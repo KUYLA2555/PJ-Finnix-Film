@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ติดต่อ — FINNIX FILM</title>
+<meta name="description" content="ติดต่อ บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ลูกค้าทั่วไปติดต่อผ่านศูนย์ติดตั้ง ส่วนเรื่องตัวแทนจำหน่ายและงานองค์กร ติดต่อบริษัทโดยตรง">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#050505;
+  --ink:#0C0C0C;
+  --paper:#FFFFFF;
+  --smoke:#F4F4F3;
+  --line:#E3E3E1;
+  --line-dark:rgba(255,255,255,.10);
+  --mute:#75756F;
+  --mute-dark:rgba(255,255,255,.52);
+  --red:#CC1B1B;
+  --red-hot:#E82323;
+
+  --u:8px;
+  --max:1440px;
+  --pad:40px;
+
+  --e:cubic-bezier(.16,1,.3,1);
+  --e-in:cubic-bezier(.7,0,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  font-size:17px;line-height:1.75;font-weight:400;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3,h4,.disp{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.eyebrow.on-dark{color:var(--mute-dark)}
+.eyebrow .dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;margin-right:10px;vertical-align:2px}
+
+/* ค่าที่ยังไม่ได้รับจากลูกค้า — ข้อ 10 ห้ามแต่งตัวเลขหรือข้อความแทน */
+.var{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--smoke);border:1px dashed #B8B8B4;border-radius:6px;padding:1px 8px;font-size:.72em;letter-spacing:0;color:#5C5C57;white-space:nowrap;font-weight:500}
+.on-void .var{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.24);color:rgba(255,255,255,.82)}
+
+/* ---------------- reveal ---------------- */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--e),transform .8s var(--e)}
+.rv.in{opacity:1;transform:none}
+.rvl{opacity:0;transform:translateY(20px);transition:opacity .9s var(--e),transform .9s var(--e)}
+body.loaded .rvl{opacity:1;transform:none}
+
+/* ---------------- nav ---------------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .5s var(--e),border-color .5s var(--e),backdrop-filter .5s}
+.nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:transparent;transition:background .5s var(--e)}
+.nav.solid{background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(20px)}
+.nav.solid::after{background:var(--line)}
+.nav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:76px;display:flex;align-items:center;gap:48px}
+.brand{flex:none;display:block;line-height:0}
+.brand img{display:block;width:auto;height:24px;aspect-ratio:817/96}
+/* ไม่ใส่ transition บน filter โดยตั้งใจ — บั๊ก v1.3 */
+.nav .brand img{filter:brightness(0) invert(1)}
+.nav.solid .brand img{filter:none}
+.nav-links{display:flex;gap:30px;margin-left:auto;font-size:15px;font-weight:400}
+.nav-links a{color:rgba(255,255,255,.78);position:relative;display:flex;align-items:center;height:44px;transition:color .4s var(--e)}
+.nav.solid .nav-links a{color:var(--mute)}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:11px;height:1px;background:var(--red);transition:right .45s var(--e)}
+.nav-links a:hover{color:#fff}
+.nav.solid .nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{right:0}
+.nav-links a[aria-current]{color:#fff}
+.nav.solid .nav-links a[aria-current]{color:var(--ink)}
+.nav-links a[aria-current]::after{right:0}
+.nav-cta{flex:none;display:flex;align-items:center;background:var(--red);color:#fff;font-size:14px;font-weight:500;height:44px;padding:0 22px;border-radius:12px;transition:background .3s var(--e),transform .3s var(--e)}
+.nav-cta:hover{background:var(--red-hot);transform:translateY(-1px)}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
+.burger span{position:absolute;left:11px;right:11px;height:1.5px;background:#fff;transition:.4s var(--e)}
+.burger span:nth-child(1){top:17px}.burger span:nth-child(2){bottom:17px}
+.nav.solid .burger span{background:var(--ink)}
+
+/* ---------------- เมนูมือถือ ---------------- */
+.drawer{display:none;position:fixed;inset:0;z-index:99;background:var(--void);
+  flex-direction:column;justify-content:center;padding:76px var(--pad) 40px;
+  opacity:0;visibility:hidden;transition:opacity .4s var(--e),visibility .4s var(--e)}
+body.menu-open .drawer{opacity:1;visibility:visible}
+body.menu-open{overflow:hidden}
+body.menu-open .nav,body.menu-open .nav.solid{background:transparent;backdrop-filter:none}
+body.menu-open .nav::after{background:transparent}
+body.menu-open .nav .brand img{filter:brightness(0) invert(1)}
+body.menu-open .burger span{background:#fff;top:50%;bottom:auto;margin-top:-1px}
+body.menu-open .burger span:nth-child(1){transform:rotate(45deg)}
+body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
+.drawer a{display:flex;align-items:center;min-height:56px;font-family:'Anuphan',sans-serif;
+  font-size:26px;font-weight:600;letter-spacing:-.02em;color:#fff;
+  border-bottom:1px solid var(--line-dark)}
+.drawer .drawer-cta{margin-top:40px;justify-content:center;background:#fff;color:var(--ink);
+  border:0;border-radius:14px;font-size:16px;min-height:56px}
+
+/* ---------------- ปุ่ม ---------------- */
+.btn{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 30px;border-radius:14px;font-size:15px;font-weight:500;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:transform .35s var(--e),background .35s var(--e),border-color .35s var(--e),color .35s var(--e)}
+.btn .ar{transition:transform .4s var(--e)}
+.btn:hover .ar{transform:translateX(5px)}
+/* แดงสงวนไว้ให้ nav CTA เท่านั้นในหน้านี้ — ปุ่มในเนื้อหาใช้ดำ ปุ่มบนพื้นมืดใช้ขาว (ข้อ 4) */
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{transform:translateY(-2px);background:#000}
+.btn-light{background:#fff;color:var(--ink)}
+.btn-light:hover{transform:translateY(-2px);background:#F0F0EE}
+
+/* ---------------- หัวหน้า ---------------- */
+.page-head{background:var(--void);color:#fff;padding:200px 0 104px}
+.page-head h1{font-size:clamp(38px,6.4vw,80px);font-weight:700;letter-spacing:-.035em;margin-top:24px;max-width:14ch}
+.page-head p{color:var(--mute-dark);margin-top:32px;max-width:52ch;font-size:18px}
+
+/* ---------------- section ---------------- */
+.sec{padding:132px 0}
+.sec.smoke{background:var(--smoke)}
+.sec-head{max-width:800px;margin-bottom:72px}
+.sec-head h2{font-size:clamp(30px,4.4vw,56px);margin-top:24px}
+.sec-head p{margin-top:24px;font-size:18px;color:var(--mute);max-width:56ch}
+
+/* สองทาง */
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.track{background:var(--paper);padding:64px 48px 72px;display:flex;flex-direction:column}
+.track .k{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.track h2{font-size:clamp(26px,3vw,36px);margin:24px 0 16px;letter-spacing:-.025em}
+.track p{color:var(--mute);font-size:16px;max-width:42ch}
+.track .btn{margin-top:40px;align-self:flex-start}
+.track .lines{margin-top:40px;border-top:1px solid var(--line)}
+.track .lines a,.track .lines div{display:flex;justify-content:space-between;gap:24px;
+  min-height:56px;align-items:center;border-bottom:1px solid var(--line);font-size:15px}
+.track .lines span:first-child{color:var(--mute);flex:none}
+.track .lines b{font-weight:500;text-align:right}
+.track .lines a{transition:color .3s var(--e)}
+.track .lines a:hover b{color:var(--red)}
+
+/* ข้อมูลบริษัท */
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.info-cell{background:var(--smoke);padding:48px 32px 56px}
+.info-cell h3{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.info-cell p{margin-top:20px;font-size:16px;line-height:1.7}
+.info-cell .sub{color:var(--mute);font-size:14px;margin-top:8px}
+
+/* ปิดท้าย */
+.closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
+.closing h2{font-size:clamp(32px,5.4vw,72px);font-weight:700;letter-spacing:-.035em;color:#fff;max-width:18ch;margin:24px auto 0}
+.closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
+.closing .btn{margin-top:48px}
+
+/* ---------------- footer ---------------- */
+footer{background:var(--void);color:#fff;padding:96px 0 40px}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px}
+.f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
+.f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
+.f-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.42);font-weight:500;margin-bottom:16px}
+.f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
+.f-col a:hover{color:var(--red-hot)}
+.f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.42)}
+
+/* ---------------- responsive ---------------- */
+@media(max-width:1080px){
+  .tracks{grid-template-columns:1fr}
+  .info{grid-template-columns:1fr}
+}
+@media(max-width:900px){
+  :root{--pad:24px}
+  .nav-links,.nav-cta{display:none}
+  .burger{display:block}
+  .drawer{display:flex}
+  .sec{padding:88px 0}
+  .page-head{padding:152px 0 72px}
+  .closing{padding:104px 0}
+  .track{padding:48px 24px 56px}
+  .f-grid{grid-template-columns:1fr 1fr;gap:40px}
+}
+@media(max-width:620px){
+  .f-grid{grid-template-columns:1fr}
+  .drawer a{font-size:22px;min-height:52px}
+  .track .lines a,.track .lines div{flex-direction:column;align-items:flex-start;gap:4px;padding:16px 0}
+  .track .lines b{text-align:left}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  .rv,.rvl{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
+    <div class="nav-links">
+      <a href="about.html">เกี่ยวกับเรา</a>
+      <a href="technology.html">เทคโนโลยี</a>
+      <a href="products.html">ผลิตภัณฑ์</a>
+      <a href="warranty.html">รับประกัน</a>
+      <a href="contact.html" aria-current="page">ติดต่อ</a>
+    </div>
+    <a href="https://finnixcenterth.com" class="nav-cta">หาศูนย์ติดตั้ง</a>
+    <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- เมนูมือถือ -->
+<div class="drawer" id="drawer">
+  <a href="about.html">เกี่ยวกับเรา</a>
+  <a href="technology.html">เทคโนโลยี</a>
+  <a href="products.html">ผลิตภัณฑ์</a>
+  <a href="warranty.html">รับประกัน</a>
+  <a href="faq.html">คำถามที่พบบ่อย</a>
+  <a href="contact.html" aria-current="page">ติดต่อ</a>
+  <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
+</div>
+
+<!-- หัวหน้า -->
+<header class="page-head on-void">
+  <div class="wrap">
+    <div class="eyebrow on-dark rvl"><span class="dot"></span>ติดต่อ</div>
+    <h1 class="rvl" style="transition-delay:.08s">เรื่องรถ ถามศูนย์ เรื่องธุรกิจ ถามบริษัท</h1>
+    <p class="rvl" style="transition-delay:.16s">สองเรื่องนี้คนละคนตอบ แยกทางไว้ตั้งแต่ต้นจะได้คำตอบเร็วกว่า</p>
+  </div>
+</header>
+
+<!-- สองทาง -->
+<section class="sec" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow"><span class="dot"></span>เลือกทาง</div>
+      <h2>คุณติดต่อเรื่องอะไร</h2>
+    </div>
+  </div>
+  <div class="tracks">
+    <div class="track rv">
+      <div class="k">ลูกค้าทั่วไป</div>
+      <h2>ติดฟิล์มรถของตัวเอง</h2>
+      <p>เรื่องราคา การนัดคิว ความเข้มที่เหมาะกับรถของคุณ และการเคลมประกัน ให้ติดต่อศูนย์ติดตั้งโดยตรง เพราะศูนย์เป็นผู้ถือคิว ราคา และบันทึกการติดตั้งของรถแต่ละคัน</p>
+      <a href="https://finnixcenterth.com" class="btn btn-dark">หาศูนย์ติดตั้งใกล้คุณ <span class="ar">→</span></a>
+    </div>
+    <div class="track rv">
+      <div class="k">ธุรกิจและองค์กร</div>
+      <h2>เป็นตัวแทนจำหน่าย หรือติดตั้งทั้งฟลีต</h2>
+      <p>เรื่องการเปิดศูนย์ใหม่ การสั่งซื้อจำนวนมาก งานรถองค์กร และการขอเอกสารสเปกฉบับเต็ม ติดต่อบริษัทโดยตรงตามช่องทางด้านล่าง</p>
+      <div class="lines">
+        <a href="tel:0635978497"><span>โทรศัพท์</span><b>06-3597-8497</b></a>
+        <div><span>อีเมล</span><b><span class="var">{{COMPANY_EMAIL}}</span></b></div>
+        <div><span>LINE Official</span><b><span class="var">{{LINE_OA_ID}}</span></b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ข้อมูลบริษัท -->
+<section class="sec smoke" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow"><span class="dot"></span>ข้อมูลบริษัท</div>
+      <h2>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</h2>
+    </div>
+  </div>
+  <div class="info">
+    <div class="info-cell rv">
+      <h3>ที่ตั้งสำนักงาน</h3>
+      <p><span class="var">{{COMPANY_ADDRESS}}</span></p>
+      <p class="sub">ที่อยู่นี้ใช้สำหรับติดต่อบริษัทและงานเอกสาร ไม่ใช่จุดให้บริการติดตั้ง</p>
+    </div>
+    <div class="info-cell rv">
+      <h3>เวลาทำการ</h3>
+      <p><span class="var">{{OFFICE_HOURS}}</span></p>
+      <p class="sub">เวลาทำการของศูนย์ติดตั้งแต่ละแห่งไม่เท่ากัน ให้ดูจากหน้าศูนย์นั้นโดยตรง</p>
+    </div>
+    <div class="info-cell rv">
+      <h3>เลขทะเบียนนิติบุคคล</h3>
+      <p><span class="var">{{COMPANY_REG_NO}}</span></p>
+      <p class="sub">ใช้สำหรับการออกเอกสารทางบัญชีและการตรวจสอบตัวตนของบริษัท</p>
+    </div>
+  </div>
+</section>
+
+<!-- ช่องทางอื่น -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow"><span class="dot"></span>ช่องทางอื่น</div>
+      <h2>ที่ที่เราอยู่</h2>
+      <p>ช่องทางเหล่านี้ใช้ประกาศข่าวสารและผลงาน ไม่ใช่ช่องทางรับเรื่องเคลมหรือจองคิว</p>
+    </div>
+    <div class="track rv" style="padding:0;background:none;max-width:640px">
+      <div class="lines" style="margin-top:0;border-top:1px solid var(--line)">
+        <div><span>Facebook</span><b><span class="var">{{FACEBOOK_URL}}</span></b></div>
+        <div><span>Instagram</span><b><span class="var">{{INSTAGRAM_URL}}</span></b></div>
+        <div><span>TikTok</span><b><span class="var">{{TIKTOK_URL}}</span></b></div>
+        <a href="https://finnixcenterth.com"><span>เว็บไซต์ศูนย์บริการ</span><b>finnixcenterth.com</b></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ปิดท้าย -->
+<section class="closing on-void">
+  <div class="wrap">
+    <div class="eyebrow on-dark" style="text-align:center"><span class="dot"></span>เรื่องรถของคุณ</div>
+    <h2>เริ่มที่ศูนย์ใกล้บ้านเร็วที่สุด</h2>
+    <p>ช่างวัดกระจกและแนะนำรุ่นได้ในนัดเดียว ไม่ต้องผ่านบริษัทก่อน</p>
+    <a href="https://finnixcenterth.com" class="btn btn-light">หาศูนย์ติดตั้งใกล้คุณ <span class="ar">→</span></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
+        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
+      </div>
+      <div class="f-col">
+        <h4>ผลิตภัณฑ์</h4>
+        <a href="products.html#titanium">TITANIUM</a><a href="products.html#ceramic">CERAMIC</a><a href="products.html#crystalize">CRYSTALIZE</a><a href="products.html#extra-clear">EXTRA CLEAR</a><a href="products.html#uv-guard">UV GUARD</a>
+      </div>
+      <div class="f-col">
+        <h4>บริษัท</h4>
+        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a>
+      </div>
+      <div class="f-col">
+        <h4>บริการ</h4>
+        <a href="warranty.html">การรับประกัน</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+      </div>
+    </div>
+    <div class="f-bot">
+      <span>© 2569 บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</span>
+      <span>นโยบายความเป็นส่วนตัว · นโยบายคุกกี้</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- load ---- */
+  window.addEventListener('load', function(){ document.body.classList.add('loaded'); });
+  setTimeout(function(){ document.body.classList.add('loaded'); }, 400);
+
+  /* ---- nav ---- */
+  var nav = document.getElementById('nav');
+  function onScrollNav(){ nav.classList.toggle('solid', window.scrollY > 40); }
+  onScrollNav(); window.addEventListener('scroll', onScrollNav, {passive:true});
+
+  /* ---- เมนูมือถือ ---- */
+  var burger = document.getElementById('burger');
+  function setMenu(open){
+    document.body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'ปิดเมนู' : 'เปิดเมนู');
+  }
+  burger.addEventListener('click', function(){
+    setMenu(!document.body.classList.contains('menu-open'));
+  });
+  document.querySelectorAll('#drawer a').forEach(function(a){
+    a.addEventListener('click', function(){ setMenu(false); });
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && document.body.classList.contains('menu-open')){
+      setMenu(false); burger.focus();
+    }
+  });
+  window.matchMedia('(min-width:901px)').addEventListener('change', function(e){
+    if(e.matches) setMenu(false);
+  });
+
+  /* ---- reveal ---- */
+  if(reduce) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rv').forEach(function(el, i){
+    el.style.transitionDelay = (i % 4) * 60 + 'ms';
+    io.observe(el);
+  });
+})();
+</script>
+</body>
+</html>

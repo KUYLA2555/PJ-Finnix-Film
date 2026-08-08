@@ -1,0 +1,179 @@
+{
+  "_readme": "ข้อมูลฟิล์มถอดจากรูปโบรชัวร์ในโฟลเดอร์นี้ · ร่างครั้งที่ 1 · 5 ส.ค. 2569 · ยังไม่ยืนยันกับลูกค้า · คำอธิบายโครงสร้างและข้อที่ต้องยืนยันอยู่ใน docs/film-data.md · ไฟล์นี้เป็นแหล่งข้อมูลตั้งต้น ไม่ใช่ไฟล์ที่หน้าเว็บ fetch ตอนรัน — เวลาทำหน้าให้ฝังค่าลง HTML ตามข้อ 9 ของบรีฟ",
+
+  "meta": {
+    "dataYear": 2024,
+    "testStandard": "{{TEST_STANDARD}}",
+    "testStandardNote": "โบรชัวร์เขียนแค่ 'เป็นไปตามวิธีทดสอบตามมาตรฐานสากลของโลก' ไม่ระบุชื่อมาตรฐาน — ต้องขอก่อนขึ้นตัวเลขใดๆ ตามข้อ 3 ของบรีฟ",
+    "warrantyYears": 7,
+    "warrantySource": "หน้าปกของทั้ง 5 ซีรีส์",
+    "installedArea": "3 ล้านตารางฟุตทั่วประเทศ",
+    "currency": "THB",
+    "priceYear": 2024,
+    "priceDisplayOnSite": false,
+    "priceDisplayNote": "ข้อเสนอ — ไม่แสดงราคาบนเว็บนี้ เพราะบรีฟข้อ 1 ระบุว่าไม่ใช่ร้านค้า ให้ส่งต่อไป finnixcenterth.com",
+    "units": "ทุกค่าเป็นเปอร์เซ็นต์",
+    "fields": {
+      "darkness": "ความเข้ม",
+      "heatReject": "ลดความร้อนจากแสงแดดโดยรวม (ตรงกับนิยาม TSER แต่โบรชัวร์ไม่ได้ใช้คำนี้)",
+      "vlt": "แสงส่องผ่าน",
+      "reflect": "สะท้อนแสง",
+      "uv": "ป้องกันรังสี UV",
+      "ir": "ป้องกันรังสี IR"
+    },
+    "carTypes": {
+      "pickup2": "กระบะ 2 ประตู",
+      "pickup4": "กระบะ 4 ประตู",
+      "sedan": "รถเก๋ง",
+      "suv": "รถ SUV",
+      "mpv": "รถ MPV",
+      "van": "รถตู้"
+    }
+  },
+
+  "series": [
+    {
+      "id": "titanium",
+      "codePrefix": "SY",
+      "name": { "th": "ฟินนิกซ์ ไทเทเนี่ยม ฟิล์ม", "en": "TITANIUM" },
+      "tech": "{{TECH_TITANIUM}}",
+      "techNote": "ชื่อซีรีส์สื่อถึงโลหะไทเทเนียม แต่เอกสารไม่ได้ระบุเทคโนโลยีตรงๆ — ต้องยืนยัน",
+      "metalFree": null,
+      "tagline": "สุดยอดฟิล์มชั้นนำ เทคโนโลยีระดับโลก",
+      "claim": "เราคัดเลือกผลิตภัณฑ์ที่ดีที่สุดจากแหล่งที่มาที่เป็นที่ยอมรับในโลก",
+      "image": "assets/finnix-titanium.png",
+      "source": ["Data/TIT/เอกสาร 6_1.jpg", "Data/TIT/เอกสาร 6_2.jpg", "Data/TIT/เอกสาร 6_3.jpg", "Data/TIT/เอกสาร 6_4.jpg"],
+      "variants": [
+        { "code": "SY40", "darkness": null, "heatReject": 81, "vlt": 40, "reflect": 0.24, "uv": 99, "ir": 91 },
+        { "code": "SY20", "darkness": null, "heatReject": 89, "vlt": 20, "reflect": 0.24, "uv": 99, "ir": 95 },
+        { "code": "SY10", "darkness": null, "heatReject": 96, "vlt": 10, "reflect": 0.24, "uv": 99, "ir": 98 }
+      ],
+      "price": {
+        "pickup2": { "front": 10600, "full": 32000 },
+        "pickup4": { "front": 10600, "full": 33000 },
+        "sedan":   { "front": 10600, "full": 33800 },
+        "suv":     { "front": 10600, "full": 36000 },
+        "mpv":     { "front": 10600, "full": 37800 },
+        "van":     { "front": 12000, "full": 40600 }
+      },
+      "verify": [
+        "ความเข้มไม่ระบุทั้งสามรหัส",
+        "สะท้อนแสง 0.24% ต่ำผิดปกติเมื่อเทียบกับซีรีส์อื่นที่ 5.1–8.6%"
+      ]
+    },
+
+    {
+      "id": "ceramic",
+      "codePrefix": "CM",
+      "name": { "th": "ฟินนิกซ์ เซรามิค ฟิล์ม", "en": "CERAMIC" },
+      "tech": "ceramic",
+      "metalFree": true,
+      "tagline": "ใส เคลียร์ ชัด",
+      "claim": "เปิดรับทุกมิติการมอง ทั้งกลางวันและกลางคืน",
+      "image": "assets/finnix-ceramic.png",
+      "source": ["Data/CM/เอกสาร 7_1.jpg", "Data/CM/เอกสาร 7_2.jpg", "Data/CM/เอกสาร 7_3.jpg", "Data/CM/เอกสาร 7_4.jpg"],
+      "variants": [
+        { "code": "CM35", "darkness": 40, "heatReject": 80, "vlt": 30, "reflect": 0.19, "uv": 99, "ir": 91 },
+        { "code": "CM15", "darkness": 60, "heatReject": 90, "vlt": 15, "reflect": 0.19, "uv": 99, "ir": 95 },
+        { "code": "CM05", "darkness": 80, "heatReject": 90, "vlt": 5,  "reflect": 0.19, "uv": 99, "ir": 98 }
+      ],
+      "price": {
+        "pickup2": { "front": 5600, "full": 10200 },
+        "pickup4": { "front": 5600, "full": 11000 },
+        "sedan":   { "front": 5600, "full": 11800 },
+        "suv":     { "front": 5600, "full": 13800 },
+        "mpv":     { "front": 5600, "full": 15000 },
+        "van":     { "front": 8000, "full": 17000 }
+      },
+      "verify": [
+        "CM15 กับ CM05 ลดความร้อนรวม 90% เท่ากันทั้งที่ความเข้มต่างกัน 20 จุด",
+        "สะท้อนแสง 0.19% ต่ำผิดปกติ"
+      ]
+    },
+
+    {
+      "id": "crystalize",
+      "codePrefix": "CT",
+      "name": { "th": "ฟินนิกซ์ คริสตัลไลซ์ ฟิล์ม", "en": "CRYSTALIZE" },
+      "tech": "metalize-sputtering",
+      "techNote": "หน้าปกระบุ MULTI LAYER METALIZE SPUTTERING ชัดเจน และค่าสะท้อนแสง 7.6–8.6% สอดคล้องกับฟิล์มโลหะ",
+      "metalFree": false,
+      "tagline": "ฟิล์มกรองแสงใส แต่กันความร้อนได้สูง",
+      "claim": null,
+      "image": "assets/finnix-crystalize.png",
+      "source": ["Data/CT/เอกสาร_1.jpg", "Data/CT/เอกสาร_2.jpg", "Data/CT/เอกสาร_3.jpg"],
+      "variants": [
+        { "code": "CT70", "darkness": null, "heatReject": 55, "vlt": 70, "reflect": 8.6, "uv": 99, "ir": 89 },
+        { "code": "CT40", "darkness": 40,   "heatReject": 75, "vlt": 35, "reflect": 7.7, "uv": 99, "ir": 90 },
+        { "code": "CT20", "darkness": 60,   "heatReject": 85, "vlt": 22, "reflect": 7.6, "uv": 99, "ir": 93 }
+      ],
+      "price": null,
+      "verify": [
+        "ไม่มีตารางราคาในเอกสารที่ได้มา",
+        "CT70 ไม่ระบุความเข้ม",
+        "เป็นฟิล์มโลหะ — ขัดกับข้อความ 'ไม่มีชั้นโลหะในเนื้อฟิล์ม' ที่ index.html:329 อ้างในระดับแบรนด์"
+      ]
+    },
+
+    {
+      "id": "extra-clear",
+      "codePrefix": "XT",
+      "name": { "th": "ฟินนิกซ์ เอ็กซ์ตร้า เคลียร์", "en": "EXTRA CLEAR" },
+      "tech": "ceramic",
+      "techNote": "หน้าที่ 2 เขียนว่า 'ทัศนวิสัยดีเยี่ยม ฟิล์มเซรามิคกันความร้อน'",
+      "metalFree": true,
+      "tagline": "ใส เคลียร์ ชัด",
+      "claim": "ทัศนวิสัยเหนือระดับ ขับขี่ไร้กังวล",
+      "image": "assets/finnix-extra-clear.png",
+      "source": ["Data/EX/เอกสาร 5_1.jpg", "Data/EX/เอกสาร 5_2.jpg", "Data/EX/เอกสาร 5_3.jpg"],
+      "variants": [
+        { "code": "XT35", "darkness": 40, "heatReject": 61, "vlt": 35, "reflect": 5.8, "uv": 100, "ir": 96 },
+        { "code": "XT15", "darkness": 60, "heatReject": 63, "vlt": 15, "reflect": 5.1, "uv": 100, "ir": 97 },
+        { "code": "XT05", "darkness": 80, "heatReject": 67, "vlt": 5,  "reflect": 5.1, "uv": 100, "ir": 98 }
+      ],
+      "price": null,
+      "verify": [
+        "ไม่มีตารางราคาในเอกสารที่ได้มา",
+        "UV 100% — สูงกว่า CM/SY/CT ที่ระบุ 99% ต้องยืนยันว่าเป็นค่าจริงหรือการปัดเลข"
+      ]
+    },
+
+    {
+      "id": "uv-guard",
+      "codePrefix": "SM",
+      "name": { "th": "ฟินนิกซ์ ยูวีการ์ด เซรามิค ฟิล์ม", "en": "UV GUARD" },
+      "tech": "ceramic",
+      "techNote": "หน้าปกระบุ CERAMIC SERIES",
+      "metalFree": true,
+      "tagline": "ใส เคลียร์ ชัด",
+      "claim": "เปิดรับทุกมิติการมอง ทั้งกลางวันและกลางคืน",
+      "image": "assets/finnix-uvguard.png",
+      "source": ["Data/UV_g/เอกสาร 4_1.jpg", "Data/UV_g/เอกสาร 4_2.jpg", "Data/UV_g/เอกสาร 4_3.jpg"],
+      "variants": [
+        { "code": "SM35", "darkness": 40, "heatReject": 52, "vlt": 40, "reflect": 6.1, "uv": 100, "ir": 95 },
+        { "code": "SM15", "darkness": 60, "heatReject": 59, "vlt": 15, "reflect": 5.2, "uv": 100, "ir": 95 },
+        { "code": "SM05", "darkness": 80, "heatReject": 63, "vlt": 5,  "reflect": 5.1, "uv": 100, "ir": 98 }
+      ],
+      "price": {
+        "pickup2": { "front": 4000, "full": 8600 },
+        "pickup4": { "front": 4000, "full": 9200 },
+        "sedan":   { "front": 4000, "full": 9800 },
+        "suv":     { "front": 4000, "full": 12000 },
+        "mpv":     { "front": 4000, "full": 14000 },
+        "van":     { "front": 5400, "full": 15800 }
+      },
+      "verify": [
+        "หัวตารางราคาในเล่มเขียนว่า 'ฟินนิกซ์ เซรามิค ฟิล์ม' แต่ราคาไม่ตรงกับเล่ม CERAMIC — น่าจะเป็นหัวตารางที่ลืมแก้",
+        "SM35 กับ SM15 กัน IR 95% เท่ากัน"
+      ]
+    }
+  ],
+
+  "openQuestions": [
+    "CL ในบรีฟข้อ 1 หมายถึง CRYSTALIZE (CT) หรือเป็นซีรีส์ที่เลิกทำแล้ว — ไม่มีรหัส CL ในเอกสารใดเลย",
+    "เฟสนี้ขึ้นเว็บ 3 ซีรีส์ตามบรีฟ หรือ 5 ซีรีส์ตามของที่ขายจริง",
+    "เรียก 'ลดความร้อนจากแสงแดดโดยรวม' ว่า TSER บนเว็บได้หรือไม่",
+    "ชื่อมาตรฐานการทดสอบ — ต้องได้เป็นลำดับแรก",
+    "จำนวนศูนย์บริการ (หน้าแรกเขียน 120+ ไม่มีที่มาในเอกสารชุดนี้)"
+  ]
+}

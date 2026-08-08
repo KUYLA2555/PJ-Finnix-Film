@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เทคโนโลยี — FINNIX FILM</title>
+<meta name="description" content="ความมืดกับความร้อนเป็นคนละเรื่องกัน อธิบายว่าฟิล์มกรองแสงลดความร้อนด้วยกลไกใด และทำไมความเข้มของฟิล์มจึงไม่ใช่ตัวชี้วัดความเย็น">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#050505;
+  --ink:#0C0C0C;
+  --paper:#FFFFFF;
+  --smoke:#F4F4F3;
+  --line:#E3E3E1;
+  --line-dark:rgba(255,255,255,.10);
+  --mute:#75756F;
+  --mute-dark:rgba(255,255,255,.52);
+  --red:#CC1B1B;
+  --red-hot:#E82323;
+
+  --u:8px;
+  --max:1440px;
+  --pad:40px;
+
+  --e:cubic-bezier(.16,1,.3,1);
+  --e-in:cubic-bezier(.7,0,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  font-size:17px;line-height:1.75;font-weight:400;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3,h4,.disp{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+.on-dark :focus-visible,.dark :focus-visible{outline-color:#fff}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.eyebrow.on-dark{color:var(--mute-dark)}
+.eyebrow .dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;margin-right:8px;vertical-align:2px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:0 0 12px 0;z-index:200}
+.skip:focus{left:0}
+
+/* ---------------- MOTION 2 · scroll reveal ---------------- */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--e),transform .8s var(--e)}
+.rv.in{opacity:1;transform:none}
+
+/* ---------------- nav ---------------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .5s var(--e),border-color .5s var(--e),backdrop-filter .5s}
+.nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:transparent;transition:background .5s var(--e)}
+.nav.solid{background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(20px)}
+.nav.solid::after{background:var(--line)}
+.nav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:76px;display:flex;align-items:center;gap:48px}
+/* โลโก้ — กำหนด aspect-ratio ไว้ล่วงหน้าเพื่อไม่ให้เกิด layout shift ตามข้อ 9 */
+.brand{flex:none;display:block;line-height:0}
+.brand img{display:block;width:auto;height:24px;aspect-ratio:817/96}
+/* พื้นมืดใช้โลโก้ขาวล้วน — ตัวอักษร FINNIX เป็นสีดำจึงจมหายบนพื้น --void
+   และการตัดแดงออกช่วยให้ hero ไม่แดงเกินโควตาข้อ 4 */
+/* ไม่ใส่ transition บน filter โดยตั้งใจ — เบราว์เซอร์ interpolate filter list ข้ามสถานะไม่ได้
+   ทำให้ค่าค้างที่ขาวแล้วโลโก้หายไปบนพื้นขาว การสลับทันทีมองไม่ออกอยู่แล้วเพราะ nav เปลี่ยนพื้นหลังพร้อมกัน */
+.nav .brand img{filter:brightness(0) invert(1)}
+.nav.solid .brand img{filter:none}
+/* ลิงก์สูง 44px ตามเกณฑ์ขนาดพื้นที่กดในข้อ 9 — เดิมสูง 38px */
+.nav-links{display:flex;gap:30px;margin-left:auto;font-size:15px;font-weight:400}
+.nav-links a{color:rgba(255,255,255,.78);position:relative;display:flex;align-items:center;height:44px;transition:color .4s var(--e)}
+.nav.solid .nav-links a{color:var(--mute)}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:11px;height:1px;background:var(--red);transition:right .45s var(--e)}
+.nav-links a:hover{color:#fff}
+.nav.solid .nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{right:0}
+.nav-links a[aria-current="page"]{color:#fff}
+.nav.solid .nav-links a[aria-current="page"]{color:var(--ink)}
+.nav-links a[aria-current="page"]::after{right:0;background:currentColor;opacity:.28}
+.nav-cta{flex:none;display:flex;align-items:center;background:var(--red);color:#fff;font-size:14px;font-weight:500;height:44px;padding:0 22px;border-radius:12px;transition:background .3s var(--e),transform .3s var(--e)}
+.nav-cta:hover{background:var(--red-hot);transform:translateY(-1px)}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
+.burger span{position:absolute;left:11px;right:11px;height:1.5px;background:#fff;transition:.4s var(--e)}
+.burger span:nth-child(1){top:17px}.burger span:nth-child(2){bottom:17px}
+.nav.solid .burger span{background:var(--ink)}
+
+/* ---------------- เมนูมือถือ ---------------- */
+/* สถานะ UI ไม่ใช่ motion เพื่อการตกแต่ง จึงไม่นับรวมในงบ 4 อย่างของข้อ 5 */
+.drawer{display:none;position:fixed;inset:0;z-index:99;background:var(--void);
+  flex-direction:column;justify-content:center;padding:76px var(--pad) 40px;
+  opacity:0;visibility:hidden;transition:opacity .4s var(--e),visibility .4s var(--e)}
+body.menu-open .drawer{opacity:1;visibility:visible}
+body.menu-open{overflow:hidden}
+body.menu-open .nav,body.menu-open .nav.solid{background:transparent;backdrop-filter:none}
+body.menu-open .nav::after{background:transparent}
+body.menu-open .nav .brand img{filter:brightness(0) invert(1)}
+body.menu-open .burger span{background:#fff;top:50%;bottom:auto;margin-top:-1px}
+body.menu-open .burger span:nth-child(1){transform:rotate(45deg)}
+body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
+.drawer a{display:flex;align-items:center;min-height:56px;font-family:'Anuphan',sans-serif;
+  font-size:26px;font-weight:600;letter-spacing:-.02em;color:#fff;
+  border-bottom:1px solid var(--line-dark)}
+.drawer .drawer-cta{margin-top:40px;justify-content:center;background:#fff;color:var(--ink);
+  border:0;border-radius:14px;font-size:16px;min-height:56px}
+
+/* ---------------- hero ---------------- */
+.hero{position:relative;min-height:96svh;background:var(--void);display:flex;align-items:flex-end;overflow:hidden;isolation:isolate}
+.hero::before{content:'';position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(80% 62% at 22% 8%, rgba(255,214,150,.10) 0%, transparent 62%),
+    linear-gradient(180deg,#0A0908 0%,#070606 52%,#050505 100%)}
+/* faint stack peeking from the bottom edge — invites the scroll, no arrow needed */
+.hero-peek{position:absolute;left:0;right:0;bottom:0;height:132px;z-index:1;pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 78%);mask-image:linear-gradient(180deg,transparent,#000 78%)}
+.hero-peek i{position:absolute;left:6%;right:6%;height:1px;background:rgba(255,255,255,.16);display:block}
+.hero-peek i:nth-child(1){bottom:96px}
+.hero-peek i:nth-child(2){bottom:80px}
+.hero-peek i:nth-child(3){bottom:64px;background:rgba(255,255,255,.20)}
+.hero-peek i:nth-child(4){bottom:48px}
+.hero-peek i:nth-child(5){bottom:32px}
+.hero-peek i:nth-child(6){bottom:16px;background:rgba(255,255,255,.24)}
+
+.hero-in{position:relative;z-index:2;width:100%;max-width:var(--max);margin:0 auto;padding:168px var(--pad) 152px}
+.hero h1{font-size:clamp(46px,8.4vw,108px);font-weight:700;color:#fff;letter-spacing:-.035em;max-width:16ch}
+/* MOTION 1 · text reveal on load */
+.hero h1 .l{display:block;overflow:hidden}
+.hero h1 .l span{display:block;transform:translateY(105%);transition:transform 1.1s var(--e)}
+.loaded .hero h1 .l span{transform:none}
+.hero h1 .l:nth-child(2) span{transition-delay:.09s}
+.hero .eyebrow{margin-bottom:32px;opacity:0;transition:opacity .9s var(--e) .15s}
+.loaded .hero .eyebrow{opacity:1}
+.hero p.sub{margin-top:32px;max-width:50ch;font-size:18px;line-height:1.7;color:rgba(255,255,255,.66);opacity:0;transform:translateY(16px);transition:.9s var(--e) .34s}
+.loaded .hero p.sub{opacity:1;transform:none}
+
+/* ---------------- generic section ---------------- */
+.sec{padding:132px 0}
+.sec.dark{background:var(--void);color:#fff}
+.sec.smoke{background:var(--smoke)}
+.sec-head{max-width:820px;margin-bottom:72px}
+.sec-head h2{font-size:clamp(30px,4.4vw,56px);margin-top:24px}
+.sec-head p{margin-top:24px;font-size:18px;color:var(--mute);max-width:58ch}
+.sec.dark .sec-head p{color:var(--mute-dark)}
+.note{font-size:14px;line-height:1.6;color:var(--mute)}
+.sec.dark .note{color:var(--mute-dark)}
+
+/* ---------------- 2 · spectrum ---------------- */
+.spectrum{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:56px 0 48px}
+.spec-scale{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:16px}
+.spec-bar{display:flex;height:88px;border-radius:12px;overflow:hidden;background:var(--smoke)}
+.spec-seg{position:relative;display:flex;align-items:flex-end;padding:0 0 16px 16px;color:#fff;font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;overflow:hidden}
+.seg-uv{flex:0 0 3.64%;background:linear-gradient(180deg,#7A5BD6,#5B3FB0)}
+.seg-vis{flex:0 0 18.18%;background:linear-gradient(90deg,#6E5BD2 0%,#3F7FD0 18%,#3FA96B 42%,#D8C03A 66%,#D2703A 86%,#8E3A3A 100%)}
+.seg-ir{flex:0 0 78.18%;background:linear-gradient(90deg,#2A2724 0%,#161513 55%,#0C0C0B 100%)}
+.spec-seg b{font-weight:500}
+.seg-uv b{position:absolute;left:50%;bottom:16px;transform:translateX(-50%) rotate(-90deg);transform-origin:center;font-size:10px}
+.spec-key{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:32px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.key-cell{background:var(--paper);padding:32px 24px}
+.key-cell .sw{width:28px;height:4px;border-radius:2px;margin-bottom:16px}
+.key-cell h3{font-size:19px;letter-spacing:-.01em}
+.key-cell .nm{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-top:8px}
+.key-cell .val{font-family:'Anuphan',sans-serif;font-size:clamp(28px,3.2vw,40px);font-weight:600;letter-spacing:-.03em;margin-top:24px;line-height:1}
+.key-cell .val small{font-size:13px;font-weight:400;color:var(--mute);letter-spacing:0;display:block;margin-top:8px;font-family:'IBM Plex Sans Thai',sans-serif}
+.key-cell p{font-size:15px;color:var(--mute);line-height:1.65;margin-top:16px}
+/* ป้ายค่าที่ยังไม่ได้รับจากลูกค้า — ใช้สีกลาง ไม่ใช้แดง เพราะแดงสงวนไว้ตามข้อ 4 ของบรีฟ */
+.var{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--smoke);border:1px dashed #B8B8B4;border-radius:6px;padding:1px 8px;font-size:.72em;letter-spacing:0;color:#5C5C57;white-space:nowrap;font-weight:500}
+.sig .var,.close .var{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.24);color:rgba(255,255,255,.82)}
+
+/* ---------------- 3 · SIGNATURE · layer stack ---------------- */
+.sig{position:relative;background:var(--void);color:#fff;height:300vh}
+.sig-sticky{position:sticky;top:0;height:100svh;display:flex;align-items:center;overflow:hidden}
+.sig-grid{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad);display:grid;grid-template-columns:1fr 440px;gap:80px;align-items:center}
+.sig-copy .eyebrow{margin-bottom:16px}
+/* เล็กกว่าหัวข้อ section ปกติ เพราะต้องอยู่ในกรอบ sticky หนึ่งหน้าจอพร้อมรายการชั้นฟิล์ม */
+.sig-copy h2{font-size:clamp(28px,3.4vw,44px);color:#fff}
+.sig-copy p{margin-top:16px;font-size:16px;color:var(--mute-dark);max-width:48ch}
+.sig-stage{position:relative;aspect-ratio:1/1;width:100%}
+.sig-stage svg{width:100%;height:100%;overflow:visible}
+.layer{transition:transform .1s linear}
+.layer rect{stroke:rgba(255,255,255,.30);stroke-width:1}
+.layer .lbl{font-family:'IBM Plex Sans Thai',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;fill:rgba(255,255,255,.44);opacity:0;transition:opacity .5s var(--e)}
+.sig.spread .layer .lbl{opacity:1}
+.sun{opacity:0;transition:opacity .6s var(--e)}
+.sig-legend{list-style:none;margin-top:32px;display:grid;gap:2px}
+.sig-legend li{display:grid;grid-template-columns:16px 1fr;gap:16px;align-items:start;padding:8px 0;border-top:1px solid var(--line-dark);opacity:.34;transition:opacity .5s var(--e)}
+.sig-legend li.on{opacity:1}
+.sig-legend .sw{width:16px;height:16px;border-radius:4px;margin-top:5px;border:1px solid rgba(255,255,255,.24)}
+.sig-legend b{font-weight:600;font-size:15px}
+.sig-legend span.d{color:var(--mute-dark);font-size:14px;line-height:1.55;display:block}
+.sig-foot{margin-top:24px;font-size:15px;color:var(--mute-dark)}
+
+/* ---------------- 4 · slider proof ---------------- */
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.proof-pane{background:var(--paper);padding:40px}
+.win{position:relative;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:linear-gradient(170deg,#8FA6BC 0%,#B9C7D4 38%,#E2E7EB 100%)}
+.win::before{content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(42% 52% at 74% 22%, rgba(255,236,196,.92), rgba(255,214,150,0) 62%),
+    linear-gradient(200deg,rgba(255,255,255,.42) 0%,transparent 44%)}
+.win-tint{position:absolute;inset:0;background:#0B1016;opacity:calc(1 - (var(--vlt,70) / 100));transition:opacity .18s linear}
+.win-tag{position:absolute;left:16px;bottom:14px;z-index:2;color:#fff;font-size:11px;letter-spacing:.18em;text-transform:uppercase;text-shadow:0 1px 10px rgba(0,0,0,.75)}
+.slider-row{margin-top:32px}
+.slider-row label{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-bottom:16px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;cursor:ew-resize;display:block}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--line)}
+input[type=range]::-moz-range-track{height:2px;background:var(--line)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--ink);border:0;margin-top:-13px;transition:transform .3s var(--e)}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:var(--ink);border:0}
+input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
+.readout{display:grid;gap:24px}
+.ro{border:1px solid var(--line);border-radius:16px;padding:32px 24px}
+.ro .k{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.ro .v{font-family:'Anuphan',sans-serif;font-size:clamp(34px,4.6vw,54px);font-weight:600;letter-spacing:-.03em;line-height:1;margin-top:16px}
+.ro .cap{font-size:14px;color:var(--mute);line-height:1.6;margin-top:16px}
+.meter{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:24px}
+.meter i{display:block;height:100%;border-radius:4px;background:var(--ink);transition:width .18s linear}
+.meter.fixed i{background:#3F3F3B}
+.ro.pin{background:var(--smoke);border-style:solid}
+.verdict{margin-top:32px;padding:32px;border-left:2px solid var(--ink);background:var(--paper);border-radius:0 12px 12px 0}
+.verdict p{font-size:17px;line-height:1.7;max-width:64ch}
+
+/* ---------------- 5 · glossary ---------------- */
+.gloss{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.gl{background:var(--paper);padding:48px 40px}
+.gl .ab{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.gl h3{font-size:24px;margin:16px 0;letter-spacing:-.015em}
+.gl p{font-size:16px;color:var(--mute);line-height:1.7;max-width:48ch}
+.gl .mean{margin-top:16px;font-size:14px;color:var(--ink);border-top:1px solid var(--line);padding-top:16px}
+.gl .mean b{font-weight:600}
+
+/* ---------------- 6 · close ---------------- */
+.close{background:var(--void);color:#fff;padding:152px 0 160px;text-align:left}
+.close h2{font-size:clamp(30px,4.4vw,56px);max-width:20ch;color:#fff}
+.close p{margin-top:24px;font-size:18px;color:var(--mute-dark);max-width:52ch}
+.btn{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 32px;border-radius:14px;font-size:15px;font-weight:500;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:transform .35s var(--e),background .35s var(--e)}
+.btn .ar{transition:transform .4s var(--e)}
+.btn:hover .ar{transform:translateX(5px)}
+.btn-red{background:var(--red);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2),0 12px 32px -12px rgba(204,27,27,.6)}
+.btn-red:hover{background:var(--red-hot);transform:translateY(-2px)}
+.close .btn{margin-top:48px}
+
+/* ---------------- footer ---------------- */
+footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid var(--line-dark)}
+.f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;padding:72px 0 56px}
+/* footer เป็นพื้นมืดเสมอ จึงใช้โลโก้ขาวล้วนตลอด */
+.f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
+.f-brand p{margin-top:20px;font-size:15px;color:var(--mute-dark);max-width:34ch;line-height:1.7}
+.f-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute-dark);font-weight:500;margin-bottom:20px}
+.f-col a{display:flex;align-items:center;min-height:44px;font-size:15px;color:rgba(255,255,255,.78);transition:color .3s var(--e)}
+.f-col a:hover{color:#fff}
+.f-bot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-top:32px;border-top:1px solid var(--line-dark);font-size:14px;color:var(--mute-dark)}
+
+/* ---------------- responsive ---------------- */
+@media(max-width:1080px){
+  .sig-grid{grid-template-columns:1fr 380px;gap:48px}
+  .f-grid{grid-template-columns:1fr 1fr;gap:40px}
+}
+@media(max-width:900px){
+  :root{--pad:24px}
+  .nav-links{display:none}
+  .burger{display:block}
+  .drawer{display:flex}
+  .sec{padding:88px 0}
+  .sig{height:auto}
+  .sig-sticky{position:static;height:auto;padding:88px 0}
+  .sig-grid{grid-template-columns:1fr;gap:56px}
+  .sig-stage{max-width:460px;order:-1}
+  .proof-grid{grid-template-columns:1fr}
+  .gloss{grid-template-columns:1fr}
+  .spec-key{grid-template-columns:1fr}
+  .seg-uv b{display:none}
+}
+@media(max-width:620px){
+  .hero-in{padding:136px var(--pad) 120px}
+  .sec-head{margin-bottom:48px}
+  .proof-pane{padding:24px}
+  .gl{padding:32px 24px}
+  .close{padding:104px 0 112px}
+  .f-grid{grid-template-columns:1fr;padding:56px 0 40px}
+  .spec-bar{height:64px}
+}
+
+/* ---------------- reduced motion ---------------- */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  .rv{opacity:1;transform:none}
+  .hero h1 .l span{transform:none}
+  .hero p.sub,.hero .eyebrow{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip">ข้ามไปยังเนื้อหาหลัก</a>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
+    <div class="nav-links">
+      <a href="about.html">เกี่ยวกับเรา</a>
+      <a href="technology.html" aria-current="page">เทคโนโลยี</a>
+      <a href="products.html">ผลิตภัณฑ์</a>
+      <a href="warranty.html">รับประกัน</a>
+      <a href="contact.html">ติดต่อ</a>
+    </div>
+    <a href="https://finnixcenterth.com" class="nav-cta">หาศูนย์ติดตั้ง</a>
+    <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- เมนูมือถือ -->
+<div class="drawer" id="drawer">
+  <a href="about.html">เกี่ยวกับเรา</a>
+  <a href="technology.html" aria-current="page">เทคโนโลยี</a>
+  <a href="products.html">ผลิตภัณฑ์</a>
+  <a href="warranty.html">รับประกัน</a>
+  <a href="faq.html">คำถามที่พบบ่อย</a>
+  <a href="contact.html">ติดต่อ</a>
+  <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
+</div>
+
+<main id="main">
+
+  <!-- ============ 1 · HERO ============ -->
+  <header class="hero">
+    <div class="hero-peek" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="hero-in">
+      <p class="eyebrow on-dark"><span class="dot"></span>เทคโนโลยี</p>
+      <h1>
+        <span class="l"><span>ความมืด กับ ความร้อน</span></span>
+        <span class="l"><span>เป็นคนละเรื่องกัน</span></span>
+      </h1>
+      <p class="sub">แสงที่ตามองเห็นเป็นเพียงส่วนหนึ่งของพลังงานที่ตกลงบนกระจก ความร้อนส่วนใหญ่เดินทางมาในคลื่นที่ตามองไม่เห็น การทำให้กระจกมืดลงจึงไม่ได้แปลว่าในรถจะเย็นลง</p>
+    </div>
+  </header>
+
+  <!-- ============ 2 · SPECTRUM ============ -->
+  <section class="sec" aria-labelledby="h-spec">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow"><span class="dot"></span>พลังงานจากดวงอาทิตย์</p>
+        <h2 id="h-spec">สิ่งที่ทำให้ร้อน<br>อยู่นอกสายตาพอดี</h2>
+        <p>แสงอาทิตย์ที่ตกลงบนกระจกรถแบ่งได้เป็นสามย่านตามความยาวคลื่น ตาของเรารับรู้ได้เพียงย่านเดียว ส่วนย่านที่พาความร้อนเข้ามามากที่สุดกลับเป็นย่านที่มองไม่เห็นเลย</p>
+      </div>
+
+      <div class="spectrum rv">
+        <div class="spec-scale" aria-hidden="true">
+          <span>300 nm</span><span>780 nm</span><span>2500 nm</span>
+        </div>
+        <div class="spec-bar" role="img" aria-label="แถบความยาวคลื่นแสงอาทิตย์ตั้งแต่ 300 ถึง 2500 นาโนเมตร แบ่งเป็นสามย่าน ได้แก่ รังสียูวี แสงที่ตามองเห็น และรังสีอินฟราเรด โดยย่านอินฟราเรดกินช่วงความยาวคลื่นกว้างที่สุด">
+          <div class="spec-seg seg-uv"><b>UV</b></div>
+          <div class="spec-seg seg-vis"><b>แสงที่ตามองเห็น</b></div>
+          <div class="spec-seg seg-ir"><b>อินฟราเรด — มองไม่เห็น</b></div>
+        </div>
+        <p class="note" style="margin-top:16px">ความกว้างของแต่ละแถบคือช่วงความยาวคลื่นจริง ไม่ใช่สัดส่วนพลังงาน — สัดส่วนพลังงานแสดงไว้ในตารางด้านล่าง</p>
+      </div>
+
+      <div class="spec-key rv">
+        <div class="key-cell">
+          <div class="sw" style="background:#6B5BD2"></div>
+          <h3>รังสียูวี</h3>
+          <p class="nm">300–380 nm</p>
+          <p class="val"><span class="var">{{UV_PCT}}</span><small>ของพลังงานทั้งหมด</small></p>
+          <p>ไม่ได้ทำให้รู้สึกร้อน แต่เป็นตัวการที่ทำให้เบาะ คอนโซล และพวงมาลัยซีดและกรอบ</p>
+        </div>
+        <div class="key-cell">
+          <div class="sw" style="background:linear-gradient(90deg,#3F7FD0,#3FA96B,#D8C03A)"></div>
+          <h3>แสงที่ตามองเห็น</h3>
+          <p class="nm">380–780 nm</p>
+          <p class="val"><span class="var">{{VIS_PCT}}</span><small>ของพลังงานทั้งหมด</small></p>
+          <p>ย่านเดียวที่ความเข้มของฟิล์มควบคุมโดยตรง ค่า VLT วัดเฉพาะย่านนี้เท่านั้น</p>
+        </div>
+        <div class="key-cell">
+          <div class="sw" style="background:#1A1917"></div>
+          <h3>อินฟราเรด</h3>
+          <p class="nm">780–2500 nm</p>
+          <p class="val"><span class="var">{{IR_PCT}}</span><small>ของพลังงานทั้งหมด</small></p>
+          <p>ย่านที่พาความร้อนเข้ามามากที่สุด และเป็นย่านที่ความเข้มของฟิล์มไม่ได้เป็นตัวกำหนด</p>
+        </div>
+      </div>
+
+      <p class="note rv" style="margin-top:24px">สัดส่วนพลังงานอ้างอิงมาตรฐาน <span class="var">{{SPECTRUM_STANDARD}}</span></p>
+    </div>
+  </section>
+
+  <!-- ============ 3 · SIGNATURE ============ -->
+  <section class="sig" id="sig" aria-labelledby="h-sig">
+    <div class="sig-sticky">
+      <div class="sig-grid">
+
+        <div class="sig-copy">
+          <p class="eyebrow on-dark">โครงสร้างฟิล์ม</p>
+          <h2 id="h-sig">หกชั้น หนารวม<br>น้อยกว่าเส้นผม</h2>
+          <p>สิ่งที่กันความร้อนไม่ใช่ความหนา แต่คือลำดับของชั้นวัสดุ แต่ละชั้นทำหน้าที่เดียวและทำได้ดีที่สุดในหน้าที่นั้น</p>
+
+          <ul class="sig-legend" id="sig-legend">
+            <li data-i="0"><span class="sw" style="background:#D8D8D4"></span><span><b>Hard Coat</b><span class="d">ผิวนอกกันรอยขนแมวจากการเช็ด</span></span></li>
+            <li data-i="1"><span class="sw" style="background:#A9B3BC"></span><span><b>PET Base</b><span class="d">โครงสร้างหลักที่ให้ความเหนียวและความใส</span></span></li>
+            <li data-i="2"><span class="sw" style="background:#CC1B1B"></span><span><b>Ceramic Layer</b><span class="d">ดูดซับคลื่นอินฟราเรด ลดความร้อนโดยไม่ต้องทำให้กระจกมืด</span></span></li>
+            <li data-i="3"><span class="sw" style="background:#7E86C4"></span><span><b>UV Blocking</b><span class="d">ชั้นกันรังสียูวีที่ทำให้เบาะและคอนโซลไม่กรอบ</span></span></li>
+            <li data-i="4"><span class="sw" style="background:#C9C4BA"></span><span><b>Adhesive</b><span class="d">กาวที่ติดแน่นแต่ลอกออกได้โดยไม่ทิ้งคราบ</span></span></li>
+            <li data-i="5"><span class="sw" style="background:#6E7C87"></span><span><b>กระจกรถ</b><span class="d">พื้นผิวที่ฟิล์มทำงานร่วมด้วย</span></span></li>
+          </ul>
+
+          <p class="sig-foot">ความหนารวมของฟิล์ม <span class="var">{{FILM_THICKNESS}}</span></p>
+        </div>
+
+        <div class="sig-stage">
+          <svg viewBox="0 0 400 400" role="img" aria-labelledby="sig-svg-title sig-svg-desc">
+            <title id="sig-svg-title">ภาพตัดขวางแสดงชั้นของฟิล์มกรองแสงหกชั้น</title>
+            <desc id="sig-svg-desc">ชั้นเรียงจากบนลงล่าง ได้แก่ Hard Coat, PET Base, Ceramic Layer, UV Blocking, Adhesive และกระจกรถ เมื่อเลื่อนหน้าจอ ชั้นทั้งหกจะแยกออกจากกันเพื่อให้เห็นลำดับ รายละเอียดของแต่ละชั้นอยู่ในรายการข้างเคียง</desc>
+
+            <!-- incoming sunlight, appears once the stack is fully separated -->
+            <g class="sun" id="sun" aria-hidden="true">
+              <line x1="150" y1="0" x2="104" y2="70" stroke="rgba(255,214,150,.55)" stroke-width="1.5"/>
+              <line x1="196" y1="0" x2="150" y2="70" stroke="rgba(255,214,150,.34)" stroke-width="1.5"/>
+              <line x1="242" y1="0" x2="196" y2="70" stroke="rgba(255,214,150,.34)" stroke-width="1.5"/>
+            </g>
+
+            <g class="layer" data-i="0">
+              <rect x="24" y="70" width="292" height="30" rx="3" fill="#D8D8D4" fill-opacity=".92"/>
+              <text class="lbl" x="328" y="90">Hard Coat</text>
+            </g>
+            <g class="layer" data-i="1">
+              <rect x="24" y="102" width="292" height="48" rx="3" fill="#A9B3BC" fill-opacity=".80"/>
+              <text class="lbl" x="328" y="131">PET Base</text>
+            </g>
+            <g class="layer" data-i="2">
+              <rect x="24" y="152" width="292" height="34" rx="3" fill="#CC1B1B" fill-opacity=".88"/>
+              <text class="lbl" x="328" y="174">Ceramic</text>
+            </g>
+            <g class="layer" data-i="3">
+              <rect x="24" y="188" width="292" height="26" rx="3" fill="#7E86C4" fill-opacity=".82"/>
+              <text class="lbl" x="328" y="206">UV Block</text>
+            </g>
+            <g class="layer" data-i="4">
+              <rect x="24" y="216" width="292" height="22" rx="3" fill="#C9C4BA" fill-opacity=".76"/>
+              <text class="lbl" x="328" y="232">Adhesive</text>
+            </g>
+            <g class="layer" data-i="5">
+              <rect x="24" y="240" width="292" height="72" rx="3" fill="#6E7C87" fill-opacity=".54"/>
+              <text class="lbl" x="328" y="282">กระจกรถ</text>
+            </g>
+          </svg>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4 · SLIDER PROOF ============ -->
+  <section class="sec smoke" aria-labelledby="h-proof">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow"><span class="dot"></span>ลองด้วยตัวเอง</p>
+        <h2 id="h-proof">เลื่อนให้มืดลง<br>แล้วดูว่าความร้อนขยับไหม</h2>
+        <p>ตัวเลื่อนนี้ปรับค่า VLT ซึ่งคือปริมาณแสงที่ตามองเห็นที่ผ่านกระจกเข้ามา ลองเลื่อนจนมืดที่สุดแล้วสังเกตแถบความร้อนทางขวา</p>
+      </div>
+
+      <div class="proof-grid rv">
+        <div class="proof-pane">
+          <div class="win" id="win">
+            <div class="win-tint"></div>
+            <span class="win-tag">ภาพจำลอง ไม่ใช่ภาพถ่ายจริง</span>
+          </div>
+          <div class="slider-row">
+            <label for="vlt">ความเข้มของฟิล์ม — ค่า VLT</label>
+            <input type="range" id="vlt" min="5" max="80" value="70" step="1"
+                   aria-describedby="vlt-out">
+          </div>
+        </div>
+
+        <div class="proof-pane">
+          <div class="readout">
+            <div class="ro">
+              <p class="k">แสงที่ตามองเห็นที่ผ่านเข้ามา — VLT</p>
+              <p class="v" id="vlt-out" aria-live="polite">70%</p>
+              <div class="meter"><i id="vlt-bar" style="width:70%"></i></div>
+              <p class="cap">ค่านี้เปลี่ยนตามตัวเลื่อน เพราะ VLT คือสิ่งที่ความเข้มของฟิล์มควบคุมโดยตรง</p>
+            </div>
+            <div class="ro pin">
+              <p class="k">ความร้อนรวมที่ถูกกันไว้ — TSER</p>
+              <p class="v"><span class="var">{{TSER_AT_VLT}}</span></p>
+              <div class="meter fixed"><i style="width:64%"></i></div>
+              <p class="cap">แถบนี้ไม่ขยับตามตัวเลื่อน เพราะความร้อนส่วนใหญ่อยู่ในย่านอินฟราเรด ซึ่งชั้นเซรามิกเป็นตัวจัดการ ไม่ใช่ความเข้ม — ความยาวแถบที่แสดงเป็นเพียงตำแหน่งตัวอย่างสำหรับตรวจแบบ ค่าจริงรอข้อมูลจากลูกค้า</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="verdict rv">
+        <p>ถ้าความเข้มเป็นตัวกำหนดความเย็น กระจกที่มืดที่สุดต้องเย็นที่สุดเสมอ ซึ่งไม่เป็นแบบนั้น สิ่งที่ควรถามก่อนซื้อจึงไม่ใช่ “เข้มเท่าไร” แต่คือ “กันความร้อนได้เท่าไร”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5 · GLOSSARY ============ -->
+  <section class="sec" aria-labelledby="h-gloss">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow"><span class="dot"></span>ศัพท์ที่ควรรู้</p>
+        <h2 id="h-gloss">สี่ค่าที่ใช้เทียบฟิล์มได้จริง</h2>
+        <p>ค่าทั้งสี่นี้วัดคนละอย่างกัน การดูเพียงค่าเดียวแล้วสรุปว่าฟิล์มดีหรือไม่ดี เป็นวิธีเทียบที่ทำให้เลือกผิดบ่อยที่สุด</p>
+      </div>
+    </div>
+
+    <div class="gloss rv">
+      <div class="gl">
+        <p class="ab">VLT — Visible Light Transmission</p>
+        <h3>แสงที่ตามองเห็นผ่านเข้ามาเท่าไร</h3>
+        <p>วัดเฉพาะย่าน 380–780 nm ตัวเลขยิ่งต่ำ กระจกยิ่งมืด</p>
+        <p class="mean"><b>อ่านอย่างไร</b> — เป็นค่าที่บอกความมืด ไม่ได้บอกความเย็น และเป็นค่าเดียวในสี่ค่านี้ที่กฎหมายกำหนดขั้นต่ำไว้</p>
+      </div>
+      <div class="gl">
+        <p class="ab">TSER — Total Solar Energy Rejected</p>
+        <h3>พลังงานความร้อนรวมที่ถูกกันไว้เท่าไร</h3>
+        <p>รวมทั้งสามย่านเข้าด้วยกันตามน้ำหนักพลังงานจริง ตัวเลขยิ่งสูงยิ่งกันความร้อนได้มาก</p>
+        <p class="mean"><b>อ่านอย่างไร</b> — ค่าที่ใกล้เคียงกับความรู้สึกเย็นในรถมากที่สุด ถ้าจะเทียบฟิล์มด้วยตัวเลขเดียว ให้ดูค่านี้</p>
+      </div>
+      <div class="gl">
+        <p class="ab">IRR — Infrared Rejection</p>
+        <h3>อินฟราเรดถูกกันไว้เท่าไร</h3>
+        <p>วัดเฉพาะย่านอินฟราเรด ซึ่งเป็นเพียงส่วนหนึ่งของพลังงานทั้งหมด</p>
+        <p class="mean"><b>อ่านอย่างไร</b> — มักถูกยกมาโฆษณาเพราะตัวเลขดูสูง แต่ถ้าวัดเฉพาะบางช่วงคลื่นก็ทำให้ตัวเลขสูงได้ ควรถามด้วยว่าวัดที่ช่วงคลื่นใด</p>
+      </div>
+      <div class="gl">
+        <p class="ab">UV Rejection</p>
+        <h3>รังสียูวีถูกกันไว้เท่าไร</h3>
+        <p>วัดย่าน 300–380 nm ฟิล์มคุณภาพใช้ได้ในท้องตลาดส่วนใหญ่ทำค่านี้ได้สูงใกล้เคียงกัน</p>
+        <p class="mean"><b>อ่านอย่างไร</b> — เกี่ยวกับการรักษาสภาพภายในรถมากกว่าความเย็น และไม่ใช่ค่าที่ใช้แยกความต่างระหว่างแบรนด์ได้ชัด</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6 · CLOSE ============ -->
+  <section class="close" aria-labelledby="h-close">
+    <div class="wrap">
+      <p class="eyebrow on-dark">ขั้นตอนถัดไป</p>
+      <h2 id="h-close" style="margin-top:24px">ค่าที่วัดได้ ต้องพิสูจน์ได้บนรถของคุณ</h2>
+      <p>ศูนย์ติดตั้งของเรามีเครื่องวัดให้ทดสอบก่อนตัดสินใจ นัดเข้าดูหน้างานได้ที่เว็บไซต์ศูนย์บริการ</p>
+      <a class="btn btn-red" href="https://finnixcenterth.com">หาศูนย์ติดตั้ง <span class="ar" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
+        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
+      </div>
+      <div class="f-col">
+        <h4>ผลิตภัณฑ์</h4>
+        <a href="products.html#titanium">TITANIUM</a><a href="products.html#ceramic">CERAMIC</a><a href="products.html#crystalize">CRYSTALIZE</a><a href="products.html#extra-clear">EXTRA CLEAR</a><a href="products.html#uv-guard">UV GUARD</a>
+      </div>
+      <div class="f-col">
+        <h4>บริษัท</h4>
+        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a>
+      </div>
+      <div class="f-col">
+        <h4>บริการ</h4>
+        <a href="warranty.html">การรับประกัน</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+      </div>
+    </div>
+    <div class="f-bot">
+      <span>© 2569 บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</span>
+      <span>นโยบายความเป็นส่วนตัว · นโยบายคุกกี้</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- load : MOTION 1 (text reveal) ---- */
+  window.addEventListener('load', function(){ document.body.classList.add('loaded'); });
+  setTimeout(function(){ document.body.classList.add('loaded'); }, 400);
+
+  /* ---- nav ---- */
+  var nav = document.getElementById('nav');
+  function onScrollNav(){ nav.classList.toggle('solid', window.scrollY > 40); }
+  onScrollNav();
+  window.addEventListener('scroll', onScrollNav, {passive:true});
+
+  /* ---- เมนูมือถือ ---- */
+  var burger = document.getElementById('burger');
+  function setMenu(open){
+    document.body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'ปิดเมนู' : 'เปิดเมนู');
+  }
+  burger.addEventListener('click', function(){
+    setMenu(!document.body.classList.contains('menu-open'));
+  });
+  document.querySelectorAll('#drawer a').forEach(function(a){
+    a.addEventListener('click', function(){ setMenu(false); });
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && document.body.classList.contains('menu-open')){
+      setMenu(false); burger.focus();
+    }
+  });
+  /* กลับมากว้างกว่า 900px แล้วต้องไม่ค้างสถานะเมนูเปิด */
+  window.matchMedia('(min-width:901px)').addEventListener('change', function(e){
+    if(e.matches) setMenu(false);
+  });
+
+  /* ---- MOTION 2 : scroll reveal ---- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rv').forEach(function(el, i){
+    el.style.transitionDelay = (i % 4) * 60 + 'ms';
+    io.observe(el);
+  });
+
+  /* ---- MOTION 3 : scroll-linked layer stack (SIGNATURE) ---- */
+  var sig     = document.getElementById('sig');
+  var layers  = Array.prototype.slice.call(document.querySelectorAll('#sig .layer'));
+  var legend  = Array.prototype.slice.call(document.querySelectorAll('#sig-legend li'));
+  var sun     = document.getElementById('sun');
+  var GAP     = 26;
+
+  function onScrollSig(){
+    var r = sig.getBoundingClientRect();
+    var total = sig.offsetHeight - window.innerHeight;
+    if(total <= 0) return;
+    var p = Math.max(0, Math.min(1, -r.top / total));
+    var spread = p < .72 ? p / .72 : 1;
+
+    layers.forEach(function(g, i){
+      g.style.transform = 'translateY(' + ((i - 2.5) * GAP * spread) + 'px)';
+    });
+
+    sig.classList.toggle('spread', spread > .35);
+    if(sun) sun.style.opacity = Math.max(0, Math.min(1, (p - .74) / .18));
+
+    var active = Math.min(layers.length - 1, Math.floor(p * layers.length * 1.25));
+    legend.forEach(function(li, i){ li.classList.toggle('on', spread > .15 && i <= active); });
+  }
+
+  if(!reduce && window.matchMedia('(min-width:901px)').matches){
+    onScrollSig();
+    window.addEventListener('scroll', onScrollSig, {passive:true});
+    window.addEventListener('resize', onScrollSig);
+  } else {
+    legend.forEach(function(li){ li.classList.add('on'); });
+    layers.forEach(function(g, i){ g.style.transform = 'translateY(' + ((i - 2.5) * GAP) + 'px)'; });
+    sig.classList.add('spread');
+    if(sun) sun.style.opacity = 1;
+  }
+
+  /* ---- MOTION 4 : VLT slider ---- */
+  var vlt    = document.getElementById('vlt');
+  var vltOut = document.getElementById('vlt-out');
+  var vltBar = document.getElementById('vlt-bar');
+  var win    = document.getElementById('win');
+
+  function onVLT(){
+    var v = parseInt(vlt.value, 10);
+    win.style.setProperty('--vlt', v);
+    vltOut.textContent = v + '%';
+    vltBar.style.width = v + '%';
+  }
+  vlt.addEventListener('input', onVLT);
+  onVLT();
+})();
+</script>
+</body>
+</html>

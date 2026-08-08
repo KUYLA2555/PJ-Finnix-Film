@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FINNIX FILM — ฟิล์มกรองแสงรถยนต์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#050505;
+  --ink:#0C0C0C;
+  --paper:#FFFFFF;
+  --smoke:#F4F4F3;
+  --line:#E3E3E1;
+  --line-dark:rgba(255,255,255,.10);
+  --mute:#75756F;
+  --mute-dark:rgba(255,255,255,.52);
+  --red:#CC1B1B;
+  --red-hot:#E82323;
+
+  --u:8px;
+  --max:1440px;
+  --pad:40px;
+
+  --e:cubic-bezier(.16,1,.3,1);
+  --e-in:cubic-bezier(.7,0,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  font-size:17px;line-height:1.75;font-weight:400;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3,h4,.disp{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.eyebrow.on-dark{color:var(--mute-dark)}
+.eyebrow .dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;margin-right:10px;vertical-align:2px}
+
+/* ---------------- reveal ---------------- */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--e),transform .8s var(--e)}
+.rv.in{opacity:1;transform:none}
+
+/* ---------------- nav ---------------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .5s var(--e),border-color .5s var(--e),backdrop-filter .5s}
+.nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:transparent;transition:background .5s var(--e)}
+.nav.solid{background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(20px)}
+.nav.solid::after{background:var(--line)}
+.nav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:76px;display:flex;align-items:center;gap:48px}
+/* โลโก้ — กำหนด aspect-ratio ไว้ล่วงหน้าเพื่อไม่ให้เกิด layout shift ตามข้อ 9 */
+.brand{flex:none;display:block;line-height:0}
+.brand img{display:block;width:auto;height:24px;aspect-ratio:817/96}
+/* พื้นมืดใช้โลโก้ขาวล้วน — ตัวอักษร FINNIX เป็นสีดำจึงจมหายบนพื้น --void
+   และการตัดแดงออกช่วยให้ hero ไม่แดงเกินโควตาข้อ 4 */
+/* ไม่ใส่ transition บน filter โดยตั้งใจ — เบราว์เซอร์ interpolate filter list ข้ามสถานะไม่ได้
+   ทำให้ค่าค้างที่ขาวแล้วโลโก้หายไปบนพื้นขาว การสลับทันทีมองไม่ออกอยู่แล้วเพราะ nav เปลี่ยนพื้นหลังพร้อมกัน */
+.nav .brand img{filter:brightness(0) invert(1)}
+.nav.solid .brand img{filter:none}
+/* ลิงก์สูง 44px ตามเกณฑ์ขนาดพื้นที่กดในข้อ 9 — เดิมสูง 38px */
+.nav-links{display:flex;gap:30px;margin-left:auto;font-size:15px;font-weight:400}
+.nav-links a{color:rgba(255,255,255,.78);position:relative;display:flex;align-items:center;height:44px;transition:color .4s var(--e)}
+.nav.solid .nav-links a{color:var(--mute)}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:11px;height:1px;background:var(--red);transition:right .45s var(--e)}
+.nav-links a:hover{color:#fff}
+.nav.solid .nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{right:0}
+.nav-links a[aria-current]{color:#fff}
+.nav.solid .nav-links a[aria-current]{color:var(--ink)}
+.nav-links a[aria-current]::after{right:0}
+.nav-cta{flex:none;display:flex;align-items:center;background:var(--red);color:#fff;font-size:14px;font-weight:500;height:44px;padding:0 22px;border-radius:12px;transition:background .3s var(--e),transform .3s var(--e)}
+.nav-cta:hover{background:var(--red-hot);transform:translateY(-1px)}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
+.burger span{position:absolute;left:11px;right:11px;height:1.5px;background:#fff;transition:.4s var(--e)}
+.burger span:nth-child(1){top:17px}.burger span:nth-child(2){bottom:17px}
+.nav.solid .burger span{background:var(--ink)}
+
+/* ---------------- เมนูมือถือ ---------------- */
+/* สถานะ UI ไม่ใช่ motion เพื่อการตกแต่ง จึงไม่นับรวมในงบ 4 อย่างของข้อ 5 */
+.drawer{display:none;position:fixed;inset:0;z-index:99;background:var(--void);
+  flex-direction:column;justify-content:center;padding:76px var(--pad) 40px;
+  opacity:0;visibility:hidden;transition:opacity .4s var(--e),visibility .4s var(--e)}
+body.menu-open .drawer{opacity:1;visibility:visible}
+body.menu-open{overflow:hidden}
+body.menu-open .nav,body.menu-open .nav.solid{background:transparent;backdrop-filter:none}
+body.menu-open .nav::after{background:transparent}
+body.menu-open .nav .brand img{filter:brightness(0) invert(1)}
+body.menu-open .burger span{background:#fff;top:50%;bottom:auto;margin-top:-1px}
+body.menu-open .burger span:nth-child(1){transform:rotate(45deg)}
+body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
+.drawer a{display:flex;align-items:center;min-height:56px;font-family:'Anuphan',sans-serif;
+  font-size:26px;font-weight:600;letter-spacing:-.02em;color:#fff;
+  border-bottom:1px solid var(--line-dark)}
+.drawer .drawer-cta{margin-top:40px;justify-content:center;background:#fff;color:var(--ink);
+  border:0;border-radius:14px;font-size:16px;min-height:56px}
+
+/* ---------------- hero ---------------- */
+.hero{position:relative;min-height:100svh;background:var(--void);display:flex;align-items:flex-end;overflow:hidden;isolation:isolate}
+.scene{position:absolute;inset:0;z-index:0;cursor:ew-resize;touch-action:pan-y}
+.glare{position:absolute;inset:0;
+  background:
+    radial-gradient(58% 70% at 30% 34%, rgba(255,196,92,.92) 0%, rgba(255,140,40,.42) 32%, rgba(120,50,10,.16) 58%, transparent 76%),
+    radial-gradient(120% 100% at 30% 34%, rgba(255,120,20,.14) 0%, transparent 60%),
+    linear-gradient(180deg,#120a04 0%,#080604 60%,#050505 100%);
+}
+.grain{position:absolute;inset:0;opacity:.5;mix-blend-mode:overlay;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px)}
+.filtered{position:absolute;inset:0;clip-path:inset(0 0 0 var(--split,100%));
+  background:linear-gradient(180deg,rgba(4,8,12,.72),rgba(3,6,10,.80));
+  backdrop-filter:brightness(.34) saturate(.55) hue-rotate(8deg);
+  -webkit-backdrop-filter:brightness(.34) saturate(.55) hue-rotate(8deg)}
+.split-line{position:absolute;top:0;bottom:0;left:var(--split,100%);width:1px;background:linear-gradient(180deg,transparent,rgba(204,27,27,.9) 22%,rgba(204,27,27,.9) 78%,transparent);box-shadow:0 0 24px rgba(204,27,27,.5)}
+.handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(10,10,10,.4);backdrop-filter:blur(8px);display:grid;place-items:center;color:#fff;font-size:13px;letter-spacing:.1em}
+.handle::before{content:'‹ ›';opacity:.8}
+.scene-tag{position:absolute;top:24%;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.62);white-space:nowrap}
+.scene-tag.l{right:calc(100% - var(--split,100%) + 22px);text-align:right}
+.scene-tag.r{left:calc(var(--split,100%) + 22px)}
+.scene-tag b{display:block;font-weight:600;color:#fff;letter-spacing:.06em;font-size:13px;margin-top:2px}
+.scene-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);pointer-events:none}
+.sweeping .filtered,.sweeping .split-line,.sweeping .scene-tag{transition:clip-path 1.5s var(--e),left 1.5s var(--e),right 1.5s var(--e)}
+
+.hero-in{position:relative;z-index:2;width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad) 116px;pointer-events:none}
+.hero-in > *{pointer-events:auto}
+.hero h1{font-size:clamp(46px,8.4vw,108px);font-weight:700;color:#fff;letter-spacing:-.035em;max-width:15ch}
+.hero h1 .l{display:block;overflow:hidden}
+.hero h1 .l span{display:block;transform:translateY(105%);transition:transform 1.1s var(--e)}
+.loaded .hero h1 .l span{transform:none}
+.hero h1 .l:nth-child(2) span{transition-delay:.09s}
+.hero p.sub{margin-top:28px;max-width:44ch;font-size:18px;line-height:1.7;color:rgba(255,255,255,.66);opacity:0;transform:translateY(16px);transition:.9s var(--e) .34s}
+.loaded .hero p.sub{opacity:1;transform:none}
+.hero .eyebrow{margin-bottom:32px;opacity:0;transition:opacity .9s var(--e) .15s}
+.loaded .hero .eyebrow{opacity:1}
+.hero-cta{display:flex;gap:12px;margin-top:44px;flex-wrap:wrap;opacity:0;transform:translateY(16px);transition:.9s var(--e) .46s}
+.loaded .hero-cta{opacity:1;transform:none}
+.btn{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 30px;border-radius:14px;font-size:15px;font-weight:500;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:transform .35s var(--e),background .35s var(--e),border-color .35s var(--e),color .35s var(--e)}
+.btn .ar{transition:transform .4s var(--e)}
+.btn:hover .ar{transform:translateX(5px)}
+.btn-red{background:var(--red);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2),0 12px 32px -12px rgba(204,27,27,.6)}
+.btn-red:hover{background:var(--red-hot);transform:translateY(-2px)}
+.btn-ghost{border-color:rgba(255,255,255,.22);color:#fff}
+.btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.05)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{transform:translateY(-2px);background:#000}
+.btn-out{border-color:var(--line);color:var(--ink)}
+.btn-out:hover{border-color:var(--ink)}
+
+/* ---------------- proof ---------------- */
+.proof{background:var(--paper);border-bottom:1px solid var(--line)}
+.proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.proof-cell{background:var(--paper);padding:52px 32px}
+.proof-cell .n{font-family:'Anuphan',sans-serif;font-weight:600;font-size:clamp(34px,4vw,52px);letter-spacing:-.03em;line-height:1}
+.proof-cell .n em{font-style:normal;color:var(--red)}
+.proof-cell .cap{margin-top:12px;font-size:14px;color:var(--mute);line-height:1.5}
+
+/* ---------------- generic section ---------------- */
+.sec{padding:132px 0}
+.sec-head{max-width:800px;margin-bottom:72px}
+.sec-head h2{font-size:clamp(30px,4.4vw,56px);margin-top:24px}
+.sec-head p{margin-top:24px;font-size:18px;color:var(--mute);max-width:56ch}
+
+/* why */
+.why{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.why-cell{background:var(--paper);padding:44px 32px 48px;transition:background .5s var(--e)}
+.why-cell:hover{background:var(--smoke)}
+.why-cell .ic{width:38px;height:38px;color:var(--red)}
+.why-cell h3{font-size:20px;margin:28px 0 12px;letter-spacing:-.01em}
+.why-cell p{font-size:15px;color:var(--mute);line-height:1.7}
+
+/* ---------------- technology ---------------- */
+.tech{background:var(--void);color:#fff;height:300vh;position:relative}
+.tech-sticky{position:sticky;top:0;height:100svh;display:flex;align-items:center;overflow:hidden}
+.tech-grid{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.tech-copy h2{font-size:clamp(30px,4vw,52px);color:#fff;margin-top:24px}
+.tech-copy p{margin-top:24px;color:var(--mute-dark);max-width:44ch}
+.stack-wrap{position:relative;height:440px;display:grid;place-items:center}
+.stack{width:100%;max-width:460px}
+.layer{transition:transform 0s}
+.layer-label{position:absolute;left:0;right:0;font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.62);display:flex;justify-content:space-between;opacity:0;transition:opacity .5s var(--e)}
+.tech-legend{margin-top:40px;display:flex;flex-direction:column;gap:2px}
+.tech-legend li{list-style:none;display:grid;grid-template-columns:26px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--line-dark);font-size:14px;color:var(--mute-dark);opacity:.32;transition:opacity .5s var(--e),color .5s var(--e)}
+.tech-legend li.on{opacity:1;color:#fff}
+.tech-legend li .i{font-size:11px;letter-spacing:.1em;color:var(--red)}
+
+/* ---------------- work ---------------- */
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tile{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:linear-gradient(140deg,#1a1c1f,#2b3038 55%,#14161a);border:1px solid var(--line)}
+.tile:nth-child(3n-1){aspect-ratio:4/5}
+.tile::after{content:'';position:absolute;inset:0;background:radial-gradient(70% 60% at 70% 20%,rgba(255,255,255,.10),transparent 70%);transition:opacity .6s var(--e)}
+.tile:hover::after{opacity:.4}
+.tile .cap{position:absolute;left:18px;bottom:16px;z-index:2;color:rgba(255,255,255,.72);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+.tile .cap b{display:block;color:#fff;font-size:15px;letter-spacing:.02em;text-transform:none;font-weight:500}
+
+/* ---------------- warranty ---------------- */
+.warranty{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.warranty-in{display:flex;align-items:center;justify-content:space-between;gap:48px;padding:56px 0;flex-wrap:wrap}
+.warranty-in h3{font-size:clamp(24px,3vw,38px)}
+.warranty-in p{color:var(--mute);margin-top:10px;font-size:16px}
+
+/* ---------------- closing ---------------- */
+.closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
+.closing h2{font-size:clamp(32px,5.4vw,76px);font-weight:700;letter-spacing:-.035em;color:#fff;max-width:18ch;margin:24px auto 0}
+.closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
+.closing .btn{margin-top:48px}
+
+/* ---------------- footer ---------------- */
+footer{background:var(--void);color:#fff;padding:96px 0 40px}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px}
+/* footer เป็นพื้นมืดเสมอ จึงใช้โลโก้ขาวล้วนตลอด */
+.f-brand .brand img{height:28px}
+.f-brand .brand img{filter:brightness(0) invert(1)}
+.f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
+.f-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.42);font-weight:500;margin-bottom:20px}
+.f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
+.f-col a:hover{color:var(--red-hot)}
+.f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.42)}
+
+/* ---------------- responsive ---------------- */
+@media(max-width:1080px){
+  .tech-grid{grid-template-columns:1fr;gap:40px}
+  .stack-wrap{height:320px;order:-1}
+}
+@media(max-width:900px){
+  :root{--pad:24px}
+  .nav-links,.nav-cta{display:none}
+  .burger{display:block}
+  .drawer{display:flex}
+  .proof-grid{grid-template-columns:repeat(2,1fr)}
+  .why{grid-template-columns:repeat(2,1fr)}
+  .sec{padding:88px 0}
+  .work-grid{grid-template-columns:repeat(2,1fr)}
+  .f-grid{grid-template-columns:1fr 1fr;gap:40px}
+  .tech{height:240vh}
+}
+@media(max-width:620px){
+  .why{grid-template-columns:1fr}
+  .work-grid{grid-template-columns:1fr}
+  .tile,.tile:nth-child(3n-1){aspect-ratio:4/3}
+  .hero-in{padding-bottom:88px}
+  .scene-tag{display:none}
+  .f-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}
+  .hero h1 .l span{transform:none}
+  .hero p.sub,.hero-cta,.hero .eyebrow{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
+    <div class="nav-links">
+      <a href="about.html">เกี่ยวกับเรา</a>
+      <a href="technology.html">เทคโนโลยี</a>
+      <a href="products.html">ผลิตภัณฑ์</a>
+      <a href="warranty.html">รับประกัน</a>
+      <a href="contact.html">ติดต่อ</a>
+    </div>
+    <a href="https://finnixcenterth.com" class="nav-cta">หาศูนย์ติดตั้ง</a>
+    <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- เมนูมือถือ -->
+<div class="drawer" id="drawer">
+  <a href="about.html">เกี่ยวกับเรา</a>
+  <a href="technology.html">เทคโนโลยี</a>
+  <a href="products.html">ผลิตภัณฑ์</a>
+  <a href="warranty.html">รับประกัน</a>
+  <a href="faq.html">คำถามที่พบบ่อย</a>
+  <a href="contact.html">ติดต่อ</a>
+  <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="scene" id="scene">
+    <div class="glare"></div>
+    <div class="grain"></div>
+    <div class="filtered"></div>
+    <div class="split-line"><span class="handle"></span></div>
+    <div class="scene-tag l">กระจกเปล่า<b>42°C</b></div>
+    <div class="scene-tag r">ติดฟินนิกซ์ CM<b>29°C</b></div>
+    <div class="scene-hint">ลากเพื่อเปรียบเทียบ</div>
+  </div>
+
+  <div class="hero-in">
+    <div class="eyebrow on-dark"><span class="dot"></span>ฟิล์มกรองแสงรถยนต์</div>
+    <h1>
+      <span class="l"><span>กันความร้อน</span></span>
+      <span class="l"><span>ไม่ใช่แค่ทำให้มืด</span></span>
+    </h1>
+    <p class="sub">ฟิล์มเซรามิกที่หยุดพลังงานความร้อนตั้งแต่ผิวกระจก ไม่ต้องแลกกับทัศนวิสัย ไม่ต้องแลกกับสัญญาณโทรศัพท์</p>
+    <div class="hero-cta">
+      <a href="products.html" class="btn btn-red">ดูซีรีส์ฟิล์ม <span class="ar">→</span></a>
+      <a href="https://finnixcenterth.com" class="btn btn-ghost">หาศูนย์ติดตั้งใกล้คุณ</a>
+    </div>
+  </div>
+</header>
+
+<!-- PROOF -->
+<section class="proof">
+  <div class="wrap" style="padding:0">
+    <div class="proof-grid">
+      <div class="proof-cell"><div class="n"><span class="cnt" data-to="3">0</span><em>M+</em></div><div class="cap">ตารางฟุตที่ติดตั้งไปแล้วทั่วประเทศ</div></div>
+      <div class="proof-cell"><div class="n"><span class="cnt" data-to="99">0</span><em>%</em></div><div class="cap">ป้องกันรังสียูวีที่ทำให้เบาะและผิวเสีย</div></div>
+      <div class="proof-cell"><div class="n"><span class="cnt" data-to="7">0</span> <span style="font-size:.5em;font-weight:500">ปี</span></div><div class="cap">รับประกันจากบริษัทโดยตรง</div></div>
+      <div class="proof-cell"><div class="n"><span class="cnt" data-to="120">0</span><em>+</em></div><div class="cap">ศูนย์บริการที่ผ่านการอบรมจากเรา</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="sec" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow"><span class="dot"></span>ทำไมต้องฟินนิกซ์</div>
+      <h2>ฟิล์มเข้มขึ้น ไม่ได้แปลว่าเย็นขึ้น</h2>
+      <p>ความเข้มคือการลดแสงที่ตามองเห็น ส่วนความร้อนอยู่ในคลื่นอินฟราเรดที่มองไม่เห็น เราออกแบบฟิล์มโดยจับที่คลื่นความร้อนโดยตรง ไม่ได้จับที่ความมืด</p>
+    </div>
+  </div>
+  <div class="why rv">
+    <div class="why-cell">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+      <h3>ลดความร้อนที่ต้นทาง</h3>
+      <p>อนุภาคเซรามิกดูดซับพลังงานอินฟราเรดก่อนที่มันจะเข้าห้องโดยสาร แอร์ทำงานน้อยลง น้ำมันลดลงตาม</p>
+    </div>
+    <div class="why-cell">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 12.5a10 10 0 0 1 14 0M8 16a6 6 0 0 1 8 0"/><circle cx="12" cy="19" r="1.2" fill="currentColor" stroke="none"/><path d="M2 9a15 15 0 0 1 20 0"/></svg>
+      <h3>ไม่รบกวนสัญญาณ</h3>
+      <p>ไม่มีชั้นโลหะในเนื้อฟิล์ม สัญญาณ 5G, GPS, กล้องหลัง และบัตรทางด่วนทำงานได้ตามปกติทุกจุด</p>
+    </div>
+    <div class="why-cell">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>
+      <h3>กลางคืนยังมองชัด</h3>
+      <p>ค่าแสงส่องผ่านคำนวณมาสำหรับถนนไทยที่ไฟส่องสว่างไม่สม่ำเสมอ ถอยจอดกลางคืนไม่ต้องเปิดกระจก</p>
+    </div>
+    <div class="why-cell">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l7.5 3.2v5.1c0 4.5-3.1 8.4-7.5 9.7-4.4-1.3-7.5-5.2-7.5-9.7V6.2L12 3Z"/><path d="M9.2 12.2l1.9 1.9 3.7-3.9"/></svg>
+      <h3>ไม่ซีด ไม่กลายเป็นม่วง</h3>
+      <p>เม็ดสีเสถียรต่อรังสียูวี ผ่านการทดสอบตากแดดเร่งอายุ สีที่เห็นวันแรกคือสีที่เห็นในปีที่เจ็ด</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- TECHNOLOGY -->
+<section class="tech" id="tech">
+  <div class="tech-sticky">
+    <div class="tech-grid">
+      <div class="tech-copy">
+        <div class="eyebrow on-dark"><span class="dot"></span>เทคโนโลยี</div>
+        <h2>หกชั้น หนารวมน้อยกว่าเส้นผม</h2>
+        <p>สิ่งที่กันความร้อนไม่ใช่ความหนา แต่คือลำดับของชั้นวัสดุ แต่ละชั้นทำหน้าที่เดียวและทำได้ดีที่สุดในหน้าที่นั้น</p>
+        <ul class="tech-legend" id="legend">
+          <li data-i="0"><span class="i">01</span><span><b>Hard Coat</b> — ผิวนอกกันรอยขนแมวจากการเช็ด</span></li>
+          <li data-i="1"><span class="i">02</span><span><b>PET Base</b> — โครงสร้างหลักที่ให้ความเหนียวและความใส</span></li>
+          <li data-i="2"><span class="i">03</span><span><b>Ceramic Layer</b> — อนุภาคเซรามิกที่ดูดซับคลื่นความร้อน</span></li>
+          <li data-i="3"><span class="i">04</span><span><b>UV Blocking</b> — ชั้นกันรังสียูวีที่ทำให้เบาะและคอนโซลไม่กรอบ</span></li>
+          <li data-i="4"><span class="i">05</span><span><b>Adhesive</b> — กาวที่ติดแน่นแต่ลอกออกได้โดยไม่ทิ้งคราบ</span></li>
+          <li data-i="5"><span class="i">06</span><span><b>กระจกรถ</b> — พื้นผิวที่ฟิล์มทำงานร่วมด้วย</span></li>
+        </ul>
+      </div>
+
+      <div class="stack-wrap">
+        <svg class="stack" id="stack" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g class="layer" data-i="0">
+            <rect x="60" y="118" width="340" height="9" rx="2" fill="#EDEDEA" opacity=".92"/>
+          </g>
+          <g class="layer" data-i="1">
+            <rect x="60" y="130" width="340" height="15" rx="2" fill="#B9C2C9" opacity=".85"/>
+          </g>
+          <g class="layer" data-i="2">
+            <rect x="60" y="148" width="340" height="18" rx="2" fill="#CC1B1B"/>
+            <g opacity=".55">
+              <circle cx="98" cy="157" r="1.7" fill="#fff"/><circle cx="146" cy="153" r="1.4" fill="#fff"/>
+              <circle cx="196" cy="160" r="1.8" fill="#fff"/><circle cx="248" cy="154" r="1.4" fill="#fff"/>
+              <circle cx="300" cy="159" r="1.7" fill="#fff"/><circle cx="352" cy="155" r="1.5" fill="#fff"/>
+            </g>
+          </g>
+          <g class="layer" data-i="3">
+            <rect x="60" y="169" width="340" height="12" rx="2" fill="#6E7A85" opacity=".9"/>
+          </g>
+          <g class="layer" data-i="4">
+            <rect x="60" y="184" width="340" height="8" rx="2" fill="#3E464E" opacity=".9"/>
+          </g>
+          <g class="layer" data-i="5">
+            <rect x="60" y="195" width="340" height="34" rx="3" fill="#8FA6B5" opacity=".28"/>
+            <rect x="60" y="195" width="340" height="34" rx="3" stroke="#8FA6B5" stroke-opacity=".5"/>
+          </g>
+          <g id="sunray" opacity="0">
+            <path d="M42 60 L118 118" stroke="#FFB648" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M92 44 L152 118" stroke="#FFB648" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+            <path d="M148 38 L188 118" stroke="#FFB648" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="sec" id="work">
+  <div class="wrap">
+    <div class="sec-head rv" style="display:flex;justify-content:space-between;align-items:flex-end;max-width:none;gap:32px;flex-wrap:wrap">
+      <div style="max-width:640px">
+        <div class="eyebrow"><span class="dot"></span>ผลงาน</div>
+        <h2 style="font-size:clamp(30px,4.4vw,56px);margin-top:24px">งานที่ออกจากมือช่างของเรา</h2>
+      </div>
+      <a href="#" class="btn btn-out">ดูผลงานทั้งหมด <span class="ar">→</span></a>
+    </div>
+
+    <!-- ป้ายซีรีส์ถูกถอดออกเมื่อ 6 ส.ค. — เดิมเขียน CM/XT/CL Series กำกับรถแต่ละคัน
+         ซึ่ง CL ไม่มีอยู่จริงในสินค้าของบริษัท และการจับคู่รุ่นฟิล์มกับรถทั้งหกคันเป็นข้อมูลสมมติ
+         ต้องแทนด้วยบันทึกการติดตั้งจริงพร้อมรหัสฟิล์มที่ใช้ ก่อนขึ้นเซิร์ฟเวอร์ -->
+    <div class="work-grid rv">
+      <div class="tile"><div class="cap"><b>Toyota Fortuner</b></div></div>
+      <div class="tile"><div class="cap"><b>BYD Sealion 6</b></div></div>
+      <div class="tile"><div class="cap"><b>Honda Civic</b></div></div>
+      <div class="tile"><div class="cap"><b>Isuzu D-Max</b></div></div>
+      <div class="tile"><div class="cap"><b>Mazda CX-5</b></div></div>
+      <div class="tile"><div class="cap"><b>Tesla Model Y</b></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WARRANTY -->
+<section class="warranty" id="warranty">
+  <div class="wrap">
+    <div class="warranty-in">
+      <div>
+        <h3>รับประกัน 7 ปี ทุกตารางฟุต</h3>
+        <p>ครอบคลุมการซีด ลอก เป็นฟอง และเปลี่ยนสี เคลมได้ที่ศูนย์บริการฟินนิกซ์ทุกสาขาทั่วประเทศ</p>
+      </div>
+      <a href="warranty.html" class="btn btn-out">อ่านเงื่อนไขการรับประกัน <span class="ar">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="wrap">
+    <div class="eyebrow on-dark" style="text-align:center"><span class="dot"></span>เริ่มต้นที่นี่</div>
+    <h2>รถของคุณจอดกลางแดด<br>วันละกี่ชั่วโมง</h2>
+    <p>ให้ช่างที่ผ่านการอบรมจากเราวัดกระจกและแนะนำซีรีส์ที่เหมาะกับการใช้งานจริงของคุณ</p>
+    <a href="https://finnixcenterth.com" class="btn btn-red">หาศูนย์ติดตั้งใกล้คุณ <span class="ar">→</span></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
+        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
+      </div>
+      <div class="f-col">
+        <h4>ผลิตภัณฑ์</h4>
+        <a href="products.html#titanium">TITANIUM</a><a href="products.html#ceramic">CERAMIC</a><a href="products.html#crystalize">CRYSTALIZE</a><a href="products.html#extra-clear">EXTRA CLEAR</a><a href="products.html#uv-guard">UV GUARD</a>
+      </div>
+      <div class="f-col">
+        <h4>บริษัท</h4>
+        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a>
+      </div>
+      <div class="f-col">
+        <h4>บริการ</h4>
+        <a href="warranty.html">การรับประกัน</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+      </div>
+    </div>
+    <div class="f-bot">
+      <span>© 2569 บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</span>
+      <span>นโยบายความเป็นส่วนตัว · นโยบายคุกกี้</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- load ---- */
+  window.addEventListener('load', function(){ document.body.classList.add('loaded'); });
+  setTimeout(function(){ document.body.classList.add('loaded'); }, 400);
+
+  /* ---- nav ---- */
+  var nav = document.getElementById('nav');
+  function onScrollNav(){ nav.classList.toggle('solid', window.scrollY > 40); }
+  onScrollNav(); window.addEventListener('scroll', onScrollNav, {passive:true});
+
+  /* ---- เมนูมือถือ ---- */
+  var burger = document.getElementById('burger');
+  function setMenu(open){
+    document.body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'ปิดเมนู' : 'เปิดเมนู');
+  }
+  burger.addEventListener('click', function(){
+    setMenu(!document.body.classList.contains('menu-open'));
+  });
+  document.querySelectorAll('#drawer a').forEach(function(a){
+    a.addEventListener('click', function(){ setMenu(false); });
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && document.body.classList.contains('menu-open')){
+      setMenu(false); burger.focus();
+    }
+  });
+  /* กลับมากว้างกว่า 900px แล้วต้องไม่ค้างสถานะเมนูเปิด */
+  window.matchMedia('(min-width:901px)').addEventListener('change', function(e){
+    if(e.matches) setMenu(false);
+  });
+
+  /* ---- hero split ---- */
+  var scene = document.getElementById('scene');
+  function setSplit(p){
+    p = Math.max(6, Math.min(94, p));
+    scene.style.setProperty('--split', p + '%');
+  }
+  setSplit(100);
+  if(reduce){ setSplit(56); }
+  else{
+    scene.classList.add('sweeping');
+    setTimeout(function(){ setSplit(56); }, 750);
+    setTimeout(function(){ scene.classList.remove('sweeping'); }, 2400);
+  }
+  var dragging = false;
+  function fromEvent(e){
+    var r = scene.getBoundingClientRect();
+    var x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+    setSplit(x / r.width * 100);
+  }
+  scene.addEventListener('pointerdown', function(e){ dragging = true; scene.setPointerCapture(e.pointerId); fromEvent(e); });
+  scene.addEventListener('pointermove', function(e){ if(dragging) fromEvent(e); });
+  scene.addEventListener('pointerup', function(){ dragging = false; });
+  scene.addEventListener('pointercancel', function(){ dragging = false; });
+
+  /* ---- reveal ---- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rv').forEach(function(el, i){
+    el.style.transitionDelay = (i % 4) * 60 + 'ms';
+    io.observe(el);
+  });
+
+  /* ---- counters ---- */
+  function runCount(el){
+    var to = parseFloat(el.dataset.to), dur = 1400, t0 = null;
+    function step(t){
+      if(!t0) t0 = t;
+      var p = Math.min(1, (t - t0) / dur);
+      var eased = 1 - Math.pow(1 - p, 4);
+      el.textContent = to < 10 ? (to * eased).toFixed(1).replace(/\.0$/,'') : Math.round(to * eased);
+      if(p < 1) requestAnimationFrame(step); else el.textContent = to;
+    }
+    requestAnimationFrame(step);
+  }
+  var cio = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ runCount(en.target); cio.unobserve(en.target); }
+    });
+  }, {threshold:.6});
+  document.querySelectorAll('.cnt').forEach(function(el){
+    if(reduce){ el.textContent = el.dataset.to; } else { cio.observe(el); }
+  });
+
+  /* ---- layer stack ---- */
+  var tech = document.getElementById('tech');
+  var layers = Array.prototype.slice.call(document.querySelectorAll('#stack .layer'));
+  var legend = Array.prototype.slice.call(document.querySelectorAll('#legend li'));
+  var sunray = document.getElementById('sunray');
+  var GAP = 20;
+
+  function onScrollTech(){
+    var r = tech.getBoundingClientRect();
+    var total = tech.offsetHeight - window.innerHeight;
+    var p = Math.max(0, Math.min(1, -r.top / total));
+    var spread = p < .75 ? p / .75 : 1;
+
+    layers.forEach(function(g, i){
+      var offset = (i - 2.5) * GAP * spread;
+      g.style.transform = 'translateY(' + offset + 'px)';
+    });
+
+    if(sunray) sunray.style.opacity = Math.max(0, Math.min(1, (p - .75) / .2));
+
+    var active = Math.min(layers.length - 1, Math.floor(p * layers.length * 1.25));
+    legend.forEach(function(li, i){ li.classList.toggle('on', spread > .15 && i <= active); });
+  }
+  if(!reduce){
+    onScrollTech();
+    window.addEventListener('scroll', onScrollTech, {passive:true});
+    window.addEventListener('resize', onScrollTech);
+  } else {
+    legend.forEach(function(li){ li.classList.add('on'); });
+    layers.forEach(function(g,i){ g.style.transform = 'translateY(' + (i-2.5)*GAP + 'px)'; });
+  }
+})();
+</script>
+</body>
+</html>

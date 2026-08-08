@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ตรวจงาน — FINNIX FILM WEBSITE</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#050505; --ink:#0C0C0C; --paper:#FFFFFF; --smoke:#F4F4F3;
+  --line:#E3E3E1; --mute:#75756F; --red:#CC1B1B;
+  --ok:#1F7A44; --warn:#8A6412; --bad:#B02020;
+  --ok-bg:#EAF5EE; --warn-bg:#FBF3E0; --bad-bg:#FBECEC;
+  --u:8px; --max:1200px; --e:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--smoke);color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Anuphan',system-ui,sans-serif;letter-spacing:-.02em;line-height:1.15}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+/* ---- banner: this is NOT a public page ---- */
+.tag{background:var(--ink);color:#fff;padding:16px 0;font-size:13px;letter-spacing:.04em}
+.tag b{color:#fff;font-weight:600}
+.tag .wrap{display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+
+header.top{background:var(--paper);border-bottom:1px solid var(--line);padding:48px 0 40px}
+header.top h1{font-size:clamp(28px,4vw,44px);font-weight:700}
+header.top p{margin-top:16px;color:var(--mute);max-width:70ch}
+.meta{margin-top:24px;display:flex;gap:32px;flex-wrap:wrap;font-size:14px;color:var(--mute)}
+.meta b{color:var(--ink);font-weight:600}
+
+section{padding:56px 0}
+section > .wrap > h2{font-size:clamp(22px,3vw,30px);font-weight:600}
+section > .wrap > p.lede{margin-top:12px;color:var(--mute);max-width:72ch}
+
+/* ---- page cards ---- */
+.pages{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:32px}
+.page{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column}
+.page .route{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.page h3{font-size:22px;margin-top:8px}
+.page .file{font-size:13px;color:var(--mute);margin-top:8px;word-break:break-all}
+.page .sum{margin-top:16px;font-size:14px;color:var(--mute);flex:1}
+.page .go{margin-top:24px;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 24px;
+  border-radius:12px;background:var(--ink);color:#fff;font-size:14px;font-weight:500;text-decoration:none;
+  align-self:flex-start;transition:transform .3s var(--e),background .3s var(--e)}
+.page .go:hover{background:#000;transform:translateY(-1px)}
+.page.todo{border-style:dashed;background:transparent}
+.page.todo h3,.page.todo .route{color:var(--mute)}
+.page.todo .go{background:transparent;border:1px solid var(--line);color:var(--mute);pointer-events:none}
+
+/* ---- status pills ---- */
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap;letter-spacing:.02em}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.pill.na{background:var(--smoke);color:var(--mute)}
+
+/* ---- criteria table ---- */
+.tablewrap{overflow-x:auto;margin-top:32px;border:1px solid var(--line);border-radius:16px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:760px}
+th,td{text-align:left;padding:16px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
+thead th{background:var(--smoke);font-weight:600;font-size:13px;letter-spacing:.02em;position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+td.n{color:var(--mute);width:40px;font-variant-numeric:tabular-nums}
+td.crit{font-weight:500;min-width:220px}
+td .why{display:block;color:var(--mute);font-size:13px;margin-top:8px;line-height:1.6}
+
+/* ---- issue list ---- */
+.issues{margin-top:32px;display:grid;gap:16px}
+.issue{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:0 12px 12px 0;padding:24px}
+.issue.p1{border-left-color:var(--bad)}
+.issue.p2{border-left-color:var(--warn)}
+.issue.p3{border-left-color:var(--line)}
+.issue h3{font-size:18px;font-weight:600;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.issue p{margin-top:12px;font-size:14px;color:var(--mute);max-width:80ch}
+.issue .where{margin-top:12px;font-size:13px;color:var(--mute)}
+.issue code{background:var(--smoke);border-radius:4px;padding:1px 6px;font-size:.92em}
+
+/* ---- variables ---- */
+.vars{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:32px}
+.vgroup{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px}
+.vgroup h3{font-size:16px;font-weight:600}
+.vgroup ul{list-style:none;margin-top:16px;display:grid;gap:8px}
+.vgroup li{font-size:13px;color:var(--mute);display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:baseline}
+.vgroup code{background:var(--smoke);border:1px dashed #B8B8B4;border-radius:4px;padding:1px 6px;color:#5C5C57;white-space:nowrap;font-size:12px}
+
+/* ---- file map ---- */
+.tree{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:32px;
+  font-size:14px;line-height:2;overflow-x:auto}
+.tree .d{font-weight:600}
+.tree .c{color:var(--mute)}
+.tree a{text-decoration:none;border-bottom:1px solid var(--line)}
+.tree a:hover{border-bottom-color:var(--ink)}
+
+footer{background:var(--paper);border-top:1px solid var(--line);padding:40px 0;font-size:14px;color:var(--mute)}
+footer a{border-bottom:1px solid var(--line);text-decoration:none}
+
+@media(max-width:620px){
+  section{padding:40px 0}
+  header.top{padding:32px 0 24px}
+  .page,.issue,.vgroup,.tree{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="tag">
+  <div class="wrap">
+    <b>เอกสารภายใน</b>
+    <span>หน้านี้ใช้ตรวจงานเท่านั้น ไม่ใช่หน้าของเว็บไซต์จริง และต้องไม่ถูกนำขึ้นเซิร์ฟเวอร์จริง</span>
+  </div>
+</div>
+
+<header class="top">
+  <div class="wrap">
+    <h1>ตรวจงาน — เว็บไซต์ FINNIX FILM</h1>
+    <p>รวมทุกอย่างที่ต้องดูไว้ในหน้าเดียว — เปิดแต่ละหน้า ตรวจเกณฑ์รับงานทั้ง 9 ข้อของบรีฟ ดูว่าอะไรค้างอยู่ และตัวเลขไหนยังรอข้อมูลจากลูกค้า</p>
+    <div class="meta">
+      <span>อัปเดต <b>3 สิงหาคม 2569</b></span>
+      <span>เวอร์ชัน <b>1.2</b></span>
+      <span>หน้าที่ทำแล้ว <b>2 จาก 10</b></span>
+      <span>ตัวแปรที่ยังค้าง <b>17</b></span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ หน้าเว็บ ============ -->
+<section>
+  <div class="wrap">
+    <h2>หน้าเว็บ</h2>
+    <p class="lede">โครงสร้าง 10 หน้าตามข้อ 8 ของบรีฟ ตอนนี้ทำแล้ว 2 หน้า</p>
+
+    <div class="pages">
+      <div class="page">
+        <p class="route">/</p>
+        <h3>หน้าแรก</h3>
+        <p class="file">index.html</p>
+        <p class="sum">เสร็จระดับตรวจได้ แต่ <b>ยังไม่ผ่านเกณฑ์ 3 ข้อ</b> — มีค่าสมมติ 12 จุด, motion เกินงบ และแดงเกินโควตาใน hero</p>
+        <a class="go" href="index.html">เปิดหน้าแรก →</a>
+      </div>
+
+      <div class="page">
+        <p class="route">/technology</p>
+        <h3>เทคโนโลยี</h3>
+        <p class="file">technology.html</p>
+        <p class="sum">หน้าที่มี <b>signature ของทั้งเว็บ</b> — ภาพตัดขวางชั้นฟิล์มที่แยกชั้นตามการเลื่อน ตรวจครบ 9 ข้อแล้ว ผ่าน 7 ผ่านโดยมีเงื่อนไข 2</p>
+        <a class="go" href="technology.html">เปิดหน้าเทคโนโลยี →</a>
+      </div>
+
+      <div class="page todo">
+        <p class="route">/about · /products · /warranty · /gallery · /news · /faq · /contact</p>
+        <h3>อีก 8 หน้า</h3>
+        <p class="file">ยังไม่ได้เริ่ม</p>
+        <p class="sum">รวมถึง <code>/products/[series]</code> ที่ใช้ template เดียวซ้ำ 3 ครั้งตามข้อ 8</p>
+        <span class="go">ยังไม่มีไฟล์</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ เกณฑ์รับงาน ============ -->
+<section>
+  <div class="wrap">
+    <h2>เกณฑ์รับงาน 9 ข้อ</h2>
+    <p class="lede">ตามข้อ 11 ของบรีฟ ตรวจทีละข้อ ไม่ใช่สรุปรวม — ช่องที่เขียนว่ายังไม่ตรวจ คือยังไม่ได้วัดจริง ไม่ใช่ผ่าน</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th class="n">#</th><th>เกณฑ์</th><th>หน้าแรก</th><th>เทคโนโลยี</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="n">1</td>
+            <td class="crit">ลบโลโก้ออกแล้วยังบอกได้ว่าเป็น Finnix</td>
+            <td><span class="pill ok">ผ่าน</span><span class="why">พาดหัว “กันความร้อน ไม่ใช่แค่ทำให้มืด” และหัวข้อ “ฟิล์มเข้มขึ้น ไม่ได้แปลว่าเย็นขึ้น” คือจุดยืนแบรนด์โดยตรง</span></td>
+            <td><span class="pill ok">ผ่าน</span><span class="why">ทั้งหน้าสร้างขึ้นเพื่อพิสูจน์ประโยคเดียวกันนั้น</span></td>
+          </tr>
+          <tr>
+            <td class="n">2</td>
+            <td class="crit">Signature มีชิ้นเดียวจริง</td>
+            <td><span class="pill warn">ต้องแก้</span><span class="why">มีภาพตัดขวางชั้นฟิล์มซ้ำกับหน้าเทคโนโลยี ทำให้ทั้งเว็บมีของว้าวสองชิ้น ขัดข้อ 6</span></td>
+            <td><span class="pill ok">ผ่าน</span><span class="why">ภาพตัดขวางชั้นฟิล์มเป็นชิ้นเดียวในหน้า</span></td>
+          </tr>
+          <tr>
+            <td class="n">3</td>
+            <td class="crit">Motion ไม่เกิน 4 อย่างต่อหน้า</td>
+            <td><span class="pill bad">ไม่ผ่าน — 5 อย่าง</span><span class="why">text reveal · ตัวเลื่อนเทียบใน hero · scroll reveal · ตัวเลขนับ · ชั้นฟิล์มตามการเลื่อน — เกินงบข้อ 5 อยู่ 1 อย่าง</span></td>
+            <td><span class="pill ok">ผ่าน — 4 พอดี</span><span class="why">text reveal · scroll reveal · ชั้นฟิล์มตามการเลื่อน · ตัวเลื่อน VLT</span></td>
+          </tr>
+          <tr>
+            <td class="n">4</td>
+            <td class="crit">แดงไม่เกิน 2 จุดต่อหน้าจอ</td>
+            <td><span class="pill bad">ไม่ผ่าน — 4 จุดใน hero</span><span class="why">ปุ่ม nav · ปุ่มแดงในหน้าจอแรก · เส้นแบ่งตัวเลื่อนสีแดง · จุด eyebrow</span></td>
+            <td><span class="pill warn">ผ่านโดยมีเงื่อนไข</span><span class="why">แก้ไปแล้ว 2 หน้าจอ เหลือหน้าจอ signature ที่นับได้ 3 จุดถ้านับสี่เหลี่ยมสีในรายการแยกจากชั้นในไดอะแกรม — รอการตัดสินใจ</span></td>
+          </tr>
+          <tr>
+            <td class="n">5</td>
+            <td class="crit">ทุกระยะหารด้วย 8 ลงตัว</td>
+            <td><span class="pill warn">ผ่านบางส่วน</span><span class="why">มีค่านอกกริดชุดเดียวกับหน้าเทคโนโลยี เพราะ nav และ footer ใช้ร่วมกัน</span></td>
+            <td><span class="pill warn">ผ่านบางส่วน</span><span class="why">ระยะโครงหน้าลงกริดครบแล้ว เหลือข้อยกเว้น 5 กลุ่ม รวมถึง 132px ที่บรีฟกำหนดเองแต่หารด้วย 8 ไม่ลงตัว</span></td>
+          </tr>
+          <tr>
+            <td class="n">6</td>
+            <td class="crit">ไม่มีค่าตัวเลขที่แต่งขึ้นเอง</td>
+            <td><span class="pill bad">ไม่ผ่าน — 12 จุด</span><span class="why">TSER · IRR · UV · VLT · ปีรับประกัน ฝังเป็นตัวเลขจริงโดยไม่มี {{ตัวแปร}} ขัดข้อ 2.5 และข้อ 10</span></td>
+            <td><span class="pill ok">ผ่าน</span><span class="why">ทุกค่าเขียนเป็น {{ตัวแปร}} ครบ</span></td>
+          </tr>
+          <tr>
+            <td class="n">7</td>
+            <td class="crit">เปิดที่ 375px แล้วอ่านง่ายกดง่าย</td>
+            <td><span class="pill na">ยังไม่ตรวจ</span><span class="why">ยังไม่ได้วัดจริง</span></td>
+            <td><span class="pill ok">ผ่าน</span><span class="why">วัดจริงแล้ว ไม่มีการล้นแนวนอน · เมนู burger ทำงาน · ปุ่ม 56px และตัวเลื่อน 44px</span></td>
+          </tr>
+          <tr>
+            <td class="n">8</td>
+            <td class="crit">เอา prompt ไปทำสินค้าอื่นแล้วผลต่างออกไป</td>
+            <td><span class="pill ok">ผ่าน</span><span class="why">เนื้อหาผูกกับฟิล์มกรองแสงโดยเฉพาะ</span></td>
+            <td><span class="pill ok">ผ่าน</span><span class="why">สร้างจากฟิสิกส์ของแสงและโครงสร้างชั้นฟิล์มล้วน</span></td>
+          </tr>
+          <tr>
+            <td class="n">9</td>
+            <td class="crit">ตัดอะไรออกได้อีกหนึ่งอย่าง</td>
+            <td><span class="pill warn">ตัดได้</span><span class="why">ถอดภาพตัดขวางชั้นฟิล์มออก แล้วส่งต่อไปหน้าเทคโนโลยี จะแก้ข้อ 2 และข้อ 3 พร้อมกัน</span></td>
+            <td><span class="pill ok">ตัดแล้ว</span><span class="why">เอาตัวเลขนับออก เพราะจะทำให้ motion เกินงบ</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ที่ต้องแก้ ============ -->
+<section>
+  <div class="wrap">
+    <h2>ที่ต้องแก้ เรียงตามความเร่งด่วน</h2>
+
+    <div class="issues">
+      <div class="issue p1">
+        <h3>1 · ค่าสมมติ 12 จุดในหน้าแรก <span class="pill bad">เร่งด่วน</span></h3>
+        <p>ตัวเลข TSER 72/65/58% · IRR 96/92/88% · UV 99% · VLT 5–20/20–40/60–70% และ “รับประกัน 7 ปี” ถูกฝังเป็นค่าจริงทั้งที่ยังไม่ได้รับจากลูกค้า ขัดข้อ 2.5 และข้อ 10 ของบรีฟโดยตรง</p>
+        <p>นี่ไม่ใช่เรื่องดีไซน์ แต่เป็นเรื่องความรับผิดชอบต่อข้อมูลที่ประกาศต่อสาธารณะ และยิ่งทำหน้าเพิ่ม ตัวเลขจะยิ่งกระจายจนตามเก็บไม่หมด</p>
+        <p class="where">แก้ที่ <code>index.html</code> — เปลี่ยนเป็น <code>{{ตัวแปร}}</code> ทุกจุด</p>
+      </div>
+
+      <div class="issue p1">
+        <h3>2 · ยังไม่มีค่า <code>{{TSER_AT_VLT}}</code> <span class="pill bad">เร่งด่วน</span></h3>
+        <p>ตัวเลื่อนในหน้าเทคโนโลยีพิสูจน์ว่า “เข้มขึ้นไม่ได้แปลว่าเย็นขึ้น” ถ้าค่า TSER จริงขยับตาม VLT มากกว่าที่คาด ข้อสรุปของทั้งหน้าจะไม่ยืน</p>
+        <p class="where">ต้องได้ก่อนหน้านี้ขึ้นจริง</p>
+      </div>
+
+      <div class="issue p2">
+        <h3>3 · หน้าแรกมี motion 5 อย่าง และ signature ซ้ำ <span class="pill warn">ควรแก้</span></h3>
+        <p>ถอดภาพตัดขวางชั้นฟิล์มออกจากหน้าแรก เหลือเป็นภาพนิ่งพร้อมลิงก์ไปหน้าเทคโนโลยี จะแก้ได้ทีเดียวสองเกณฑ์ — motion ลดเหลือ 4 และ signature เหลือชิ้นเดียวทั้งเว็บ</p>
+        <p class="where">แก้ที่ <code>index.html</code> ส่วน <code>#tech</code> และ <code>#stack</code></p>
+      </div>
+
+      <div class="issue p2">
+        <h3>4 · แดง 4 จุดใน hero ของหน้าแรก <span class="pill warn">ควรแก้</span></h3>
+        <p>เส้นแบ่งของตัวเลื่อนเทียบใช้สีแดง ซ้อนกับปุ่ม nav ปุ่มแดง และจุด eyebrow ในหน้าจอเดียว เกินโควตา 2 จุดตามข้อ 4 อยู่เท่าตัว</p>
+        <p class="where">แก้ที่ <code>index.html</code> — <code>.split-line</code> เปลี่ยนเป็นสีขาวโปร่ง</p>
+      </div>
+
+      <div class="issue p3">
+        <h3>5 · ลิงก์ในเมนูและ footer สูงไม่ถึง 44px <span class="pill na">รอตัดสินใจ</span></h3>
+        <p>ลิงก์ footer สูง 40px และลิงก์ nav สูง 38px ต่ำกว่าเกณฑ์ในข้อ 9 มีเหมือนกันทั้งสองไฟล์เพราะคัดลอกกันมา ควรแก้พร้อมกัน ไม่ใช่แก้เฉพาะหน้าใหม่</p>
+        <p class="where">ข้อ 9 เขียนว่า “ปุ่ม” ซึ่งอาจไม่รวมลิงก์ข้อความ — ขอการตัดสินใจก่อนแก้</p>
+      </div>
+
+      <div class="issue p3">
+        <h3>6 · โลโก้สีจริงเพิ่มจุดแดงตอน nav เป็นพื้นขาว <span class="pill na">รอตัดสินใจ</span></h3>
+        <p>โลโก้มีนกแดงและคำว่า FILM สีแดง เมื่อเลื่อนลงจน nav เปลี่ยนเป็นพื้นขาว จะเพิ่มจุดแดงในหน้าจอนั้นอีกหนึ่งจุด ซึ่งซ้ำเติมปัญหาข้อ 4 ของหน้าแรกที่เกินโควตาอยู่แล้ว</p>
+        <p>บนพื้นมืดไม่มีปัญหา เพราะใช้โลโก้ขาวล้วนอยู่แล้ว</p>
+        <p class="where">ถ้าต้องการนับเคร่งครัด เปลี่ยน <code>.nav.solid .brand img</code> เป็น <code>filter:grayscale(1)</code> แก้ได้ในบรรทัดเดียว — แต่โลโก้เป็นเครื่องหมายการค้า ไม่ใช่สีตกแต่งที่ข้อ 4 พูดถึง จึงขอการตัดสินใจก่อน</p>
+      </div>
+
+      <div class="issue p3">
+        <h3>7 · ไลน์สินค้าในแบนเนอร์เดิมไม่ตรงกับบรีฟ <span class="pill na">ต้องยืนยัน</span></h3>
+        <p>แบนเนอร์แบรนด์ที่มีอยู่ (<code>assets/reference-banner-lineup.jpg</code>) ระบุสินค้า 5 ตัว — CERAMIC · TITANIUM · CRYSTALIZE · EXTRA CLEAR · UV GUARD แต่บรีฟข้อ 1 ระบุว่าเฟสนี้มี 3 ซีรีส์คือ XT · CM · CL ซึ่งเป็นคนละชุดชื่อกัน</p>
+        <p class="where">ต้องยืนยันว่าจะใช้ชุดชื่อใดบนเว็บใหม่ ก่อนทำหน้า <code>/products</code></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ตัวแปร ============ -->
+<section>
+  <div class="wrap">
+    <h2>ตัวแปรที่ต้องขอจากลูกค้า</h2>
+    <p class="lede">รวม 17 ตัว ทุกตัวต้องระบุได้ว่าวัดด้วยมาตรฐานใด ตามข้อ 3 ของบรีฟ</p>
+
+    <div class="vars">
+      <div class="vgroup">
+        <h3>หน้าเทคโนโลยี — 6 ตัว</h3>
+        <ul>
+          <li><code>{{UV_PCT}}</code><span>สัดส่วนพลังงานย่านยูวี</span></li>
+          <li><code>{{VIS_PCT}}</code><span>สัดส่วนพลังงานย่านที่ตามองเห็น</span></li>
+          <li><code>{{IR_PCT}}</code><span>สัดส่วนพลังงานย่านอินฟราเรด</span></li>
+          <li><code>{{SPECTRUM_STANDARD}}</code><span>มาตรฐานที่ใช้อ้างสามค่าข้างบน</span></li>
+          <li><code>{{FILM_THICKNESS}}</code><span>ความหนารวมของฟิล์ม</span></li>
+          <li><code>{{TSER_AT_VLT}}</code><span>ค่าในตัวเลื่อน — ต้องได้เป็นลำดับแรก</span></li>
+        </ul>
+      </div>
+
+      <div class="vgroup">
+        <h3>หน้าแรก — 11 ตัว</h3>
+        <ul>
+          <li><code>{{TSER_XT}}</code><span>ค่ากันความร้อนรวม XT</span></li>
+          <li><code>{{TSER_CM}}</code><span>ค่ากันความร้อนรวม CM</span></li>
+          <li><code>{{TSER_CL}}</code><span>ค่ากันความร้อนรวม CL</span></li>
+          <li><code>{{IRR_XT}}</code><span>ค่ากันอินฟราเรด XT</span></li>
+          <li><code>{{IRR_CM}}</code><span>ค่ากันอินฟราเรด CM</span></li>
+          <li><code>{{IRR_CL}}</code><span>ค่ากันอินฟราเรด CL</span></li>
+          <li><code>{{VLT_XT}}</code><span>ช่วงความเข้ม XT</span></li>
+          <li><code>{{VLT_CM}}</code><span>ช่วงความเข้ม CM</span></li>
+          <li><code>{{VLT_CL}}</code><span>ช่วงความเข้ม CL</span></li>
+          <li><code>{{UV_BLOCK}}</code><span>ค่ากันรังสียูวี</span></li>
+          <li><code>{{WARRANTY_YEARS}}</code><span>จำนวนปีรับประกัน</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ไฟล์ ============ -->
+<section>
+  <div class="wrap">
+    <h2>ไฟล์ในโปรเจกต์</h2>
+    <div class="tree">
+<span class="d">PJ_Finnix_Film/</span>
+├── <a href="index.html">index.html</a> <span class="c">— หน้าแรก</span>
+├── <a href="technology.html">technology.html</a> <span class="c">— หน้าเทคโนโลยี</span>
+├── review.html <span class="c">— หน้านี้ ใช้ตรวจงาน ไม่ขึ้นเซิร์ฟเวอร์จริง</span>
+├── <span class="d">assets/</span>
+│   ├── <a href="assets/logo-finnix-web.png">logo-finnix-web.png</a> <span class="c">— ใช้จริงบนเว็บ 817×96 · 14.6 KB</span>
+│   ├── <a href="assets/logo-finnix.png">logo-finnix.png</a> <span class="c">— ไฟล์แม่ความละเอียดสูง 7660×900 ไม่ได้เรียกใช้บนเว็บ</span>
+│   └── <a href="assets/reference-banner-lineup.jpg">reference-banner-lineup.jpg</a> <span class="c">— แบนเนอร์เดิม ใช้อ้างอิงเท่านั้น</span>
+└── <span class="d">docs/</span>
+    ├── <a href="docs/master-prompt.md">master-prompt.md</a> <span class="c">— บรีฟหลัก วางไฟล์นี้ทุกครั้งที่สั่งงาน</span>
+    └── <a href="docs/CHANGELOG.md">CHANGELOG.md</a> <span class="c">— บันทึกการแก้ไขฉบับเต็ม</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>รายละเอียดการตัดสินใจแต่ละข้อ พร้อมเหตุผลและสิ่งที่แก้ไปแล้ว อยู่ใน <a href="docs/CHANGELOG.md">docs/CHANGELOG.md</a></p>
+    <p style="margin-top:8px">หากเปิดไฟล์ตรงจาก <code>file://</code> แล้วลิงก์ทำงานไม่ครบ ให้รัน <code>python -m http.server 8731</code> ในโฟลเดอร์นี้ แล้วเปิด <code>http://127.0.0.1:8731/review.html</code></p>
+  </div>
+</footer>
+
+</body>
+</html>

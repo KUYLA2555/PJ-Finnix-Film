@@ -1,0 +1,16 @@
+# Windows / macOS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python (ใช้ python -m http.server เสิร์ฟตอน dev)
+__pycache__/
+*.pyc

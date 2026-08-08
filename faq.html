@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>คำถามที่พบบ่อย — FINNIX FILM</title>
+<meta name="description" content="คำถามที่พบบ่อยเรื่องฟิล์มกรองแสงรถยนต์ — ความเข้มกับความร้อน ค่า TSER ฟิล์มเซรามิกกับฟิล์มโลหะ การติดตั้งและการรับประกัน">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#050505;
+  --ink:#0C0C0C;
+  --paper:#FFFFFF;
+  --smoke:#F4F4F3;
+  --line:#E3E3E1;
+  --line-dark:rgba(255,255,255,.10);
+  --mute:#75756F;
+  --mute-dark:rgba(255,255,255,.52);
+  --red:#CC1B1B;
+  --red-hot:#E82323;
+
+  --u:8px;
+  --max:1440px;
+  --pad:40px;
+
+  --e:cubic-bezier(.16,1,.3,1);
+  --e-in:cubic-bezier(.7,0,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  font-size:17px;line-height:1.75;font-weight:400;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3,h4,.disp{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.eyebrow.on-dark{color:var(--mute-dark)}
+.eyebrow .dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;margin-right:10px;vertical-align:2px}
+
+/* ค่าที่ยังไม่ได้รับจากลูกค้า — ข้อ 10 ห้ามแต่งตัวเลขหรือข้อความแทน */
+.var{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--smoke);border:1px dashed #B8B8B4;border-radius:6px;padding:1px 8px;font-size:.72em;letter-spacing:0;color:#5C5C57;white-space:nowrap;font-weight:500}
+.on-void .var{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.24);color:rgba(255,255,255,.82)}
+
+/* ---------------- reveal ---------------- */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--e),transform .8s var(--e)}
+.rv.in{opacity:1;transform:none}
+.rvl{opacity:0;transform:translateY(20px);transition:opacity .9s var(--e),transform .9s var(--e)}
+body.loaded .rvl{opacity:1;transform:none}
+
+/* ---------------- nav ---------------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .5s var(--e),border-color .5s var(--e),backdrop-filter .5s}
+.nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:transparent;transition:background .5s var(--e)}
+.nav.solid{background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(20px)}
+.nav.solid::after{background:var(--line)}
+.nav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:76px;display:flex;align-items:center;gap:48px}
+.brand{flex:none;display:block;line-height:0}
+.brand img{display:block;width:auto;height:24px;aspect-ratio:817/96}
+/* ไม่ใส่ transition บน filter โดยตั้งใจ — บั๊ก v1.3 */
+.nav .brand img{filter:brightness(0) invert(1)}
+.nav.solid .brand img{filter:none}
+.nav-links{display:flex;gap:30px;margin-left:auto;font-size:15px;font-weight:400}
+.nav-links a{color:rgba(255,255,255,.78);position:relative;display:flex;align-items:center;height:44px;transition:color .4s var(--e)}
+.nav.solid .nav-links a{color:var(--mute)}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:11px;height:1px;background:var(--red);transition:right .45s var(--e)}
+.nav-links a:hover{color:#fff}
+.nav.solid .nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{right:0}
+.nav-links a[aria-current]{color:#fff}
+.nav.solid .nav-links a[aria-current]{color:var(--ink)}
+.nav-links a[aria-current]::after{right:0}
+.nav-cta{flex:none;display:flex;align-items:center;background:var(--red);color:#fff;font-size:14px;font-weight:500;height:44px;padding:0 22px;border-radius:12px;transition:background .3s var(--e),transform .3s var(--e)}
+.nav-cta:hover{background:var(--red-hot);transform:translateY(-1px)}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
+.burger span{position:absolute;left:11px;right:11px;height:1.5px;background:#fff;transition:.4s var(--e)}
+.burger span:nth-child(1){top:17px}.burger span:nth-child(2){bottom:17px}
+.nav.solid .burger span{background:var(--ink)}
+
+/* ---------------- เมนูมือถือ ---------------- */
+.drawer{display:none;position:fixed;inset:0;z-index:99;background:var(--void);
+  flex-direction:column;justify-content:center;padding:76px var(--pad) 40px;
+  opacity:0;visibility:hidden;transition:opacity .4s var(--e),visibility .4s var(--e)}
+body.menu-open .drawer{opacity:1;visibility:visible}
+body.menu-open{overflow:hidden}
+body.menu-open .nav,body.menu-open .nav.solid{background:transparent;backdrop-filter:none}
+body.menu-open .nav::after{background:transparent}
+body.menu-open .nav .brand img{filter:brightness(0) invert(1)}
+body.menu-open .burger span{background:#fff;top:50%;bottom:auto;margin-top:-1px}
+body.menu-open .burger span:nth-child(1){transform:rotate(45deg)}
+body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
+.drawer a{display:flex;align-items:center;min-height:56px;font-family:'Anuphan',sans-serif;
+  font-size:26px;font-weight:600;letter-spacing:-.02em;color:#fff;
+  border-bottom:1px solid var(--line-dark)}
+.drawer .drawer-cta{margin-top:40px;justify-content:center;background:#fff;color:var(--ink);
+  border:0;border-radius:14px;font-size:16px;min-height:56px}
+
+/* ---------------- ปุ่ม ---------------- */
+.btn{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 30px;border-radius:14px;font-size:15px;font-weight:500;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:transform .35s var(--e),background .35s var(--e),border-color .35s var(--e),color .35s var(--e)}
+.btn .ar{transition:transform .4s var(--e)}
+.btn:hover .ar{transform:translateX(5px)}
+/* ปุ่มปิดท้ายเป็นขาวไม่ใช่แดง เพราะ nav CTA แดงติดหน้าจอตลอด — กันแดงเกิน 2 จุดตามข้อ 4 */
+.btn-light{background:#fff;color:var(--ink)}
+.btn-light:hover{transform:translateY(-2px);background:#F0F0EE}
+
+/* ---------------- หัวหน้า ---------------- */
+.page-head{background:var(--void);color:#fff;padding:200px 0 104px}
+.page-head h1{font-size:clamp(38px,6.4vw,80px);font-weight:700;letter-spacing:-.035em;margin-top:24px;max-width:15ch}
+.page-head p{color:var(--mute-dark);margin-top:32px;max-width:52ch;font-size:18px}
+
+/* ---------------- section ---------------- */
+.sec{padding:132px 0}
+.sec.smoke{background:var(--smoke)}
+
+/* กลุ่มคำถาม */
+.qa-group{display:grid;grid-template-columns:320px 1fr;gap:80px;align-items:start}
+.qa-group+.qa-group{margin-top:104px;padding-top:104px;border-top:1px solid var(--line)}
+.qa-group h2{font-size:clamp(26px,3.2vw,38px);margin-top:24px;position:sticky;top:108px}
+.qa-side{position:sticky;top:108px}
+
+details{border-bottom:1px solid var(--line)}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;gap:24px;align-items:flex-start;
+  padding:28px 0;font-family:'Anuphan',sans-serif;font-size:20px;font-weight:600;
+  letter-spacing:-.015em;line-height:1.35;min-height:44px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'';flex:none;width:14px;height:14px;margin-left:auto;margin-top:6px;
+  background:linear-gradient(var(--ink),var(--ink)) center/100% 1.5px no-repeat,
+             linear-gradient(var(--ink),var(--ink)) center/1.5px 100% no-repeat;
+  transition:transform .4s var(--e)}
+details[open] summary::after{transform:rotate(45deg)}
+summary:hover{color:var(--mute)}
+.qa-body{padding:0 60px 32px 0;color:var(--mute);font-size:16px;max-width:70ch}
+.qa-body p+p{margin-top:16px}
+.qa-body a{color:var(--ink);border-bottom:1px solid var(--line);padding-bottom:2px;
+  transition:border-color .3s var(--e)}
+.qa-body a:hover{border-color:var(--ink)}
+.qa-body .pair{margin-top:20px;border-top:1px solid var(--line)}
+.qa-body .pair div{display:flex;justify-content:space-between;gap:24px;padding:14px 0;
+  border-bottom:1px solid var(--line);font-size:15px}
+.qa-body .pair b{font-weight:500;color:var(--ink)}
+
+/* ปิดท้าย */
+.closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
+.closing h2{font-size:clamp(32px,5.4vw,72px);font-weight:700;letter-spacing:-.035em;color:#fff;max-width:18ch;margin:24px auto 0}
+.closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
+.closing .btn{margin-top:48px}
+
+/* ---------------- footer ---------------- */
+footer{background:var(--void);color:#fff;padding:96px 0 40px}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px}
+.f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
+.f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
+.f-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.42);font-weight:500;margin-bottom:16px}
+.f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
+.f-col a:hover{color:var(--red-hot)}
+.f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.42)}
+
+/* ---------------- responsive ---------------- */
+@media(max-width:1080px){
+  .qa-group{grid-template-columns:1fr;gap:32px}
+  .qa-group h2,.qa-side{position:static}
+  .qa-body{padding-right:0}
+}
+@media(max-width:900px){
+  :root{--pad:24px}
+  .nav-links,.nav-cta{display:none}
+  .burger{display:block}
+  .drawer{display:flex}
+  .sec{padding:88px 0}
+  .page-head{padding:152px 0 72px}
+  .closing{padding:104px 0}
+  .qa-group+.qa-group{margin-top:72px;padding-top:72px}
+  .f-grid{grid-template-columns:1fr 1fr;gap:40px}
+}
+@media(max-width:620px){
+  summary{font-size:18px;gap:16px}
+  .f-grid{grid-template-columns:1fr}
+  .drawer a{font-size:22px;min-height:52px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  .rv,.rvl{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
+    <div class="nav-links">
+      <a href="about.html">เกี่ยวกับเรา</a>
+      <a href="technology.html">เทคโนโลยี</a>
+      <a href="products.html">ผลิตภัณฑ์</a>
+      <a href="warranty.html">รับประกัน</a>
+      <a href="contact.html">ติดต่อ</a>
+    </div>
+    <a href="https://finnixcenterth.com" class="nav-cta">หาศูนย์ติดตั้ง</a>
+    <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- เมนูมือถือ -->
+<div class="drawer" id="drawer">
+  <a href="about.html">เกี่ยวกับเรา</a>
+  <a href="technology.html">เทคโนโลยี</a>
+  <a href="products.html">ผลิตภัณฑ์</a>
+  <a href="warranty.html">รับประกัน</a>
+  <a href="faq.html" aria-current="page">คำถามที่พบบ่อย</a>
+  <a href="contact.html">ติดต่อ</a>
+  <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
+</div>
+
+<!-- หัวหน้า -->
+<header class="page-head on-void">
+  <div class="wrap">
+    <div class="eyebrow on-dark rvl"><span class="dot"></span>คำถามที่พบบ่อย</div>
+    <h1 class="rvl" style="transition-delay:.08s">คำถามที่ช่างของเราถูกถามบ่อยที่สุด</h1>
+    <p class="rvl" style="transition-delay:.16s">ตอบตามที่รู้จริง ข้อไหนที่ยังไม่มีข้อมูลยืนยัน เราเขียนไว้ว่ายังไม่มี ไม่เดาแทน</p>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+
+    <!-- กลุ่ม 1 -->
+    <div class="qa-group">
+      <div class="qa-side rv">
+        <div class="eyebrow"><span class="dot"></span>เลือกฟิล์ม</div>
+        <h2>ความเข้มกับความร้อน</h2>
+      </div>
+      <div class="rv">
+        <details>
+          <summary>ฟิล์มเข้มขึ้น แปลว่าเย็นขึ้นใช่ไหม</summary>
+          <div class="qa-body">
+            <p>ไม่ใช่ ความเข้มของฟิล์มวัดจากปริมาณแสงที่ตามองเห็นซึ่งผ่านเข้ามาได้ ส่วนความร้อนส่วนใหญ่เดินทางมากับคลื่นอินฟราเรดที่ตามองไม่เห็น ฟิล์มจึงมืดลงได้โดยที่ความสามารถในการกันความร้อนไม่ได้เพิ่มตาม</p>
+            <p>ในไลน์ของเราเองมีตัวอย่างชัดเจน ฟิล์มที่แสงส่องผ่าน 30% กันความร้อนรวมได้มากกว่าฟิล์มที่แสงส่องผ่านเพียง 5% เพราะเนื้อฟิล์มคนละเทคโนโลยีกัน</p>
+            <p><a href="technology.html">ดูวิธีที่เราพิสูจน์เรื่องนี้ →</a></p>
+          </div>
+        </details>
+        <details>
+          <summary>ควรเลือกจากอะไร ถ้าไม่ใช่ความเข้ม</summary>
+          <div class="qa-body">
+            <p>เลือกจากค่าการลดความร้อนรวมเป็นหลัก แล้วค่อยเลือกความเข้มตามความชอบและทัศนวิสัยที่ต้องการ สองค่านี้แยกกันได้</p>
+            <p>ที่ความเข้มระดับเดียวกัน ฟิล์มต่างซีรีส์ของเราลดความร้อนได้ต่างกันได้ถึงยี่สิบกว่าจุด คนที่เลือกจากความเข้มอย่างเดียวจึงมีโอกาสได้ผลลัพธ์ต่างจากที่คาดไว้มาก</p>
+          </div>
+        </details>
+        <details>
+          <summary>กระจกหน้าติดเข้มได้แค่ไหนตามกฎหมาย</summary>
+          <div class="qa-body">
+            <p>มีข้อกำหนดตามกฎหมายไทยที่ระบุค่าแสงส่องผ่านขั้นต่ำไว้ ค่าที่ใช้อ้างอิงคือ <span class="var">{{LAW_VLT_MIN}}</span> ตามที่ระบุใน <span class="var">{{LAW_REFERENCE}}</span></p>
+            <p>เราไม่ระบุตัวเลขนี้เองจนกว่าจะยืนยันฉบับล่าสุดได้ เพราะเป็นข้อมูลที่ลูกค้าอาจใช้ตัดสินใจแล้วมีผลทางกฎหมาย ให้สอบถามศูนย์ติดตั้งซึ่งอัปเดตตามประกาศปัจจุบัน</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- กลุ่ม 2 -->
+    <div class="qa-group">
+      <div class="qa-side rv">
+        <div class="eyebrow"><span class="dot"></span>ค่าที่ต้องอ่านเป็น</div>
+        <h2>ตัวเลขบนกล่อง</h2>
+      </div>
+      <div class="rv">
+        <details>
+          <summary>TSER กับ IR Rejection ต่างกันอย่างไร</summary>
+          <div class="qa-body">
+            <p>IR Rejection บอกว่าฟิล์มกันคลื่นอินฟราเรดได้กี่เปอร์เซ็นต์ ส่วนค่าการลดความร้อนรวมบอกว่ากันพลังงานความร้อนทั้งหมดที่ตกกระทบได้กี่เปอร์เซ็นต์ ซึ่งรวมทั้งอินฟราเรด แสงที่ตามองเห็น และยูวี</p>
+            <p>ค่าแรกจึงเป็นแค่ส่วนหนึ่งของค่าที่สอง ฟิล์มสองแผ่นที่กัน IR ได้เท่ากันเป๊ะ อาจลดความร้อนรวมได้ต่างกันเกือบสามสิบจุด นี่คือเหตุผลที่ค่า IR สูงอย่างเดียวไม่ได้แปลว่าฟิล์มดี</p>
+            <p><b>เวลาเทียบยี่ห้อ ให้ดูค่าการลดความร้อนรวมเป็นหลัก</b> และดูว่าวัดด้วยมาตรฐานเดียวกันหรือไม่</p>
+          </div>
+        </details>
+        <details>
+          <summary>ค่าที่โฆษณากันมาจากมาตรฐานเดียวกันไหม</summary>
+          <div class="qa-body">
+            <p>ไม่จำเป็น ค่าการลดความร้อนวัดได้หลายวิธี และแต่ละวิธีให้ตัวเลขไม่เท่ากัน การเอาค่าจากคนละมาตรฐานมาเทียบกันจึงไม่มีความหมาย</p>
+            <p>มาตรฐานที่ใช้วัดฟิล์มของเราคือ <span class="var">{{TEST_STANDARD}}</span> เราจะแสดงค่าสเปกทั้งหมดบนเว็บนี้ก็ต่อเมื่อระบุมาตรฐานกำกับได้ครบแล้ว</p>
+          </div>
+        </details>
+        <details>
+          <summary>ค่าป้องกันยูวี 99% กับ 100% ต่างกันมากไหม</summary>
+          <div class="qa-body">
+            <p>ต่างกันน้อยมากในทางปฏิบัติ ฟิล์มกรองแสงเกือบทุกชนิดในตลาดกันยูวีได้ในระดับนี้อยู่แล้ว ค่านี้จึงไม่ใช่ตัวแยกความต่างระหว่างรุ่น</p>
+            <p>ค่าที่แยกความต่างจริงคือการลดความร้อนรวม ซึ่งในไลน์ของเราห่างกันตั้งแต่ห้าสิบต้นๆ ถึงเกือบร้อยเปอร์เซ็นต์</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- กลุ่ม 3 -->
+    <div class="qa-group">
+      <div class="qa-side rv">
+        <div class="eyebrow"><span class="dot"></span>เนื้อฟิล์ม</div>
+        <h2>เซรามิกกับโลหะ</h2>
+      </div>
+      <div class="rv">
+        <details>
+          <summary>ฟิล์มรบกวนสัญญาณ GPS หรือบัตรทางด่วนไหม</summary>
+          <div class="qa-body">
+            <p>ขึ้นอยู่กับว่าเป็นฟิล์มชนิดไหน ฟิล์มที่ไม่มีชั้นโลหะในเนื้อฟิล์มไม่รบกวนสัญญาณ ส่วนฟิล์มที่ใช้เทคโนโลยีเคลือบโลหะมีโอกาสรบกวนได้</p>
+            <p>ในไลน์ของเรามีทั้งสองแบบ ฟิล์มเซรามิกและยูวีการ์ดไม่มีชั้นโลหะ ส่วนคริสตัลไลซ์เป็นฟิล์มเคลือบโลหะหลายชั้น <b>เราจึงไม่พูดว่าฟิล์มฟินนิกซ์ทุกรุ่นไม่รบกวนสัญญาณ</b> เพราะไม่จริงกับทุกรุ่น</p>
+            <p>ถ้าเรื่องสัญญาณเป็นเงื่อนไขสำคัญของคุณ แจ้งช่างตั้งแต่ตอนเลือกรุ่น</p>
+          </div>
+        </details>
+        <details>
+          <summary>ฟิล์มเซรามิกดีกว่าฟิล์มโลหะเสมอไหม</summary>
+          <div class="qa-body">
+            <p>ไม่เสมอไป แต่ละแบบมีข้อแลกเปลี่ยนคนละอย่าง</p>
+            <div class="pair">
+              <div><span>ฟิล์มเซรามิก</span><b>ไม่รบกวนสัญญาณ · สะท้อนแสงต่ำ</b></div>
+              <div><span>ฟิล์มเคลือบโลหะ</span><b>กันความร้อนได้สูง · สะท้อนแสงมากกว่า</b></div>
+            </div>
+            <p style="margin-top:20px">ค่าสะท้อนแสงที่สูงกว่าหมายถึงกระจกจะดูเป็นเงามากกว่าเมื่อมองจากภายนอก ซึ่งบางคนชอบและบางคนไม่ชอบ</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- กลุ่ม 4 -->
+    <div class="qa-group">
+      <div class="qa-side rv">
+        <div class="eyebrow"><span class="dot"></span>หลังติดตั้ง</div>
+        <h2>การใช้งานและรับประกัน</h2>
+      </div>
+      <div class="rv">
+        <details>
+          <summary>ติดตั้งใช้เวลานานแค่ไหน</summary>
+          <div class="qa-body">
+            <p>ขึ้นอยู่กับประเภทรถและจำนวนบานที่ติด ระยะเวลาโดยประมาณคือ <span class="var">{{INSTALL_DURATION}}</span></p>
+            <p>ควรนัดล่วงหน้ากับศูนย์ เพราะการติดตั้งต้องทำในพื้นที่ปิดที่ควบคุมฝุ่นได้</p>
+          </div>
+        </details>
+        <details>
+          <summary>หลังติดตั้งแล้วเปิดกระจกได้เมื่อไร</summary>
+          <div class="qa-body">
+            <p>ต้องรอให้กาวเซ็ตตัวก่อน ระยะเวลาที่ต้องรอคือ <span class="var">{{CURE_TIME}}</span> ถ้าเลื่อนกระจกก่อนกำหนดมีโอกาสที่ขอบฟิล์มจะร่น</p>
+            <p>ในช่วงแรกอาจเห็นฝ้าหรือฟองเล็กๆ ซึ่งเป็นน้ำที่ยังระเหยไม่หมดและจะหายไปเอง</p>
+          </div>
+        </details>
+        <details>
+          <summary>ทำความสะอาดอย่างไรไม่ให้ฟิล์มเสีย</summary>
+          <div class="qa-body">
+            <p>ใช้ผ้าไมโครไฟเบอร์กับน้ำสะอาดหรือน้ำยาที่ไม่มีส่วนผสมของแอมโมเนีย เพราะแอมโมเนียทำให้ชั้นกาวและชั้นย้อมสีเสื่อม</p>
+            <p>หลีกเลี่ยงผ้าแข็ง แปรง และการขูดสติกเกอร์บนกระจกที่ติดฟิล์มไว้ด้านใน</p>
+          </div>
+        </details>
+        <details>
+          <summary>รับประกันกี่ปี และครอบคลุมอะไรบ้าง</summary>
+          <div class="qa-body">
+            <p>ฟิล์มทุกซีรีส์รับประกัน 7 ปีนับจากวันติดตั้ง ไม่มีรุ่นไหนได้ระยะสั้นกว่ารุ่นอื่น</p>
+            <p>เงื่อนไขครอบคลุมความเสียหายที่เกิดจากตัวเนื้อฟิล์มเอง ไม่ครอบคลุมความเสียหายจากการใช้งานหรืออุบัติเหตุ</p>
+            <p><a href="warranty.html">อ่านเงื่อนไขการรับประกันทั้งหมด →</a></p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ปิดท้าย -->
+<section class="closing on-void">
+  <div class="wrap">
+    <div class="eyebrow on-dark" style="text-align:center"><span class="dot"></span>ยังไม่ได้คำตอบ</div>
+    <h2>ถามช่างที่หน้างานได้เลย</h2>
+    <p>คำถามเรื่องรถคันของคุณโดยเฉพาะ ตอบได้แม่นกว่าเมื่อได้เห็นกระจกจริง</p>
+    <a href="https://finnixcenterth.com" class="btn btn-light">หาศูนย์ติดตั้งใกล้คุณ <span class="ar">→</span></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
+        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
+      </div>
+      <div class="f-col">
+        <h4>ผลิตภัณฑ์</h4>
+        <a href="products.html#titanium">TITANIUM</a><a href="products.html#ceramic">CERAMIC</a><a href="products.html#crystalize">CRYSTALIZE</a><a href="products.html#extra-clear">EXTRA CLEAR</a><a href="products.html#uv-guard">UV GUARD</a>
+      </div>
+      <div class="f-col">
+        <h4>บริษัท</h4>
+        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a>
+      </div>
+      <div class="f-col">
+        <h4>บริการ</h4>
+        <a href="warranty.html">การรับประกัน</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+      </div>
+    </div>
+    <div class="f-bot">
+      <span>© 2569 บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</span>
+      <span>นโยบายความเป็นส่วนตัว · นโยบายคุกกี้</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- load ---- */
+  window.addEventListener('load', function(){ document.body.classList.add('loaded'); });
+  setTimeout(function(){ document.body.classList.add('loaded'); }, 400);
+
+  /* ---- nav ---- */
+  var nav = document.getElementById('nav');
+  function onScrollNav(){ nav.classList.toggle('solid', window.scrollY > 40); }
+  onScrollNav(); window.addEventListener('scroll', onScrollNav, {passive:true});
+
+  /* ---- เมนูมือถือ ---- */
+  var burger = document.getElementById('burger');
+  function setMenu(open){
+    document.body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'ปิดเมนู' : 'เปิดเมนู');
+  }
+  burger.addEventListener('click', function(){
+    setMenu(!document.body.classList.contains('menu-open'));
+  });
+  document.querySelectorAll('#drawer a').forEach(function(a){
+    a.addEventListener('click', function(){ setMenu(false); });
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && document.body.classList.contains('menu-open')){
+      setMenu(false); burger.focus();
+    }
+  });
+  window.matchMedia('(min-width:901px)').addEventListener('change', function(e){
+    if(e.matches) setMenu(false);
+  });
+
+  /* ---- reveal ---- */
+  if(reduce) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rv').forEach(function(el, i){
+    el.style.transitionDelay = (i % 4) * 60 + 'ms';
+    io.observe(el);
+  });
+})();
+</script>
+</body>
+</html>
