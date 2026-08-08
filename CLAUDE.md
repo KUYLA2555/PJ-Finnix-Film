@@ -5,7 +5,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## ภาพรวม
 
 เว็บไซต์ Brand & Corporate ของ บริษัท ฟินนิกซ์ ฟิล์ม จำกัด (ฟิล์มกรองแสงรถยนต์) — static site ล้วน
-**ไม่มี build system · ไม่มี package manager · ไม่มี test · ไม่มี git** หนึ่งหน้า = หนึ่งไฟล์ HTML ที่มี CSS และ JS อยู่ในไฟล์เดียวกัน
+**ไม่มี build system · ไม่มี package manager · ไม่มี test** หนึ่งหน้า = หนึ่งไฟล์ HTML ที่มี CSS และ JS อยู่ในไฟล์เดียวกัน
+
+**เริ่มใช้ git แล้ว 8 ส.ค. 2569** — `KUYLA2555/PJ-Finnix-Film` (**private**) · ประวัติก่อนหน้านั้นไม่มี ต้องอ่านจาก `docs/CHANGELOG.md` แทน
+**อย่าสับสนกับ `KUYLA2555/ProjectWorldFilm`** ซึ่งเป็นคนละโปรเจกต์ — เว็บ WORLD FILM ศูนย์ติดตั้งที่ขายหลายแบรนด์ (มี Finnix เป็นแบรนด์หนึ่ง) เป็น public และ deploy ขึ้น GitHub Pages ทุกครั้งที่ push เข้า `main` · **ห้าม push ข้ามไปที่นั่นเด็ดขาด**
+การเชื่อมต่อ push ก้อนใหญ่เกิน ~2 MB ไม่ผ่าน (HTTP 408) — ถ้าต้องเพิ่มไฟล์ภาพ ให้แยก commit ทีละไฟล์
 ทำแล้ว 7 หน้าจาก 10 หน้าตามข้อ 8 ของบรีฟ — `index.html` (`/`) · `technology.html` · `products.html` · `about.html` · `warranty.html` · `faq.html` · `contact.html`
 ยังขาด `/products/[series]` `/gallery` `/news` — เหตุผลอยู่ใน CHANGELOG v1.5 และ v1.6 (หน้ารายซีรีส์อาจไม่จำเป็นแล้วหลัง v1.6 · **ยังรอการตัดสินใจ**)
 
