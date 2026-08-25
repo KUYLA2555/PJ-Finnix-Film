@@ -1,0 +1,180 @@
+{
+ "_readme": "source of truth ของรายชื่อตัวแทนบนหน้า /contact — ทุกรายยังเป็น placeholder:true (ตัวอย่างการแสดงผล ไม่ใช่ข้อมูลจริง) · แก้ที่นี่ก่อน แล้วคัดลอกก้อน dealers ลงบล็อก <script id=\"dealers-data\"> ใน contact.html (หน้าไม่ fetch ตอนรัน — ข้อ 9) · tier: center|automotive|sub · services: automotive|ppf (ฟิล์มอาคารถูกตัดออกจากเว็บใน v2.6)",
+ "dealers": [
+  {
+   "id": "fnx-bkk-001",
+   "name": "ฟินนิกซ์ เซ็นเตอร์ ลาดพร้าว",
+   "companyName": "บจก. ตัวอย่างฟิล์ม กรุงเทพ",
+   "tier": "center",
+   "services": [
+    "automotive",
+    "ppf"
+   ],
+   "address": "999/1 ถ.ลาดพร้าว แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900",
+   "province": "กรุงเทพมหานคร",
+   "region": "bangkok",
+   "phone": "0810000001",
+   "lineId": "@fnxlp-demo",
+   "lat": 13.8161,
+   "lng": 100.5606,
+   "hours": "จ-ส 09:00-18:00",
+   "featured": true,
+   "placeholder": true
+  },
+  {
+   "id": "fnx-bkk-002",
+   "name": "พระราม 2 ออโต้ฟิล์ม",
+   "companyName": "หจก. ตัวอย่างออโต้",
+   "tier": "automotive",
+   "services": [
+    "automotive"
+   ],
+   "address": "88 ถ.พระราม 2 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10150",
+   "province": "กรุงเทพมหานคร",
+   "region": "bangkok",
+   "phone": "0810000002",
+   "lineId": "",
+   "lat": 13.6608,
+   "lng": 100.4419,
+   "hours": "ทุกวัน 09:00-19:00",
+   "featured": false,
+   "placeholder": true
+  },
+  {
+   "id": "fnx-nbi-001",
+   "name": "นนท์ฟิล์ม แคราย",
+   "companyName": "",
+   "tier": "sub",
+   "services": [
+    "automotive"
+   ],
+   "address": "55/7 ถ.ติวานนท์ ต.บางกระสอ อ.เมือง จ.นนทบุรี 11000",
+   "province": "นนทบุรี",
+   "region": "central",
+   "phone": "0810000003",
+   "lineId": "",
+   "lat": 13.8622,
+   "lng": 100.5218,
+   "hours": "จ-ส 08:30-18:00",
+   "featured": false,
+   "placeholder": true
+  },
+  {
+   "id": "fnx-cnx-001",
+   "name": "เชียงใหม่ คาร์ฟิล์ม",
+   "companyName": "หจก. ตัวอย่างเชียงใหม่",
+   "tier": "center",
+   "services": [
+    "automotive",
+    "ppf"
+   ],
+   "address": "285 ถ.มหิดล ต.ป่าแดด อ.เมือง จ.เชียงใหม่ 50100",
+   "province": "เชียงใหม่",
+   "region": "north",
+   "phone": "0810000004",
+   "lineId": "@fnxcm-demo",
+   "lat": 18.7654,
+   "lng": 98.9876,
+   "hours": "จ-ส 09:00-18:00",
+   "featured": false,
+   "placeholder": true
+  },
+  {
+   "id": "fnx-plk-001",
+   "name": "พิษณุโลก ฟิล์มเฮาส์",
+   "companyName": "",
+   "tier": "sub",
+   "services": [
+    "automotive"
+   ],
+   "address": "12 ถ.มิตรภาพ ต.ในเมือง อ.เมือง จ.พิษณุโลก 65000",
+   "province": "พิษณุโลก",
+   "region": "north",
+   "phone": "0810000005",
+   "lineId": "",
+   "lat": 16.8211,
+   "lng": 100.2659,
+   "hours": "จ-ส 09:00-18:00",
+   "featured": false,
+   "placeholder": true
+  },
+  {
+   "id": "fnx-kkn-001",
+   "name": "ขอนแก่น พรีเมียมฟิล์ม",
+   "companyName": "บจก. ตัวอย่างอีสาน",
+   "tier": "automotive",
+   "services": [
+    "automotive",
+    "ppf"
+   ],
+   "address": "171 ถ.มิตรภาพ ต.ในเมือง อ.เมือง จ.ขอนแก่น 40000",
+   "province": "ขอนแก่น",
+   "region": "northeast",
+   "phone": "0810000006",
+   "lineId": "@fnxkk-demo",
+   "lat": 16.4322,
+   "lng": 102.8236,
+   "hours": "ทุกวัน 08:30-18:30",
+   "featured": false,
+   "placeholder": true
+  },
+  {
+   "id": "fnx-cbi-001",
+   "name": "ชลบุรี ออโต้ชิลด์",
+   "companyName": "หจก. ตัวอย่างตะวันออก",
+   "tier": "automotive",
+   "services": [
+    "automotive",
+    "ppf"
+   ],
+   "address": "39/4 ถ.สุขุมวิท ต.บ้านสวน อ.เมือง จ.ชลบุรี 20000",
+   "province": "ชลบุรี",
+   "region": "east",
+   "phone": "0810000008",
+   "lineId": "",
+   "lat": 13.3611,
+   "lng": 100.9847,
+   "hours": "จ-ส 09:00-18:00",
+   "featured": false,
+   "placeholder": true
+  },
+  {
+   "id": "fnx-hkt-001",
+   "name": "ภูเก็ต ซันบล็อกฟิล์ม",
+   "companyName": "",
+   "tier": "sub",
+   "services": [
+    "automotive"
+   ],
+   "address": "77 ถ.เทพกระษัตรี ต.รัษฎา อ.เมือง จ.ภูเก็ต 83000",
+   "province": "ภูเก็ต",
+   "region": "south",
+   "phone": "0810000009",
+   "lineId": "",
+   "lat": 7.8906,
+   "lng": 98.3984,
+   "hours": "จ-ส 09:00-18:00",
+   "featured": false,
+   "placeholder": true
+  },
+  {
+   "id": "fnx-ska-001",
+   "name": "หาดใหญ่ ฟิล์มโปร",
+   "companyName": "บจก. ตัวอย่างใต้",
+   "tier": "sub",
+   "services": [
+    "ppf"
+   ],
+   "address": "246 ถ.กาญจนวนิช ต.หาดใหญ่ อ.หาดใหญ่ จ.สงขลา 90110",
+   "province": "สงขลา",
+   "region": "south",
+   "phone": "0810000010",
+   "lineId": "@fnxhy-demo",
+   "lat": 7.0086,
+   "lng": 100.4747,
+   "hours": "จ-ส 09:00-18:00",
+   "featured": false,
+   "placeholder": true
+  }
+ ]
+}

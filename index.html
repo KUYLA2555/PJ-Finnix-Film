@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FINNIX FILM — ฟิล์มกรองแสงรถยนต์</title>
+<meta name="description" content="บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงรถยนต์ที่กันความร้อนด้วยการจับคลื่นอินฟราเรด ไม่ใช่ด้วยการทำให้มืด ตัวเลขทุกตัวบนเว็บนี้มีที่มา">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -40,10 +41,18 @@ a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 :focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
 
+/* ข้ามไปเนื้อหาหลัก — ต้องมีทุกหน้าเพื่อให้คนใช้คีย์บอร์ดไม่ต้องไล่ผ่าน nav ทุกครั้ง (ข้อ 9) */
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:0 0 12px 0;z-index:200}
+.skip:focus{left:0}
+.nb{white-space:nowrap}
+
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
 .eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
 .eyebrow.on-dark{color:var(--mute-dark)}
 .eyebrow .dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;margin-right:10px;vertical-align:2px}
+
+/* ค่าที่ยังไม่ได้รับจากลูกค้า — ข้อ 10 ห้ามแต่งตัวเลขหรือข้อความแทน */
+.var{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--smoke);border:1px dashed #B8B8B4;border-radius:6px;padding:1px 8px;font-size:.72em;letter-spacing:0;color:#5C5C57;white-space:nowrap;font-weight:500}
 
 /* ---------------- reveal ---------------- */
 .rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--e),transform .8s var(--e)}
@@ -64,7 +73,7 @@ img{display:block;max-width:100%}
    ทำให้ค่าค้างที่ขาวแล้วโลโก้หายไปบนพื้นขาว การสลับทันทีมองไม่ออกอยู่แล้วเพราะ nav เปลี่ยนพื้นหลังพร้อมกัน */
 .nav .brand img{filter:brightness(0) invert(1)}
 .nav.solid .brand img{filter:none}
-/* ลิงก์สูง 44px ตามเกณฑ์ขนาดพื้นที่กดในข้อ 9 — เดิมสูง 38px */
+/* ลิงก์สูง 44px ตามเกณฑ์ขนาดพื้นที่กดในข้อ 9 */
 .nav-links{display:flex;gap:30px;margin-left:auto;font-size:15px;font-weight:400}
 .nav-links a{color:rgba(255,255,255,.78);position:relative;display:flex;align-items:center;height:44px;transition:color .4s var(--e)}
 .nav.solid .nav-links a{color:var(--mute)}
@@ -116,7 +125,9 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
   background:linear-gradient(180deg,rgba(4,8,12,.72),rgba(3,6,10,.80));
   backdrop-filter:brightness(.34) saturate(.55) hue-rotate(8deg);
   -webkit-backdrop-filter:brightness(.34) saturate(.55) hue-rotate(8deg)}
-.split-line{position:absolute;top:0;bottom:0;left:var(--split,100%);width:1px;background:linear-gradient(180deg,transparent,rgba(204,27,27,.9) 22%,rgba(204,27,27,.9) 78%,transparent);box-shadow:0 0 24px rgba(204,27,27,.5)}
+/* เส้นแบ่งเป็นขาวโปร่ง ไม่ใช่แดง — ตามข้อ 4 ของ review.html
+   เดิม hero มีแดง 4 จุด (nav CTA · ปุ่มใน hero · จุด eyebrow · เส้นนี้) เกินโควตา 2 จุดอยู่เท่าตัว */
+.split-line{position:absolute;top:0;bottom:0;left:var(--split,100%);width:1px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.85) 22%,rgba(255,255,255,.85) 78%,transparent);box-shadow:0 0 24px rgba(255,255,255,.28)}
 .handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(10,10,10,.4);backdrop-filter:blur(8px);display:grid;place-items:center;color:#fff;font-size:13px;letter-spacing:.1em}
 .handle::before{content:'‹ ›';opacity:.8}
 .scene-tag{position:absolute;top:24%;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.62);white-space:nowrap}
@@ -139,71 +150,99 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .loaded .hero .eyebrow{opacity:1}
 .hero-cta{display:flex;gap:12px;margin-top:44px;flex-wrap:wrap;opacity:0;transform:translateY(16px);transition:.9s var(--e) .46s}
 .loaded .hero-cta{opacity:1;transform:none}
+
+/* ---------------- ปุ่ม ---------------- */
 .btn{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 30px;border-radius:14px;font-size:15px;font-weight:500;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:transform .35s var(--e),background .35s var(--e),border-color .35s var(--e),color .35s var(--e)}
 .btn .ar{transition:transform .4s var(--e)}
 .btn:hover .ar{transform:translateX(5px)}
-.btn-red{background:var(--red);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2),0 12px 32px -12px rgba(204,27,27,.6)}
-.btn-red:hover{background:var(--red-hot);transform:translateY(-2px)}
+/* พื้นมืดใช้ปุ่มขาว ไม่ใช่ปุ่มแดง — nav CTA เป็นแดงอยู่แล้วและติดหน้าจอตลอด
+   ถ้าปุ่มใน hero หรือปุ่มปิดท้ายเป็นแดงด้วย จะกลายเป็นปุ่มแดงสองปุ่มในหน้าจอเดียว เกินโควตาข้อ 4 */
+.btn-light{background:#fff;color:var(--ink)}
+.btn-light:hover{transform:translateY(-2px);background:#F0F0EE}
 .btn-ghost{border-color:rgba(255,255,255,.22);color:#fff}
 .btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.05)}
-.btn-dark{background:var(--ink);color:#fff}
-.btn-dark:hover{transform:translateY(-2px);background:#000}
-.btn-out{border-color:var(--line);color:var(--ink)}
-.btn-out:hover{border-color:var(--ink)}
 
-/* ---------------- proof ---------------- */
-.proof{background:var(--paper);border-bottom:1px solid var(--line)}
-.proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-left:1px solid var(--line);border-right:1px solid var(--line)}
-.proof-cell{background:var(--paper);padding:52px 32px}
-.proof-cell .n{font-family:'Anuphan',sans-serif;font-weight:600;font-size:clamp(34px,4vw,52px);letter-spacing:-.03em;line-height:1}
-.proof-cell .n em{font-style:normal;color:var(--red)}
-.proof-cell .cap{margin-top:12px;font-size:14px;color:var(--mute);line-height:1.5}
+/* ---------------- ตัวเลขบริษัท ----------------
+   บล็อกเดียวของทั้งเว็บที่พูดตัวเลขระดับองค์กร — `/about` ไม่มีบล็อกนี้แล้ว **ห้ามใส่ซ้ำ**
+   เดิม v1.8 มีทั้งแถบตัวนับที่นี่และบล็อก 4 ช่องที่ /about ซึ่งพูดซ้ำกัน 3 ใน 4 ช่อง */
+.figs{background:var(--paper);border-bottom:1px solid var(--line)}
+.figs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.fig{background:var(--paper);padding:52px 32px}
+.fig .n{font-family:'Anuphan',sans-serif;font-weight:600;font-size:clamp(34px,4vw,52px);letter-spacing:-.03em;line-height:1}
+/* หน่วยเป็นสีเทา ไม่ใช่แดง — แถบนี้มี 4 ช่อง ถ้าหน่วยเป็นแดงจะได้แดง 3 จุด
+   บวก nav CTA อีกจุด กลายเป็น 4 จุดในหน้าจอเดียว เกินโควตา 2 จุดของข้อ 4 */
+.fig .n em{font-style:normal;color:var(--mute)}
+.fig .cap{margin-top:12px;font-size:14px;color:var(--mute);line-height:1.5}
+/* ชิปตัวแปรอยู่ในบรรทัดขนาด clamp(34px,4vw,52px) ถ้าไม่กดขนาดจะสูงกว่าตัวเลขช่องอื่น */
+.fig .var{font-size:16px}
+.figs-note{margin:32px auto 0;max-width:var(--max);padding:0 var(--pad);font-size:14px;color:var(--mute)}
+
+/* ที่มาของบริษัท — ย้ายมาจาก /about */
+.origin{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.origin .lede{font-size:20px;line-height:1.65;letter-spacing:-.01em}
+.origin p{color:var(--mute)}
+.origin p+p{margin-top:24px}
 
 /* ---------------- generic section ---------------- */
 .sec{padding:132px 0}
+.sec.smoke{background:var(--smoke)}
 .sec-head{max-width:800px;margin-bottom:72px}
 .sec-head h2{font-size:clamp(30px,4.4vw,56px);margin-top:24px}
 .sec-head p{margin-top:24px;font-size:18px;color:var(--mute);max-width:56ch}
 
-/* why */
-.why{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.why-cell{background:var(--paper);padding:44px 32px 48px;transition:background .5s var(--e)}
-.why-cell:hover{background:var(--smoke)}
-.why-cell .ic{width:38px;height:38px;color:var(--red)}
-.why-cell h3{font-size:20px;margin:28px 0 12px;letter-spacing:-.01em}
-.why-cell p{font-size:15px;color:var(--mute);line-height:1.7}
+/* จุดยืน */
+/* บล็อกจุดขาย — โครงจากหน้าต้นแบบ: เครื่องหมายนำ » · หัวข้อสองบรรทัด (บรรทัดล่างเยื้องขวา)
+   · บรรทัดเน้น · คำอธิบาย · ช่องสื่อ  ต่างที่ช่องสื่อ: MODE B ไม่มีภาพถ่าย ใช้แผนภูมิและ typography */
+.pitch{padding:120px 0}
+.pitch + .pitch{border-top:1px solid var(--line)}
+.pitch.smoke{background:var(--smoke)}
+.pitch .head{display:flex;align-items:flex-start;gap:16px}
+.pitch .cev{flex:none;font-size:clamp(36px,5vw,64px);line-height:1;color:#C8C8C4;font-weight:700}
+.pitch h2{font-size:clamp(28px,4.4vw,56px);letter-spacing:-.03em;line-height:1.12}
+.pitch h2 .b{display:block;color:var(--mute);padding-left:1.2em}
+.pitch .lead{margin-top:32px;font-size:18px;font-weight:600;letter-spacing:-.01em;max-width:52ch}
+.pitch .desc{margin-top:16px;color:var(--mute);max-width:60ch;font-size:16px;line-height:1.8}
+.pitch .media{margin-top:56px}
+.pitch .cap{margin-top:24px;font-size:13px;color:var(--mute)}
 
-/* ---------------- technology ---------------- */
-.tech{background:var(--void);color:#fff;height:300vh;position:relative}
-.tech-sticky{position:sticky;top:0;height:100svh;display:flex;align-items:center;overflow:hidden}
-.tech-grid{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.tech-copy h2{font-size:clamp(30px,4vw,52px);color:#fff;margin-top:24px}
-.tech-copy p{margin-top:24px;color:var(--mute-dark);max-width:44ch}
-.stack-wrap{position:relative;height:440px;display:grid;place-items:center}
-.stack{width:100%;max-width:460px}
-.layer{transition:transform 0s}
-.layer-label{position:absolute;left:0;right:0;font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.62);display:flex;justify-content:space-between;opacity:0;transition:opacity .5s var(--e)}
-.tech-legend{margin-top:40px;display:flex;flex-direction:column;gap:2px}
-.tech-legend li{list-style:none;display:grid;grid-template-columns:26px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--line-dark);font-size:14px;color:var(--mute-dark);opacity:.32;transition:opacity .5s var(--e),color .5s var(--e)}
-.tech-legend li.on{opacity:1;color:#fff}
-.tech-legend li .i{font-size:11px;letter-spacing:.1em;color:var(--red)}
+/* แผนภูมิแท่ง — ค่าคงที่จาก films.json ไม่มี animation (งบ motion ข้อ 5 เต็มแล้ว) */
+.bars{display:grid;gap:16px;max-width:720px}
+.bar{display:grid;grid-template-columns:132px 1fr 56px;gap:16px;align-items:center;font-size:14px}
+.bar .who b{font-weight:600}
+.bar .who span{color:var(--mute);font-size:13px;display:block}
+.bar .track{height:12px;background:#E4E4E0;border-radius:999px;overflow:hidden}
+.bar .track i{display:block;height:100%;background:var(--ink);border-radius:999px}
+.bar .val{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.bar.dim .track i{background:#B8B8B4}
 
-/* ---------------- work ---------------- */
-.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.tile{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:linear-gradient(140deg,#1a1c1f,#2b3038 55%,#14161a);border:1px solid var(--line)}
-.tile:nth-child(3n-1){aspect-ratio:4/5}
-.tile::after{content:'';position:absolute;inset:0;background:radial-gradient(70% 60% at 70% 20%,rgba(255,255,255,.10),transparent 70%);transition:opacity .6s var(--e)}
-.tile:hover::after{opacity:.4}
-.tile .cap{position:absolute;left:18px;bottom:16px;z-index:2;color:rgba(255,255,255,.72);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
-.tile .cap b{display:block;color:#fff;font-size:15px;letter-spacing:.02em;text-transform:none;font-weight:500}
+/* ตัวเลขเด่นกลางบล็อก — แทนตำแหน่งภาพของหน้าต้นแบบ */
+.bignum{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:center;gap:24px;
+  padding:72px 32px;border:1px solid var(--line);border-radius:16px;background:var(--paper);text-align:center}
+.bignum .n{font-size:clamp(64px,12vw,144px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.bignum .t{font-size:16px;color:var(--mute);max-width:32ch;text-align:left}
 
-/* ---------------- warranty ---------------- */
-.warranty{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.warranty-in{display:flex;align-items:center;justify-content:space-between;gap:48px;padding:56px 0;flex-wrap:wrap}
-.warranty-in h3{font-size:clamp(24px,3vw,38px)}
-.warranty-in p{color:var(--mute);margin-top:10px;font-size:16px}
+/* การ์ดซีรีส์ */
+.sgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.scard{border:1px solid var(--line);border-radius:12px;padding:24px;background:var(--paper)}
+.scard .nm{font-weight:600;font-size:15px;letter-spacing:-.01em}
+.scard .cd{margin-top:16px;font-size:13px;color:var(--mute);font-variant-numeric:tabular-nums;line-height:1.8}
 
-/* ---------------- closing ---------------- */
+
+/* ทางเข้า 3 แกนตามข้อ 8 — หน้าแรกทำหน้าที่ hub ไม่ใช่ปลายทาง */
+.axes{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.axis{background:var(--paper);padding:48px 32px 40px;display:flex;flex-direction:column;
+  transition:background .5s var(--e)}
+.axis:hover{background:#FAFAF9}
+.axis .k{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.axis h3{font-size:24px;margin:24px 0 16px;letter-spacing:-.015em}
+.axis p{font-size:15px;color:var(--mute);line-height:1.7}
+.axis .go{margin-top:auto;padding-top:32px;font-size:15px;font-weight:500;
+  display:inline-flex;align-items:center;gap:12px;min-height:44px}
+.axis .go .ar{transition:transform .4s var(--e)}
+.axis:hover .go .ar{transform:translateX(5px)}
+
+/* ---------------- ปิดท้าย ---------------- */
 .closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
 .closing h2{font-size:clamp(32px,5.4vw,76px);font-weight:700;letter-spacing:-.035em;color:#fff;max-width:18ch;margin:24px auto 0}
 .closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
@@ -211,10 +250,9 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 
 /* ---------------- footer ---------------- */
 footer{background:var(--void);color:#fff;padding:96px 0 40px}
-.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
 /* footer เป็นพื้นมืดเสมอ จึงใช้โลโก้ขาวล้วนตลอด */
-.f-brand .brand img{height:28px}
-.f-brand .brand img{filter:brightness(0) invert(1)}
+.f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
 .f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
 .f-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.42);font-weight:500;margin-bottom:20px}
 .f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
@@ -223,28 +261,30 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 
 /* ---------------- responsive ---------------- */
 @media(max-width:1080px){
-  .tech-grid{grid-template-columns:1fr;gap:40px}
-  .stack-wrap{height:320px;order:-1}
+  .stand,.origin{grid-template-columns:1fr;gap:40px}
+  .axes{grid-template-columns:1fr}
+  .sgrid{grid-template-columns:repeat(2,1fr)}
+  .bar{grid-template-columns:104px 1fr 48px;gap:12px}
+  .pitch{padding:88px 0}
 }
-@media(max-width:900px){
-  :root{--pad:24px}
+@media(max-width:1080px){
   .nav-links,.nav-cta{display:none}
   .burger{display:block}
   .drawer{display:flex}
-  .proof-grid{grid-template-columns:repeat(2,1fr)}
-  .why{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:900px){
+  :root{--pad:24px}
+  .figs-grid{grid-template-columns:repeat(2,1fr)}
   .sec{padding:88px 0}
-  .work-grid{grid-template-columns:repeat(2,1fr)}
+  .closing{padding:104px 0}
   .f-grid{grid-template-columns:1fr 1fr;gap:40px}
-  .tech{height:240vh}
 }
 @media(max-width:620px){
-  .why{grid-template-columns:1fr}
-  .work-grid{grid-template-columns:1fr}
-  .tile,.tile:nth-child(3n-1){aspect-ratio:4/3}
+  .figs-grid{grid-template-columns:1fr}
   .hero-in{padding-bottom:88px}
   .scene-tag{display:none}
   .f-grid{grid-template-columns:1fr}
+  .drawer a{font-size:22px;min-height:52px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important}
@@ -256,15 +296,17 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 </head>
 <body>
 
+<a href="#main" class="skip">ข้ามไปยังเนื้อหาหลัก</a>
+
 <!-- NAV -->
 <nav class="nav" id="nav">
   <div class="nav-in">
     <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
     <div class="nav-links">
+      <a href="index.html" aria-current="page">หน้าแรก</a>
       <a href="about.html">เกี่ยวกับเรา</a>
       <a href="technology.html">เทคโนโลยี</a>
-      <a href="products.html">ผลิตภัณฑ์</a>
-      <a href="warranty.html">รับประกัน</a>
+      <a href="gallery.html">ผลงาน</a>
       <a href="contact.html">ติดต่อ</a>
     </div>
     <a href="https://finnixcenterth.com" class="nav-cta">หาศูนย์ติดตั้ง</a>
@@ -274,14 +316,16 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 
 <!-- เมนูมือถือ -->
 <div class="drawer" id="drawer">
+  <a href="index.html" aria-current="page">หน้าแรก</a>
   <a href="about.html">เกี่ยวกับเรา</a>
   <a href="technology.html">เทคโนโลยี</a>
-  <a href="products.html">ผลิตภัณฑ์</a>
-  <a href="warranty.html">รับประกัน</a>
+  <a href="gallery.html">ผลงาน</a>
   <a href="faq.html">คำถามที่พบบ่อย</a>
   <a href="contact.html">ติดต่อ</a>
   <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
 </div>
+
+<main id="main">
 
 <!-- HERO -->
 <header class="hero">
@@ -289,8 +333,9 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     <div class="glare"></div>
     <div class="grain"></div>
     <div class="filtered"></div>
-    <div class="split-line"><span class="handle"></span></div>
-    <div class="scene-tag l">กระจกเปล่า<b>42°C</b></div>
+    <div class="split-line"></div>
+    <div class="handle"></div>
+    <div class="scene-tag l">กระจกเปล่า<b>43°C</b></div>
     <div class="scene-tag r">ติดฟินนิกซ์ CM<b>29°C</b></div>
     <div class="scene-hint">ลากเพื่อเปรียบเทียบ</div>
   </div>
@@ -301,162 +346,169 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
       <span class="l"><span>กันความร้อน</span></span>
       <span class="l"><span>ไม่ใช่แค่ทำให้มืด</span></span>
     </h1>
-    <p class="sub">ฟิล์มเซรามิกที่หยุดพลังงานความร้อนตั้งแต่ผิวกระจก ไม่ต้องแลกกับทัศนวิสัย ไม่ต้องแลกกับสัญญาณโทรศัพท์</p>
+    <p class="sub">ความมืดของฟิล์มคือการลดแสงที่ตามองเห็น ส่วนความร้อนเดินทางมากับคลื่นที่มองไม่เห็น เราออกแบบโดยจับที่คลื่นความร้อน ไม่ได้จับที่ความมืด</p>
     <div class="hero-cta">
-      <a href="products.html" class="btn btn-red">ดูซีรีส์ฟิล์ม <span class="ar">→</span></a>
+      <a href="gallery.html" class="btn btn-light">ดูผลงานติดตั้ง <span class="ar">→</span></a>
       <a href="https://finnixcenterth.com" class="btn btn-ghost">หาศูนย์ติดตั้งใกล้คุณ</a>
     </div>
   </div>
 </header>
 
-<!-- PROOF -->
-<section class="proof">
+<!-- ตัวเลขบริษัท -->
+<section class="figs">
   <div class="wrap" style="padding:0">
-    <div class="proof-grid">
-      <div class="proof-cell"><div class="n"><span class="cnt" data-to="3">0</span><em>M+</em></div><div class="cap">ตารางฟุตที่ติดตั้งไปแล้วทั่วประเทศ</div></div>
-      <div class="proof-cell"><div class="n"><span class="cnt" data-to="99">0</span><em>%</em></div><div class="cap">ป้องกันรังสียูวีที่ทำให้เบาะและผิวเสีย</div></div>
-      <div class="proof-cell"><div class="n"><span class="cnt" data-to="7">0</span> <span style="font-size:.5em;font-weight:500">ปี</span></div><div class="cap">รับประกันจากบริษัทโดยตรง</div></div>
-      <div class="proof-cell"><div class="n"><span class="cnt" data-to="120">0</span><em>+</em></div><div class="cap">ศูนย์บริการที่ผ่านการอบรมจากเรา</div></div>
+    <div class="figs-grid">
+      <div class="fig"><div class="n"><span class="var">{{YEAR_FOUNDED}}</span></div><div class="cap">ปีที่ก่อตั้งบริษัท</div></div>
+      <div class="fig"><div class="n"><span class="cnt" data-to="3">0</span><em>M+</em></div><div class="cap">ตารางฟุตที่ติดตั้งไปแล้วทั่วประเทศ</div></div>
+      <div class="fig"><div class="n"><span class="cnt" data-to="7">0</span> <span style="font-size:.5em;font-weight:500">ปี</span></div><div class="cap">รับประกันทุก<span class="nb">ซีรีส์</span>จากบริษัทโดยตรง</div></div>
+      <div class="fig"><div class="n"><span class="var">{{SERVICE_CENTERS}}</span></div><div class="cap">ศูนย์ติดตั้งที่ผ่านการอบรมจากเรา</div></div>
+    </div>
+  </div>
+  <p class="figs-note">ตัวเลขพื้นที่ติดตั้งอ้างอิงจากเอกสารผลิตภัณฑ์ของบริษัท ระยะรับประกันอ้างอิงจากเงื่อนไขที่ระบุบนเอกสารรับประกันของทุก<span class="nb">ซีรีส์</span></p>
+</section>
+
+<!-- บล็อกจุดขาย 1 — ตัวเลขเด่นแบบหน้าต้นแบบ · ค่าทั้งหมดจาก data/films.json -->
+<section class="pitch">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="cev" aria-hidden="true">&raquo;</span>
+      <h2>ความเข้มเท่ากัน<span class="b">ต่างกันได้ 27 จุด</span></h2>
+    </div>
+    <p class="lead rv">สามรหัสนี้แสงส่องผ่านเท่ากันหมดที่ 5% แต่กันความร้อนได้ไม่เท่ากันเลย</p>
+    <p class="desc rv">ความมืดของฟิล์มคือการลดแสงที่ตามองเห็น ส่วนความร้อนส่วนใหญ่เดินทางมากับคลื่นอินฟราเรดซึ่งมองไม่เห็นด้วยตา ฟิล์มสองแผ่นที่เข้มเท่ากันจึงกันความร้อนได้ไม่เท่ากัน — นี่คือความเข้าใจผิดที่พบบ่อยที่สุดเวลาคนเลือกฟิล์ม</p>
+    <div class="media rv">
+      <div class="bars">
+        <div class="bar"><div class="who"><b>CM05</b><span>CERAMIC</span></div><div class="track"><i style="width:90%"></i></div><div class="val">90%</div></div>
+        <div class="bar dim"><div class="who"><b>XT05</b><span>EXTRA CLEAR</span></div><div class="track"><i style="width:67%"></i></div><div class="val">67%</div></div>
+        <div class="bar dim"><div class="who"><b>SM05</b><span>UV GUARD</span></div><div class="track"><i style="width:63%"></i></div><div class="val">63%</div></div>
+      </div>
+      <p class="cap">แท่งคือค่าลดความร้อนรวม ทั้งสามรหัสมีแสงส่องผ่าน 5% เท่ากัน · ค่าจากเอกสารผลิตภัณฑ์ปี 2567 วัดตาม <span class="var">{{TEST_STANDARD}}</span></p>
     </div>
   </div>
 </section>
 
-<!-- WHY -->
-<section class="sec" style="padding-bottom:0">
+<!-- บล็อกจุดขาย 2 -->
+<section class="pitch smoke">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="cev" aria-hidden="true">&raquo;</span>
+      <h2>ลดความร้อนรวม<span class="b">สูงสุด 96%</span></h2>
+    </div>
+    <p class="lead rv">รหัสที่กันความร้อนได้สูงที่สุดในไลน์คือ SY10 ของซีรีส์ TITANIUM</p>
+    <p class="desc rv">ค่านี้คือการลดพลังงานความร้อนจากแสงแดดโดยรวม ไม่ใช่เฉพาะย่านอินฟราเรด ตัวเลขที่โฆษณากันว่า “กันร้อน 99%” ส่วนใหญ่เป็นค่าเฉพาะย่าน IR ซึ่งสูงกว่าเสมอและเทียบกันไม่ได้</p>
+    <div class="media rv">
+      <div class="bars">
+        <div class="bar"><div class="who"><b>TITANIUM</b><span>SY10</span></div><div class="track"><i style="width:96%"></i></div><div class="val">96%</div></div>
+        <div class="bar"><div class="who"><b>CERAMIC</b><span>CM05 · CM15</span></div><div class="track"><i style="width:90%"></i></div><div class="val">90%</div></div>
+        <div class="bar"><div class="who"><b>CRYSTALIZE</b><span>CT20</span></div><div class="track"><i style="width:85%"></i></div><div class="val">85%</div></div>
+        <div class="bar dim"><div class="who"><b>EXTRA CLEAR</b><span>XT05</span></div><div class="track"><i style="width:67%"></i></div><div class="val">67%</div></div>
+        <div class="bar dim"><div class="who"><b>UV GUARD</b><span>SM05</span></div><div class="track"><i style="width:63%"></i></div><div class="val">63%</div></div>
+      </div>
+      <p class="cap">ค่าสูงสุดของแต่ละซีรีส์ · รหัสในวงเล็บคือรหัสที่ทำค่านั้นได้</p>
+    </div>
+  </div>
+</section>
+
+<!-- บล็อกจุดขาย 3 -->
+<section class="pitch">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="cev" aria-hidden="true">&raquo;</span>
+      <h2>กันยูวี<span class="b">99% ขึ้นไปทุกรหัส</span></h2>
+    </div>
+    <p class="lead rv">ทั้ง 15 รหัสกันรังสียูวีได้ 99% ขึ้นไป ไม่ว่าจะเลือกความเข้มไหน</p>
+    <p class="desc rv">รังสียูวีคือตัวที่ทำให้ผิวเสียและวัสดุในห้องโดยสารซีดกรอบ ค่านี้ไม่ได้ขึ้นกับความเข้มของฟิล์ม รหัสที่ใสที่สุดในไลน์ก็กันได้เท่ากับรหัสที่เข้มที่สุด</p>
+    <div class="media rv">
+      <div class="bignum">
+        <div class="n">99<span style="font-size:.4em">%+</span></div>
+        <p class="t">ค่าต่ำสุดในไลน์คือ 99% ส่วนซีรีส์ EXTRA CLEAR กับ UV GUARD อยู่ที่ 100% ตามเอกสารผลิตภัณฑ์</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- บล็อกจุดขาย 4 -->
+<section class="pitch smoke">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="cev" aria-hidden="true">&raquo;</span>
+      <h2>ห้าซีรีส์<span class="b">สิบห้ารหัสความเข้ม</span></h2>
+    </div>
+    <p class="lead rv">แต่ละซีรีส์ถนัดคนละอย่าง ไม่ได้ต่างกันแค่ราคา</p>
+    <p class="desc rv">TITANIUM กันความร้อนสูงสุด · CERAMIC ไม่มีชั้นโลหะจึงไม่รบกวนสัญญาณ · CRYSTALIZE ใสกว่าแต่ยังกันร้อนได้ดี · EXTRA CLEAR สำหรับคนที่ต้องการทัศนวิสัยเป็นหลัก · UV GUARD เน้นกันยูวีในราคาที่เข้าถึงง่ายที่สุด</p>
+    <div class="media rv">
+      <div class="sgrid">
+        <div class="scard"><div class="nm">TITANIUM</div><div class="cd">SY40<br>SY20<br>SY10</div></div>
+        <div class="scard"><div class="nm">CERAMIC</div><div class="cd">CM35<br>CM15<br>CM05</div></div>
+        <div class="scard"><div class="nm">CRYSTALIZE</div><div class="cd">CT70<br>CT40<br>CT20</div></div>
+        <div class="scard"><div class="nm">EXTRA CLEAR</div><div class="cd">XT35<br>XT15<br>XT05</div></div>
+        <div class="scard"><div class="nm">UV GUARD</div><div class="cd">SM35<br>SM15<br>SM05</div></div>
+      </div>
+      <p class="cap">ตัวเลขท้ายรหัสคือระดับความเข้ม ยิ่งน้อยยิ่งเข้ม</p>
+    </div>
+  </div>
+</section>
+
+<!-- ที่มาของบริษัท -->
+<section class="sec">
   <div class="wrap">
     <div class="sec-head rv">
-      <div class="eyebrow"><span class="dot"></span>ทำไมต้องฟินนิกซ์</div>
-      <h2>ฟิล์มเข้มขึ้น ไม่ได้แปลว่าเย็นขึ้น</h2>
-      <p>ความเข้มคือการลดแสงที่ตามองเห็น ส่วนความร้อนอยู่ในคลื่นอินฟราเรดที่มองไม่เห็น เราออกแบบฟิล์มโดยจับที่คลื่นความร้อนโดยตรง ไม่ได้จับที่ความมืด</p>
+      <div class="eyebrow"><span class="dot"></span>ที่มา</div>
+      <h2>ทำไมถึงตั้งบริษัทนี้ขึ้นมา</h2>
     </div>
-  </div>
-  <div class="why rv">
-    <div class="why-cell">
-      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
-      <h3>ลดความร้อนที่ต้นทาง</h3>
-      <p>อนุภาคเซรามิกดูดซับพลังงานอินฟราเรดก่อนที่มันจะเข้าห้องโดยสาร แอร์ทำงานน้อยลง น้ำมันลดลงตาม</p>
-    </div>
-    <div class="why-cell">
-      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 12.5a10 10 0 0 1 14 0M8 16a6 6 0 0 1 8 0"/><circle cx="12" cy="19" r="1.2" fill="currentColor" stroke="none"/><path d="M2 9a15 15 0 0 1 20 0"/></svg>
-      <h3>ไม่รบกวนสัญญาณ</h3>
-      <p>ไม่มีชั้นโลหะในเนื้อฟิล์ม สัญญาณ 5G, GPS, กล้องหลัง และบัตรทางด่วนทำงานได้ตามปกติทุกจุด</p>
-    </div>
-    <div class="why-cell">
-      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>
-      <h3>กลางคืนยังมองชัด</h3>
-      <p>ค่าแสงส่องผ่านคำนวณมาสำหรับถนนไทยที่ไฟส่องสว่างไม่สม่ำเสมอ ถอยจอดกลางคืนไม่ต้องเปิดกระจก</p>
-    </div>
-    <div class="why-cell">
-      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l7.5 3.2v5.1c0 4.5-3.1 8.4-7.5 9.7-4.4-1.3-7.5-5.2-7.5-9.7V6.2L12 3Z"/><path d="M9.2 12.2l1.9 1.9 3.7-3.9"/></svg>
-      <h3>ไม่ซีด ไม่กลายเป็นม่วง</h3>
-      <p>เม็ดสีเสถียรต่อรังสียูวี ผ่านการทดสอบตากแดดเร่งอายุ สีที่เห็นวันแรกคือสีที่เห็นในปีที่เจ็ด</p>
-    </div>
-  </div>
-</section>
-
-
-<!-- TECHNOLOGY -->
-<section class="tech" id="tech">
-  <div class="tech-sticky">
-    <div class="tech-grid">
-      <div class="tech-copy">
-        <div class="eyebrow on-dark"><span class="dot"></span>เทคโนโลยี</div>
-        <h2>หกชั้น หนารวมน้อยกว่าเส้นผม</h2>
-        <p>สิ่งที่กันความร้อนไม่ใช่ความหนา แต่คือลำดับของชั้นวัสดุ แต่ละชั้นทำหน้าที่เดียวและทำได้ดีที่สุดในหน้าที่นั้น</p>
-        <ul class="tech-legend" id="legend">
-          <li data-i="0"><span class="i">01</span><span><b>Hard Coat</b> — ผิวนอกกันรอยขนแมวจากการเช็ด</span></li>
-          <li data-i="1"><span class="i">02</span><span><b>PET Base</b> — โครงสร้างหลักที่ให้ความเหนียวและความใส</span></li>
-          <li data-i="2"><span class="i">03</span><span><b>Ceramic Layer</b> — อนุภาคเซรามิกที่ดูดซับคลื่นความร้อน</span></li>
-          <li data-i="3"><span class="i">04</span><span><b>UV Blocking</b> — ชั้นกันรังสียูวีที่ทำให้เบาะและคอนโซลไม่กรอบ</span></li>
-          <li data-i="4"><span class="i">05</span><span><b>Adhesive</b> — กาวที่ติดแน่นแต่ลอกออกได้โดยไม่ทิ้งคราบ</span></li>
-          <li data-i="5"><span class="i">06</span><span><b>กระจกรถ</b> — พื้นผิวที่ฟิล์มทำงานร่วมด้วย</span></li>
-        </ul>
+    <div class="origin">
+      <div class="rv">
+        <p class="lede"><span class="var">{{FOUNDING_STORY}}</span></p>
       </div>
-
-      <div class="stack-wrap">
-        <svg class="stack" id="stack" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g class="layer" data-i="0">
-            <rect x="60" y="118" width="340" height="9" rx="2" fill="#EDEDEA" opacity=".92"/>
-          </g>
-          <g class="layer" data-i="1">
-            <rect x="60" y="130" width="340" height="15" rx="2" fill="#B9C2C9" opacity=".85"/>
-          </g>
-          <g class="layer" data-i="2">
-            <rect x="60" y="148" width="340" height="18" rx="2" fill="#CC1B1B"/>
-            <g opacity=".55">
-              <circle cx="98" cy="157" r="1.7" fill="#fff"/><circle cx="146" cy="153" r="1.4" fill="#fff"/>
-              <circle cx="196" cy="160" r="1.8" fill="#fff"/><circle cx="248" cy="154" r="1.4" fill="#fff"/>
-              <circle cx="300" cy="159" r="1.7" fill="#fff"/><circle cx="352" cy="155" r="1.5" fill="#fff"/>
-            </g>
-          </g>
-          <g class="layer" data-i="3">
-            <rect x="60" y="169" width="340" height="12" rx="2" fill="#6E7A85" opacity=".9"/>
-          </g>
-          <g class="layer" data-i="4">
-            <rect x="60" y="184" width="340" height="8" rx="2" fill="#3E464E" opacity=".9"/>
-          </g>
-          <g class="layer" data-i="5">
-            <rect x="60" y="195" width="340" height="34" rx="3" fill="#8FA6B5" opacity=".28"/>
-            <rect x="60" y="195" width="340" height="34" rx="3" stroke="#8FA6B5" stroke-opacity=".5"/>
-          </g>
-          <g id="sunray" opacity="0">
-            <path d="M42 60 L118 118" stroke="#FFB648" stroke-width="1.6" stroke-linecap="round"/>
-            <path d="M92 44 L152 118" stroke="#FFB648" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
-            <path d="M148 38 L188 118" stroke="#FFB648" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
-          </g>
-        </svg>
+      <div class="rv">
+        <p>ส่วนนี้ยังรอข้อมูลจากบริษัท เราไม่เขียนเรื่องเล่าที่มาขึ้นเองเพราะเป็นข้อความที่ลูกค้าจะใช้ตัดสินว่าจะเชื่อแบรนด์หรือไม่ ถ้าเขียนแทนแล้วไม่ตรงกับความจริง ความเสียหายมากกว่าการปล่อยว่างไว้ก่อน</p>
+        <p>สิ่งที่ต้องการคือ ปีและเหตุผลที่ก่อตั้ง · ผู้ก่อตั้งและภูมิหลัง — ส่วนแหล่งผลิตฟิล์มอยู่ที่หน้า <a href="about.html" style="border-bottom:1px solid var(--line)">เกี่ยวกับเรา</a></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WORK -->
-<section class="sec" id="work">
+<!-- ทางเข้า 3 แกน -->
+<section class="sec smoke" style="padding-bottom:0">
   <div class="wrap">
-    <div class="sec-head rv" style="display:flex;justify-content:space-between;align-items:flex-end;max-width:none;gap:32px;flex-wrap:wrap">
-      <div style="max-width:640px">
-        <div class="eyebrow"><span class="dot"></span>ผลงาน</div>
-        <h2 style="font-size:clamp(30px,4.4vw,56px);margin-top:24px">งานที่ออกจากมือช่างของเรา</h2>
-      </div>
-      <a href="#" class="btn btn-out">ดูผลงานทั้งหมด <span class="ar">→</span></a>
+    <div class="sec-head rv">
+      <div class="eyebrow"><span class="dot"></span>เริ่มจากตรงไหน</div>
+      <h2>สามคำถามที่คนเลือกฟิล์มถามบ่อยที่สุด</h2>
     </div>
-
-    <!-- ป้ายซีรีส์ถูกถอดออกเมื่อ 6 ส.ค. — เดิมเขียน CM/XT/CL Series กำกับรถแต่ละคัน
-         ซึ่ง CL ไม่มีอยู่จริงในสินค้าของบริษัท และการจับคู่รุ่นฟิล์มกับรถทั้งหกคันเป็นข้อมูลสมมติ
-         ต้องแทนด้วยบันทึกการติดตั้งจริงพร้อมรหัสฟิล์มที่ใช้ ก่อนขึ้นเซิร์ฟเวอร์ -->
-    <div class="work-grid rv">
-      <div class="tile"><div class="cap"><b>Toyota Fortuner</b></div></div>
-      <div class="tile"><div class="cap"><b>BYD Sealion 6</b></div></div>
-      <div class="tile"><div class="cap"><b>Honda Civic</b></div></div>
-      <div class="tile"><div class="cap"><b>Isuzu D-Max</b></div></div>
-      <div class="tile"><div class="cap"><b>Mazda CX-5</b></div></div>
-      <div class="tile"><div class="cap"><b>Tesla Model Y</b></div></div>
+  </div>
+  <div class="axes">
+    <div class="axis rv">
+      <div class="k">มันทำงานอย่างไร</div>
+      <h3 class="nb">เทคโนโลยี</h3>
+      <p>ความร้อนจากแสงแดดอยู่ในคลื่นอินฟราเรดที่ตามองไม่เห็น หน้านี้อธิบายว่าฟิล์มหยุดคลื่นนั้นได้อย่างไร และทำไมความเข้มถึงไม่ใช่ตัวชี้วัด</p>
+      <a href="technology.html" class="go">ดูภาพตัดขวางชั้นฟิล์ม <span class="ar">→</span></a>
+    </div>
+    <div class="axis rv">
+      <div class="k">ติดแล้วเป็นอย่างไร</div>
+      <h3>ผลงาน</h3>
+      <p>รถแต่ละรุ่นเลือกความเข้มต่างกันตามตำแหน่งกระจก หน้านี้รวมงานติดตั้งพร้อมรหัสฟิล์มที่ใช้จริงในแต่ละบาน</p>
+      <a href="gallery.html" class="go">ดูผลงานติดตั้ง <span class="ar">→</span></a>
+    </div>
+    <div class="axis rv">
+      <div class="k">ติดที่ไหนดี</div>
+      <h3>ตัวแทนใกล้บ้าน</h3>
+      <p>ฟิล์มดีแค่ไหนก็ขึ้นกับคนติด เครือข่ายตัวแทนที่ผ่านการอบรมจากบริษัทกระจายอยู่ทั่วประเทศ ค้นหาตามจังหวัดได้ทันที</p>
+      <a href="contact.html#dealers" class="go">ค้นหาตัวแทนใกล้คุณ <span class="ar">→</span></a>
     </div>
   </div>
 </section>
 
-<!-- WARRANTY -->
-<section class="warranty" id="warranty">
-  <div class="wrap">
-    <div class="warranty-in">
-      <div>
-        <h3>รับประกัน 7 ปี ทุกตารางฟุต</h3>
-        <p>ครอบคลุมการซีด ลอก เป็นฟอง และเปลี่ยนสี เคลมได้ที่ศูนย์บริการฟินนิกซ์ทุกสาขาทั่วประเทศ</p>
-      </div>
-      <a href="warranty.html" class="btn btn-out">อ่านเงื่อนไขการรับประกัน <span class="ar">→</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- CLOSING -->
+<!-- ปิดท้าย -->
 <section class="closing">
   <div class="wrap">
     <div class="eyebrow on-dark" style="text-align:center"><span class="dot"></span>เริ่มต้นที่นี่</div>
     <h2>รถของคุณจอดกลางแดด<br>วันละกี่ชั่วโมง</h2>
     <p>ให้ช่างที่ผ่านการอบรมจากเราวัดกระจกและแนะนำซีรีส์ที่เหมาะกับการใช้งานจริงของคุณ</p>
-    <a href="https://finnixcenterth.com" class="btn btn-red">หาศูนย์ติดตั้งใกล้คุณ <span class="ar">→</span></a>
+    <a href="https://finnixcenterth.com" class="btn btn-light">หาศูนย์ติดตั้งใกล้คุณ <span class="ar">→</span></a>
   </div>
 </section>
+
+</main>
 
 <!-- FOOTER -->
 <footer>
@@ -467,16 +519,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
         <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
       </div>
       <div class="f-col">
-        <h4>ผลิตภัณฑ์</h4>
-        <a href="products.html#titanium">TITANIUM</a><a href="products.html#ceramic">CERAMIC</a><a href="products.html#crystalize">CRYSTALIZE</a><a href="products.html#extra-clear">EXTRA CLEAR</a><a href="products.html#uv-guard">UV GUARD</a>
-      </div>
-      <div class="f-col">
         <h4>บริษัท</h4>
-        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a>
+        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a><a href="gallery.html">ผลงาน</a>
       </div>
       <div class="f-col">
         <h4>บริการ</h4>
-        <a href="warranty.html">การรับประกัน</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+        <a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
       </div>
     </div>
     <div class="f-bot">
@@ -518,7 +566,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     }
   });
   /* กลับมากว้างกว่า 900px แล้วต้องไม่ค้างสถานะเมนูเปิด */
-  window.matchMedia('(min-width:901px)').addEventListener('change', function(e){
+  window.matchMedia('(min-width:1081px)').addEventListener('change', function(e){
     if(e.matches) setMenu(false);
   });
 
@@ -577,38 +625,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   document.querySelectorAll('.cnt').forEach(function(el){
     if(reduce){ el.textContent = el.dataset.to; } else { cio.observe(el); }
   });
-
-  /* ---- layer stack ---- */
-  var tech = document.getElementById('tech');
-  var layers = Array.prototype.slice.call(document.querySelectorAll('#stack .layer'));
-  var legend = Array.prototype.slice.call(document.querySelectorAll('#legend li'));
-  var sunray = document.getElementById('sunray');
-  var GAP = 20;
-
-  function onScrollTech(){
-    var r = tech.getBoundingClientRect();
-    var total = tech.offsetHeight - window.innerHeight;
-    var p = Math.max(0, Math.min(1, -r.top / total));
-    var spread = p < .75 ? p / .75 : 1;
-
-    layers.forEach(function(g, i){
-      var offset = (i - 2.5) * GAP * spread;
-      g.style.transform = 'translateY(' + offset + 'px)';
-    });
-
-    if(sunray) sunray.style.opacity = Math.max(0, Math.min(1, (p - .75) / .2));
-
-    var active = Math.min(layers.length - 1, Math.floor(p * layers.length * 1.25));
-    legend.forEach(function(li, i){ li.classList.toggle('on', spread > .15 && i <= active); });
-  }
-  if(!reduce){
-    onScrollTech();
-    window.addEventListener('scroll', onScrollTech, {passive:true});
-    window.addEventListener('resize', onScrollTech);
-  } else {
-    legend.forEach(function(li){ li.classList.add('on'); });
-    layers.forEach(function(g,i){ g.style.transform = 'translateY(' + (i-2.5)*GAP + 'px)'; });
-  }
 })();
 </script>
 </body>

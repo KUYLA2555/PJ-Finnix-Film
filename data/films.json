@@ -42,7 +42,7 @@
       "tagline": "สุดยอดฟิล์มชั้นนำ เทคโนโลยีระดับโลก",
       "claim": "เราคัดเลือกผลิตภัณฑ์ที่ดีที่สุดจากแหล่งที่มาที่เป็นที่ยอมรับในโลก",
       "image": "assets/finnix-titanium.png",
-      "source": ["Data/TIT/เอกสาร 6_1.jpg", "Data/TIT/เอกสาร 6_2.jpg", "Data/TIT/เอกสาร 6_3.jpg", "Data/TIT/เอกสาร 6_4.jpg"],
+      "source": ["scans/TIT/เอกสาร 6_1.jpg", "scans/TIT/เอกสาร 6_2.jpg", "scans/TIT/เอกสาร 6_3.jpg", "scans/TIT/เอกสาร 6_4.jpg"],
       "variants": [
         { "code": "SY40", "darkness": null, "heatReject": 81, "vlt": 40, "reflect": 0.24, "uv": 99, "ir": 91 },
         { "code": "SY20", "darkness": null, "heatReject": 89, "vlt": 20, "reflect": 0.24, "uv": 99, "ir": 95 },
@@ -71,7 +71,7 @@
       "tagline": "ใส เคลียร์ ชัด",
       "claim": "เปิดรับทุกมิติการมอง ทั้งกลางวันและกลางคืน",
       "image": "assets/finnix-ceramic.png",
-      "source": ["Data/CM/เอกสาร 7_1.jpg", "Data/CM/เอกสาร 7_2.jpg", "Data/CM/เอกสาร 7_3.jpg", "Data/CM/เอกสาร 7_4.jpg"],
+      "source": ["scans/CM/เอกสาร 7_1.jpg", "scans/CM/เอกสาร 7_2.jpg", "scans/CM/เอกสาร 7_3.jpg", "scans/CM/เอกสาร 7_4.jpg"],
       "variants": [
         { "code": "CM35", "darkness": 40, "heatReject": 80, "vlt": 30, "reflect": 0.19, "uv": 99, "ir": 91 },
         { "code": "CM15", "darkness": 60, "heatReject": 90, "vlt": 15, "reflect": 0.19, "uv": 99, "ir": 95 },
@@ -101,7 +101,7 @@
       "tagline": "ฟิล์มกรองแสงใส แต่กันความร้อนได้สูง",
       "claim": null,
       "image": "assets/finnix-crystalize.png",
-      "source": ["Data/CT/เอกสาร_1.jpg", "Data/CT/เอกสาร_2.jpg", "Data/CT/เอกสาร_3.jpg"],
+      "source": ["scans/CT/เอกสาร_1.jpg", "scans/CT/เอกสาร_2.jpg", "scans/CT/เอกสาร_3.jpg"],
       "variants": [
         { "code": "CT70", "darkness": null, "heatReject": 55, "vlt": 70, "reflect": 8.6, "uv": 99, "ir": 89 },
         { "code": "CT40", "darkness": 40,   "heatReject": 75, "vlt": 35, "reflect": 7.7, "uv": 99, "ir": 90 },
@@ -125,7 +125,7 @@
       "tagline": "ใส เคลียร์ ชัด",
       "claim": "ทัศนวิสัยเหนือระดับ ขับขี่ไร้กังวล",
       "image": "assets/finnix-extra-clear.png",
-      "source": ["Data/EX/เอกสาร 5_1.jpg", "Data/EX/เอกสาร 5_2.jpg", "Data/EX/เอกสาร 5_3.jpg"],
+      "source": ["scans/EX/เอกสาร 5_1.jpg", "scans/EX/เอกสาร 5_2.jpg", "scans/EX/เอกสาร 5_3.jpg"],
       "variants": [
         { "code": "XT35", "darkness": 40, "heatReject": 61, "vlt": 35, "reflect": 5.8, "uv": 100, "ir": 96 },
         { "code": "XT15", "darkness": 60, "heatReject": 63, "vlt": 15, "reflect": 5.1, "uv": 100, "ir": 97 },
@@ -148,7 +148,7 @@
       "tagline": "ใส เคลียร์ ชัด",
       "claim": "เปิดรับทุกมิติการมอง ทั้งกลางวันและกลางคืน",
       "image": "assets/finnix-uvguard.png",
-      "source": ["Data/UV_g/เอกสาร 4_1.jpg", "Data/UV_g/เอกสาร 4_2.jpg", "Data/UV_g/เอกสาร 4_3.jpg"],
+      "source": ["scans/UV_g/เอกสาร 4_1.jpg", "scans/UV_g/เอกสาร 4_2.jpg", "scans/UV_g/เอกสาร 4_3.jpg"],
       "variants": [
         { "code": "SM35", "darkness": 40, "heatReject": 52, "vlt": 40, "reflect": 6.1, "uv": 100, "ir": 95 },
         { "code": "SM15", "darkness": 60, "heatReject": 59, "vlt": 15, "reflect": 5.2, "uv": 100, "ir": 95 },

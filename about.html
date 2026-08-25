@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>เกี่ยวกับเรา — FINNIX FILM</title>
-<meta name="description" content="บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — เราขายฟิล์มกรองแสงรถยนต์ด้วยการอธิบายว่ามันทำงานอย่างไร ไม่ใช่ด้วยการบอกว่ามันดีแค่ไหน">
+<meta name="description" content="บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ทำไมต้องฟินนิกซ์ ที่มาของบริษัท สิ่งที่ฟิล์มทั้งห้าซีรีส์ทำได้จริง และมาตรฐานที่ใช้อ้างอิงตัวเลขทุกตัว">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -40,6 +40,11 @@ h1,h2,h3,h4,.disp{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;lin
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 :focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+/* เบราว์เซอร์ตัดคำไทยด้วยพจนานุกรมที่ไม่มีคำทับศัพท์ — ครอบคำที่ตัดผิดด้วย .nb */
+.nb{white-space:nowrap}
+/* ข้ามไปเนื้อหาหลัก — ต้องมีทุกหน้าเพื่อให้คนใช้คีย์บอร์ดไม่ต้องไล่ผ่าน nav ทุกครั้ง (ข้อ 9) */
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:0 0 12px 0;z-index:200}
+.skip:focus{left:0}
 
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
 .eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
@@ -114,8 +119,6 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
    ถ้าปุ่มปิดท้ายเป็นแดงด้วยจะกลายเป็นแดง 3 จุดในหน้าจอเดียว เกินโควตาข้อ 4 */
 .btn-light{background:#fff;color:var(--ink)}
 .btn-light:hover{transform:translateY(-2px);background:#F0F0EE}
-.btn-out{border-color:var(--line);color:var(--ink)}
-.btn-out:hover{border-color:var(--ink)}
 
 /* ---------------- หัวหน้า ---------------- */
 .page-head{background:var(--void);color:#fff;padding:200px 0 104px}
@@ -129,39 +132,45 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .sec-head h2{font-size:clamp(30px,4.4vw,56px);margin-top:24px}
 .sec-head p{margin-top:24px;font-size:18px;color:var(--mute);max-width:56ch}
 
-/* จุดยืน */
-.stand{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-.stand h2{font-size:clamp(30px,4.4vw,56px);letter-spacing:-.03em;max-width:14ch}
-.stand .body p{color:var(--mute);font-size:18px}
-.stand .body p+p{margin-top:24px}
-.stand .more{display:inline-block;margin-top:32px;font-size:16px;color:var(--ink);
-  border-bottom:1px solid var(--line);padding-bottom:4px;transition:border-color .3s var(--e)}
-.stand .more:hover{border-color:var(--ink)}
-
-/* ตัวเลขบริษัท */
-.figs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+/* ส่วนที่ 1 — ทำไมต้องฟินนิกซ์ */
+.why{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
   border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.fig{background:var(--smoke);padding:48px 32px}
-.fig .n{font-family:'Anuphan',sans-serif;font-weight:600;font-size:clamp(30px,3.6vw,46px);
-  letter-spacing:-.03em;line-height:1.1}
-.fig .cap{margin-top:16px;font-size:14px;color:var(--mute);line-height:1.5}
-.figs-note{margin-top:32px;font-size:14px;color:var(--mute);max-width:64ch}
+.why-cell{background:var(--paper);padding:44px 32px 48px;transition:background .5s var(--e)}
+.why-cell:hover{background:var(--smoke)}
+.why-cell .ic{width:38px;height:38px;color:var(--red)}
+.why-cell h3{font-size:20px;margin:28px 0 12px;letter-spacing:-.01em}
+.why-cell p{font-size:15px;color:var(--mute);line-height:1.7}
+.why-note{margin-top:40px;font-size:14px;color:var(--mute);max-width:72ch}
 
-/* ที่มา */
+/* ส่วนที่ 2 — แหล่งผลิต
+   บล็อกตัวเลขบริษัทกับเรื่องที่มาของบริษัทย้ายไปหน้าแรกแล้วใน v1.9 **ห้ามใส่กลับ**
+   หน้านี้รับเฉพาะเรื่องผู้ผลิต ซึ่งตรงกับส่วน Manufacturing Heritage ของ IA ต้นแบบ */
 .origin{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.origin h3{font-size:22px;margin-bottom:16px;letter-spacing:-.015em}
 .origin .lede{font-size:20px;line-height:1.65;letter-spacing:-.01em}
 .origin p{color:var(--mute)}
 .origin p+p{margin-top:24px}
 
-/* หลักที่ยึด */
-.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.rule{background:var(--paper);padding:48px 32px 56px}
-.rule .k{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
-.rule h3{font-size:22px;margin:24px 0 16px;letter-spacing:-.015em}
-.rule p{font-size:15px;color:var(--mute);line-height:1.7}
+/* ส่วนที่ 3 — ตารางระดับซีรีส์
+   overflow-y:hidden ต้องเขียนตรงๆ — สเปก CSS บังคับให้ visible กลายเป็น auto
+   เมื่ออีกแกนไม่ใช่ visible ทำให้ scrollbar แนวตั้งโผล่ทั้งที่ความสูงไม่ล้น */
+.spec-wrap{overflow-x:auto;overflow-y:hidden;border:1px solid var(--line);border-radius:16px}
+.spec{width:100%;border-collapse:collapse;min-width:800px;font-size:15px}
+.spec th,.spec td{padding:24px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.spec thead th{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);
+  font-weight:500;background:var(--smoke);white-space:nowrap}
+.spec tbody th{font-family:'Anuphan',sans-serif;font-weight:600;font-size:18px;letter-spacing:-.01em;white-space:nowrap}
+.spec tbody td{color:var(--mute)}
+.spec td.num{font-family:'Anuphan',sans-serif;font-weight:600;font-size:20px;letter-spacing:-.02em;color:var(--ink);white-space:nowrap}
+.spec tbody tr:last-child th,.spec tbody tr:last-child td{border-bottom:0}
 
-/* ปิดท้าย */
+/* แจ้งว่ายังไม่มีข้อมูล — ข้อ 3 และข้อ 10 บังคับให้ระบุที่มาของทุกตัวเลขและทุกข้อความ */
+.notice{background:var(--smoke);border:1px dashed #B8B8B4;border-radius:16px;padding:32px 40px;
+  font-size:15px;color:#5C5C57;line-height:1.7;max-width:900px}
+.notice b{color:var(--ink);font-weight:600;display:block;margin-bottom:8px;font-size:16px}
+.notice + .notice{margin-top:24px}
+
+/* ---------------- ปิดท้าย ---------------- */
 .closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
 .closing h2{font-size:clamp(32px,5.4vw,72px);font-weight:700;letter-spacing:-.035em;color:#fff;max-width:18ch;margin:24px auto 0}
 .closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
@@ -169,7 +178,7 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 
 /* ---------------- footer ---------------- */
 footer{background:var(--void);color:#fff;padding:96px 0 40px}
-.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
 .f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
 .f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
 .f-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.42);font-weight:500;margin-bottom:16px}
@@ -179,22 +188,24 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 
 /* ---------------- responsive ---------------- */
 @media(max-width:1080px){
-  .stand,.origin{grid-template-columns:1fr;gap:40px}
-  .figs{grid-template-columns:repeat(2,1fr)}
-  .rules{grid-template-columns:1fr}
+  .origin{grid-template-columns:1fr;gap:40px}
+  .why{grid-template-columns:repeat(2,1fr)}
 }
-@media(max-width:900px){
-  :root{--pad:24px}
+@media(max-width:1080px){
   .nav-links,.nav-cta{display:none}
   .burger{display:block}
   .drawer{display:flex}
+}
+@media(max-width:900px){
+  :root{--pad:24px}
   .sec{padding:88px 0}
   .page-head{padding:152px 0 72px}
   .closing{padding:104px 0}
+  .notice{padding:24px}
   .f-grid{grid-template-columns:1fr 1fr;gap:40px}
 }
 @media(max-width:620px){
-  .figs{grid-template-columns:1fr}
+  .why{grid-template-columns:1fr}
   .f-grid{grid-template-columns:1fr}
   .drawer a{font-size:22px;min-height:52px}
 }
@@ -206,15 +217,17 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 </head>
 <body>
 
+<a href="#main" class="skip">ข้ามไปยังเนื้อหาหลัก</a>
+
 <!-- NAV -->
 <nav class="nav" id="nav">
   <div class="nav-in">
     <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
     <div class="nav-links">
+      <a href="index.html">หน้าแรก</a>
       <a href="about.html" aria-current="page">เกี่ยวกับเรา</a>
       <a href="technology.html">เทคโนโลยี</a>
-      <a href="products.html">ผลิตภัณฑ์</a>
-      <a href="warranty.html">รับประกัน</a>
+      <a href="gallery.html">ผลงาน</a>
       <a href="contact.html">ติดต่อ</a>
     </div>
     <a href="https://finnixcenterth.com" class="nav-cta">หาศูนย์ติดตั้ง</a>
@@ -224,121 +237,174 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 
 <!-- เมนูมือถือ -->
 <div class="drawer" id="drawer">
+  <a href="index.html">หน้าแรก</a>
   <a href="about.html" aria-current="page">เกี่ยวกับเรา</a>
   <a href="technology.html">เทคโนโลยี</a>
-  <a href="products.html">ผลิตภัณฑ์</a>
-  <a href="warranty.html">รับประกัน</a>
+  <a href="gallery.html">ผลงาน</a>
   <a href="faq.html">คำถามที่พบบ่อย</a>
   <a href="contact.html">ติดต่อ</a>
   <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
 </div>
+
+<main id="main">
 
 <!-- หัวหน้า -->
 <header class="page-head on-void">
   <div class="wrap">
     <div class="eyebrow on-dark rvl"><span class="dot"></span>เกี่ยวกับเรา</div>
     <h1 class="rvl" style="transition-delay:.08s">เราขายฟิล์ม<br>ด้วยการอธิบายว่ามันทำงานอย่างไร</h1>
-    <p class="rvl" style="transition-delay:.16s">ไม่ใช่ด้วยการบอกว่ามันดีแค่ไหน ตัวเลขทุกตัวบนเว็บนี้มีที่มา และเราบอกได้ว่าวัดมาอย่างไร</p>
+    <p class="rvl" style="transition-delay:.16s">ไม่ใช่ด้วยการบอกว่ามันดีแค่ไหน หน้านี้รวมสิ่งที่ตรวจสอบได้เกี่ยวกับบริษัทและฟิล์มของเราไว้ที่เดียว</p>
   </div>
 </header>
 
-<!-- จุดยืน -->
-<section class="sec">
+<!-- ส่วนที่ 1 — ทำไมต้องฟินนิกซ์ -->
+<section class="sec" style="padding-bottom:0">
   <div class="wrap">
-    <div class="stand">
-      <div class="rv">
-        <div class="eyebrow"><span class="dot"></span>จุดยืน</div>
-        <h2 style="margin-top:24px">ฟิล์มเข้มขึ้น ไม่ได้แปลว่าเย็นขึ้น</h2>
-      </div>
-      <div class="body rv">
-        <p>ความมืดของฟิล์มคือการลดแสงที่ตามองเห็น ส่วนความร้อนส่วนใหญ่เดินทางมากับคลื่นอินฟราเรดซึ่งมองไม่เห็นด้วยตา ฟิล์มสองแผ่นที่เข้มเท่ากันจึงกันความร้อนได้ไม่เท่ากัน</p>
-        <p>นี่คือความเข้าใจผิดที่พบบ่อยที่สุดเวลาคนเลือกฟิล์ม และเป็นเหตุผลที่เราเลือกอธิบายก่อนขาย เพราะคนที่เข้าใจว่าตัวเองกำลังซื้ออะไร จะเลือกได้ถูกกว่าคนที่เลือกจากความเข้มอย่างเดียว</p>
-        <a href="technology.html" class="more">ดูว่าเราพิสูจน์เรื่องนี้อย่างไร →</a>
-      </div>
+    <div class="sec-head rv">
+      <div class="eyebrow"><span class="dot"></span>ทำไมต้องฟินนิกซ์</div>
+      <h2>สี่เรื่องที่เราออกแบบมาให้ต่าง</h2>
+      <p>ความเข้มคือการลดแสงที่ตามองเห็น ส่วนความร้อนอยู่ในคลื่นอินฟราเรดที่มองไม่เห็น เราออกแบบฟิล์มโดยจับที่คลื่นความร้อนโดยตรง ไม่ได้จับที่ความมืด</p>
     </div>
+  </div>
+  <div class="why rv">
+    <div class="why-cell">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+      <h3>ลดความร้อนที่ต้นทาง</h3>
+      <p>อนุภาคเซรามิกดูดซับพลังงานอินฟราเรดก่อนที่มันจะเข้าห้องโดยสาร แอร์ทำงานน้อยลง น้ำมันลดลงตาม</p>
+    </div>
+    <div class="why-cell">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 12.5a10 10 0 0 1 14 0M8 16a6 6 0 0 1 8 0"/><circle cx="12" cy="19" r="1.2" fill="currentColor" stroke="none"/><path d="M2 9a15 15 0 0 1 20 0"/></svg>
+      <h3><span class="nb">ซีรีส์</span>เซรามิกไม่รบกวนสัญญาณ</h3>
+      <p>CERAMIC · EXTRA CLEAR · UV GUARD ไม่มีชั้นโลหะในเนื้อฟิล์ม สัญญาณ 5G, GPS, กล้องหลัง และบัตรทางด่วนทำงานได้ตามปกติ</p>
+    </div>
+    <div class="why-cell">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>
+      <h3>กลางคืนยังมองชัด</h3>
+      <p>ทุกซีรีส์มีรหัสที่แสงส่องผ่านสูงให้เลือก ไล่ตั้งแต่ 5% ถึง 70% เลือกได้ตามการใช้งานจริง ไม่ใช่เลือกจากความเข้มอย่างเดียว</p>
+    </div>
+    <div class="why-cell">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l7.5 3.2v5.1c0 4.5-3.1 8.4-7.5 9.7-4.4-1.3-7.5-5.2-7.5-9.7V6.2L12 3Z"/><path d="M9.2 12.2l1.9 1.9 3.7-3.9"/></svg>
+      <h3>รับประกัน 7 ปีจากบริษัท</h3>
+      <p>ครอบคลุมการซีด ลอก เป็นฟอง และเปลี่ยนสี ทุกซีรีส์ได้ระยะเท่ากัน ไม่ต้องจำว่ารุ่นไหนได้กี่ปี</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="why-note rv">ข้อที่สองระบุเป็นรายซีรีส์โดยตั้งใจ — CRYSTALIZE ใช้เทคโนโลยีเคลือบโลหะหลายชั้น จึงไม่อยู่ในกลุ่มที่ไม่มีชั้นโลหะ ส่วน TITANIUM เอกสารยังไม่ระบุ ดูตารางในส่วนถัดไป</p>
   </div>
 </section>
 
-<!-- ตัวเลขบริษัท -->
+<!-- ส่วนที่ 2 — แหล่งผลิต -->
 <section class="sec smoke">
   <div class="wrap">
     <div class="sec-head rv">
-      <div class="eyebrow"><span class="dot"></span>บริษัท</div>
-      <h2>ฟินนิกซ์ ฟิล์ม โดยย่อ</h2>
-    </div>
-  </div>
-  <div class="figs">
-    <div class="fig rv">
-      <div class="n"><span class="var">{{YEAR_FOUNDED}}</span></div>
-      <div class="cap">ปีที่ก่อตั้งบริษัท</div>
-    </div>
-    <div class="fig rv">
-      <div class="n">3 ล้าน</div>
-      <div class="cap">ตารางฟุตที่ติดตั้งไปแล้วทั่วประเทศ</div>
-    </div>
-    <div class="fig rv">
-      <div class="n">7 ปี</div>
-      <div class="cap">ระยะเวลารับประกันฟิล์มทุกซีรีส์</div>
-    </div>
-    <div class="fig rv">
-      <div class="n"><span class="var">{{SERVICE_CENTERS}}</span></div>
-      <div class="cap">ศูนย์ติดตั้งที่ผ่านการอบรมจากเรา</div>
-    </div>
-  </div>
-  <div class="wrap">
-    <p class="figs-note rv">ตัวเลขพื้นที่ติดตั้งอ้างอิงจากเอกสารผลิตภัณฑ์ของบริษัท ระยะรับประกันอ้างอิงจากเงื่อนไขที่ระบุบนเอกสารรับประกันของทุกซีรีส์</p>
-  </div>
-</section>
-
-<!-- ที่มา -->
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow"><span class="dot"></span>ที่มา</div>
-      <h2>ทำไมถึงตั้งบริษัทนี้ขึ้นมา</h2>
+      <div class="eyebrow"><span class="dot"></span>แหล่งผลิต</div>
+      <h2>ฟิล์มที่เราขาย ผลิตมาจากที่ใด</h2>
+      <p>ตัวเลขบริษัทกับที่มาของการก่อตั้งอยู่ที่ <a href="index.html" style="border-bottom:1px solid var(--line)">หน้าแรก</a> — หน้านี้พูดเฉพาะเรื่องผู้ผลิตและสิ่งที่ตรวจสอบได้เกี่ยวกับตัวฟิล์ม</p>
     </div>
     <div class="origin">
       <div class="rv">
-        <p class="lede"><span class="var">{{FOUNDING_STORY}}</span></p>
+        <h3>ผู้ผลิตและประเทศต้นทาง</h3>
+        <p class="lede"><span class="var">{{FILM_SOURCE}}</span></p>
+        <p>เอกสารผลิตภัณฑ์ระบุเพียงว่า “เราคัดเลือกผลิตภัณฑ์ที่ดีที่สุดจากแหล่งที่มาที่เป็นที่ยอมรับในโลก” ซึ่งบอกไม่ได้ว่าผลิตที่ใด</p>
+        <p>สิ่งที่ต้องการคือ ประเทศและโรงงานผู้ผลิต และเหตุผลที่บริษัทเลือกแหล่งนั้น — เป็นข้อมูลที่คนเทียบแบรนด์ถามก่อนเสมอ</p>
       </div>
       <div class="rv">
-        <p>ส่วนนี้ยังรอข้อมูลจากบริษัท เราไม่เขียนเรื่องเล่าที่มาขึ้นเองเพราะเป็นข้อความที่ลูกค้าจะใช้ตัดสินว่าจะเชื่อแบรนด์หรือไม่ ถ้าเขียนแทนแล้วไม่ตรงกับความจริง ความเสียหายมากกว่าการปล่อยว่างไว้ก่อน</p>
-        <p>สิ่งที่ต้องการคือ ปีและเหตุผลที่ก่อตั้ง · ผู้ก่อตั้งและภูมิหลัง · แหล่งผลิตฟิล์มที่บริษัทเลือกใช้และเหตุผลที่เลือก</p>
+        <h3>ทำไมถึงต้องบอกให้ชัด</h3>
+        <p>แบรนด์ฟิล์มที่ขายในไทยส่วนใหญ่ไม่ได้ผลิตฟิล์มเอง แต่สั่งจากโรงงานแล้วติดตราของตัวเอง ซึ่งไม่ใช่เรื่องเสียหาย — เสียหายตรงที่ไม่บอก</p>
+        <p>เมื่อไม่รู้ว่าใครผลิต ก็ตรวจสอบไม่ได้ว่าค่าที่โฆษณามาจากห้องทดสอบไหน และเคลมประกันในอีกห้าปีข้างหน้าจะยังมีคนรับผิดชอบอยู่หรือไม่ เราจึงเว้นช่องนี้ไว้แทนที่จะเขียนคำกว้างๆ ให้ดูดี</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- หลักที่ยึด -->
-<section class="sec smoke" style="padding-bottom:0">
+<!-- ส่วนที่ 3 — สิ่งที่ฟิล์มทำได้จริง -->
+<section class="sec">
   <div class="wrap">
     <div class="sec-head rv">
-      <div class="eyebrow"><span class="dot"></span>หลักที่ยึด</div>
-      <h2>สามข้อที่เราไม่ยอมลดหย่อน</h2>
-      <p>ไม่ใช่คำโฆษณา แต่เป็นเกณฑ์ที่ใช้ตัดสินว่าจะเขียนอะไรลงบนเว็บนี้ได้บ้าง</p>
+      <div class="eyebrow"><span class="dot"></span>สิ่งที่ฟิล์มทำได้</div>
+      <h2>ห้า<span class="nb">ซีรีส์</span> กับสิ่งที่แต่ละแบบถนัดคนละอย่าง</h2>
+      <p>ค่าที่แสดงเป็นช่วงจากรหัสที่อ่อนที่สุดถึงเข้มที่สุดของแต่ละซีรีส์ ถอดจากเอกสารผลิตภัณฑ์ของบริษัทปี 2567 ค่ารายรหัสสอบถามได้ที่ศูนย์ติดตั้ง</p>
     </div>
-  </div>
-  <div class="rules">
-    <div class="rule rv">
-      <div class="k">หนึ่ง</div>
-      <h3>ตัวเลขต้องบอกได้ว่าวัดมาอย่างไร</h3>
-      <p>ค่ากันความร้อนที่ไม่ระบุวิธีทดสอบ เอาไปเทียบกับยี่ห้ออื่นไม่ได้เลย เราจึงระบุมาตรฐานกำกับทุกครั้งที่แสดงตัวเลข</p>
+
+    <div class="spec-wrap rv">
+      <table class="spec">
+        <thead>
+          <tr>
+            <th scope="col">ซีรีส์</th>
+            <th scope="col">เทคโนโลยี</th>
+            <th scope="col">ลดความร้อน</th>
+            <th scope="col">ป้องกันยูวี</th>
+            <th scope="col">แสงส่องผ่าน</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">TITANIUM</th>
+            <td><span class="var">{{TECH_TITANIUM}}</span></td>
+            <td class="num">81–96%</td>
+            <td class="num">99%</td>
+            <td class="num">10–40%</td>
+          </tr>
+          <tr>
+            <th scope="row">CERAMIC</th>
+            <td>เซรามิก ไม่มีชั้นโลหะ</td>
+            <td class="num">80–90%</td>
+            <td class="num">99%</td>
+            <td class="num">5–30%</td>
+          </tr>
+          <tr>
+            <th scope="row">CRYSTALIZE</th>
+            <td>เคลือบโลหะหลายชั้น (sputtering)</td>
+            <td class="num">55–85%</td>
+            <td class="num">99%</td>
+            <td class="num">22–70%</td>
+          </tr>
+          <tr>
+            <th scope="row">EXTRA CLEAR</th>
+            <td>เซรามิก ไม่มีชั้นโลหะ</td>
+            <td class="num">61–67%</td>
+            <td class="num">100%</td>
+            <td class="num">5–35%</td>
+          </tr>
+          <tr>
+            <th scope="row">UV GUARD</th>
+            <td>เซรามิก ไม่มีชั้นโลหะ</td>
+            <td class="num">52–63%</td>
+            <td class="num">100%</td>
+            <td class="num">5–40%</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="rule rv">
-      <div class="k">สอง</div>
-      <h3>บอกข้อจำกัดพร้อมกับข้อดี</h3>
-      <p>ฟิล์มทุกรุ่นมีข้อแลกเปลี่ยน ฟิล์มที่กันความร้อนสูงบางรุ่นมีชั้นโลหะ ฟิล์มที่ใสมากกันความร้อนได้น้อยกว่า เราบอกทั้งสองด้าน</p>
-    </div>
-    <div class="rule rv">
-      <div class="k">สาม</div>
-      <h3>ไม่เทียบกับยี่ห้อที่ไม่ได้เอ่ยชื่อ</h3>
-      <p>การเทียบกับ “ฟิล์มทั่วไป” โดยไม่บอกว่าคือรุ่นไหน วัดเมื่อไร เป็นการเทียบที่ตรวจสอบไม่ได้ เราใช้ค่าของเราเองเทียบกันเอง</p>
+
+    <div class="notice rv" style="margin-top:56px">
+      <b>ค่าทั้งหมดในตารางนี้ถอดจากเอกสารผลิตภัณฑ์ของบริษัท แต่ยังขาดชื่อมาตรฐานการวัด</b>
+      เอกสารระบุเพียงว่า “เป็นไปตามวิธีทดสอบตามมาตรฐานสากลของโลก” โดยไม่บอกชื่อมาตรฐาน ค่าที่วัดคนละมาตรฐานเอามาเทียบข้ามยี่ห้อไม่ได้ จึงต้องได้ <span class="var">{{TEST_STANDARD}}</span> มากำกับก่อนใช้ตัวเลขชุดนี้เทียบกับแบรนด์อื่น
     </div>
   </div>
 </section>
 
-<!-- ปิดท้าย -->
-<section class="closing on-void">
+<!-- ส่วนที่ 4 — มาตรฐานและการรับรอง -->
+<section class="sec smoke">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow"><span class="dot"></span>มาตรฐานและการรับรอง</div>
+      <h2>เราจะไม่ติดตราที่พิสูจน์ไม่ได้</h2>
+      <p>หน้าเกี่ยวกับเราของแบรนด์ฟิล์มส่วนใหญ่จบด้วยแถวโลโก้สถาบันรับรอง ตราแต่ละอันมีความหมายต่อกันคนละเรื่อง และบางอันรับรองโรงงาน ไม่ได้รับรองฟิล์มที่ขายในไทย</p>
+    </div>
+    <div class="notice rv">
+      <b>ส่วนนี้ยังไม่มีข้อมูลจากบริษัท</b>
+      รายการมาตรฐานและใบรับรองที่บริษัทหรือฟิล์มถืออยู่ต้องมาจากเอกสารจริงเท่านั้น <span class="var">{{CERTIFICATIONS}}</span> — สิ่งที่ต้องการคือ ชื่อสถาบัน · สิ่งที่ใบรับรองครอบคลุม (โรงงาน ผู้ผลิต หรือตัวฟิล์ม) · เลขที่และปีที่ออก
+    </div>
+    <div class="notice rv">
+      <b>ค่าที่ต้องได้เป็นลำดับแรกของทั้งเว็บ</b>
+      <span class="var">{{TEST_STANDARD}}</span> คือชื่อมาตรฐานที่ใช้วัดค่าฟิล์มทุกตัว ตราบใดที่ยังไม่ได้ ตัวเลขทุกตัวบนเว็บนี้ยังเทียบกับแบรนด์อื่นไม่ได้
+    </div>
+  </div>
+</section>
+
+<!-- ส่วนที่ 5 — ปิดท้าย -->
+<section class="closing">
   <div class="wrap">
     <div class="eyebrow on-dark" style="text-align:center"><span class="dot"></span>ขั้นตอนต่อไป</div>
     <h2>อยากรู้ว่ารถของคุณควรใช้รุ่นไหน</h2>
@@ -346,6 +412,8 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     <a href="https://finnixcenterth.com" class="btn btn-light">หาศูนย์ติดตั้งใกล้คุณ <span class="ar">→</span></a>
   </div>
 </section>
+
+</main>
 
 <!-- FOOTER -->
 <footer>
@@ -356,16 +424,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
         <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
       </div>
       <div class="f-col">
-        <h4>ผลิตภัณฑ์</h4>
-        <a href="products.html#titanium">TITANIUM</a><a href="products.html#ceramic">CERAMIC</a><a href="products.html#crystalize">CRYSTALIZE</a><a href="products.html#extra-clear">EXTRA CLEAR</a><a href="products.html#uv-guard">UV GUARD</a>
-      </div>
-      <div class="f-col">
         <h4>บริษัท</h4>
-        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a>
+        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a><a href="gallery.html">ผลงาน</a>
       </div>
       <div class="f-col">
         <h4>บริการ</h4>
-        <a href="warranty.html">การรับประกัน</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+        <a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
       </div>
     </div>
     <div class="f-bot">
@@ -407,7 +471,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     }
   });
   /* กลับมากว้างกว่า 900px แล้วต้องไม่ค้างสถานะเมนูเปิด */
-  window.matchMedia('(min-width:901px)').addEventListener('change', function(e){
+  window.matchMedia('(min-width:1081px)').addEventListener('change', function(e){
     if(e.matches) setMenu(false);
   });
 

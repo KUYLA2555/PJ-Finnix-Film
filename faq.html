@@ -41,6 +41,13 @@ a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 :focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
 
+/* ข้ามไปเนื้อหาหลัก — ต้องมีทุกหน้าเพื่อให้คนใช้คีย์บอร์ดไม่ต้องไล่ผ่าน nav ทุกครั้ง (ข้อ 9) */
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:0 0 12px 0;z-index:200}
+.skip:focus{left:0}
+
+/* เบราว์เซอร์ตัดคำไทยด้วยพจนานุกรมที่ไม่มีคำทับศัพท์ — ครอบคำที่ตัดผิดด้วย .nb */
+.nb{white-space:nowrap}
+
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
 .eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
 .eyebrow.on-dark{color:var(--mute-dark)}
@@ -155,7 +162,7 @@ summary:hover{color:var(--mute)}
 
 /* ---------------- footer ---------------- */
 footer{background:var(--void);color:#fff;padding:96px 0 40px}
-.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
 .f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
 .f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
 .f-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.42);font-weight:500;margin-bottom:16px}
@@ -169,11 +176,13 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .qa-group h2,.qa-side{position:static}
   .qa-body{padding-right:0}
 }
-@media(max-width:900px){
-  :root{--pad:24px}
+@media(max-width:1080px){
   .nav-links,.nav-cta{display:none}
   .burger{display:block}
   .drawer{display:flex}
+}
+@media(max-width:900px){
+  :root{--pad:24px}
   .sec{padding:88px 0}
   .page-head{padding:152px 0 72px}
   .closing{padding:104px 0}
@@ -193,15 +202,17 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 </head>
 <body>
 
+<a href="#main" class="skip">ข้ามไปยังเนื้อหาหลัก</a>
+
 <!-- NAV -->
 <nav class="nav" id="nav">
   <div class="nav-in">
     <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
     <div class="nav-links">
+      <a href="index.html">หน้าแรก</a>
       <a href="about.html">เกี่ยวกับเรา</a>
       <a href="technology.html">เทคโนโลยี</a>
-      <a href="products.html">ผลิตภัณฑ์</a>
-      <a href="warranty.html">รับประกัน</a>
+      <a href="gallery.html">ผลงาน</a>
       <a href="contact.html">ติดต่อ</a>
     </div>
     <a href="https://finnixcenterth.com" class="nav-cta">หาศูนย์ติดตั้ง</a>
@@ -211,14 +222,16 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 
 <!-- เมนูมือถือ -->
 <div class="drawer" id="drawer">
+  <a href="index.html">หน้าแรก</a>
   <a href="about.html">เกี่ยวกับเรา</a>
   <a href="technology.html">เทคโนโลยี</a>
-  <a href="products.html">ผลิตภัณฑ์</a>
-  <a href="warranty.html">รับประกัน</a>
+  <a href="gallery.html">ผลงาน</a>
   <a href="faq.html" aria-current="page">คำถามที่พบบ่อย</a>
   <a href="contact.html">ติดต่อ</a>
   <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
 </div>
+
+<main id="main">
 
 <!-- หัวหน้า -->
 <header class="page-head on-void">
@@ -300,7 +313,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     <div class="qa-group">
       <div class="qa-side rv">
         <div class="eyebrow"><span class="dot"></span>เนื้อฟิล์ม</div>
-        <h2>เซรามิกกับโลหะ</h2>
+        <h2><span class="nb">เซรามิก</span>กับโลหะ</h2>
       </div>
       <div class="rv">
         <details>
@@ -358,7 +371,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           <div class="qa-body">
             <p>ฟิล์มทุกซีรีส์รับประกัน 7 ปีนับจากวันติดตั้ง ไม่มีรุ่นไหนได้ระยะสั้นกว่ารุ่นอื่น</p>
             <p>เงื่อนไขครอบคลุมความเสียหายที่เกิดจากตัวเนื้อฟิล์มเอง ไม่ครอบคลุมความเสียหายจากการใช้งานหรืออุบัติเหตุ</p>
-            <p><a href="warranty.html">อ่านเงื่อนไขการรับประกันทั้งหมด →</a></p>
           </div>
         </details>
       </div>
@@ -377,6 +389,8 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   </div>
 </section>
 
+</main>
+
 <!-- FOOTER -->
 <footer>
   <div class="wrap">
@@ -386,16 +400,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
         <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
       </div>
       <div class="f-col">
-        <h4>ผลิตภัณฑ์</h4>
-        <a href="products.html#titanium">TITANIUM</a><a href="products.html#ceramic">CERAMIC</a><a href="products.html#crystalize">CRYSTALIZE</a><a href="products.html#extra-clear">EXTRA CLEAR</a><a href="products.html#uv-guard">UV GUARD</a>
-      </div>
-      <div class="f-col">
         <h4>บริษัท</h4>
-        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a>
+        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a><a href="gallery.html">ผลงาน</a>
       </div>
       <div class="f-col">
         <h4>บริการ</h4>
-        <a href="warranty.html">การรับประกัน</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+        <a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
       </div>
     </div>
     <div class="f-bot">
@@ -436,7 +446,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
       setMenu(false); burger.focus();
     }
   });
-  window.matchMedia('(min-width:901px)').addEventListener('change', function(e){
+  window.matchMedia('(min-width:1081px)').addEventListener('change', function(e){
     if(e.matches) setMenu(false);
   });
 

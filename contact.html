@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ติดต่อ — FINNIX FILM</title>
-<meta name="description" content="ติดต่อ บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ลูกค้าทั่วไปติดต่อผ่านศูนย์ติดตั้ง ส่วนเรื่องตัวแทนจำหน่ายและงานองค์กร ติดต่อบริษัทโดยตรง">
+<title>ติดต่อเรา | ฟินนิกซ์ ฟิล์ม — ฟิล์มกรองแสงรถยนต์</title>
+<meta name="description" content="ติดต่อ ฟินนิกซ์ ฟิล์ม — ค้นหาตัวแทนติดตั้งใกล้คุณทั่วประเทศ หรือติดต่อบริษัทโดยตรง ฟิล์มกรองแสงรถยนต์ 5 ซีรีส์ TITANIUM · CERAMIC · CRYSTALIZE · EXTRA CLEAR · UV GUARD">
+<meta name="format-detection" content="telephone=no">
+<!-- TODO SEO (รอค่าจริงก่อนใส่ — ค้างข้อ 15: โดเมนยังไม่นิ่ง): canonical · Open Graph/Twitter 1200x630 · JSON-LD LocalBusiness (ต้องได้ COMPANY_ADDRESS · COMPANY_EMAIL ก่อน ไม่ป้อนค่า placeholder ให้ crawler) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -40,6 +42,13 @@ h1,h2,h3,h4,.disp{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;lin
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 :focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+
+/* ข้ามไปเนื้อหาหลัก — ต้องมีทุกหน้าเพื่อให้คนใช้คีย์บอร์ดไม่ต้องไล่ผ่าน nav ทุกครั้ง (ข้อ 9) */
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:0 0 12px 0;z-index:200}
+.skip:focus{left:0}
+
+/* เบราว์เซอร์ตัดคำไทยด้วยพจนานุกรมที่ไม่มีคำทับศัพท์ — ครอบคำที่ตัดผิดด้วย .nb */
+.nb{white-space:nowrap}
 
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
 .eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
@@ -112,51 +121,156 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .btn-light{background:#fff;color:var(--ink)}
 .btn-light:hover{transform:translateY(-2px);background:#F0F0EE}
 
-/* ---------------- หัวหน้า ---------------- */
-.page-head{background:var(--void);color:#fff;padding:200px 0 104px}
+/* ---------------- หัวหน้า — hero มืด + vignette (MODE B: ไม่มีภาพถ่าย ใช้ gradient แทน) ---------------- */
+.page-head{background:var(--void);color:#fff;padding:200px 0 104px;position:relative;overflow:hidden}
+.page-head::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(255,255,255,.06),transparent 70%),
+             radial-gradient(ellipse 60% 50% at 85% 100%,rgba(204,27,27,.08),transparent 70%)}
+.page-head .wrap{position:relative}
 .page-head h1{font-size:clamp(38px,6.4vw,80px);font-weight:700;letter-spacing:-.035em;margin-top:24px;max-width:14ch}
 .page-head p{color:var(--mute-dark);margin-top:32px;max-width:52ch;font-size:18px}
 
 /* ---------------- section ---------------- */
 .sec{padding:132px 0}
 .sec.smoke{background:var(--smoke)}
-.sec-head{max-width:800px;margin-bottom:72px}
-.sec-head h2{font-size:clamp(30px,4.4vw,56px);margin-top:24px}
-.sec-head p{margin-top:24px;font-size:18px;color:var(--mute);max-width:56ch}
 
-/* สองทาง */
-.tracks{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.track{background:var(--paper);padding:64px 48px 72px;display:flex;flex-direction:column}
-.track .k{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
-.track h2{font-size:clamp(26px,3vw,36px);margin:24px 0 16px;letter-spacing:-.025em}
-.track p{color:var(--mute);font-size:16px;max-width:42ch}
-.track .btn{margin-top:40px;align-self:flex-start}
-.track .lines{margin-top:40px;border-top:1px solid var(--line)}
-.track .lines a,.track .lines div{display:flex;justify-content:space-between;gap:24px;
-  min-height:56px;align-items:center;border-bottom:1px solid var(--line);font-size:15px}
-.track .lines span:first-child{color:var(--mute);flex:none}
-.track .lines b{font-weight:500;text-align:right}
-.track .lines a{transition:color .3s var(--e)}
-.track .lines a:hover b{color:var(--red)}
+/* ---------------- hero สองคอลัมน์ตามหน้าต้นแบบ — ข้อมูลติดต่อซ้าย · ฟอร์มขวา ---------------- */
+.hero-c{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.hero-c .rule{width:56px;height:2px;background:rgba(255,255,255,.32);margin:32px 0}
+.chan-box{margin-top:40px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);
+  border-radius:16px;padding:32px 32px 24px}
+.chan-row{display:flex;align-items:baseline;gap:16px;padding-bottom:16px;margin-bottom:16px;
+  border-bottom:1px solid rgba(255,255,255,.10)}
+.chan-row:last-child{border-bottom:0;margin-bottom:0}
+.chan-row .k{flex:none;width:96px;font-size:13px;color:var(--mute-dark)}
+.chan-row b{font-weight:500;font-size:16px;word-break:break-word}
+.chan-row a{border-bottom:1px solid rgba(255,255,255,.32)}
+.chan-row a:hover{border-bottom-color:#fff}
 
-/* ข้อมูลบริษัท */
-.info{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.info-cell{background:var(--smoke);padding:48px 32px 56px}
-.info-cell h3{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
-.info-cell p{margin-top:20px;font-size:16px;line-height:1.7}
-.info-cell .sub{color:var(--mute);font-size:14px;margin-top:8px}
+/* ฟอร์ม — การ์ดขาวลอยบนพื้นมืด · 3 ช่องตามหน้าต้นแบบ */
+.cform{background:var(--paper);color:var(--ink);border-radius:16px;padding:40px}
+.fld{position:relative;margin-bottom:24px}
+.fld input,.fld textarea{display:block;width:100%;padding:24px 16px 8px;
+  font:inherit;font-size:15px;color:var(--ink);background:var(--paper);
+  border:1px solid var(--line);border-radius:12px}
+.fld textarea{resize:vertical;min-height:160px}
+.fld label{position:absolute;left:16px;top:16px;font-size:15px;color:var(--mute);
+  pointer-events:none;transition:transform .18s var(--e),font-size .18s var(--e);transform-origin:left top}
+.fld input:focus + label,.fld input:not(:placeholder-shown) + label,
+.fld textarea:focus + label,.fld textarea:not(:placeholder-shown) + label{transform:translateY(-10px);font-size:11px}
+.fld input:focus,.fld textarea:focus{border-color:var(--ink)}
+.fld.err input,.fld.err textarea{border-color:var(--red)}
+.fld .msg{display:none;margin-top:8px;font-size:13px;color:var(--red)}
+.fld.err .msg{display:block}
+.hp{position:absolute;left:-9999px;top:0;height:1px;width:1px;overflow:hidden}
+.cform .btn{width:100%;justify-content:center}
+.cform .btn .spin{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.35);
+  border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cform.busy .btn .spin{display:inline-block}
+.cform.busy .btn{opacity:.7;pointer-events:none}
+/* การ์ดฟอร์มอยู่ในโซนพื้นมืด — ต้องชนะ .page-head p ที่เป็นสีขาว ไม่งั้นตัวหนังสือหายไปบนการ์ดขาว */
+.cform .form-note{margin-top:16px;font-size:13px;color:var(--mute);line-height:1.7}
+.cform .form-ok p{color:var(--mute)}
+.form-ok{display:none;text-align:center;padding:32px 0}
+.form-ok .ck{width:56px;height:56px;margin:0 auto;border-radius:50%;background:var(--ink);
+  display:flex;align-items:center;justify-content:center;color:#fff}
+.form-ok h3{font-size:22px;margin-top:24px}
+.form-ok p{color:var(--mute);margin-top:8px;font-size:15px}
+.form-ok a{display:inline-block;margin-top:24px;font-size:15px;font-weight:500;text-decoration:underline}
+.cform.sent form{display:none}
+.cform.sent .form-ok{display:block}
+.form-err{display:none;margin-bottom:24px;padding:16px;border:1px solid var(--red);
+  border-radius:12px;background:#FBECEC;color:#B02020;font-size:14px}
+.cform.fail .form-err{display:block}
+
+/* แถบค้นหา | OR | สำนักงานใหญ่ — สามคอลัมน์ตามหน้าต้นแบบ */
+.find{display:grid;grid-template-columns:1fr auto 1fr;gap:48px;align-items:start}
+.find h2{font-size:24px;letter-spacing:-.02em}
+.find .or{align-self:stretch;display:flex;align-items:center;gap:24px;
+  font-size:13px;letter-spacing:.2em;color:var(--mute)}
+.find .or::before,.find .or::after{content:'';width:1px;flex:1;background:var(--line)}
+.find .or::before,.find .or::after{min-height:64px}
+.flabel{display:block;font-size:11px;font-weight:500;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute);margin:32px 0 8px}
+.find select{display:block;width:100%;max-width:400px;padding:16px;font:inherit;font-size:15px;
+  color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:12px}
+.find select:focus{border-color:var(--ink)}
+.find .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.find .grp{margin-top:24px;font-size:15px;line-height:1.8}
+.find .grp span{display:block;font-size:13px;color:var(--mute)}
+.find .tel{font-weight:500}
+
+/* ป้ายตัวอย่าง (แพทเทิร์น v2.2) */
+.sample-tag{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;padding:8px 16px;
+  border:1px dashed #B8B8B4;border-radius:8px;background:var(--paper);font-size:13px;color:#5C5C57}
+
+/* แผนที่ + รายการตัวแทน — สองคอลัมน์ตามหน้าต้นแบบ */
+.loc{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.tmap{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px}
+.tmap iframe{display:block;width:100%;height:670px;border:0;border-radius:12px}
+.tmap .map-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:8px;margin-top:16px;font-size:13px;color:var(--mute)}
+.tmap .map-foot a{font-weight:500;text-decoration:underline}
+.loc-list{background:var(--paper);border:1px solid var(--line);border-radius:16px;
+  display:flex;flex-direction:column;max-height:720px;overflow-y:auto;overflow-x:hidden}
+.count{position:sticky;top:0;z-index:2;background:var(--paper);padding:16px 24px;
+  font-size:14px;color:var(--mute);border-bottom:1px solid var(--line)}
+.dcards{flex:1}
+.dcard{padding:24px;border-bottom:1px solid var(--line);transition:background .2s var(--e)}
+.dcard:last-child{border-bottom:0}
+.dcard:hover,.dcard.on{background:var(--smoke)}
+.dcard .top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.dcard h3{font-size:17px;letter-spacing:-.01em}
+.dcard .co{font-size:13px;color:var(--mute);margin-top:2px}
+.dcard .addr{font-size:14px;color:var(--mute);margin-top:8px;line-height:1.7}
+.dcard .dist{font-size:13px;color:var(--ink);font-weight:500;margin-top:8px;font-variant-numeric:tabular-nums}
+.dcard .svc{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;font-size:12px;color:var(--mute)}
+.dcard .svc span{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:6px;padding:2px 8px}
+.dcard .act{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.dcard .act a{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;
+  border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:500;transition:border-color .2s var(--e)}
+.dcard .act a,.dcard .act .map-btn{border:1px solid var(--line)}
+.dcard .act .map-btn{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;
+  border-radius:999px;font:inherit;font-size:14px;font-weight:500;background:var(--paper);
+  color:var(--ink);cursor:pointer;transition:border-color .2s var(--e)}
+.dcard .act a:hover,.dcard .act .map-btn:hover{border-color:var(--ink)}
+.chip{min-height:40px;padding:0 16px;border-radius:999px;font:inherit;font-size:14px;font-weight:500;
+  border:1px solid var(--line);background:var(--paper);color:var(--mute);cursor:pointer;
+  transition:color .2s var(--e),border-color .2s var(--e),background .2s var(--e)}
+.chip:hover{color:var(--ink);border-color:#B8B8B4}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+/* แบดจ์ 4 tier — แยกกันโดยไม่ใช้แดง (โควตาข้อ 4) และไม่พึ่งสีอย่างเดียว: ข้อความ + ไอคอนต่างกัน */
+.badge{flex:none;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:4px 10px}
+.badge.center{background:var(--ink);color:#fff}
+.badge.automotive{border:1px solid var(--ink);color:var(--ink)}
+.badge.sub{background:#EDEDEB;color:#5C5C57}
+.loc-empty{display:none;padding:56px 24px;text-align:center}
+.loc-empty h3{font-size:20px}
+.loc-empty p{color:var(--mute);font-size:15px;margin-top:8px}
+.loc-empty .alt{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}
+.loc-empty .cta{display:inline-block;margin-top:24px;font-weight:500;text-decoration:underline}
+.loc.empty .loc-empty{display:block}
+.loc.empty .dcards .dcard,.loc.empty .count{display:none}
+.more{display:none;margin:24px;align-self:center}
+.toast{position:fixed;z-index:120;left:50%;bottom:24px;transform:translate(-50%,16px);
+  background:var(--ink);color:#fff;font-size:14px;padding:12px 24px;border-radius:999px;
+  opacity:0;visibility:hidden;transition:opacity .3s var(--e),transform .3s var(--e),visibility .3s}
+.toast.on{opacity:1;visibility:visible;transform:translate(-50%,0)}
 
 /* ปิดท้าย */
-.closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
+.closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0;position:relative;overflow:hidden}
+.closing::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 60% at 50% 100%,rgba(204,27,27,.10),transparent 70%)}
+.closing .wrap{position:relative}
 .closing h2{font-size:clamp(32px,5.4vw,72px);font-weight:700;letter-spacing:-.035em;color:#fff;max-width:18ch;margin:24px auto 0}
 .closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
-.closing .btn{margin-top:48px}
+.closing .btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:48px}
 
 /* ---------------- footer ---------------- */
 footer{background:var(--void);color:#fff;padding:96px 0 40px}
-.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
 .f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
 .f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
 .f-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.42);font-weight:500;margin-bottom:16px}
@@ -166,25 +280,37 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 
 /* ---------------- responsive ---------------- */
 @media(max-width:1080px){
-  .tracks{grid-template-columns:1fr}
-  .info{grid-template-columns:1fr}
-}
-@media(max-width:900px){
-  :root{--pad:24px}
   .nav-links,.nav-cta{display:none}
   .burger{display:block}
   .drawer{display:flex}
+}
+@media(max-width:1080px){
+  .hero-c{grid-template-columns:1fr;gap:48px}
+  .loc{grid-template-columns:1fr}
+  .tmap{order:-1}
+  .tmap iframe{height:400px}
+  .loc-list{max-height:none}
+  .find{grid-template-columns:1fr;gap:32px}
+  .find .or{display:none}
+  .find > .rv + .rv{padding-top:32px;border-top:1px solid var(--line)}
+}
+@media(max-width:900px){
+  :root{--pad:24px}
   .sec{padding:88px 0}
   .page-head{padding:152px 0 72px}
   .closing{padding:104px 0}
-  .track{padding:48px 24px 56px}
   .f-grid{grid-template-columns:1fr 1fr;gap:40px}
+}
+@media(max-width:640px){
+  .cform{padding:32px 24px}
+  .chan-box{padding:24px}
+  .chan-row{flex-direction:column;gap:4px}
+  .chan-row .k{width:auto}
 }
 @media(max-width:620px){
   .f-grid{grid-template-columns:1fr}
   .drawer a{font-size:22px;min-height:52px}
-  .track .lines a,.track .lines div{flex-direction:column;align-items:flex-start;gap:4px;padding:16px 0}
-  .track .lines b{text-align:left}
+  .dcard .top{flex-direction:column;align-items:flex-start;gap:8px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important}
@@ -194,15 +320,17 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 </head>
 <body>
 
+<a href="#main" class="skip">ข้ามไปยังเนื้อหาหลัก</a>
+
 <!-- NAV -->
 <nav class="nav" id="nav">
   <div class="nav-in">
     <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
     <div class="nav-links">
+      <a href="index.html">หน้าแรก</a>
       <a href="about.html">เกี่ยวกับเรา</a>
       <a href="technology.html">เทคโนโลยี</a>
-      <a href="products.html">ผลิตภัณฑ์</a>
-      <a href="warranty.html">รับประกัน</a>
+      <a href="gallery.html">ผลงาน</a>
       <a href="contact.html" aria-current="page">ติดต่อ</a>
     </div>
     <a href="https://finnixcenterth.com" class="nav-cta">หาศูนย์ติดตั้ง</a>
@@ -212,107 +340,141 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 
 <!-- เมนูมือถือ -->
 <div class="drawer" id="drawer">
+  <a href="index.html">หน้าแรก</a>
   <a href="about.html">เกี่ยวกับเรา</a>
   <a href="technology.html">เทคโนโลยี</a>
-  <a href="products.html">ผลิตภัณฑ์</a>
-  <a href="warranty.html">รับประกัน</a>
+  <a href="gallery.html">ผลงาน</a>
   <a href="faq.html">คำถามที่พบบ่อย</a>
   <a href="contact.html" aria-current="page">ติดต่อ</a>
   <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
 </div>
 
-<!-- หัวหน้า -->
+<main id="main">
+
+<!-- 1 · hero มืด สองคอลัมน์ตามหน้าต้นแบบ — ข้อมูลติดต่อซ้าย · ฟอร์มขวา
+     ต่างจากเขาโดยตั้งใจ: ไม่มีภาพแผนที่โลกเป็นพื้นหลัง (MODE B ห้ามภาพถ่าย) ใช้ gradient แทน -->
 <header class="page-head on-void">
   <div class="wrap">
-    <div class="eyebrow on-dark rvl"><span class="dot"></span>ติดต่อ</div>
-    <h1 class="rvl" style="transition-delay:.08s">เรื่องรถ ถามศูนย์ เรื่องธุรกิจ ถามบริษัท</h1>
-    <p class="rvl" style="transition-delay:.16s">สองเรื่องนี้คนละคนตอบ แยกทางไว้ตั้งแต่ต้นจะได้คำตอบเร็วกว่า</p>
+    <div class="hero-c">
+      <div>
+        <div class="eyebrow on-dark rvl"><span class="dot"></span>CONTACT</div>
+        <h1 class="rvl" style="transition-delay:.08s">ติดต่อเรา</h1>
+        <div class="rule rvl" style="transition-delay:.12s"></div>
+        <p class="rvl" style="transition-delay:.16s">บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มใสกันรอยรถยนต์ <span class="nb">ห้าซีรีส์</span> สำหรับสภาพอากาศเมืองไทย</p>
+        <div class="chan-box rvl" style="transition-delay:.24s">
+          <div class="chan-row"><span class="k">Hotline</span><b><a href="tel:0635978497">06-3597-8497</a></b></div>
+          <div class="chan-row"><span class="k">LINE</span><b><span class="var">{{LINE_OA_ID}}</span></b></div>
+          <div class="chan-row"><span class="k">Facebook</span><b><span class="var">{{FACEBOOK_URL}}</span></b></div>
+          <div class="chan-row"><span class="k">Instagram</span><b><span class="var">{{INSTAGRAM_URL}}</span></b></div>
+        </div>
+      </div>
+
+      <div class="cform rvl" id="cform-wrap" style="transition-delay:.2s">
+        <form id="cform" novalidate>
+          <div class="form-err" role="alert">ส่งไม่สำเร็จ — ข้อความของคุณยังอยู่ครบ ลองอีกครั้งหรือโทรหาเราแทน</div>
+          <div class="fld">
+            <input id="f-name" name="name" type="text" placeholder=" " autocomplete="name" required>
+            <label for="f-name">ชื่อ</label>
+            <p class="msg" id="f-name-err">กรอกชื่อ</p>
+          </div>
+          <div class="fld">
+            <input id="f-mail" name="email" type="email" placeholder=" " autocomplete="email" required>
+            <label for="f-mail">อีเมล</label>
+            <p class="msg" id="f-mail-err">รูปแบบอีเมลไม่ถูกต้อง</p>
+          </div>
+          <div class="fld">
+            <textarea id="f-msg" name="message" placeholder=" " required></textarea>
+            <label for="f-msg">ข้อความ</label>
+            <p class="msg" id="f-msg-err">พิมพ์ข้อความที่อยากสอบถาม</p>
+          </div>
+          <div class="hp" aria-hidden="true"><label>ห้ามกรอกช่องนี้<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <button type="submit" class="btn btn-dark">ส่ง <span class="spin" aria-hidden="true"></span></button>
+          <p class="form-note">โหมดสาธิต — ข้อความยังไม่ถูกส่งไปที่ใด จนกว่าระบบรับจะเชื่อมกับ <span class="var">{{COMPANY_EMAIL}}</span> · ระหว่างนี้โทรหรือทัก LINE ได้เลย</p>
+        </form>
+        <div class="form-ok" aria-live="polite">
+          <div class="ck"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <h3>ขอบคุณครับ</h3>
+          <p>ทีมงานจะติดต่อกลับภายใน 1 วันทำการ<br>(โหมดสาธิต — ยังไม่มีการส่งจริง)</p>
+          <a href="#" id="form-reset">ส่งข้อความอีกครั้ง</a>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
-<!-- สองทาง -->
-<section class="sec" style="padding-bottom:0">
+<!-- 2 · ค้นหาตัวแทน | OR | สำนักงานใหญ่ — สามคอลัมน์ตามหน้าต้นแบบ -->
+<section class="sec" id="find">
   <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow"><span class="dot"></span>เลือกทาง</div>
-      <h2>คุณติดต่อเรื่องอะไร</h2>
-    </div>
-  </div>
-  <div class="tracks">
-    <div class="track rv">
-      <div class="k">ลูกค้าทั่วไป</div>
-      <h2>ติดฟิล์มรถของตัวเอง</h2>
-      <p>เรื่องราคา การนัดคิว ความเข้มที่เหมาะกับรถของคุณ และการเคลมประกัน ให้ติดต่อศูนย์ติดตั้งโดยตรง เพราะศูนย์เป็นผู้ถือคิว ราคา และบันทึกการติดตั้งของรถแต่ละคัน</p>
-      <a href="https://finnixcenterth.com" class="btn btn-dark">หาศูนย์ติดตั้งใกล้คุณ <span class="ar">→</span></a>
-    </div>
-    <div class="track rv">
-      <div class="k">ธุรกิจและองค์กร</div>
-      <h2>เป็นตัวแทนจำหน่าย หรือติดตั้งทั้งฟลีต</h2>
-      <p>เรื่องการเปิดศูนย์ใหม่ การสั่งซื้อจำนวนมาก งานรถองค์กร และการขอเอกสารสเปกฉบับเต็ม ติดต่อบริษัทโดยตรงตามช่องทางด้านล่าง</p>
-      <div class="lines">
-        <a href="tel:0635978497"><span>โทรศัพท์</span><b>06-3597-8497</b></a>
-        <div><span>อีเมล</span><b><span class="var">{{COMPANY_EMAIL}}</span></b></div>
-        <div><span>LINE Official</span><b><span class="var">{{LINE_OA_ID}}</span></b></div>
+    <div class="find">
+      <div class="rv">
+        <h2>ค้นหาตัวแทน</h2>
+        <label class="flabel" for="prov">จังหวัด</label>
+        <select id="prov"></select>
+        <div class="acts">
+          <button type="button" class="btn btn-dark" id="find-btn">ค้นหา</button>
+          <button type="button" class="chip" id="near-btn">📍 ใกล้ฉัน</button>
+        </div>
+      </div>
+
+      <div class="or" aria-hidden="true">OR</div>
+
+      <div class="rv">
+        <h2>สำนักงานใหญ่</h2>
+        <div class="grp"><span>ที่อยู่</span><span class="var">{{COMPANY_ADDRESS}}</span></div>
+        <div class="grp"><span>โทรศัพท์</span><a href="tel:0635978497" class="tel">06-3597-8497</a></div>
+        <div class="grp"><span>อีเมล</span><span class="var">{{COMPANY_EMAIL}}</span></div>
+        <div class="grp"><span>เวลาทำการ</span><span class="var">{{OFFICE_HOURS}}</span></div>
+        <div class="grp"><span>เลขทะเบียนนิติบุคคล</span><span class="var">{{COMPANY_REG_NO}}</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ข้อมูลบริษัท -->
-<section class="sec smoke" style="padding-bottom:0">
+<!-- 3 · แผนที่ + รายการตัวแทน
+     ต่างจากเขาโดยตั้งใจ: แผนที่เป็น SVG ในไฟล์ ไม่ใช่ Google Maps SDK — ข้อ 9 อนุญาต request ภายนอกแค่ Google Fonts -->
+<section class="sec smoke" id="dealers">
   <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow"><span class="dot"></span>ข้อมูลบริษัท</div>
-      <h2>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</h2>
-    </div>
-  </div>
-  <div class="info">
-    <div class="info-cell rv">
-      <h3>ที่ตั้งสำนักงาน</h3>
-      <p><span class="var">{{COMPANY_ADDRESS}}</span></p>
-      <p class="sub">ที่อยู่นี้ใช้สำหรับติดต่อบริษัทและงานเอกสาร ไม่ใช่จุดให้บริการติดตั้ง</p>
-    </div>
-    <div class="info-cell rv">
-      <h3>เวลาทำการ</h3>
-      <p><span class="var">{{OFFICE_HOURS}}</span></p>
-      <p class="sub">เวลาทำการของศูนย์ติดตั้งแต่ละแห่งไม่เท่ากัน ให้ดูจากหน้าศูนย์นั้นโดยตรง</p>
-    </div>
-    <div class="info-cell rv">
-      <h3>เลขทะเบียนนิติบุคคล</h3>
-      <p><span class="var">{{COMPANY_REG_NO}}</span></p>
-      <p class="sub">ใช้สำหรับการออกเอกสารทางบัญชีและการตรวจสอบตัวตนของบริษัท</p>
-    </div>
-  </div>
-</section>
+    <div class="sample-tag rv">ตัวอย่างการแสดงผล — รายชื่อตัวแทนทั้งหมดยังเป็นข้อมูลสมมติ · รายชื่อจริงรอ <span class="var">{{SERVICE_CENTERS}}</span></div>
 
-<!-- ช่องทางอื่น -->
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow"><span class="dot"></span>ช่องทางอื่น</div>
-      <h2>ที่ที่เราอยู่</h2>
-      <p>ช่องทางเหล่านี้ใช้ประกาศข่าวสารและผลงาน ไม่ใช่ช่องทางรับเรื่องเคลมหรือจองคิว</p>
-    </div>
-    <div class="track rv" style="padding:0;background:none;max-width:640px">
-      <div class="lines" style="margin-top:0;border-top:1px solid var(--line)">
-        <div><span>Facebook</span><b><span class="var">{{FACEBOOK_URL}}</span></b></div>
-        <div><span>Instagram</span><b><span class="var">{{INSTAGRAM_URL}}</span></b></div>
-        <div><span>TikTok</span><b><span class="var">{{TIKTOK_URL}}</span></b></div>
-        <a href="https://finnixcenterth.com"><span>เว็บไซต์ศูนย์บริการ</span><b>finnixcenterth.com</b></a>
+    <div class="loc rv" id="loc">
+      <div class="tmap">
+        <iframe id="gmap" title="แผนที่ตำแหน่งตัวแทน" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://maps.google.com/maps?q=Thailand&z=5&output=embed"></iframe>
+        <div class="map-foot">
+          <span id="map-cap">แผนที่ทั้งประเทศ — เลือกจังหวัดหรือกดร้านในรายการเพื่อซูมไปตำแหน่งนั้น</span>
+          <a id="map-out" href="https://www.google.com/maps/search/?api=1&query=Thailand" target="_blank" rel="noopener noreferrer">เปิดใน Google Maps</a>
+        </div>
+      </div>
+
+      <div class="loc-list">
+        <p class="count" aria-live="polite" id="count"></p>
+        <div class="dcards" id="dcards"></div>
+        <div class="loc-empty" id="loc-empty">
+          <h3>ยังไม่พบตัวแทนในจังหวัดนี้</h3>
+          <p>ลองจังหวัดใกล้เคียง หรือติดต่อสำนักงานใหญ่ให้ช่วยแนะนำ</p>
+          <div class="alt" id="alt-prov"></div>
+          <a class="cta" href="#find">ติดต่อสำนักงานใหญ่</a>
+        </div>
+        <button type="button" class="btn btn-dark more" id="more-btn">แสดงเพิ่ม</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ปิดท้าย -->
+<!-- 4 · ปิดท้าย -->
 <section class="closing on-void">
   <div class="wrap">
-    <div class="eyebrow on-dark" style="text-align:center"><span class="dot"></span>เรื่องรถของคุณ</div>
-    <h2>เริ่มที่ศูนย์ใกล้บ้านเร็วที่สุด</h2>
-    <p>ช่างวัดกระจกและแนะนำรุ่นได้ในนัดเดียว ไม่ต้องผ่านบริษัทก่อน</p>
-    <a href="https://finnixcenterth.com" class="btn btn-light">หาศูนย์ติดตั้งใกล้คุณ <span class="ar">→</span></a>
+    <div class="eyebrow on-dark" style="text-align:center"><span class="dot"></span>พร้อมเมื่อคุณพร้อม</div>
+    <h2>พร้อมติดตั้งแล้วหรือยัง?</h2>
+    <p>ตัวแทนใกล้บ้านคุณตอบเรื่องรุ่น ราคา และคิวได้ตรงที่สุด</p>
+    <div class="btns">
+      <a href="#dealers" class="btn btn-light">ค้นหาตัวแทนใกล้คุณ <span class="ar" aria-hidden="true">→</span></a>
+    </div>
   </div>
 </section>
+
+</main>
 
 <!-- FOOTER -->
 <footer>
@@ -323,16 +485,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
         <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
       </div>
       <div class="f-col">
-        <h4>ผลิตภัณฑ์</h4>
-        <a href="products.html#titanium">TITANIUM</a><a href="products.html#ceramic">CERAMIC</a><a href="products.html#crystalize">CRYSTALIZE</a><a href="products.html#extra-clear">EXTRA CLEAR</a><a href="products.html#uv-guard">UV GUARD</a>
-      </div>
-      <div class="f-col">
         <h4>บริษัท</h4>
-        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a>
+        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a><a href="gallery.html">ผลงาน</a>
       </div>
       <div class="f-col">
         <h4>บริการ</h4>
-        <a href="warranty.html">การรับประกัน</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+        <a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
       </div>
     </div>
     <div class="f-bot">
@@ -341,6 +499,9 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     </div>
   </div>
 </footer>
+
+<!-- ข้อมูลตัวแทน — ต้นทางคือ data/dealers.json คัดลอกมาฝัง ไม่ fetch ตอนรัน (ข้อ 9) -->
+<script id="dealers-data" type="application/json">[{"id": "fnx-bkk-001", "name": "ฟินนิกซ์ เซ็นเตอร์ ลาดพร้าว", "companyName": "บจก. ตัวอย่างฟิล์ม กรุงเทพ", "tier": "center", "services": ["automotive", "ppf"], "address": "999/1 ถ.ลาดพร้าว แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900", "province": "กรุงเทพมหานคร", "region": "bangkok", "phone": "0810000001", "lineId": "@fnxlp-demo", "lat": 13.8161, "lng": 100.5606, "hours": "จ-ส 09:00-18:00", "featured": true, "placeholder": true}, {"id": "fnx-bkk-002", "name": "พระราม 2 ออโต้ฟิล์ม", "companyName": "หจก. ตัวอย่างออโต้", "tier": "automotive", "services": ["automotive"], "address": "88 ถ.พระราม 2 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10150", "province": "กรุงเทพมหานคร", "region": "bangkok", "phone": "0810000002", "lineId": "", "lat": 13.6608, "lng": 100.4419, "hours": "ทุกวัน 09:00-19:00", "featured": false, "placeholder": true}, {"id": "fnx-nbi-001", "name": "นนท์ฟิล์ม แคราย", "companyName": "", "tier": "sub", "services": ["automotive"], "address": "55/7 ถ.ติวานนท์ ต.บางกระสอ อ.เมือง จ.นนทบุรี 11000", "province": "นนทบุรี", "region": "central", "phone": "0810000003", "lineId": "", "lat": 13.8622, "lng": 100.5218, "hours": "จ-ส 08:30-18:00", "featured": false, "placeholder": true}, {"id": "fnx-cnx-001", "name": "เชียงใหม่ คาร์ฟิล์ม", "companyName": "หจก. ตัวอย่างเชียงใหม่", "tier": "center", "services": ["automotive", "ppf"], "address": "285 ถ.มหิดล ต.ป่าแดด อ.เมือง จ.เชียงใหม่ 50100", "province": "เชียงใหม่", "region": "north", "phone": "0810000004", "lineId": "@fnxcm-demo", "lat": 18.7654, "lng": 98.9876, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}, {"id": "fnx-plk-001", "name": "พิษณุโลก ฟิล์มเฮาส์", "companyName": "", "tier": "sub", "services": ["automotive"], "address": "12 ถ.มิตรภาพ ต.ในเมือง อ.เมือง จ.พิษณุโลก 65000", "province": "พิษณุโลก", "region": "north", "phone": "0810000005", "lineId": "", "lat": 16.8211, "lng": 100.2659, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}, {"id": "fnx-kkn-001", "name": "ขอนแก่น พรีเมียมฟิล์ม", "companyName": "บจก. ตัวอย่างอีสาน", "tier": "automotive", "services": ["automotive", "ppf"], "address": "171 ถ.มิตรภาพ ต.ในเมือง อ.เมือง จ.ขอนแก่น 40000", "province": "ขอนแก่น", "region": "northeast", "phone": "0810000006", "lineId": "@fnxkk-demo", "lat": 16.4322, "lng": 102.8236, "hours": "ทุกวัน 08:30-18:30", "featured": false, "placeholder": true}, {"id": "fnx-cbi-001", "name": "ชลบุรี ออโต้ชิลด์", "companyName": "หจก. ตัวอย่างตะวันออก", "tier": "automotive", "services": ["automotive", "ppf"], "address": "39/4 ถ.สุขุมวิท ต.บ้านสวน อ.เมือง จ.ชลบุรี 20000", "province": "ชลบุรี", "region": "east", "phone": "0810000008", "lineId": "", "lat": 13.3611, "lng": 100.9847, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}, {"id": "fnx-hkt-001", "name": "ภูเก็ต ซันบล็อกฟิล์ม", "companyName": "", "tier": "sub", "services": ["automotive"], "address": "77 ถ.เทพกระษัตรี ต.รัษฎา อ.เมือง จ.ภูเก็ต 83000", "province": "ภูเก็ต", "region": "south", "phone": "0810000009", "lineId": "", "lat": 7.8906, "lng": 98.3984, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}, {"id": "fnx-ska-001", "name": "หาดใหญ่ ฟิล์มโปร", "companyName": "บจก. ตัวอย่างใต้", "tier": "sub", "services": ["ppf"], "address": "246 ถ.กาญจนวนิช ต.หาดใหญ่ อ.หาดใหญ่ จ.สงขลา 90110", "province": "สงขลา", "region": "south", "phone": "0810000010", "lineId": "@fnxhy-demo", "lat": 7.0086, "lng": 100.4747, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}]</script>
 
 <script>
 (function(){
@@ -373,9 +534,195 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
       setMenu(false); burger.focus();
     }
   });
-  window.matchMedia('(min-width:901px)').addEventListener('change', function(e){
+  window.matchMedia('(min-width:1081px)').addEventListener('change', function(e){
     if(e.matches) setMenu(false);
   });
+
+  /* ==== ฟอร์ม 3 ช่องตามหน้าต้นแบบ — validate on blur · โหมดสาธิต ==== */
+  // TODO: wire to email — ยังไม่มีปลายทางจริง (COMPANY_EMAIL ยังค้าง) หน้าแสดงป้าย "โหมดสาธิต" กำกับไว้แล้ว
+  var wrap = document.getElementById('cform-wrap');
+  var form = document.getElementById('cform');
+  function setErr(id, bad){
+    var el = document.getElementById(id);
+    el.closest('.fld').classList.toggle('err', bad);
+    el.setAttribute('aria-invalid', bad ? 'true' : 'false');
+    if(bad) el.setAttribute('aria-describedby', id + '-err');
+  }
+  var checks = {
+    'f-name': function(v){ return v.trim().length > 0; },
+    'f-mail': function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); },
+    'f-msg':  function(v){ return v.trim().length > 0; }
+  };
+  Object.keys(checks).forEach(function(id){
+    var el = document.getElementById(id);
+    el.addEventListener('blur', function(){ setErr(id, !checks[id](el.value)); });
+  });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(form.elements.website.value) return; // honeypot
+    var bad = false;
+    Object.keys(checks).forEach(function(id){
+      var el = document.getElementById(id);
+      var ok = checks[id](el.value);
+      setErr(id, !ok);
+      if(!ok && !bad){ bad = true; el.focus(); }
+    });
+    if(bad) return;
+    wrap.classList.add('busy');
+    setTimeout(function(){                       // จำลอง request — โหมดสาธิต
+      wrap.classList.remove('busy');
+      wrap.classList.add('sent');
+    }, 600);
+  });
+  document.getElementById('form-reset').addEventListener('click', function(e){
+    e.preventDefault();
+    wrap.classList.remove('sent', 'fail');
+  });
+
+  /* ==== ค้นหาตัวแทน — สถานะ UI ไม่นับเป็น motion ==== */
+  var DEALERS = JSON.parse(document.getElementById('dealers-data').textContent);
+  var TIER_TH = {center:'★ Finnix Center', automotive:'Automotive Dealer', sub:'Sub Dealer'};
+  var SVC_TH  = {automotive:'ฟิล์มรถยนต์', ppf:'PPF'};   /* ฟิล์มอาคารถูกตัดออกจากเว็บใน v2.6 */
+  var state = { province:'', geo:null, shown:30 };
+  var loc = document.getElementById('loc');
+  var cards = document.getElementById('dcards');
+  var countEl = document.getElementById('count');
+  var sel = document.getElementById('prov');
+  var gmap = document.getElementById('gmap');
+  var mapCap = document.getElementById('map-cap');
+  var mapOut = document.getElementById('map-out');
+
+  function esc(t){ var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+  function km(a, b, c, d){
+    var R = 6371, p = Math.PI / 180;
+    var x = (Math.sin((c - a) * p / 2) * Math.sin((c - a) * p / 2)) +
+            Math.cos(a * p) * Math.cos(c * p) * Math.sin((d - b) * p / 2) * Math.sin((d - b) * p / 2);
+    return 2 * R * Math.asin(Math.sqrt(x));
+  }
+
+  /* dropdown มีเฉพาะจังหวัดที่มีตัวแทนจริง — แบบเดียวกับหน้าต้นแบบ ไม่ใช่ 77 จังหวัด */
+  var PROVS = [];
+  DEALERS.forEach(function(x){ if(PROVS.indexOf(x.province) < 0) PROVS.push(x.province); });
+  PROVS.sort(function(a, b){ return a.localeCompare(b, 'th'); });
+  sel.innerHTML = '<option value="">ทั้งหมด</option>' +
+    PROVS.map(function(pv){ return '<option value="' + esc(pv) + '">' + esc(pv) + '</option>'; }).join('');
+
+  function filtered(){
+    var out = DEALERS.filter(function(x){
+      return !state.province || x.province === state.province;
+    });
+    if(state.geo){
+      out.forEach(function(x){ x._d = km(state.geo.lat, state.geo.lng, x.lat, x.lng); });
+      out.sort(function(a, b){ return a._d - b._d; });
+    }
+    return out;
+  }
+  function syncURL(){
+    if(!state.province){ history.replaceState(null, '', location.pathname + location.hash); return; }
+    history.replaceState(null, '', location.pathname + '?province=' + encodeURIComponent(state.province) + '#dealers');
+  }
+
+  /* แผนที่จริง — เปลี่ยน src ของ iframe ตามสิ่งที่ผู้ใช้เลือก
+     ใช้ endpoint embed ของ Google Maps ที่ไม่ต้องใช้ API key · เป็น request ภายนอกตัวที่สองของเว็บ (ดู CHANGELOG v2.5) */
+  function setMap(q, zoom, cap, outQ){
+    gmap.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(q) + '&z=' + zoom + '&output=embed';
+    mapCap.textContent = cap;
+    mapOut.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(outQ || q);
+  }
+  function mapForList(list){
+    if(state.province && list.length){
+      var c = list[0];
+      setMap(state.province + ' ประเทศไทย', 10,
+        'แผนที่ จ.' + state.province + ' — กดร้านในรายการเพื่อซูมไปตำแหน่งนั้น', c.lat + ',' + c.lng);
+    } else if(state.geo){
+      setMap(state.geo.lat + ',' + state.geo.lng, 11, 'แผนที่รอบตำแหน่งของคุณ — กดร้านในรายการเพื่อดูตำแหน่งร้าน');
+    } else {
+      setMap('Thailand', 5, 'แผนที่ทั้งประเทศ — เลือกจังหวัดหรือกดร้านในรายการเพื่อซูมไปตำแหน่งนั้น');
+    }
+  }
+  function render(){
+    var list = filtered();
+    loc.classList.toggle('empty', !list.length);
+    if(!list.length){
+      document.getElementById('alt-prov').innerHTML = PROVS.map(function(pv){
+        return '<button type="button" class="chip" data-prov="' + esc(pv) + '">' + esc(pv) + '</button>';
+      }).join('');
+    }
+    countEl.textContent = 'พบ ' + list.length + ' ตัวแทน' + (state.province ? 'ใน จ.' + state.province : 'ทั่วประเทศ') + (state.geo ? ' — เรียงตามระยะทางจากคุณ' : '');
+    cards.innerHTML = list.slice(0, state.shown).map(function(x){
+      var svc = x.services.filter(function(v){ return SVC_TH[v]; })
+        .map(function(v){ return '<span>' + SVC_TH[v] + '</span>'; }).join('');
+      var acts = '<button type="button" class="map-btn" data-id="' + x.id + '">ดูบนแผนที่</button>' +
+        '<a href="tel:' + x.phone + '">โทร</a>' +
+        '<a href="https://www.google.com/maps/dir/?api=1&destination=' + x.lat + ',' + x.lng + '" target="_blank" rel="noopener noreferrer">เส้นทาง</a>' +
+        (x.lineId ? '<a href="https://line.me/ti/p/' + encodeURIComponent(x.lineId) + '" target="_blank" rel="noopener noreferrer">LINE</a>' : '');
+      return '<article class="dcard" data-id="' + x.id + '"><div class="top"><h3>' + esc(x.name) + '</h3>' +
+        (TIER_TH[x.tier] ? '<span class="badge ' + x.tier + '">' + TIER_TH[x.tier] + '</span>' : '') + '</div>' +
+        (x.companyName ? '<p class="co">' + esc(x.companyName) + '</p>' : '') +
+        '<p class="addr">' + esc(x.address) + '</p>' +
+        (x._d != null ? '<p class="dist">ห่างจากคุณ ' + x._d.toFixed(1) + ' กม.</p>' : '') +
+        '<div class="svc">' + svc + '</div><div class="act">' + acts + '</div></article>';
+    }).join('');
+    mapForList(list);
+    document.getElementById('more-btn').style.display = list.length > state.shown ? 'inline-flex' : 'none';
+    syncURL();
+  }
+
+  /* กดการ์ดร้าน -> ซูมแผนที่ไปตำแหน่งร้านนั้น */
+  function pickDealer(id){
+    var d = DEALERS.filter(function(x){ return x.id === id; })[0];
+    if(!d) return;
+    cards.querySelectorAll('.dcard.on').forEach(function(c){ c.classList.remove('on'); });
+    var card = cards.querySelector('[data-id="' + id + '"]');
+    if(card) card.classList.add('on');
+    setMap(d.lat + ',' + d.lng, 16, d.name + ' — ' + d.address, d.lat + ',' + d.lng);
+  }
+  cards.addEventListener('click', function(e){
+    if(e.target.closest('a')) return;              // ปุ่ม โทร/เส้นทาง/LINE ทำงานตามปกติ
+    var c = e.target.closest('.dcard');
+    if(c) pickDealer(c.getAttribute('data-id'));
+  });
+  cards.addEventListener('click', function(e){
+    var b = e.target.closest('.map-btn');
+    if(b){ e.stopPropagation(); pickDealer(b.getAttribute('data-id')); }
+  }, true);
+
+  function pick(pv){ state.province = pv; sel.value = pv; state.shown = 30; render(); }
+  sel.addEventListener('change', function(){ pick(sel.value); });
+  document.getElementById('find-btn').addEventListener('click', function(){ pick(sel.value); });
+  document.getElementById('more-btn').addEventListener('click', function(){ state.shown += 30; render(); });
+  document.getElementById('loc-empty').addEventListener('click', function(e){
+    var b = e.target.closest('[data-prov]');
+    if(b) pick(b.getAttribute('data-prov'));
+  });
+
+  /* ใกล้ฉัน — ไม่บล็อกหน้า · ปฏิเสธ = toast แล้วใช้ dropdown ต่อ */
+  var toast = document.createElement('div');
+  toast.className = 'toast'; toast.setAttribute('role', 'status');
+  document.body.appendChild(toast);
+  var toastT;
+  function showToast(t){
+    toast.textContent = t; toast.classList.add('on');
+    clearTimeout(toastT);
+    toastT = setTimeout(function(){ toast.classList.remove('on'); }, 4000);
+  }
+  document.getElementById('near-btn').addEventListener('click', function(){
+    if(!navigator.geolocation){ showToast('เบราว์เซอร์นี้ไม่รองรับตำแหน่ง — เลือกจังหวัดจากรายการแทนได้เลย'); return; }
+    navigator.geolocation.getCurrentPosition(function(pos){
+      state.geo = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+      document.getElementById('near-btn').setAttribute('aria-pressed', 'true');
+      render();
+    }, function(){
+      showToast('ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง — เลือกจังหวัดจากรายการแทนได้เลย');
+    }, {timeout: 8000});
+  });
+
+  /* อ่านจังหวัดจาก URL ตอนเปิดหน้า (ลิงก์แชร์ได้) */
+  (function(){
+    var q = new URLSearchParams(location.search).get('province');
+    if(q && PROVS.indexOf(q) >= 0){ state.province = q; sel.value = q; }
+  })();
+  render();
 
   /* ---- reveal ---- */
   if(reduce) return;

@@ -143,7 +143,7 @@ footer a{border-bottom:1px solid var(--line);text-decoration:none}
         <h3>หน้าแรก</h3>
         <p class="file">index.html</p>
         <p class="sum">เสร็จระดับตรวจได้ แต่ <b>ยังไม่ผ่านเกณฑ์ 3 ข้อ</b> — มีค่าสมมติ 12 จุด, motion เกินงบ และแดงเกินโควตาใน hero</p>
-        <a class="go" href="index.html">เปิดหน้าแรก →</a>
+        <a class="go" href="../index.html">เปิดหน้าแรก →</a>
       </div>
 
       <div class="page">
@@ -151,7 +151,7 @@ footer a{border-bottom:1px solid var(--line);text-decoration:none}
         <h3>เทคโนโลยี</h3>
         <p class="file">technology.html</p>
         <p class="sum">หน้าที่มี <b>signature ของทั้งเว็บ</b> — ภาพตัดขวางชั้นฟิล์มที่แยกชั้นตามการเลื่อน ตรวจครบ 9 ข้อแล้ว ผ่าน 7 ผ่านโดยมีเงื่อนไข 2</p>
-        <a class="go" href="technology.html">เปิดหน้าเทคโนโลยี →</a>
+        <a class="go" href="../technology.html">เปิดหน้าเทคโนโลยี →</a>
       </div>
 
       <div class="page todo">
@@ -298,6 +298,13 @@ footer a{border-bottom:1px solid var(--line);text-decoration:none}
 
     <div class="vars">
       <div class="vgroup">
+        <h3>หน้าผลงาน /gallery — 1 ตัว (เพิ่มใน v2.1 · กลุ่มอื่นด้านล่างค้างที่ v1.2 ดูชุดจริงที่ CHANGELOG)</h3>
+        <ul>
+          <li><code>{{PORTFOLIO_ITEMS}}</code><span>รายการติดตั้งจริง — รุ่นรถ · รหัสฟิล์มต่อตำแหน่งกระจก · เดือนปีที่ติดตั้ง</span></li>
+        </ul>
+      </div>
+
+      <div class="vgroup">
         <h3>หน้าเทคโนโลยี — 6 ตัว</h3>
         <ul>
           <li><code>{{UV_PCT}}</code><span>สัดส่วนพลังงานย่านยูวี</span></li>
@@ -335,24 +342,32 @@ footer a{border-bottom:1px solid var(--line);text-decoration:none}
     <h2>ไฟล์ในโปรเจกต์</h2>
     <div class="tree">
 <span class="d">PJ_Finnix_Film/</span>
-├── <a href="index.html">index.html</a> <span class="c">— หน้าแรก</span>
-├── <a href="technology.html">technology.html</a> <span class="c">— หน้าเทคโนโลยี</span>
-├── review.html <span class="c">— หน้านี้ ใช้ตรวจงาน ไม่ขึ้นเซิร์ฟเวอร์จริง</span>
-├── <span class="d">assets/</span>
-│   ├── <a href="assets/logo-finnix-web.png">logo-finnix-web.png</a> <span class="c">— ใช้จริงบนเว็บ 817×96 · 14.6 KB</span>
-│   ├── <a href="assets/logo-finnix.png">logo-finnix.png</a> <span class="c">— ไฟล์แม่ความละเอียดสูง 7660×900 ไม่ได้เรียกใช้บนเว็บ</span>
-│   └── <a href="assets/reference-banner-lineup.jpg">reference-banner-lineup.jpg</a> <span class="c">— แบนเนอร์เดิม ใช้อ้างอิงเท่านั้น</span>
+├── <a href="../index.html">index.html</a> <span class="c">— หน้าแรก</span>
+├── <a href="../about.html">about.html</a> <span class="c">— เกี่ยวกับเรา</span>
+├── <a href="../technology.html">technology.html</a> <span class="c">— เทคโนโลยี</span>
+├── <a href="../gallery.html">gallery.html</a> <span class="c">— ผลงานของเรา (เพิ่มใน v2.1)</span>
+├── <a href="../faq.html">faq.html</a> <span class="c">— คำถามที่พบบ่อย</span>
+├── <a href="../contact.html">contact.html</a> <span class="c">— ติดต่อเรา</span>
+├── <span class="d">assets/</span> <span class="c">— โลโก้ที่ใช้จริง + โลโก้ซีรีส์ 5 อัน (ยังใช้ไม่ได้) + ภาพอ้างอิง</span>
+│   ├── <a href="../assets/logo-finnix-web.png">logo-finnix-web.png</a> <span class="c">— ใช้จริงบนเว็บ 817×96 · 14.6 KB</span>
+│   ├── <span>logo-finnix.png</span> <span class="c">— ไฟล์แม่ 7660×900 <b>ถูกลบไปแล้ว ไม่มีในโฟลเดอร์</b></span>
+│   └── <a href="../assets/reference-banner-lineup.jpg">reference-banner-lineup.jpg</a> <span class="c">— แบนเนอร์เดิม ใช้อ้างอิงเท่านั้น</span>
+├── <span class="d">data/</span>
+│   └── <a href="../data/films.json">films.json</a> <span class="c">— source of truth ของตัวเลขทุกตัวบนเว็บ</span>
+├── <span class="d">scans/</span> <span class="c">— สแกนโบรชัวร์ 17 หน้า แยกตามซีรีส์ ถอดเป็นข้อความครบแล้ว</span>
 └── <span class="d">docs/</span>
-    ├── <a href="docs/master-prompt.md">master-prompt.md</a> <span class="c">— บรีฟหลัก วางไฟล์นี้ทุกครั้งที่สั่งงาน</span>
-    └── <a href="docs/CHANGELOG.md">CHANGELOG.md</a> <span class="c">— บันทึกการแก้ไขฉบับเต็ม</span>
+    ├── <a href="master-prompt.md">master-prompt.md</a> <span class="c">— บรีฟหลัก วางไฟล์นี้ทุกครั้งที่สั่งงาน</span>
+    ├── <a href="CHANGELOG.md">CHANGELOG.md</a> <span class="c">— บันทึกการแก้ไขฉบับเต็ม</span>
+    ├── <a href="film-data.md">film-data.md</a> <span class="c">— ค่าสเปกจริง 15 รหัส + ข้อค้นพบ</span>
+    └── review.html <span class="c">— หน้านี้ ใช้ตรวจงาน ไม่ขึ้นเซิร์ฟเวอร์จริง</span>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <p>รายละเอียดการตัดสินใจแต่ละข้อ พร้อมเหตุผลและสิ่งที่แก้ไปแล้ว อยู่ใน <a href="docs/CHANGELOG.md">docs/CHANGELOG.md</a></p>
-    <p style="margin-top:8px">หากเปิดไฟล์ตรงจาก <code>file://</code> แล้วลิงก์ทำงานไม่ครบ ให้รัน <code>python -m http.server 8731</code> ในโฟลเดอร์นี้ แล้วเปิด <code>http://127.0.0.1:8731/review.html</code></p>
+    <p>รายละเอียดการตัดสินใจแต่ละข้อ พร้อมเหตุผลและสิ่งที่แก้ไปแล้ว อยู่ใน <a href="CHANGELOG.md">docs/CHANGELOG.md</a></p>
+    <p style="margin-top:8px">ไฟล์นี้ย้ายมาอยู่ใน <code>docs/</code> แล้ว ลิงก์ทั้งหมดชี้ขึ้นไปที่ root ด้วย <code>../</code> — ให้รัน <code>python -m http.server 8000</code> ที่ <b>root ของโปรเจกต์</b> แล้วเปิด <code>http://127.0.0.1:8000/docs/review.html</code></p>
   </div>
 </footer>
 

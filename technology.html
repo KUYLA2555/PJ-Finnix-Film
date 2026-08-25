@@ -42,6 +42,9 @@ img{display:block;max-width:100%}
 :focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
 .on-dark :focus-visible,.dark :focus-visible{outline-color:#fff}
 
+/* เบราว์เซอร์ตัดคำไทยด้วยพจนานุกรมที่ไม่มีคำทับศัพท์ — ครอบคำที่ตัดผิดด้วย .nb */
+.nb{white-space:nowrap}
+
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
 .eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
 .eyebrow.on-dark{color:var(--mute-dark)}
@@ -242,7 +245,7 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 
 /* ---------------- footer ---------------- */
 footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid var(--line-dark)}
-.f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;padding:72px 0 56px}
+.f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:48px;padding:72px 0 56px}
 /* footer เป็นพื้นมืดเสมอ จึงใช้โลโก้ขาวล้วนตลอด */
 .f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
 .f-brand p{margin-top:20px;font-size:15px;color:var(--mute-dark);max-width:34ch;line-height:1.7}
@@ -256,11 +259,13 @@ footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid v
   .sig-grid{grid-template-columns:1fr 380px;gap:48px}
   .f-grid{grid-template-columns:1fr 1fr;gap:40px}
 }
-@media(max-width:900px){
-  :root{--pad:24px}
-  .nav-links{display:none}
+@media(max-width:1080px){
+  .nav-links,.nav-cta{display:none}
   .burger{display:block}
   .drawer{display:flex}
+}
+@media(max-width:900px){
+  :root{--pad:24px}
   .sec{padding:88px 0}
   .sig{height:auto}
   .sig-sticky{position:static;height:auto;padding:88px 0}
@@ -298,10 +303,10 @@ footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid v
   <div class="nav-in">
     <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
     <div class="nav-links">
+      <a href="index.html">หน้าแรก</a>
       <a href="about.html">เกี่ยวกับเรา</a>
       <a href="technology.html" aria-current="page">เทคโนโลยี</a>
-      <a href="products.html">ผลิตภัณฑ์</a>
-      <a href="warranty.html">รับประกัน</a>
+      <a href="gallery.html">ผลงาน</a>
       <a href="contact.html">ติดต่อ</a>
     </div>
     <a href="https://finnixcenterth.com" class="nav-cta">หาศูนย์ติดตั้ง</a>
@@ -311,10 +316,10 @@ footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid v
 
 <!-- เมนูมือถือ -->
 <div class="drawer" id="drawer">
+  <a href="index.html">หน้าแรก</a>
   <a href="about.html">เกี่ยวกับเรา</a>
   <a href="technology.html" aria-current="page">เทคโนโลยี</a>
-  <a href="products.html">ผลิตภัณฑ์</a>
-  <a href="warranty.html">รับประกัน</a>
+  <a href="gallery.html">ผลงาน</a>
   <a href="faq.html">คำถามที่พบบ่อย</a>
   <a href="contact.html">ติดต่อ</a>
   <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
@@ -373,7 +378,7 @@ footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid v
         </div>
         <div class="key-cell">
           <div class="sw" style="background:#1A1917"></div>
-          <h3>อินฟราเรด</h3>
+          <h3 class="nb">อินฟราเรด</h3>
           <p class="nm">780–2500 nm</p>
           <p class="val"><span class="var">{{IR_PCT}}</span><small>ของพลังงานทั้งหมด</small></p>
           <p>ย่านที่พาความร้อนเข้ามามากที่สุด และเป็นย่านที่ความเข้มของฟิล์มไม่ได้เป็นตัวกำหนด</p>
@@ -520,7 +525,7 @@ footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid v
       </div>
       <div class="gl">
         <p class="ab">IRR — Infrared Rejection</p>
-        <h3>อินฟราเรดถูกกันไว้เท่าไร</h3>
+        <h3><span class="nb">อินฟราเรด</span>ถูกกันไว้เท่าไร</h3>
         <p>วัดเฉพาะย่านอินฟราเรด ซึ่งเป็นเพียงส่วนหนึ่งของพลังงานทั้งหมด</p>
         <p class="mean"><b>อ่านอย่างไร</b> — มักถูกยกมาโฆษณาเพราะตัวเลขดูสูง แต่ถ้าวัดเฉพาะบางช่วงคลื่นก็ทำให้ตัวเลขสูงได้ ควรถามด้วยว่าวัดที่ช่วงคลื่นใด</p>
       </div>
@@ -553,16 +558,12 @@ footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid v
         <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
       </div>
       <div class="f-col">
-        <h4>ผลิตภัณฑ์</h4>
-        <a href="products.html#titanium">TITANIUM</a><a href="products.html#ceramic">CERAMIC</a><a href="products.html#crystalize">CRYSTALIZE</a><a href="products.html#extra-clear">EXTRA CLEAR</a><a href="products.html#uv-guard">UV GUARD</a>
-      </div>
-      <div class="f-col">
         <h4>บริษัท</h4>
-        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a>
+        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a><a href="gallery.html">ผลงาน</a>
       </div>
       <div class="f-col">
         <h4>บริการ</h4>
-        <a href="warranty.html">การรับประกัน</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+        <a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
       </div>
     </div>
     <div class="f-bot">
@@ -605,7 +606,7 @@ footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid v
     }
   });
   /* กลับมากว้างกว่า 900px แล้วต้องไม่ค้างสถานะเมนูเปิด */
-  window.matchMedia('(min-width:901px)').addEventListener('change', function(e){
+  window.matchMedia('(min-width:1081px)').addEventListener('change', function(e){
     if(e.matches) setMenu(false);
   });
 
