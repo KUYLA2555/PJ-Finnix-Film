@@ -8,7 +8,7 @@
       <a href="gallery.html"@CUR:gallery@>ผลงาน</a>
       <a href="contact.html"@CUR:contact@>ติดต่อ</a>
     </div>
-    <a href="https://finnixcenterth.com" class="nav-cta">หาศูนย์ติดตั้ง</a>
+    <a href="centers.html" class="nav-cta"@CUR:centers@>หาศูนย์ติดตั้ง</a>
     <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
   </div>
 </nav>

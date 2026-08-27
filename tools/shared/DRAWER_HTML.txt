@@ -5,5 +5,5 @@
   <a href="gallery.html"@CUR:gallery@>ผลงาน</a>
   <a href="faq.html"@CUR:faq@>คำถามที่พบบ่อย</a>
   <a href="contact.html"@CUR:contact@>ติดต่อ</a>
-  <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
+  <a href="centers.html" class="drawer-cta"@CUR:centers@>หาศูนย์ติดตั้ง</a>
 </div>

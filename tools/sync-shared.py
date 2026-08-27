@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-sync-shared.py — ทำให้ "ของร่วม" ของทั้ง 6 หน้าตรงกันเสมอ โดยไม่ขัดข้อ 9
+sync-shared.py — ทำให้ "ของร่วม" ของทั้ง 7 หน้าตรงกันเสมอ โดยไม่ขัดข้อ 9
 
 ปัญหาที่แก้
   ข้อ 9 ของบรีฟบังคับว่าหนึ่งหน้าต้องจบในไฟล์เดียว CSS/JS จึงแยกออกไปเป็นไฟล์ร่วมไม่ได้
-  ผลคือของร่วม (tokens · nav · drawer · footer · noscript) ถูกคัดลอกไว้ 6 ชุด
-  แก้ทีหนึ่งต้องแก้ 6 จุด และที่ผ่านมามันไถลออกจากกันเรื่อยๆ จนต้องไล่ตามแก้ทุกเวอร์ชัน
+  ผลคือของร่วม (tokens · nav · drawer · footer · noscript) ถูกคัดลอกไว้ 7 ชุด
+  แก้ทีหนึ่งต้องแก้ 7 จุด และที่ผ่านมามันไถลออกจากกันเรื่อยๆ จนต้องไล่ตามแก้ทุกเวอร์ชัน
 
 วิธีแก้
   เก็บฉบับจริงไว้ที่ tools/shared/<REGION>.txt ที่เดียว
@@ -19,7 +19,7 @@ sync-shared.py — ทำให้ "ของร่วม" ของทั้ง
 
 วิธีใช้ (รันจาก root ของ repo)
   python tools/sync-shared.py            ตรวจอย่างเดียว ไม่แก้ไฟล์ — ต่างเมื่อไหร่ exit 1
-  python tools/sync-shared.py --write    เขียนฉบับจริงลงทั้ง 6 ไฟล์
+  python tools/sync-shared.py --write    เขียนฉบับจริงลงทุกไฟล์
   python tools/sync-shared.py --pull index.html   ดึงเนื้อหาจากไฟล์นั้นขึ้นเป็นฉบับจริง
 
 ลำดับการทำงานที่ตั้งใจ
@@ -35,7 +35,8 @@ import io, os, re, sys, glob
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SHARED = os.path.join(ROOT, 'tools', 'shared')
-PAGES = ['about.html', 'contact.html', 'faq.html', 'gallery.html', 'index.html', 'technology.html']
+PAGES = ['about.html', 'centers.html', 'contact.html', 'faq.html', 'gallery.html', 'index.html',
+         'technology.html']
 
 # ชื่อบริเวณ -> (เป็น CSS หรือ HTML, คำอธิบายสั้นๆ)
 # CSS ใช้เครื่องหมาย /* */ ส่วน HTML/JS ใช้ <!-- -->
@@ -158,11 +159,17 @@ def cmd_pull(src):
             continue
         body = got.replace('\r\n', '\n')
         if name in ('NAV_HTML', 'DRAWER_HTML') and '@CUR' not in body:
-            # ใส่ token กลับให้ลิงก์เมนูทุกอัน (เว้นโลโก้กับปุ่ม CTA ซึ่งมี class)
+            # ใส่ token กลับให้ลิงก์ที่ชี้ไปหน้าอื่นทุกอัน รวมปุ่ม CTA ที่ชี้ centers.html
+            # เว้นเฉพาะลิงก์โลโก้ (class="brand") ซึ่งชี้ index.html แต่ไม่ใช่ลิงก์เมนู
             body = body.replace(' aria-current="page"', '')
-            body = re.sub(r'<a href="([a-z]+)\.html"(?![^>]*class=)',
-                          lambda m: '<a href="%s.html"@CUR:%s@' % (m.group(1), m.group(1)),
-                          body)
+
+            def tok(m):
+                head, page = m.group(0), m.group(1)
+                if 'class="brand"' in head:
+                    return head
+                return head + '@CUR:%s@' % page
+
+            body = re.sub(r'<a href="([a-z]+)\.html"(?:\s+class="[^"]*")?', tok, body)
         write(os.path.join(SHARED, name + '.txt'), body + '\n')
         print('  ดึง %-12s จาก %s (%d ตัวอักษร)' % (name, src, len(body)))
     return 0

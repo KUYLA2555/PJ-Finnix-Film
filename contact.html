@@ -194,7 +194,6 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 
 /* ---------------- section ---------------- */
 .sec{padding:132px 0}
-.sec.smoke{background:var(--smoke)}
 
 /* ---------------- hero สองคอลัมน์ตามหน้าต้นแบบ — ข้อมูลติดต่อซ้าย · ฟอร์มขวา ---------------- */
 .hero-c{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
@@ -247,79 +246,13 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
   border-radius:12px;background:#FBECEC;color:#B02020;font-size:14px}
 .cform.fail .form-err{display:block}
 
-/* แถบค้นหา | OR | สำนักงานใหญ่ — สามคอลัมน์ตามหน้าต้นแบบ */
-.find{display:grid;grid-template-columns:1fr auto 1fr;gap:48px;align-items:start}
-.find h2{font-size:24px;letter-spacing:-.02em}
-.find .or{align-self:stretch;display:flex;align-items:center;gap:24px;
-  font-size:13px;letter-spacing:.2em;color:var(--mute)}
-.find .or::before,.find .or::after{content:'';width:1px;flex:1;min-height:64px;background:var(--line)}
-.flabel{display:block;font-size:11px;font-weight:500;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--mute);margin:32px 0 8px}
-.find select{display:block;width:100%;max-width:400px;padding:16px;font:inherit;font-size:15px;
-  color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:12px}
-.find select:focus{border-color:var(--ink)}
-.find .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.find .grp{margin-top:24px;font-size:15px;line-height:1.8}
-.find .grp span{display:block;font-size:13px;color:var(--mute)}
-.find .tel{font-weight:500}
-
-/* ป้ายตัวอย่าง (แพทเทิร์น v2.2) */
-.sample-tag{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;padding:8px 16px;
-  border:1px dashed #B8B8B4;border-radius:8px;background:var(--paper);font-size:13px;color:#5C5C57}
-
-/* แผนที่ + รายการตัวแทน — สองคอลัมน์ตามหน้าต้นแบบ */
-.loc{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
-.tmap{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px}
-.tmap iframe{display:block;width:100%;height:670px;border:0;border-radius:12px}
-.tmap .map-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
-  gap:8px;margin-top:16px;font-size:13px;color:var(--mute)}
-.tmap .map-foot a{font-weight:500;text-decoration:underline}
-.loc-list{background:var(--paper);border:1px solid var(--line);border-radius:16px;
-  display:flex;flex-direction:column;max-height:720px;overflow-y:auto;overflow-x:hidden}
-.count{position:sticky;top:0;z-index:2;background:var(--paper);padding:16px 24px;
-  font-size:14px;color:var(--mute);border-bottom:1px solid var(--line)}
-.dcards{flex:1}
-.dcard{padding:24px;border-bottom:1px solid var(--line);transition:background .2s var(--e)}
-.dcard:last-child{border-bottom:0}
-.dcard:hover,.dcard.on{background:var(--smoke)}
-.dcard .top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
-.dcard h3{font-size:17px;letter-spacing:-.01em}
-.dcard .co{font-size:13px;color:var(--mute);margin-top:2px}
-.dcard .addr{font-size:14px;color:var(--mute);margin-top:8px;line-height:1.7}
-.dcard .dist{font-size:13px;color:var(--ink);font-weight:500;margin-top:8px;font-variant-numeric:tabular-nums}
-.dcard .svc{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;font-size:12px;color:var(--mute)}
-.dcard .svc span{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:6px;padding:2px 8px}
-.dcard .act{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.dcard .act a{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;
-  border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:500;transition:border-color .2s var(--e)}
-.dcard .act a,.dcard .act .map-btn{border:1px solid var(--line)}
-.dcard .act .map-btn{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;
-  border-radius:999px;font:inherit;font-size:14px;font-weight:500;background:var(--paper);
-  color:var(--ink);cursor:pointer;transition:border-color .2s var(--e)}
-.dcard .act a:hover,.dcard .act .map-btn:hover{border-color:var(--ink)}
-.chip{min-height:40px;padding:0 16px;border-radius:999px;font:inherit;font-size:14px;font-weight:500;
-  border:1px solid var(--line);background:var(--paper);color:var(--mute);cursor:pointer;
-  transition:color .2s var(--e),border-color .2s var(--e),background .2s var(--e)}
-.chip:hover{color:var(--ink);border-color:#B8B8B4}
-.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
-/* แบดจ์ 3 tier — แยกกันโดยไม่ใช้แดง (โควตาข้อ 4) และไม่พึ่งสีอย่างเดียว: ข้อความ + ไอคอนต่างกัน */
-.badge{flex:none;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;
-  letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:4px 10px}
-.badge.center{background:var(--ink);color:#fff}
-.badge.automotive{border:1px solid var(--ink);color:var(--ink)}
-.badge.sub{background:#EDEDEB;color:#5C5C57}
-.loc-empty{display:none;padding:56px 24px;text-align:center}
-.loc-empty h3{font-size:20px}
-.loc-empty p{color:var(--mute);font-size:15px;margin-top:8px}
-.loc-empty .alt{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}
-.loc-empty .cta{display:inline-block;margin-top:24px;font-weight:500;text-decoration:underline}
-.loc.empty .loc-empty{display:block}
-.loc.empty .dcards .dcard,.loc.empty .count{display:none}
-.more{display:none;margin:24px;align-self:center}
-.toast{position:fixed;z-index:120;left:50%;bottom:24px;transform:translate(-50%,16px);
-  background:var(--ink);color:#fff;font-size:14px;padding:12px 24px;border-radius:999px;
-  opacity:0;visibility:hidden;transition:opacity .3s var(--e),transform .3s var(--e),visibility .3s}
-.toast.on{opacity:1;visibility:visible;transform:translate(-50%,0)}
+/* สำนักงานใหญ่ — v3.4 ตัดคอลัมน์ "ค้นหาตัวแทน" กับตัวคั่น OR ออก
+   ตัวค้นหาตัวแทนทั้งชุดย้ายไป centers.html แล้ว หน้านี้เหลือหน้าที่เดียวคือบอกช่องทางติดต่อ */
+.hq{max-width:640px}
+.hq h2{font-size:24px;letter-spacing:-.02em}
+.hq .grp{margin-top:24px;font-size:15px;line-height:1.8}
+.hq .grp span{display:block;font-size:13px;color:var(--mute)}
+.hq .tel{font-weight:500}
 
 /* ปิดท้าย */
 .closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
@@ -346,13 +279,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .burger{display:block}
   .drawer{display:flex}
   .hero-c{grid-template-columns:1fr;gap:48px}
-  .loc{grid-template-columns:1fr}
-  .tmap{order:-1}
-  .tmap iframe{height:400px}
-  .loc-list{max-height:none}
-  .find{grid-template-columns:1fr;gap:32px}
-  .find .or{display:none}
-  .find > .rv + .rv{padding-top:32px;border-top:1px solid var(--line)}
 }
 @media(max-width:900px){
   :root{--pad:24px}
@@ -368,7 +294,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .chan-row .k{width:auto}
   .f-grid{grid-template-columns:1fr}
   .drawer a{font-size:22px;min-height:52px}
-  .dcard .top{flex-direction:column;align-items:flex-start;gap:8px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important}
@@ -404,7 +329,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
       <a href="gallery.html">ผลงาน</a>
       <a href="contact.html" aria-current="page">ติดต่อ</a>
     </div>
-    <a href="https://finnixcenterth.com" class="nav-cta">หาศูนย์ติดตั้ง</a>
+    <a href="centers.html" class="nav-cta">หาศูนย์ติดตั้ง</a>
     <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
   </div>
 </nav>
@@ -419,7 +344,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   <a href="gallery.html">ผลงาน</a>
   <a href="faq.html">คำถามที่พบบ่อย</a>
   <a href="contact.html" aria-current="page">ติดต่อ</a>
-  <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
+  <a href="centers.html" class="drawer-cta">หาศูนย์ติดตั้ง</a>
 </div>
 <!-- @end:DRAWER_HTML -->
 
@@ -476,62 +401,17 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   </div>
 </header>
 
-<!-- 2 · ค้นหาตัวแทน | OR | สำนักงานใหญ่ — สามคอลัมน์ตามหน้าต้นแบบ -->
-<section class="sec" id="find">
+<!-- 2 · สำนักงานใหญ่ — v3.4 ตัดคอลัมน์ค้นหาตัวแทนออก ย้ายไป centers.html -->
+<section class="sec" id="hq">
   <div class="wrap">
-    <div class="find">
-      <div class="rv">
-        <h2>ค้นหาตัวแทน</h2>
-        <label class="flabel" for="prov">จังหวัด</label>
-        <select id="prov"></select>
-        <div class="acts">
-          <button type="button" class="btn btn-dark" id="find-btn">ค้นหา</button>
-          <button type="button" class="chip" id="near-btn">📍 ใกล้ฉัน</button>
-        </div>
-      </div>
-
-      <div class="or" aria-hidden="true">OR</div>
-
-      <div class="rv">
-        <h2>สำนักงานใหญ่</h2>
-        <div class="grp"><span>ที่อยู่</span><span class="var">{{COMPANY_ADDRESS}}</span></div>
-        <div class="grp"><span>โทรศัพท์</span><a href="tel:0635978497" class="tel">06-3597-8497</a></div>
-        <div class="grp"><span>อีเมล</span><span class="var">{{COMPANY_EMAIL}}</span></div>
-        <div class="grp"><span>เวลาทำการ</span><span class="var">{{OFFICE_HOURS}}</span></div>
-        <div class="grp"><span>เลขทะเบียนนิติบุคคล</span><span class="var">{{COMPANY_REG_NO}}</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 3 · แผนที่ + รายการตัวแทน
-     ต่างจากเขาโดยตั้งใจ: แผนที่เป็น SVG ในไฟล์ ไม่ใช่ Google Maps SDK — ข้อ 9 อนุญาต request ภายนอกแค่ Google Fonts -->
-<section class="sec smoke" id="dealers">
-  <div class="wrap">
-    <div class="sample-tag rv">ตัวอย่างการแสดงผล — รายชื่อตัวแทนทั้งหมดยังเป็นข้อมูลสมมติ · รายชื่อจริงรอ <span class="var">{{SERVICE_CENTERS}}</span></div>
-
-    <div class="loc rv" id="loc">
-      <div class="tmap">
-        <iframe id="gmap" title="แผนที่ตำแหน่งตัวแทน" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=Thailand&z=5&output=embed"></iframe>
-        <div class="map-foot">
-          <span id="map-cap">แผนที่ทั้งประเทศ — เลือกจังหวัดหรือกดร้านในรายการเพื่อซูมไปตำแหน่งนั้น</span>
-          <a id="map-out" href="https://www.google.com/maps/search/?api=1&query=Thailand" target="_blank" rel="noopener noreferrer">เปิดใน Google Maps</a>
-        </div>
-      </div>
-
-      <div class="loc-list">
-        <p class="count" aria-live="polite" id="count"></p>
-        <div class="dcards" id="dcards"></div>
-        <div class="loc-empty" id="loc-empty">
-          <h3>ยังไม่พบตัวแทนในจังหวัดนี้</h3>
-          <p>ลองจังหวัดใกล้เคียง หรือติดต่อสำนักงานใหญ่ให้ช่วยแนะนำ</p>
-          <div class="alt" id="alt-prov"></div>
-          <a class="cta" href="#find">ติดต่อสำนักงานใหญ่</a>
-        </div>
-        <button type="button" class="btn btn-dark more" id="more-btn">แสดงเพิ่ม</button>
-      </div>
+    <div class="hq rv">
+      <h2>สำนักงานใหญ่</h2>
+      <div class="grp"><span>ที่อยู่</span><span class="var">{{COMPANY_ADDRESS}}</span></div>
+      <div class="grp"><span>โทรศัพท์</span><a href="tel:0635978497" class="tel">06-3597-8497</a></div>
+      <div class="grp"><span>อีเมล</span><span class="var">{{COMPANY_EMAIL}}</span></div>
+      <div class="grp"><span>เวลาทำการ</span><span class="var">{{OFFICE_HOURS}}</span></div>
+      <div class="grp"><span>เลขทะเบียนนิติบุคคล</span><span class="var">{{COMPANY_REG_NO}}</span></div>
+      <p class="form-note" style="margin-top:32px">อยากรู้ว่าติดตั้งได้ที่ไหนใกล้บ้าน ดูรายชื่อตัวแทนพร้อมแผนที่ได้ที่ <a href="centers.html">หาศูนย์ติดตั้ง</a></p>
     </div>
   </div>
 </section>
@@ -543,7 +423,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     <h2>พร้อมติดตั้งแล้วหรือยัง?</h2>
     <p>ตัวแทนใกล้บ้านคุณตอบเรื่องรุ่น ราคา และคิวได้ตรงที่สุด</p>
     <div class="btns">
-      <a href="#dealers" class="btn btn-light">ค้นหาตัวแทนใกล้คุณ <span class="ar" aria-hidden="true">→</span></a>
+      <a href="centers.html" class="btn btn-light">หาศูนย์ติดตั้งใกล้คุณ <span class="ar" aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
@@ -565,7 +445,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
       </div>
       <div class="f-col">
         <h3>บริการ</h3>
-        <a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+        <a href="centers.html">หาศูนย์ติดตั้ง</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
       </div>
     </div>
     <div class="f-bot">
@@ -577,7 +457,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <!-- @end:FOOTER_HTML -->
 
 <!-- ข้อมูลตัวแทน — ต้นทางคือ data/dealers.json คัดลอกมาฝัง ไม่ fetch ตอนรัน (ข้อ 9) -->
-<script id="dealers-data" type="application/json">[{"id": "fnx-bkk-001", "name": "ฟินนิกซ์ เซ็นเตอร์ ลาดพร้าว", "companyName": "บจก. ตัวอย่างฟิล์ม กรุงเทพ", "tier": "center", "services": ["automotive", "ppf"], "address": "999/1 ถ.ลาดพร้าว แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900", "province": "กรุงเทพมหานคร", "region": "bangkok", "phone": "0810000001", "lineId": "@fnxlp-demo", "lat": 13.8161, "lng": 100.5606, "hours": "จ-ส 09:00-18:00", "featured": true, "placeholder": true}, {"id": "fnx-bkk-002", "name": "พระราม 2 ออโต้ฟิล์ม", "companyName": "หจก. ตัวอย่างออโต้", "tier": "automotive", "services": ["automotive"], "address": "88 ถ.พระราม 2 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10150", "province": "กรุงเทพมหานคร", "region": "bangkok", "phone": "0810000002", "lineId": "", "lat": 13.6608, "lng": 100.4419, "hours": "ทุกวัน 09:00-19:00", "featured": false, "placeholder": true}, {"id": "fnx-nbi-001", "name": "นนท์ฟิล์ม แคราย", "companyName": "", "tier": "sub", "services": ["automotive"], "address": "55/7 ถ.ติวานนท์ ต.บางกระสอ อ.เมือง จ.นนทบุรี 11000", "province": "นนทบุรี", "region": "central", "phone": "0810000003", "lineId": "", "lat": 13.8622, "lng": 100.5218, "hours": "จ-ส 08:30-18:00", "featured": false, "placeholder": true}, {"id": "fnx-cnx-001", "name": "เชียงใหม่ คาร์ฟิล์ม", "companyName": "หจก. ตัวอย่างเชียงใหม่", "tier": "center", "services": ["automotive", "ppf"], "address": "285 ถ.มหิดล ต.ป่าแดด อ.เมือง จ.เชียงใหม่ 50100", "province": "เชียงใหม่", "region": "north", "phone": "0810000004", "lineId": "@fnxcm-demo", "lat": 18.7654, "lng": 98.9876, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}, {"id": "fnx-plk-001", "name": "พิษณุโลก ฟิล์มเฮาส์", "companyName": "", "tier": "sub", "services": ["automotive"], "address": "12 ถ.มิตรภาพ ต.ในเมือง อ.เมือง จ.พิษณุโลก 65000", "province": "พิษณุโลก", "region": "north", "phone": "0810000005", "lineId": "", "lat": 16.8211, "lng": 100.2659, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}, {"id": "fnx-kkn-001", "name": "ขอนแก่น พรีเมียมฟิล์ม", "companyName": "บจก. ตัวอย่างอีสาน", "tier": "automotive", "services": ["automotive", "ppf"], "address": "171 ถ.มิตรภาพ ต.ในเมือง อ.เมือง จ.ขอนแก่น 40000", "province": "ขอนแก่น", "region": "northeast", "phone": "0810000006", "lineId": "@fnxkk-demo", "lat": 16.4322, "lng": 102.8236, "hours": "ทุกวัน 08:30-18:30", "featured": false, "placeholder": true}, {"id": "fnx-cbi-001", "name": "ชลบุรี ออโต้ชิลด์", "companyName": "หจก. ตัวอย่างตะวันออก", "tier": "automotive", "services": ["automotive", "ppf"], "address": "39/4 ถ.สุขุมวิท ต.บ้านสวน อ.เมือง จ.ชลบุรี 20000", "province": "ชลบุรี", "region": "east", "phone": "0810000008", "lineId": "", "lat": 13.3611, "lng": 100.9847, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}, {"id": "fnx-hkt-001", "name": "ภูเก็ต ซันบล็อกฟิล์ม", "companyName": "", "tier": "sub", "services": ["automotive"], "address": "77 ถ.เทพกระษัตรี ต.รัษฎา อ.เมือง จ.ภูเก็ต 83000", "province": "ภูเก็ต", "region": "south", "phone": "0810000009", "lineId": "", "lat": 7.8906, "lng": 98.3984, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}, {"id": "fnx-ska-001", "name": "หาดใหญ่ ฟิล์มโปร", "companyName": "บจก. ตัวอย่างใต้", "tier": "sub", "services": ["ppf"], "address": "246 ถ.กาญจนวนิช ต.หาดใหญ่ อ.หาดใหญ่ จ.สงขลา 90110", "province": "สงขลา", "region": "south", "phone": "0810000010", "lineId": "@fnxhy-demo", "lat": 7.0086, "lng": 100.4747, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}]</script>
 
 <script>
 (function(){
@@ -673,151 +552,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     e.preventDefault();
     wrap.classList.remove('sent', 'fail');
   });
-
-  /* ==== ค้นหาตัวแทน — สถานะ UI ไม่นับเป็น motion ==== */
-  var DEALERS = JSON.parse(document.getElementById('dealers-data').textContent);
-  var TIER_TH = {center:'★ Finnix Center', automotive:'Automotive Dealer', sub:'Sub Dealer'};
-  var SVC_TH  = {automotive:'ฟิล์มรถยนต์', ppf:'PPF'};   /* ฟิล์มอาคารถูกตัดออกจากเว็บใน v2.6 */
-  var state = { province:'', geo:null, shown:30 };
-  var loc = document.getElementById('loc');
-  var cards = document.getElementById('dcards');
-  var countEl = document.getElementById('count');
-  var sel = document.getElementById('prov');
-  var gmap = document.getElementById('gmap');
-  var mapCap = document.getElementById('map-cap');
-  var mapOut = document.getElementById('map-out');
-
-  function esc(t){ var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
-  function km(a, b, c, d){
-    var R = 6371, p = Math.PI / 180;
-    var x = (Math.sin((c - a) * p / 2) * Math.sin((c - a) * p / 2)) +
-            Math.cos(a * p) * Math.cos(c * p) * Math.sin((d - b) * p / 2) * Math.sin((d - b) * p / 2);
-    return 2 * R * Math.asin(Math.sqrt(x));
-  }
-
-  /* dropdown มีเฉพาะจังหวัดที่มีตัวแทนจริง — แบบเดียวกับหน้าต้นแบบ ไม่ใช่ 77 จังหวัด */
-  var PROVS = [];
-  DEALERS.forEach(function(x){ if(PROVS.indexOf(x.province) < 0) PROVS.push(x.province); });
-  PROVS.sort(function(a, b){ return a.localeCompare(b, 'th'); });
-  sel.innerHTML = '<option value="">ทั้งหมด</option>' +
-    PROVS.map(function(pv){ return '<option value="' + esc(pv) + '">' + esc(pv) + '</option>'; }).join('');
-
-  function filtered(){
-    var out = DEALERS.filter(function(x){
-      return !state.province || x.province === state.province;
-    });
-    if(state.geo){
-      out.forEach(function(x){ x._d = km(state.geo.lat, state.geo.lng, x.lat, x.lng); });
-      out.sort(function(a, b){ return a._d - b._d; });
-    }
-    return out;
-  }
-  function syncURL(){
-    if(!state.province){ history.replaceState(null, '', location.pathname + location.hash); return; }
-    history.replaceState(null, '', location.pathname + '?province=' + encodeURIComponent(state.province) + '#dealers');
-  }
-
-  /* แผนที่จริง — เปลี่ยน src ของ iframe ตามสิ่งที่ผู้ใช้เลือก
-     ใช้ endpoint embed ของ Google Maps ที่ไม่ต้องใช้ API key · เป็น request ภายนอกตัวที่สองของเว็บ (ดู CHANGELOG v2.5) */
-  function setMap(q, zoom, cap, outQ){
-    gmap.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(q) + '&z=' + zoom + '&output=embed';
-    mapCap.textContent = cap;
-    mapOut.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(outQ || q);
-  }
-  function mapForList(list){
-    if(state.province && list.length){
-      var c = list[0];
-      setMap(state.province + ' ประเทศไทย', 10,
-        'แผนที่ จ.' + state.province + ' — กดร้านในรายการเพื่อซูมไปตำแหน่งนั้น', c.lat + ',' + c.lng);
-    } else if(state.geo){
-      setMap(state.geo.lat + ',' + state.geo.lng, 11, 'แผนที่รอบตำแหน่งของคุณ — กดร้านในรายการเพื่อดูตำแหน่งร้าน');
-    } else {
-      setMap('Thailand', 5, 'แผนที่ทั้งประเทศ — เลือกจังหวัดหรือกดร้านในรายการเพื่อซูมไปตำแหน่งนั้น');
-    }
-  }
-  function render(){
-    var list = filtered();
-    loc.classList.toggle('empty', !list.length);
-    if(!list.length){
-      document.getElementById('alt-prov').innerHTML = PROVS.map(function(pv){
-        return '<button type="button" class="chip" data-prov="' + esc(pv) + '">' + esc(pv) + '</button>';
-      }).join('');
-    }
-    countEl.textContent = 'พบ ' + list.length + ' ตัวแทน' + (state.province ? 'ใน จ.' + state.province : 'ทั่วประเทศ') + (state.geo ? ' — เรียงตามระยะทางจากคุณ' : '');
-    cards.innerHTML = list.slice(0, state.shown).map(function(x){
-      var svc = x.services.filter(function(v){ return SVC_TH[v]; })
-        .map(function(v){ return '<span>' + SVC_TH[v] + '</span>'; }).join('');
-      var acts = '<button type="button" class="map-btn" data-id="' + x.id + '">ดูบนแผนที่</button>' +
-        '<a href="tel:' + x.phone + '">โทร</a>' +
-        '<a href="https://www.google.com/maps/dir/?api=1&destination=' + x.lat + ',' + x.lng + '" target="_blank" rel="noopener noreferrer">เส้นทาง</a>' +
-        (x.lineId ? '<a href="https://line.me/ti/p/' + encodeURIComponent(x.lineId) + '" target="_blank" rel="noopener noreferrer">LINE</a>' : '');
-      return '<article class="dcard" data-id="' + x.id + '"><div class="top"><h3>' + esc(x.name) + '</h3>' +
-        (TIER_TH[x.tier] ? '<span class="badge ' + x.tier + '">' + TIER_TH[x.tier] + '</span>' : '') + '</div>' +
-        (x.companyName ? '<p class="co">' + esc(x.companyName) + '</p>' : '') +
-        '<p class="addr">' + esc(x.address) + '</p>' +
-        (x._d != null ? '<p class="dist">ห่างจากคุณ ' + x._d.toFixed(1) + ' กม.</p>' : '') +
-        '<div class="svc">' + svc + '</div><div class="act">' + acts + '</div></article>';
-    }).join('');
-    mapForList(list);
-    document.getElementById('more-btn').style.display = list.length > state.shown ? 'inline-flex' : 'none';
-    syncURL();
-  }
-
-  /* กดการ์ดร้าน -> ซูมแผนที่ไปตำแหน่งร้านนั้น */
-  function pickDealer(id){
-    var d = DEALERS.filter(function(x){ return x.id === id; })[0];
-    if(!d) return;
-    cards.querySelectorAll('.dcard.on').forEach(function(c){ c.classList.remove('on'); });
-    var card = cards.querySelector('[data-id="' + id + '"]');
-    if(card) card.classList.add('on');
-    setMap(d.lat + ',' + d.lng, 16, d.name + ' — ' + d.address, d.lat + ',' + d.lng);
-  }
-  cards.addEventListener('click', function(e){
-    if(e.target.closest('a')) return;              // ปุ่ม โทร/เส้นทาง/LINE ทำงานตามปกติ
-    var c = e.target.closest('.dcard');
-    if(c) pickDealer(c.getAttribute('data-id'));
-  });
-  cards.addEventListener('click', function(e){
-    var b = e.target.closest('.map-btn');
-    if(b){ e.stopPropagation(); pickDealer(b.getAttribute('data-id')); }
-  }, true);
-
-  function pick(pv){ state.province = pv; sel.value = pv; state.shown = 30; render(); }
-  sel.addEventListener('change', function(){ pick(sel.value); });
-  document.getElementById('find-btn').addEventListener('click', function(){ pick(sel.value); });
-  document.getElementById('more-btn').addEventListener('click', function(){ state.shown += 30; render(); });
-  document.getElementById('loc-empty').addEventListener('click', function(e){
-    var b = e.target.closest('[data-prov]');
-    if(b) pick(b.getAttribute('data-prov'));
-  });
-
-  /* ใกล้ฉัน — ไม่บล็อกหน้า · ปฏิเสธ = toast แล้วใช้ dropdown ต่อ */
-  var toast = document.createElement('div');
-  toast.className = 'toast'; toast.setAttribute('role', 'status');
-  document.body.appendChild(toast);
-  var toastT;
-  function showToast(t){
-    toast.textContent = t; toast.classList.add('on');
-    clearTimeout(toastT);
-    toastT = setTimeout(function(){ toast.classList.remove('on'); }, 4000);
-  }
-  document.getElementById('near-btn').addEventListener('click', function(){
-    if(!navigator.geolocation){ showToast('เบราว์เซอร์นี้ไม่รองรับตำแหน่ง — เลือกจังหวัดจากรายการแทนได้เลย'); return; }
-    navigator.geolocation.getCurrentPosition(function(pos){
-      state.geo = {lat: pos.coords.latitude, lng: pos.coords.longitude};
-      document.getElementById('near-btn').setAttribute('aria-pressed', 'true');
-      render();
-    }, function(){
-      showToast('ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง — เลือกจังหวัดจากรายการแทนได้เลย');
-    }, {timeout: 8000});
-  });
-
-  /* อ่านจังหวัดจาก URL ตอนเปิดหน้า (ลิงก์แชร์ได้) */
-  (function(){
-    var q = new URLSearchParams(location.search).get('province');
-    if(q && PROVS.indexOf(q) >= 0){ state.province = q; sel.value = q; }
-  })();
-  render();
 })();
 </script>
 </body>

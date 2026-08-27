@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>หาศูนย์ติดตั้ง — FINNIX FILM</title>
+<meta name="description" content="ค้นหาศูนย์ติดตั้งฟิล์มฟินนิกซ์ใกล้คุณ — เลือกจังหวัดหรือใช้ตำแหน่งปัจจุบัน ดูที่อยู่ เบอร์โทร และแผนที่ของแต่ละแห่ง">
+<meta name="format-detection" content="telephone=no">
+<!-- TODO SEO (รอค่าจริงก่อนใส่ — ค้างข้อ 15: โดเมนยังไม่นิ่ง): canonical · Open Graph/Twitter 1200x630 · JSON-LD LocalBusiness (ต้องได้ COMPANY_ADDRESS · COMPANY_EMAIL ก่อน ไม่ป้อนค่า placeholder ให้ crawler) -->
+
+<!-- Open Graph — ใส่เฉพาะที่ไม่ต้องใช้โดเมน
+     og:url · canonical · og:image ยังไม่ใส่โดยตั้งใจ: โดเมนยังไม่นิ่ง (ค้างข้อ 15)
+     และ MODE B ไม่มีภาพ 1200x630 ให้ใช้ — **ห้ามป้อนค่า placeholder ให้ crawler** -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FINNIX FILM">
+<meta property="og:locale" content="th_TH">
+<meta property="og:title" content="หาศูนย์ติดตั้ง — FINNIX FILM">
+<meta property="og:description" content="ค้นหาศูนย์ติดตั้งฟิล์มฟินนิกซ์ใกล้คุณ — เลือกจังหวัดหรือใช้ตำแหน่งปัจจุบัน ดูที่อยู่ เบอร์โทร และแผนที่ของแต่ละแห่ง">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   centers.html — หาศูนย์ติดตั้ง  (/centers)
+
+   อ่านก่อนแก้ไฟล์นี้
+     CLAUDE.md .................. กฎที่ละเมิดแล้วงานไม่ผ่าน + สคริปต์ตรวจ
+     docs/master-prompt.md ...... บรีฟหลัก อ้างอิงเป็น "ข้อ 1-12" เสมอ
+     docs/CHANGELOG.md .......... ท้ายไฟล์มี "ค้างอยู่" กับ "ตัวแปรที่ต้องขอ"
+
+   ข้อ 9 บังคับว่าหนึ่งหน้าจบในไฟล์เดียว — CSS กับ JS อยู่ในไฟล์นี้ ห้ามแยกออกไป
+   request ภายนอกมีได้แค่ Google Fonts (+ แผนที่ Google ที่ contact.html เท่านั้น)
+
+   ลำดับบล็อกใน <style> นี้ (ค้นด้วยชื่อ อย่าค้นด้วยเลขบรรทัด มันเลื่อนทุกรอบ)
+      1. reveal
+      2. nav
+      3. เมนูมือถือ
+      4. ปุ่ม
+      5. หัวหน้า — hero มืด + vignette (MODE B: ไม่มีภาพถ่าย ใช้ gradient แทน)
+      6. section
+      7. hero สองคอลัมน์ตามหน้าต้นแบบ — ข้อมูลติดต่อซ้าย · ฟอร์มขวา
+      8. footer
+      9. responsive
+
+   ของร่วม — แก้ที่ไฟล์นี้ต้องแก้ครบทั้ง 6 ไฟล์พร้อมกันเสมอ ไม่งั้นสลับหน้าแล้วเลย์เอาต์ขยับ
+     :root tokens · nav · drawer · footer · .btn · .rv · .var · SEO meta · บล็อก noscript
+   จุดตัด responsive ของทั้งเว็บมีสามจุด: 1080 (พับเมนู) · 900 · 620 — อย่าเพิ่มจุดใหม่
+   ทุกระยะต้องหารด้วย 8 ลงตัว · สีข้อความต้องผ่าน WCAG AA 4.5:1 วัดก่อนเปลี่ยนทุกครั้ง
+   ============================================================================ */
+/* @shared:TOKENS */
+:root{
+  --void:#050505;
+  --ink:#0C0C0C;
+  --paper:#FFFFFF;
+  --smoke:#F4F4F3;
+  --line:#E3E3E1;
+  --line-dark:rgba(255,255,255,.10);
+  --mute:#70706A;
+  --mute-dark:rgba(255,255,255,.52);
+  --red:#CC1B1B;
+  --red-hot:#E82323;
+
+  --u:8px;
+  --max:1440px;
+  --pad:40px;
+
+  --e:cubic-bezier(.16,1,.3,1);
+  --e-in:cubic-bezier(.7,0,.3,1);
+
+  /* ให้ block-size ไล่ค่าระหว่าง 0 กับ auto ได้ ใช้กับ accordion ที่ /faq และ FAQ ย่อหน้าแรก
+     ใส่ครบทั้ง 6 ไฟล์เพราะ :root ต้องแฮชตรงกัน หน้าที่ไม่มี <details> ก็ไม่มีผลอะไร
+     เบราว์เซอร์ที่ยังไม่รองรับจะข้ามบรรทัดนี้ไปเฉยๆ accordion เปิดทันทีแบบเดิม ไม่พัง */
+  interpolate-size:allow-keywords;
+}
+/* @end:TOKENS */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+/* nav ลอยสูง 76px — ถ้าไม่กันระยะไว้ หัวข้อปลายทางของ anchor จะไปมุดใต้แถบ nav
+   รวมถึง #main ที่ skip link ชี้ไป ซึ่งเป็นเรื่อง accessibility ตรงๆ (ข้อ 9) */
+[id]{scroll-margin-top:96px}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+  font-size:17px;line-height:1.75;font-weight:400;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3,h4{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+
+/* ข้ามไปเนื้อหาหลัก — ต้องมีทุกหน้าเพื่อให้คนใช้คีย์บอร์ดไม่ต้องไล่ผ่าน nav ทุกครั้ง (ข้อ 9) */
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:0 0 12px 0;z-index:200}
+.skip:focus{left:0}
+
+/* เบราว์เซอร์ตัดคำไทยด้วยพจนานุกรมที่ไม่มีคำทับศัพท์ — ครอบคำที่ตัดผิดด้วย .nb */
+.nb{white-space:nowrap}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.eyebrow.on-dark{color:var(--mute-dark)}
+.eyebrow .dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;margin-right:10px;vertical-align:2px}
+
+/* ค่าที่ยังไม่ได้รับจากลูกค้า — ข้อ 10 ห้ามแต่งตัวเลขหรือข้อความแทน */
+.var{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--smoke);border:1px dashed #B8B8B4;border-radius:6px;padding:1px 8px;font-size:.72em;letter-spacing:0;color:#5C5C57;white-space:nowrap;font-weight:500}
+.on-void .var{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.24);color:rgba(255,255,255,.82)}
+
+/* ---------------- reveal ---------------- */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--e),transform .8s var(--e)}
+.rv.in{opacity:1;transform:none}
+.rvl{opacity:0;transform:translateY(20px);transition:opacity .9s var(--e),transform .9s var(--e)}
+body.loaded .rvl{opacity:1;transform:none}
+
+/* @shared:NAV_CSS */
+/* ---------------- nav ---------------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .5s var(--e),border-color .5s var(--e),backdrop-filter .5s}
+.nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:transparent;transition:background .5s var(--e)}
+.nav.solid{background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(20px)}
+.nav.solid::after{background:var(--line)}
+.nav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:76px;display:flex;align-items:center;gap:48px}
+/* โลโก้ — กำหนด aspect-ratio ไว้ล่วงหน้าเพื่อไม่ให้เกิด layout shift ตามข้อ 9 */
+.brand{flex:none;display:block;line-height:0}
+.brand img{display:block;width:auto;height:24px;aspect-ratio:817/96}
+/* พื้นมืดใช้โลโก้ขาวล้วน — ตัวอักษร FINNIX เป็นสีดำจึงจมหายบนพื้น --void
+   และการตัดแดงออกช่วยให้ hero ไม่แดงเกินโควตาข้อ 4 */
+/* ไม่ใส่ transition บน filter โดยตั้งใจ — เบราว์เซอร์ interpolate filter list ข้ามสถานะไม่ได้
+   ทำให้ค่าค้างที่ขาวแล้วโลโก้หายไปบนพื้นขาว การสลับทันทีมองไม่ออกอยู่แล้วเพราะ nav เปลี่ยนพื้นหลังพร้อมกัน */
+.nav .brand img{filter:brightness(0) invert(1)}
+.nav.solid .brand img{filter:none}
+/* ลิงก์สูง 44px ตามเกณฑ์ขนาดพื้นที่กดในข้อ 9 */
+.nav-links{display:flex;gap:30px;margin-left:auto;font-size:15px;font-weight:400}
+.nav-links a{color:rgba(255,255,255,.78);position:relative;display:flex;align-items:center;height:44px;transition:color .4s var(--e)}
+.nav.solid .nav-links a{color:var(--mute)}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:11px;height:1px;background:var(--red);transition:right .45s var(--e)}
+.nav-links a:hover{color:#fff}
+.nav.solid .nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{right:0}
+/* ลิงก์ของหน้าปัจจุบัน — เส้นใต้ใช้ currentColor จางๆ **ไม่ใช่แดง**
+   หน้าจอบนสุดมี nav CTA แดง + จุด eyebrow แดงอยู่แล้ว ถ้าเส้นนี้เป็นแดงด้วยจะเป็นจุดที่ 3 ทุกหน้า
+   เกินโควตาข้อ 4 · technology.html ทำถูกมาตั้งแต่ต้น อีก 5 หน้าคัดลอกไปแล้วทำเป็นแดง
+   v3.3 ยกเวอร์ชันของ technology ขึ้นเป็นฉบับจริงแล้ว */
+.nav-links a[aria-current]{color:#fff}
+.nav.solid .nav-links a[aria-current]{color:var(--ink)}
+.nav-links a[aria-current]::after{right:0;background:currentColor;opacity:.28}
+.nav-cta{flex:none;display:flex;align-items:center;background:var(--red);color:#fff;font-size:14px;font-weight:500;height:44px;padding:0 22px;border-radius:12px;transition:background .3s var(--e),transform .3s var(--e)}
+.nav-cta:hover{background:var(--red-hot);transform:translateY(-1px)}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
+.burger span{position:absolute;left:11px;right:11px;height:1.5px;background:#fff;transition:.4s var(--e)}
+.burger span:nth-child(1){top:17px}.burger span:nth-child(2){bottom:17px}
+.nav.solid .burger span{background:var(--ink)}
+/* @end:NAV_CSS */
+/* @shared:DRAWER_CSS */
+/* ---------------- เมนูมือถือ ---------------- */
+/* สถานะ UI ไม่ใช่ motion เพื่อการตกแต่ง จึงไม่นับรวมในงบ 4 อย่างของข้อ 5 */
+.drawer{display:none;position:fixed;inset:0;z-index:99;background:var(--void);
+  flex-direction:column;justify-content:center;padding:76px var(--pad) 40px;
+  opacity:0;visibility:hidden;transition:opacity .4s var(--e),visibility .4s var(--e)}
+body.menu-open .drawer{opacity:1;visibility:visible}
+body.menu-open{overflow:hidden}
+body.menu-open .nav,body.menu-open .nav.solid{background:transparent;backdrop-filter:none}
+body.menu-open .nav::after{background:transparent}
+body.menu-open .nav .brand img{filter:brightness(0) invert(1)}
+body.menu-open .burger span{background:#fff;top:50%;bottom:auto;margin-top:-1px}
+body.menu-open .burger span:nth-child(1){transform:rotate(45deg)}
+body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
+.drawer a{display:flex;align-items:center;min-height:56px;font-family:'Anuphan',sans-serif;
+  font-size:26px;font-weight:600;letter-spacing:-.02em;color:#fff;
+  border-bottom:1px solid var(--line-dark)}
+.drawer .drawer-cta{margin-top:40px;justify-content:center;background:#fff;color:var(--ink);
+  border:0;border-radius:14px;font-size:16px;min-height:56px}
+/* @end:DRAWER_CSS */
+
+/* ---------------- ปุ่ม ---------------- */
+.btn{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 30px;border-radius:14px;font-size:15px;font-weight:500;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:transform .35s var(--e),background .35s var(--e),border-color .35s var(--e),color .35s var(--e)}
+.btn .ar{transition:transform .4s var(--e)}
+.btn:hover .ar{transform:translateX(5px)}
+/* แดงสงวนไว้ให้ nav CTA เท่านั้นในหน้านี้ — ปุ่มในเนื้อหาใช้ดำ ปุ่มบนพื้นมืดใช้ขาว (ข้อ 4) */
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{transform:translateY(-2px);background:#000}
+.btn-light{background:#fff;color:var(--ink)}
+.btn-light:hover{transform:translateY(-2px);background:#F0F0EE}
+
+/* ---------------- หัวหน้า — hero มืด + vignette (MODE B: ไม่มีภาพถ่าย ใช้ gradient แทน) ---------------- */
+.page-head{background:var(--void);color:#fff;padding:200px 0 104px;position:relative;overflow:hidden}
+.page-head::before{content:'';position:absolute;inset:0;pointer-events:none;
+  /* เดิมมี radial แดง rgba(204,27,27,.08) ซ้อนอีกชั้นตรงมุมขวาล่าง — ถอดออกแล้ว
+     หน้าจอ hero มี nav CTA แดง + จุด eyebrow แดงอยู่แล้ว แสงแดงนี้เป็นจุดที่ 3 เกินโควตาข้อ 4
+     และแสงเรืองพื้นหลังไม่อยู่ในรายการที่ข้อ 4 อนุญาต (ปุ่มหลัก · จุด eyebrow · ชั้นเซรามิก · focus/error) */
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(255,255,255,.06),transparent 70%)}
+.page-head .wrap{position:relative}
+.page-head h1{font-size:clamp(38px,6.4vw,80px);font-weight:700;letter-spacing:-.035em;margin-top:24px;max-width:14ch}
+.page-head p{color:var(--mute-dark);margin-top:32px;max-width:52ch;font-size:18px}
+
+/* ---------------- section ---------------- */
+.sec{padding:132px 0}
+.sec.smoke{background:var(--smoke)}
+
+/* หัวข้อของบล็อกตัวแทน — ต้องมีเพื่อไม่ให้ลำดับหัวข้อกระโดดจาก h1 ไป h3 (ข้อ 9) */
+.sec-h2{font-size:clamp(26px,3.2vw,38px);letter-spacing:-.025em;margin-bottom:32px}
+
+/* แถบตัวกรอง — ย้ายมาจาก contact.html ตอนแยกหน้านี้ออกมาใน v3.4
+   เดิมเป็นสามคอลัมน์ "ค้นหาตัวแทน | OR | สำนักงานใหญ่" ที่หน้าติดต่อ
+   หน้านี้ไม่มีคอลัมน์สำนักงานใหญ่แล้ว (อยู่ที่ /contact ที่เดียว) จึงเหลือเป็นแถบเดียว */
+.finder-bar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:24px;margin-bottom:40px}
+.finder-bar .fb-field{flex:1 1 320px;min-width:0}
+.flabel{display:block;font-size:11px;font-weight:500;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+.finder-bar select{display:block;width:100%;max-width:400px;padding:16px;font:inherit;font-size:15px;
+  color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:12px}
+.finder-bar select:focus{border-color:var(--ink)}
+.finder-bar .acts{display:flex;flex-wrap:wrap;gap:8px}
+
+/* ป้ายตัวอย่าง (แพทเทิร์น v2.2) */
+.sample-tag{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;padding:8px 16px;
+  border:1px dashed #B8B8B4;border-radius:8px;background:var(--paper);font-size:13px;color:#5C5C57}
+
+/* แผนที่ + รายการตัวแทน — สองคอลัมน์ตามหน้าต้นแบบ */
+.loc{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.tmap{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px}
+.tmap iframe{display:block;width:100%;height:670px;border:0;border-radius:12px}
+.tmap .map-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:8px;margin-top:16px;font-size:13px;color:var(--mute)}
+.tmap .map-foot a{font-weight:500;text-decoration:underline}
+.loc-list{background:var(--paper);border:1px solid var(--line);border-radius:16px;
+  display:flex;flex-direction:column;max-height:720px;overflow-y:auto;overflow-x:hidden}
+.count{position:sticky;top:0;z-index:2;background:var(--paper);padding:16px 24px;
+  font-size:14px;color:var(--mute);border-bottom:1px solid var(--line)}
+.dcards{flex:1}
+.dcard{padding:24px;border-bottom:1px solid var(--line);transition:background .2s var(--e)}
+.dcard:last-child{border-bottom:0}
+.dcard:hover,.dcard.on{background:var(--smoke)}
+.dcard .top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.dcard h3{font-size:17px;letter-spacing:-.01em}
+.dcard .co{font-size:13px;color:var(--mute);margin-top:2px}
+.dcard .addr{font-size:14px;color:var(--mute);margin-top:8px;line-height:1.7}
+.dcard .dist{font-size:13px;color:var(--ink);font-weight:500;margin-top:8px;font-variant-numeric:tabular-nums}
+.dcard .svc{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;font-size:12px;color:var(--mute)}
+.dcard .svc span{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:6px;padding:2px 8px}
+.dcard .act{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.dcard .act a{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;
+  border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:500;transition:border-color .2s var(--e)}
+.dcard .act a,.dcard .act .map-btn{border:1px solid var(--line)}
+.dcard .act .map-btn{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;
+  border-radius:999px;font:inherit;font-size:14px;font-weight:500;background:var(--paper);
+  color:var(--ink);cursor:pointer;transition:border-color .2s var(--e)}
+.dcard .act a:hover,.dcard .act .map-btn:hover{border-color:var(--ink)}
+.chip{min-height:40px;padding:0 16px;border-radius:999px;font:inherit;font-size:14px;font-weight:500;
+  border:1px solid var(--line);background:var(--paper);color:var(--mute);cursor:pointer;
+  transition:color .2s var(--e),border-color .2s var(--e),background .2s var(--e)}
+.chip:hover{color:var(--ink);border-color:#B8B8B4}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+/* แบดจ์ 3 tier — แยกกันโดยไม่ใช้แดง (โควตาข้อ 4) และไม่พึ่งสีอย่างเดียว: ข้อความ + ไอคอนต่างกัน */
+.badge{flex:none;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:4px 10px}
+.badge.center{background:var(--ink);color:#fff}
+.badge.automotive{border:1px solid var(--ink);color:var(--ink)}
+.badge.sub{background:#EDEDEB;color:#5C5C57}
+.loc-empty{display:none;padding:56px 24px;text-align:center}
+.loc-empty h3{font-size:20px}
+.loc-empty p{color:var(--mute);font-size:15px;margin-top:8px}
+.loc-empty .alt{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}
+.loc-empty .cta{display:inline-block;margin-top:24px;font-weight:500;text-decoration:underline}
+.loc.empty .loc-empty{display:block}
+.loc.empty .dcards .dcard,.loc.empty .count{display:none}
+.more{display:none;margin:24px;align-self:center}
+.toast{position:fixed;z-index:120;left:50%;bottom:24px;transform:translate(-50%,16px);
+  background:var(--ink);color:#fff;font-size:14px;padding:12px 24px;border-radius:999px;
+  opacity:0;visibility:hidden;transition:opacity .3s var(--e),transform .3s var(--e),visibility .3s}
+.toast.on{opacity:1;visibility:visible;transform:translate(-50%,0)}
+
+/* ปิดท้าย */
+.closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
+.closing h2{font-size:clamp(32px,5.4vw,72px);font-weight:700;letter-spacing:-.035em;color:#fff;max-width:18ch;margin:24px auto 0}
+.closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
+.closing .btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:48px}
+
+/* @shared:FOOTER_CSS */
+/* ---------------- footer ---------------- */
+footer{background:var(--void);color:#fff;padding:96px 0 40px}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
+/* footer เป็นพื้นมืดเสมอ จึงใช้โลโก้ขาวล้วนตลอด */
+.f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
+.f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
+.f-col h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.46);font-weight:500;margin-bottom:16px}
+.f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
+.f-col a:hover{color:var(--red-hot)}
+.f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--mute-dark)}
+/* @end:FOOTER_CSS */
+
+/* ---------------- responsive ---------------- */
+@media(max-width:1080px){
+  .nav-links,.nav-cta{display:none}
+  .burger{display:block}
+  .drawer{display:flex}
+  
+  .loc{grid-template-columns:1fr}
+  .tmap{order:-1}
+  .tmap iframe{height:400px}
+  .loc-list{max-height:none}
+  .find{grid-template-columns:1fr;gap:32px}
+  .find .or{display:none}
+  .find > .rv + .rv{padding-top:32px;border-top:1px solid var(--line)}
+}
+@media(max-width:900px){
+  :root{--pad:24px}
+  .sec{padding:88px 0}
+  .page-head{padding:152px 0 72px}
+  .closing{padding:104px 0}
+  .f-grid{grid-template-columns:1fr 1fr;gap:40px}
+}
+@media(max-width:620px){
+  
+  
+  
+  
+  .f-grid{grid-template-columns:1fr}
+  .drawer a{font-size:22px;min-height:52px}
+  .dcard .top{flex-direction:column;align-items:flex-start;gap:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  .rv,.rvl{opacity:1;transform:none}
+}
+</style>
+<!-- @shared:NOSCRIPT -->
+<!-- ไม่มี JS = .rv/.rvl ค้างที่ opacity:0 และ hero ค้างที่ translateY -> หน้าว่างเกือบทั้งหน้า
+     บล็อกนี้คืนสถานะปลายทางให้ทันที เนื้อหาจึงอ่านได้ครบแม้ JS ไม่ทำงาน
+     **เขียนเหมือนกันทั้ง 6 ไฟล์โดยตั้งใจ** — selector ที่หน้านั้นไม่มีก็ไม่มีผลอะไร
+     แต่ถ้าเขียนต่างกันรายไฟล์ สคริปต์ตรวจของร่วมจะอ่านเป็น .rv ที่ไม่ตรงกัน -->
+<noscript><style>
+  .rv,.rvl{opacity:1;transform:none}
+  .hero h1 .l span{transform:none}
+  .hero .eyebrow,.hero p.sub,.hero-cta{opacity:1;transform:none}
+  .sig-legend li{opacity:1}
+</style></noscript>
+<!-- @end:NOSCRIPT -->
+</head>
+<body>
+
+<a href="#main" class="skip">ข้ามไปยังเนื้อหาหลัก</a>
+
+<!-- NAV -->
+<!-- @shared:NAV_HTML -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
+    <div class="nav-links">
+      <a href="index.html">หน้าแรก</a>
+      <a href="about.html">เกี่ยวกับเรา</a>
+      <a href="technology.html">เทคโนโลยี</a>
+      <a href="gallery.html">ผลงาน</a>
+      <a href="contact.html">ติดต่อ</a>
+    </div>
+    <a href="centers.html" class="nav-cta" aria-current="page">หาศูนย์ติดตั้ง</a>
+    <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
+  </div>
+</nav>
+<!-- @end:NAV_HTML -->
+
+<!-- เมนูมือถือ -->
+<!-- @shared:DRAWER_HTML -->
+<div class="drawer" id="drawer">
+  <a href="index.html">หน้าแรก</a>
+  <a href="about.html">เกี่ยวกับเรา</a>
+  <a href="technology.html">เทคโนโลยี</a>
+  <a href="gallery.html">ผลงาน</a>
+  <a href="faq.html">คำถามที่พบบ่อย</a>
+  <a href="contact.html">ติดต่อ</a>
+  <a href="centers.html" class="drawer-cta" aria-current="page">หาศูนย์ติดตั้ง</a>
+</div>
+<!-- @end:DRAWER_HTML -->
+
+<main id="main">
+
+<!-- 1 · hero มืด สองคอลัมน์ตามหน้าต้นแบบ — ข้อมูลติดต่อซ้าย · ฟอร์มขวา
+     ต่างจากเขาโดยตั้งใจ: ไม่มีภาพแผนที่โลกเป็นพื้นหลัง (MODE B ห้ามภาพถ่าย) ใช้ gradient แทน -->
+<header class="page-head on-void">
+  <div class="wrap">
+    <div class="eyebrow on-dark rvl"><span class="dot"></span>เครือข่ายติดตั้ง</div>
+    <h1 class="rvl" style="transition-delay:.08s">หา<span class="nb">ศูนย์ติดตั้ง</span>ใกล้คุณ</h1>
+    <p class="rvl" style="transition-delay:.16s">เลือกจังหวัดหรือใช้ตำแหน่งปัจจุบัน แล้วดูที่อยู่ เบอร์โทร และแผนที่ของแต่ละแห่ง · เรื่องบริษัทกับช่องทางติดต่อสำนักงานใหญ่อยู่ที่หน้า <a href="contact.html">ติดต่อเรา</a></p>
+  </div>
+</header>
+
+<!-- 3 · แผนที่ + รายการตัวแทน
+     ต่างจากเขาโดยตั้งใจ: แผนที่เป็น SVG ในไฟล์ ไม่ใช่ Google Maps SDK — ข้อ 9 อนุญาต request ภายนอกแค่ Google Fonts -->
+<section class="sec smoke" id="dealers">
+  <div class="wrap">
+    <div class="sample-tag rv">ตัวอย่างการแสดงผล — รายชื่อตัวแทนทั้งหมดยังเป็นข้อมูลสมมติ · รายชื่อจริงรอ <span class="var">{{SERVICE_CENTERS}}</span></div>
+
+    <div class="rv">
+      <h2 class="sec-h2">ตัวแทนและศูนย์ติดตั้งทั่วประเทศ</h2>
+    </div>
+
+    <div class="finder-bar rv">
+      <div class="fb-field">
+        <label class="flabel" for="prov">จังหวัด</label>
+        <select id="prov"></select>
+      </div>
+      <div class="acts">
+        <button type="button" class="btn btn-dark" id="find-btn">ค้นหา</button>
+        <button type="button" class="chip" id="near-btn">📍 ใกล้ฉัน</button>
+      </div>
+    </div>
+
+    <div class="loc rv" id="loc">
+      <div class="tmap">
+        <iframe id="gmap" title="แผนที่ตำแหน่งตัวแทน" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://maps.google.com/maps?q=Thailand&z=5&output=embed"></iframe>
+        <div class="map-foot">
+          <span id="map-cap">แผนที่ทั้งประเทศ — เลือกจังหวัดหรือกดร้านในรายการเพื่อซูมไปตำแหน่งนั้น</span>
+          <a id="map-out" href="https://www.google.com/maps/search/?api=1&query=Thailand" target="_blank" rel="noopener noreferrer">เปิดใน Google Maps</a>
+        </div>
+      </div>
+
+      <div class="loc-list">
+        <p class="count" aria-live="polite" id="count"></p>
+        <div class="dcards" id="dcards"></div>
+        <div class="loc-empty" id="loc-empty">
+          <h3>ยังไม่พบตัวแทนในจังหวัดนี้</h3>
+          <p>ลองจังหวัดใกล้เคียง หรือติดต่อสำนักงานใหญ่ให้ช่วยแนะนำ</p>
+          <div class="alt" id="alt-prov"></div>
+          <a class="cta" href="contact.html">ติดต่อสำนักงานใหญ่</a>
+        </div>
+        <button type="button" class="btn btn-dark more" id="more-btn">แสดงเพิ่ม</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · ปิดท้าย -->
+<section class="closing on-void">
+  <div class="wrap">
+    <div class="eyebrow on-dark" style="text-align:center"><span class="dot"></span>ยังไม่เจอที่ใกล้</div>
+    <h2>ไม่มีตัวแทนในจังหวัดของคุณ?</h2>
+    <p>ติดต่อสำนักงานใหญ่ เราช่วยหาช่างที่ผ่านการอบรมที่ใกล้ที่สุดให้ได้</p>
+    <div class="btns">
+      <a href="contact.html" class="btn btn-light">ติดต่อเรา <span class="ar" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<!-- @shared:FOOTER_HTML -->
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
+        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
+      </div>
+      <div class="f-col">
+        <h3>บริษัท</h3>
+        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a><a href="gallery.html">ผลงาน</a>
+      </div>
+      <div class="f-col">
+        <h3>บริการ</h3>
+        <a href="centers.html">หาศูนย์ติดตั้ง</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+      </div>
+    </div>
+    <div class="f-bot">
+      <span>© 2569 บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</span>
+      <span>นโยบายความเป็นส่วนตัว · นโยบายคุกกี้</span>
+    </div>
+  </div>
+</footer>
+<!-- @end:FOOTER_HTML -->
+
+<!-- ข้อมูลตัวแทน — ต้นทางคือ data/dealers.json คัดลอกมาฝัง ไม่ fetch ตอนรัน (ข้อ 9) -->
+<script id="dealers-data" type="application/json">[{"id": "fnx-bkk-001", "name": "ฟินนิกซ์ เซ็นเตอร์ ลาดพร้าว", "companyName": "บจก. ตัวอย่างฟิล์ม กรุงเทพ", "tier": "center", "services": ["automotive", "ppf"], "address": "999/1 ถ.ลาดพร้าว แขวงจอมพล เขตจตุจักร กรุงเทพฯ 10900", "province": "กรุงเทพมหานคร", "region": "bangkok", "phone": "0810000001", "lineId": "@fnxlp-demo", "lat": 13.8161, "lng": 100.5606, "hours": "จ-ส 09:00-18:00", "featured": true, "placeholder": true}, {"id": "fnx-bkk-002", "name": "พระราม 2 ออโต้ฟิล์ม", "companyName": "หจก. ตัวอย่างออโต้", "tier": "automotive", "services": ["automotive"], "address": "88 ถ.พระราม 2 แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10150", "province": "กรุงเทพมหานคร", "region": "bangkok", "phone": "0810000002", "lineId": "", "lat": 13.6608, "lng": 100.4419, "hours": "ทุกวัน 09:00-19:00", "featured": false, "placeholder": true}, {"id": "fnx-nbi-001", "name": "นนท์ฟิล์ม แคราย", "companyName": "", "tier": "sub", "services": ["automotive"], "address": "55/7 ถ.ติวานนท์ ต.บางกระสอ อ.เมือง จ.นนทบุรี 11000", "province": "นนทบุรี", "region": "central", "phone": "0810000003", "lineId": "", "lat": 13.8622, "lng": 100.5218, "hours": "จ-ส 08:30-18:00", "featured": false, "placeholder": true}, {"id": "fnx-cnx-001", "name": "เชียงใหม่ คาร์ฟิล์ม", "companyName": "หจก. ตัวอย่างเชียงใหม่", "tier": "center", "services": ["automotive", "ppf"], "address": "285 ถ.มหิดล ต.ป่าแดด อ.เมือง จ.เชียงใหม่ 50100", "province": "เชียงใหม่", "region": "north", "phone": "0810000004", "lineId": "@fnxcm-demo", "lat": 18.7654, "lng": 98.9876, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}, {"id": "fnx-plk-001", "name": "พิษณุโลก ฟิล์มเฮาส์", "companyName": "", "tier": "sub", "services": ["automotive"], "address": "12 ถ.มิตรภาพ ต.ในเมือง อ.เมือง จ.พิษณุโลก 65000", "province": "พิษณุโลก", "region": "north", "phone": "0810000005", "lineId": "", "lat": 16.8211, "lng": 100.2659, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}, {"id": "fnx-kkn-001", "name": "ขอนแก่น พรีเมียมฟิล์ม", "companyName": "บจก. ตัวอย่างอีสาน", "tier": "automotive", "services": ["automotive", "ppf"], "address": "171 ถ.มิตรภาพ ต.ในเมือง อ.เมือง จ.ขอนแก่น 40000", "province": "ขอนแก่น", "region": "northeast", "phone": "0810000006", "lineId": "@fnxkk-demo", "lat": 16.4322, "lng": 102.8236, "hours": "ทุกวัน 08:30-18:30", "featured": false, "placeholder": true}, {"id": "fnx-cbi-001", "name": "ชลบุรี ออโต้ชิลด์", "companyName": "หจก. ตัวอย่างตะวันออก", "tier": "automotive", "services": ["automotive", "ppf"], "address": "39/4 ถ.สุขุมวิท ต.บ้านสวน อ.เมือง จ.ชลบุรี 20000", "province": "ชลบุรี", "region": "east", "phone": "0810000008", "lineId": "", "lat": 13.3611, "lng": 100.9847, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}, {"id": "fnx-hkt-001", "name": "ภูเก็ต ซันบล็อกฟิล์ม", "companyName": "", "tier": "sub", "services": ["automotive"], "address": "77 ถ.เทพกระษัตรี ต.รัษฎา อ.เมือง จ.ภูเก็ต 83000", "province": "ภูเก็ต", "region": "south", "phone": "0810000009", "lineId": "", "lat": 7.8906, "lng": 98.3984, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}, {"id": "fnx-ska-001", "name": "หาดใหญ่ ฟิล์มโปร", "companyName": "บจก. ตัวอย่างใต้", "tier": "sub", "services": ["ppf"], "address": "246 ถ.กาญจนวนิช ต.หาดใหญ่ อ.หาดใหญ่ จ.สงขลา 90110", "province": "สงขลา", "region": "south", "phone": "0810000010", "lineId": "@fnxhy-demo", "lat": 7.0086, "lng": 100.4747, "hours": "จ-ส 09:00-18:00", "featured": false, "placeholder": true}]</script>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- reveal — ต้องอยู่ก่อนโค้ดเฉพาะหน้า ----
+     ถ้าบล็อกไหนข้างล่าง throw ขึ้นมา .rv จะค้างที่ opacity:0 ทั้งหน้า
+     เดิมบล็อกนี้อยู่ท้ายสุด จึงพังตามทุกครั้งที่โค้ดก่อนหน้ามีปัญหา
+     ห่อด้วย if(!reduce) ไม่ใช่ early return เพราะ return จะฆ่าโค้ดที่เหลือทั้งไฟล์ */
+  if(!reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.rv').forEach(function(el, i){
+      el.style.transitionDelay = (i % 4) * 60 + 'ms';
+      io.observe(el);
+    });
+  }
+
+  /* ---- load ---- */
+  window.addEventListener('load', function(){ document.body.classList.add('loaded'); });
+  setTimeout(function(){ document.body.classList.add('loaded'); }, 400);
+
+<!-- @shared:JS_NAV -->
+  /* ---- nav ---- */
+  var nav = document.getElementById('nav');
+  function onScrollNav(){ nav.classList.toggle('solid', window.scrollY > 40); }
+  onScrollNav(); window.addEventListener('scroll', onScrollNav, {passive:true});
+
+  /* ---- เมนูมือถือ ---- */
+  var burger = document.getElementById('burger');
+  function setMenu(open){
+    document.body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'ปิดเมนู' : 'เปิดเมนู');
+  }
+  burger.addEventListener('click', function(){
+    setMenu(!document.body.classList.contains('menu-open'));
+  });
+  document.querySelectorAll('#drawer a').forEach(function(a){
+    a.addEventListener('click', function(){ setMenu(false); });
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && document.body.classList.contains('menu-open')){
+      setMenu(false); burger.focus();
+    }
+  });
+  /* กลับมากว้างกว่า 900px แล้วต้องไม่ค้างสถานะเมนูเปิด */
+  window.matchMedia('(min-width:1081px)').addEventListener('change', function(e){
+    if(e.matches) setMenu(false);
+  });
+<!-- @end:JS_NAV -->
+
+  /* ==== ค้นหาตัวแทน — สถานะ UI ไม่นับเป็น motion ==== */
+  var DEALERS = JSON.parse(document.getElementById('dealers-data').textContent);
+  var TIER_TH = {center:'★ Finnix Center', automotive:'Automotive Dealer', sub:'Sub Dealer'};
+  var SVC_TH  = {automotive:'ฟิล์มรถยนต์', ppf:'PPF'};   /* ฟิล์มอาคารถูกตัดออกจากเว็บใน v2.6 */
+  var state = { province:'', geo:null, shown:30 };
+  var loc = document.getElementById('loc');
+  var cards = document.getElementById('dcards');
+  var countEl = document.getElementById('count');
+  var sel = document.getElementById('prov');
+  var gmap = document.getElementById('gmap');
+  var mapCap = document.getElementById('map-cap');
+  var mapOut = document.getElementById('map-out');
+
+  function esc(t){ var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+  function km(a, b, c, d){
+    var R = 6371, p = Math.PI / 180;
+    var x = (Math.sin((c - a) * p / 2) * Math.sin((c - a) * p / 2)) +
+            Math.cos(a * p) * Math.cos(c * p) * Math.sin((d - b) * p / 2) * Math.sin((d - b) * p / 2);
+    return 2 * R * Math.asin(Math.sqrt(x));
+  }
+
+  /* dropdown มีเฉพาะจังหวัดที่มีตัวแทนจริง — แบบเดียวกับหน้าต้นแบบ ไม่ใช่ 77 จังหวัด */
+  var PROVS = [];
+  DEALERS.forEach(function(x){ if(PROVS.indexOf(x.province) < 0) PROVS.push(x.province); });
+  PROVS.sort(function(a, b){ return a.localeCompare(b, 'th'); });
+  sel.innerHTML = '<option value="">ทั้งหมด</option>' +
+    PROVS.map(function(pv){ return '<option value="' + esc(pv) + '">' + esc(pv) + '</option>'; }).join('');
+
+  function filtered(){
+    var out = DEALERS.filter(function(x){
+      return !state.province || x.province === state.province;
+    });
+    if(state.geo){
+      out.forEach(function(x){ x._d = km(state.geo.lat, state.geo.lng, x.lat, x.lng); });
+      out.sort(function(a, b){ return a._d - b._d; });
+    }
+    return out;
+  }
+  function syncURL(){
+    if(!state.province){ history.replaceState(null, '', location.pathname + location.hash); return; }
+    history.replaceState(null, '', location.pathname + '?province=' + encodeURIComponent(state.province) + '#dealers');
+  }
+
+  /* แผนที่จริง — เปลี่ยน src ของ iframe ตามสิ่งที่ผู้ใช้เลือก
+     ใช้ endpoint embed ของ Google Maps ที่ไม่ต้องใช้ API key · เป็น request ภายนอกตัวที่สองของเว็บ (ดู CHANGELOG v2.5) */
+  function setMap(q, zoom, cap, outQ){
+    gmap.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(q) + '&z=' + zoom + '&output=embed';
+    mapCap.textContent = cap;
+    mapOut.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(outQ || q);
+  }
+  function mapForList(list){
+    if(state.province && list.length){
+      var c = list[0];
+      setMap(state.province + ' ประเทศไทย', 10,
+        'แผนที่ จ.' + state.province + ' — กดร้านในรายการเพื่อซูมไปตำแหน่งนั้น', c.lat + ',' + c.lng);
+    } else if(state.geo){
+      setMap(state.geo.lat + ',' + state.geo.lng, 11, 'แผนที่รอบตำแหน่งของคุณ — กดร้านในรายการเพื่อดูตำแหน่งร้าน');
+    } else {
+      setMap('Thailand', 5, 'แผนที่ทั้งประเทศ — เลือกจังหวัดหรือกดร้านในรายการเพื่อซูมไปตำแหน่งนั้น');
+    }
+  }
+  function render(){
+    var list = filtered();
+    loc.classList.toggle('empty', !list.length);
+    if(!list.length){
+      document.getElementById('alt-prov').innerHTML = PROVS.map(function(pv){
+        return '<button type="button" class="chip" data-prov="' + esc(pv) + '">' + esc(pv) + '</button>';
+      }).join('');
+    }
+    countEl.textContent = 'พบ ' + list.length + ' ตัวแทน' + (state.province ? 'ใน จ.' + state.province : 'ทั่วประเทศ') + (state.geo ? ' — เรียงตามระยะทางจากคุณ' : '');
+    cards.innerHTML = list.slice(0, state.shown).map(function(x){
+      var svc = x.services.filter(function(v){ return SVC_TH[v]; })
+        .map(function(v){ return '<span>' + SVC_TH[v] + '</span>'; }).join('');
+      var acts = '<button type="button" class="map-btn" data-id="' + x.id + '">ดูบนแผนที่</button>' +
+        '<a href="tel:' + x.phone + '">โทร</a>' +
+        '<a href="https://www.google.com/maps/dir/?api=1&destination=' + x.lat + ',' + x.lng + '" target="_blank" rel="noopener noreferrer">เส้นทาง</a>' +
+        (x.lineId ? '<a href="https://line.me/ti/p/' + encodeURIComponent(x.lineId) + '" target="_blank" rel="noopener noreferrer">LINE</a>' : '');
+      return '<article class="dcard" data-id="' + x.id + '"><div class="top"><h3>' + esc(x.name) + '</h3>' +
+        (TIER_TH[x.tier] ? '<span class="badge ' + x.tier + '">' + TIER_TH[x.tier] + '</span>' : '') + '</div>' +
+        (x.companyName ? '<p class="co">' + esc(x.companyName) + '</p>' : '') +
+        '<p class="addr">' + esc(x.address) + '</p>' +
+        (x._d != null ? '<p class="dist">ห่างจากคุณ ' + x._d.toFixed(1) + ' กม.</p>' : '') +
+        '<div class="svc">' + svc + '</div><div class="act">' + acts + '</div></article>';
+    }).join('');
+    mapForList(list);
+    document.getElementById('more-btn').style.display = list.length > state.shown ? 'inline-flex' : 'none';
+    syncURL();
+  }
+
+  /* กดการ์ดร้าน -> ซูมแผนที่ไปตำแหน่งร้านนั้น */
+  function pickDealer(id){
+    var d = DEALERS.filter(function(x){ return x.id === id; })[0];
+    if(!d) return;
+    cards.querySelectorAll('.dcard.on').forEach(function(c){ c.classList.remove('on'); });
+    var card = cards.querySelector('[data-id="' + id + '"]');
+    if(card) card.classList.add('on');
+    setMap(d.lat + ',' + d.lng, 16, d.name + ' — ' + d.address, d.lat + ',' + d.lng);
+  }
+  cards.addEventListener('click', function(e){
+    if(e.target.closest('a')) return;              // ปุ่ม โทร/เส้นทาง/LINE ทำงานตามปกติ
+    var c = e.target.closest('.dcard');
+    if(c) pickDealer(c.getAttribute('data-id'));
+  });
+  cards.addEventListener('click', function(e){
+    var b = e.target.closest('.map-btn');
+    if(b){ e.stopPropagation(); pickDealer(b.getAttribute('data-id')); }
+  }, true);
+
+  function pick(pv){ state.province = pv; sel.value = pv; state.shown = 30; render(); }
+  sel.addEventListener('change', function(){ pick(sel.value); });
+  document.getElementById('find-btn').addEventListener('click', function(){ pick(sel.value); });
+  document.getElementById('more-btn').addEventListener('click', function(){ state.shown += 30; render(); });
+  document.getElementById('loc-empty').addEventListener('click', function(e){
+    var b = e.target.closest('[data-prov]');
+    if(b) pick(b.getAttribute('data-prov'));
+  });
+
+  /* ใกล้ฉัน — ไม่บล็อกหน้า · ปฏิเสธ = toast แล้วใช้ dropdown ต่อ */
+  var toast = document.createElement('div');
+  toast.className = 'toast'; toast.setAttribute('role', 'status');
+  document.body.appendChild(toast);
+  var toastT;
+  function showToast(t){
+    toast.textContent = t; toast.classList.add('on');
+    clearTimeout(toastT);
+    toastT = setTimeout(function(){ toast.classList.remove('on'); }, 4000);
+  }
+  document.getElementById('near-btn').addEventListener('click', function(){
+    if(!navigator.geolocation){ showToast('เบราว์เซอร์นี้ไม่รองรับตำแหน่ง — เลือกจังหวัดจากรายการแทนได้เลย'); return; }
+    navigator.geolocation.getCurrentPosition(function(pos){
+      state.geo = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+      document.getElementById('near-btn').setAttribute('aria-pressed', 'true');
+      render();
+    }, function(){
+      showToast('ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง — เลือกจังหวัดจากรายการแทนได้เลย');
+    }, {timeout: 8000});
+  });
+
+  /* อ่านจังหวัดจาก URL ตอนเปิดหน้า (ลิงก์แชร์ได้) */
+  (function(){
+    var q = new URLSearchParams(location.search).get('province');
+    if(q && PROVS.indexOf(q) >= 0){ state.province = q; sel.value = q; }
+  })();
+  render();
+})();
+</script>
+</body>
+</html>
