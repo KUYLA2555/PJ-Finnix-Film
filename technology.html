@@ -5,10 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>เทคโนโลยี — FINNIX FILM</title>
 <meta name="description" content="ความมืดกับความร้อนเป็นคนละเรื่องกัน อธิบายว่าฟิล์มกรองแสงลดความร้อนด้วยกลไกใด และทำไมความเข้มของฟิล์มจึงไม่ใช่ตัวชี้วัดความเย็น">
+
+<!-- Open Graph — ใส่เฉพาะที่ไม่ต้องใช้โดเมน
+     og:url · canonical · og:image ยังไม่ใส่โดยตั้งใจ: โดเมนยังไม่นิ่ง (ค้างข้อ 15)
+     และ MODE B ไม่มีภาพ 1200x630 ให้ใช้ — **ห้ามป้อนค่า placeholder ให้ crawler** -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FINNIX FILM">
+<meta property="og:locale" content="th_TH">
+<meta property="og:title" content="เทคโนโลยี — FINNIX FILM">
+<meta property="og:description" content="ความมืดกับความร้อนเป็นคนละเรื่องกัน อธิบายว่าฟิล์มกรองแสงลดความร้อนด้วยกลไกใด และทำไมความเข้มของฟิล์มจึงไม่ใช่ตัวชี้วัดความเย็น">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ============================================================================
+   technology.html — เทคโนโลยี  (/technology)
+   เป็นที่อยู่ของ signature ชิ้นเดียวของทั้งเว็บ (ไดอะแกรมชั้นฟิล์ม) — ห้ามสร้างชิ้นที่สอง
+
+   อ่านก่อนแก้ไฟล์นี้
+     CLAUDE.md .................. กฎที่ละเมิดแล้วงานไม่ผ่าน + สคริปต์ตรวจ
+     docs/master-prompt.md ...... บรีฟหลัก อ้างอิงเป็น "ข้อ 1-12" เสมอ
+     docs/CHANGELOG.md .......... ท้ายไฟล์มี "ค้างอยู่" กับ "ตัวแปรที่ต้องขอ"
+
+   ข้อ 9 บังคับว่าหนึ่งหน้าจบในไฟล์เดียว — CSS กับ JS อยู่ในไฟล์นี้ ห้ามแยกออกไป
+   request ภายนอกมีได้แค่ Google Fonts (+ แผนที่ Google ที่ contact.html เท่านั้น)
+
+   ลำดับบล็อกใน <style> นี้ (ค้นด้วยชื่อ อย่าค้นด้วยเลขบรรทัด มันเลื่อนทุกรอบ)
+      1. MOTION 2 · scroll reveal
+      2. nav
+      3. เมนูมือถือ
+      4. hero
+      5. generic section
+      6. 2 · spectrum
+      7. 3 · SIGNATURE · layer stack
+      8. 4 · slider proof
+      9. 5 · glossary
+     10. 6 · closing
+     11. footer
+     12. responsive
+     13. reduced motion
+
+   ของร่วม — แก้ที่ไฟล์นี้ต้องแก้ครบทั้ง 6 ไฟล์พร้อมกันเสมอ ไม่งั้นสลับหน้าแล้วเลย์เอาต์ขยับ
+     :root tokens · nav · drawer · footer · .btn · .rv · .var · SEO meta · บล็อก noscript
+   จุดตัด responsive ของทั้งเว็บมีสามจุด: 1080 (พับเมนู) · 900 · 620 — อย่าเพิ่มจุดใหม่
+   ทุกระยะต้องหารด้วย 8 ลงตัว · สีข้อความต้องผ่าน WCAG AA 4.5:1 วัดก่อนเปลี่ยนทุกครั้ง
+   ============================================================================ */
 :root{
   --void:#050505;
   --ink:#0C0C0C;
@@ -16,7 +58,7 @@
   --smoke:#F4F4F3;
   --line:#E3E3E1;
   --line-dark:rgba(255,255,255,.10);
-  --mute:#75756F;
+  --mute:#70706A;
   --mute-dark:rgba(255,255,255,.52);
   --red:#CC1B1B;
   --red-hot:#E82323;
@@ -27,20 +69,28 @@
 
   --e:cubic-bezier(.16,1,.3,1);
   --e-in:cubic-bezier(.7,0,.3,1);
+
+  /* ให้ block-size ไล่ค่าระหว่าง 0 กับ auto ได้ ใช้กับ accordion ที่ /faq และ FAQ ย่อหน้าแรก
+     ใส่ครบทั้ง 6 ไฟล์เพราะ :root ต้องแฮชตรงกัน หน้าที่ไม่มี <details> ก็ไม่มีผลอะไร
+     เบราว์เซอร์ที่ยังไม่รองรับจะข้ามบรรทัดนี้ไปเฉยๆ accordion เปิดทันทีแบบเดิม ไม่พัง */
+  interpolate-size:allow-keywords;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+/* nav ลอยสูง 76px — ถ้าไม่กันระยะไว้ หัวข้อปลายทางของ anchor จะไปมุดใต้แถบ nav
+   รวมถึง #main ที่ skip link ชี้ไป ซึ่งเป็นเรื่อง accessibility ตรงๆ (ข้อ 9) */
+[id]{scroll-margin-top:96px}
 body{
   background:var(--paper);color:var(--ink);
   font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
   font-size:17px;line-height:1.75;font-weight:400;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
-h1,h2,h3,h4,.disp{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
+h1,h2,h3,h4{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 :focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
-.on-dark :focus-visible,.dark :focus-visible{outline-color:#fff}
+.on-dark :focus-visible{outline-color:#fff}
 
 /* เบราว์เซอร์ตัดคำไทยด้วยพจนานุกรมที่ไม่มีคำทับศัพท์ — ครอบคำที่ตัดผิดด้วย .nb */
 .nb{white-space:nowrap}
@@ -48,7 +98,7 @@ img{display:block;max-width:100%}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
 .eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
 .eyebrow.on-dark{color:var(--mute-dark)}
-.eyebrow .dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;margin-right:8px;vertical-align:2px}
+.eyebrow .dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;margin-right:10px;vertical-align:2px}
 .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:0 0 12px 0;z-index:200}
 .skip:focus{left:0}
 
@@ -139,14 +189,11 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 
 /* ---------------- generic section ---------------- */
 .sec{padding:132px 0}
-.sec.dark{background:var(--void);color:#fff}
 .sec.smoke{background:var(--smoke)}
 .sec-head{max-width:820px;margin-bottom:72px}
 .sec-head h2{font-size:clamp(30px,4.4vw,56px);margin-top:24px}
 .sec-head p{margin-top:24px;font-size:18px;color:var(--mute);max-width:58ch}
-.sec.dark .sec-head p{color:var(--mute-dark)}
 .note{font-size:14px;line-height:1.6;color:var(--mute)}
-.sec.dark .note{color:var(--mute-dark)}
 
 /* ---------------- 2 · spectrum ---------------- */
 .spectrum{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:56px 0 48px}
@@ -168,7 +215,7 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .key-cell p{font-size:15px;color:var(--mute);line-height:1.65;margin-top:16px}
 /* ป้ายค่าที่ยังไม่ได้รับจากลูกค้า — ใช้สีกลาง ไม่ใช้แดง เพราะแดงสงวนไว้ตามข้อ 4 ของบรีฟ */
 .var{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--smoke);border:1px dashed #B8B8B4;border-radius:6px;padding:1px 8px;font-size:.72em;letter-spacing:0;color:#5C5C57;white-space:nowrap;font-weight:500}
-.sig .var,.close .var{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.24);color:rgba(255,255,255,.82)}
+.sig .var,.closing .var{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.24);color:rgba(255,255,255,.82)}
 
 /* ---------------- 3 · SIGNATURE · layer stack ---------------- */
 .sig{position:relative;background:var(--void);color:#fff;height:300vh}
@@ -183,7 +230,6 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .layer{transition:transform .1s linear}
 .layer rect{stroke:rgba(255,255,255,.30);stroke-width:1}
 .layer .lbl{font-family:'IBM Plex Sans Thai',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;fill:rgba(255,255,255,.44);opacity:0;transition:opacity .5s var(--e)}
-.sig.spread .layer .lbl{opacity:1}
 .sun{opacity:0;transition:opacity .6s var(--e)}
 .sig-legend{list-style:none;margin-top:32px;display:grid;gap:2px}
 .sig-legend li{display:grid;grid-template-columns:16px 1fr;gap:16px;align-items:start;padding:8px 0;border-top:1px solid var(--line-dark);opacity:.34;transition:opacity .5s var(--e)}
@@ -232,37 +278,36 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 .gl .mean{margin-top:16px;font-size:14px;color:var(--ink);border-top:1px solid var(--line);padding-top:16px}
 .gl .mean b{font-weight:600}
 
-/* ---------------- 6 · close ---------------- */
-.close{background:var(--void);color:#fff;padding:152px 0 160px;text-align:left}
-.close h2{font-size:clamp(30px,4.4vw,56px);max-width:20ch;color:#fff}
-.close p{margin-top:24px;font-size:18px;color:var(--mute-dark);max-width:52ch}
-.btn{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 32px;border-radius:14px;font-size:15px;font-weight:500;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:transform .35s var(--e),background .35s var(--e)}
+/* ---------------- 6 · closing ---------------- */
+/* ตรงกับ .closing ของอีก 5 หน้าทุกบรรทัดแล้วตั้งแต่ v3.0 — แก้ที่นี่ต้องแก้ครบทั้ง 6 ไฟล์ */
+.closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
+.closing h2{font-size:clamp(32px,5.4vw,72px);font-weight:700;letter-spacing:-.035em;color:#fff;max-width:18ch;margin:24px auto 0}
+.closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
+.btn{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 30px;border-radius:14px;font-size:15px;font-weight:500;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:transform .35s var(--e),background .35s var(--e),border-color .35s var(--e),color .35s var(--e)}
 .btn .ar{transition:transform .4s var(--e)}
 .btn:hover .ar{transform:translateX(5px)}
-.btn-red{background:var(--red);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2),0 12px 32px -12px rgba(204,27,27,.6)}
-.btn-red:hover{background:var(--red-hot);transform:translateY(-2px)}
-.close .btn{margin-top:48px}
+.btn-light{background:#fff;color:var(--ink)}
+.btn-light:hover{transform:translateY(-2px);background:#F0F0EE}
+.closing .btn{margin-top:48px}
 
 /* ---------------- footer ---------------- */
-footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid var(--line-dark)}
-.f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:48px;padding:72px 0 56px}
+footer{background:var(--void);color:#fff;padding:96px 0 40px}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
 /* footer เป็นพื้นมืดเสมอ จึงใช้โลโก้ขาวล้วนตลอด */
 .f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
-.f-brand p{margin-top:20px;font-size:15px;color:var(--mute-dark);max-width:34ch;line-height:1.7}
-.f-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute-dark);font-weight:500;margin-bottom:20px}
-.f-col a{display:flex;align-items:center;min-height:44px;font-size:15px;color:rgba(255,255,255,.78);transition:color .3s var(--e)}
-.f-col a:hover{color:#fff}
-.f-bot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-top:32px;border-top:1px solid var(--line-dark);font-size:14px;color:var(--mute-dark)}
+.f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
+.f-col h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.46);font-weight:500;margin-bottom:16px}
+.f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
+.f-col a:hover{color:var(--red-hot)}
+.f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--mute-dark)}
 
 /* ---------------- responsive ---------------- */
-@media(max-width:1080px){
-  .sig-grid{grid-template-columns:1fr 380px;gap:48px}
-  .f-grid{grid-template-columns:1fr 1fr;gap:40px}
-}
 @media(max-width:1080px){
   .nav-links,.nav-cta{display:none}
   .burger{display:block}
   .drawer{display:flex}
+  .sig-grid{grid-template-columns:1fr 380px;gap:48px}
+  .f-grid{grid-template-columns:1fr 1fr;gap:40px}
 }
 @media(max-width:900px){
   :root{--pad:24px}
@@ -281,7 +326,7 @@ footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid v
   .sec-head{margin-bottom:48px}
   .proof-pane{padding:24px}
   .gl{padding:32px 24px}
-  .close{padding:104px 0 112px}
+  .closing{padding:104px 0 112px}
   .f-grid{grid-template-columns:1fr;padding:56px 0 40px}
   .spec-bar{height:64px}
 }
@@ -295,6 +340,16 @@ footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid v
   .hero p.sub,.hero .eyebrow{opacity:1;transform:none}
 }
 </style>
+<!-- ไม่มี JS = .rv/.rvl ค้างที่ opacity:0 และ hero ค้างที่ translateY -> หน้าว่างเกือบทั้งหน้า
+     บล็อกนี้คืนสถานะปลายทางให้ทันที เนื้อหาจึงอ่านได้ครบแม้ JS ไม่ทำงาน
+     **เขียนเหมือนกันทั้ง 6 ไฟล์โดยตั้งใจ** — selector ที่หน้านั้นไม่มีก็ไม่มีผลอะไร
+     แต่ถ้าเขียนต่างกันรายไฟล์ สคริปต์ตรวจของร่วมจะอ่านเป็น .rv ที่ไม่ตรงกัน -->
+<noscript><style>
+  .rv,.rvl{opacity:1;transform:none}
+  .hero h1 .l span{transform:none}
+  .hero .eyebrow,.hero p.sub,.hero-cta{opacity:1;transform:none}
+  .sig-legend li{opacity:1}
+</style></noscript>
 </head>
 <body>
 <a href="#main" class="skip">ข้ามไปยังเนื้อหาหลัก</a>
@@ -538,13 +593,13 @@ footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid v
     </div>
   </section>
 
-  <!-- ============ 6 · CLOSE ============ -->
-  <section class="close" aria-labelledby="h-close">
+  <!-- ============ 6 · CLOSING ============ -->
+  <section class="closing" aria-labelledby="h-close">
     <div class="wrap">
-      <p class="eyebrow on-dark">ขั้นตอนถัดไป</p>
-      <h2 id="h-close" style="margin-top:24px">ค่าที่วัดได้ ต้องพิสูจน์ได้บนรถของคุณ</h2>
+      <div class="eyebrow on-dark" style="text-align:center"><span class="dot"></span>ขั้นตอนถัดไป</div>
+      <h2 id="h-close">ค่าที่วัดได้ ต้องพิสูจน์ได้บนรถของคุณ</h2>
       <p>ศูนย์ติดตั้งของเรามีเครื่องวัดให้ทดสอบก่อนตัดสินใจ นัดเข้าดูหน้างานได้ที่เว็บไซต์ศูนย์บริการ</p>
-      <a class="btn btn-red" href="https://finnixcenterth.com">หาศูนย์ติดตั้ง <span class="ar" aria-hidden="true">→</span></a>
+      <a class="btn btn-light" href="https://finnixcenterth.com">หาศูนย์ติดตั้ง <span class="ar" aria-hidden="true">→</span></a>
     </div>
   </section>
 
@@ -558,11 +613,11 @@ footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid v
         <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
       </div>
       <div class="f-col">
-        <h4>บริษัท</h4>
+        <h3>บริษัท</h3>
         <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a><a href="gallery.html">ผลงาน</a>
       </div>
       <div class="f-col">
-        <h4>บริการ</h4>
+        <h3>บริการ</h3>
         <a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
       </div>
     </div>
@@ -646,16 +701,39 @@ footer{background:var(--void);color:#fff;padding:0 0 56px;border-top:1px solid v
     legend.forEach(function(li, i){ li.classList.toggle('on', spread > .15 && i <= active); });
   }
 
-  if(!reduce && window.matchMedia('(min-width:901px)').matches){
-    onScrollSig();
-    window.addEventListener('scroll', onScrollSig, {passive:true});
-    window.addEventListener('resize', onScrollSig);
-  } else {
+  /* โหมดนิ่ง — ใช้เมื่อ <=900px (layout .sig พับแล้ว sticky ถูกปิด) หรือเมื่อผู้ใช้ปิด motion
+     กางชั้นฟิล์มค้างไว้เต็มที่และเปิด legend ให้อ่านได้ ไม่งั้น .sig-legend li ค้างที่ opacity:.34 */
+  function sigStatic(){
     legend.forEach(function(li){ li.classList.add('on'); });
     layers.forEach(function(g, i){ g.style.transform = 'translateY(' + ((i - 2.5) * GAP) + 'px)'; });
     sig.classList.add('spread');
     if(sun) sun.style.opacity = 1;
   }
+
+  /* gate นี้เคยเช็คครั้งเดียวตอนโหลด — ย่อ/ขยายจอข้ามเส้น 900 แล้วไดอะแกรมค้างโหมดเดิม
+     จนกว่าจะรีโหลด (drawer มี listener แบบนี้อยู่แล้ว แต่ sig ไม่มี)
+     **เส้น 901 ผูกกับ layout .sig ที่พับที่ 900 ไม่ใช่จุดพับเมนู 1080 — ห้ามเปลี่ยนตามกัน** */
+  var sigMQ = window.matchMedia('(min-width:901px)');
+  var sigBound = false;
+  function applySigMode(){
+    if(!reduce && sigMQ.matches){
+      if(!sigBound){
+        window.addEventListener('scroll', onScrollSig, {passive:true});
+        window.addEventListener('resize', onScrollSig);
+        sigBound = true;
+      }
+      onScrollSig();
+    } else {
+      if(sigBound){
+        window.removeEventListener('scroll', onScrollSig);
+        window.removeEventListener('resize', onScrollSig);
+        sigBound = false;
+      }
+      sigStatic();
+    }
+  }
+  applySigMode();
+  sigMQ.addEventListener('change', applySigMode);
 
   /* ---- MOTION 4 : VLT slider ---- */
   var vlt    = document.getElementById('vlt');

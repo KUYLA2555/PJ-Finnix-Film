@@ -3,14 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ติดต่อเรา | ฟินนิกซ์ ฟิล์ม — ฟิล์มกรองแสงรถยนต์</title>
+<title>ติดต่อเรา — FINNIX FILM</title>
 <meta name="description" content="ติดต่อ ฟินนิกซ์ ฟิล์ม — ค้นหาตัวแทนติดตั้งใกล้คุณทั่วประเทศ หรือติดต่อบริษัทโดยตรง ฟิล์มกรองแสงรถยนต์ 5 ซีรีส์ TITANIUM · CERAMIC · CRYSTALIZE · EXTRA CLEAR · UV GUARD">
 <meta name="format-detection" content="telephone=no">
 <!-- TODO SEO (รอค่าจริงก่อนใส่ — ค้างข้อ 15: โดเมนยังไม่นิ่ง): canonical · Open Graph/Twitter 1200x630 · JSON-LD LocalBusiness (ต้องได้ COMPANY_ADDRESS · COMPANY_EMAIL ก่อน ไม่ป้อนค่า placeholder ให้ crawler) -->
+
+<!-- Open Graph — ใส่เฉพาะที่ไม่ต้องใช้โดเมน
+     og:url · canonical · og:image ยังไม่ใส่โดยตั้งใจ: โดเมนยังไม่นิ่ง (ค้างข้อ 15)
+     และ MODE B ไม่มีภาพ 1200x630 ให้ใช้ — **ห้ามป้อนค่า placeholder ให้ crawler** -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FINNIX FILM">
+<meta property="og:locale" content="th_TH">
+<meta property="og:title" content="ติดต่อเรา — FINNIX FILM">
+<meta property="og:description" content="ติดต่อ ฟินนิกซ์ ฟิล์ม — ค้นหาตัวแทนติดตั้งใกล้คุณทั่วประเทศ หรือติดต่อบริษัทโดยตรง ฟิล์มกรองแสงรถยนต์ 5 ซีรีส์ TITANIUM · CERAMIC · CRYSTALIZE · EXTRA CLEAR · UV GUARD">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ============================================================================
+   contact.html — ติดต่อ  (/contact)
+
+   อ่านก่อนแก้ไฟล์นี้
+     CLAUDE.md .................. กฎที่ละเมิดแล้วงานไม่ผ่าน + สคริปต์ตรวจ
+     docs/master-prompt.md ...... บรีฟหลัก อ้างอิงเป็น "ข้อ 1-12" เสมอ
+     docs/CHANGELOG.md .......... ท้ายไฟล์มี "ค้างอยู่" กับ "ตัวแปรที่ต้องขอ"
+
+   ข้อ 9 บังคับว่าหนึ่งหน้าจบในไฟล์เดียว — CSS กับ JS อยู่ในไฟล์นี้ ห้ามแยกออกไป
+   request ภายนอกมีได้แค่ Google Fonts (+ แผนที่ Google ที่ contact.html เท่านั้น)
+
+   ลำดับบล็อกใน <style> นี้ (ค้นด้วยชื่อ อย่าค้นด้วยเลขบรรทัด มันเลื่อนทุกรอบ)
+      1. reveal
+      2. nav
+      3. เมนูมือถือ
+      4. ปุ่ม
+      5. หัวหน้า — hero มืด + vignette (MODE B: ไม่มีภาพถ่าย ใช้ gradient แทน)
+      6. section
+      7. hero สองคอลัมน์ตามหน้าต้นแบบ — ข้อมูลติดต่อซ้าย · ฟอร์มขวา
+      8. footer
+      9. responsive
+
+   ของร่วม — แก้ที่ไฟล์นี้ต้องแก้ครบทั้ง 6 ไฟล์พร้อมกันเสมอ ไม่งั้นสลับหน้าแล้วเลย์เอาต์ขยับ
+     :root tokens · nav · drawer · footer · .btn · .rv · .var · SEO meta · บล็อก noscript
+   จุดตัด responsive ของทั้งเว็บมีสามจุด: 1080 (พับเมนู) · 900 · 620 — อย่าเพิ่มจุดใหม่
+   ทุกระยะต้องหารด้วย 8 ลงตัว · สีข้อความต้องผ่าน WCAG AA 4.5:1 วัดก่อนเปลี่ยนทุกครั้ง
+   ============================================================================ */
 :root{
   --void:#050505;
   --ink:#0C0C0C;
@@ -18,7 +55,7 @@
   --smoke:#F4F4F3;
   --line:#E3E3E1;
   --line-dark:rgba(255,255,255,.10);
-  --mute:#75756F;
+  --mute:#70706A;
   --mute-dark:rgba(255,255,255,.52);
   --red:#CC1B1B;
   --red-hot:#E82323;
@@ -29,16 +66,24 @@
 
   --e:cubic-bezier(.16,1,.3,1);
   --e-in:cubic-bezier(.7,0,.3,1);
+
+  /* ให้ block-size ไล่ค่าระหว่าง 0 กับ auto ได้ ใช้กับ accordion ที่ /faq และ FAQ ย่อหน้าแรก
+     ใส่ครบทั้ง 6 ไฟล์เพราะ :root ต้องแฮชตรงกัน หน้าที่ไม่มี <details> ก็ไม่มีผลอะไร
+     เบราว์เซอร์ที่ยังไม่รองรับจะข้ามบรรทัดนี้ไปเฉยๆ accordion เปิดทันทีแบบเดิม ไม่พัง */
+  interpolate-size:allow-keywords;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+/* nav ลอยสูง 76px — ถ้าไม่กันระยะไว้ หัวข้อปลายทางของ anchor จะไปมุดใต้แถบ nav
+   รวมถึง #main ที่ skip link ชี้ไป ซึ่งเป็นเรื่อง accessibility ตรงๆ (ข้อ 9) */
+[id]{scroll-margin-top:96px}
 body{
   background:var(--paper);color:var(--ink);
   font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
   font-size:17px;line-height:1.75;font-weight:400;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
-h1,h2,h3,h4,.disp{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
+h1,h2,h3,h4{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 :focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
@@ -124,8 +169,10 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 /* ---------------- หัวหน้า — hero มืด + vignette (MODE B: ไม่มีภาพถ่าย ใช้ gradient แทน) ---------------- */
 .page-head{background:var(--void);color:#fff;padding:200px 0 104px;position:relative;overflow:hidden}
 .page-head::before{content:'';position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(255,255,255,.06),transparent 70%),
-             radial-gradient(ellipse 60% 50% at 85% 100%,rgba(204,27,27,.08),transparent 70%)}
+  /* เดิมมี radial แดง rgba(204,27,27,.08) ซ้อนอีกชั้นตรงมุมขวาล่าง — ถอดออกแล้ว
+     หน้าจอ hero มี nav CTA แดง + จุด eyebrow แดงอยู่แล้ว แสงแดงนี้เป็นจุดที่ 3 เกินโควตาข้อ 4
+     และแสงเรืองพื้นหลังไม่อยู่ในรายการที่ข้อ 4 อนุญาต (ปุ่มหลัก · จุด eyebrow · ชั้นเซรามิก · focus/error) */
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(255,255,255,.06),transparent 70%)}
 .page-head .wrap{position:relative}
 .page-head h1{font-size:clamp(38px,6.4vw,80px);font-weight:700;letter-spacing:-.035em;margin-top:24px;max-width:14ch}
 .page-head p{color:var(--mute-dark);margin-top:32px;max-width:52ch;font-size:18px}
@@ -175,9 +222,10 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .form-ok{display:none;text-align:center;padding:32px 0}
 .form-ok .ck{width:56px;height:56px;margin:0 auto;border-radius:50%;background:var(--ink);
   display:flex;align-items:center;justify-content:center;color:#fff}
-.form-ok h3{font-size:22px;margin-top:24px}
+.form-ok h2{font-size:22px;margin-top:24px}
 .form-ok p{color:var(--mute);margin-top:8px;font-size:15px}
-.form-ok a{display:inline-block;margin-top:24px;font-size:15px;font-weight:500;text-decoration:underline}
+.form-ok .again{display:inline-block;margin-top:24px;font:inherit;font-size:15px;font-weight:500;
+  color:var(--ink);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
 .cform.sent form{display:none}
 .cform.sent .form-ok{display:block}
 .form-err{display:none;margin-bottom:24px;padding:16px;border:1px solid var(--red);
@@ -189,8 +237,7 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .find h2{font-size:24px;letter-spacing:-.02em}
 .find .or{align-self:stretch;display:flex;align-items:center;gap:24px;
   font-size:13px;letter-spacing:.2em;color:var(--mute)}
-.find .or::before,.find .or::after{content:'';width:1px;flex:1;background:var(--line)}
-.find .or::before,.find .or::after{min-height:64px}
+.find .or::before,.find .or::after{content:'';width:1px;flex:1;min-height:64px;background:var(--line)}
 .flabel{display:block;font-size:11px;font-weight:500;letter-spacing:.2em;
   text-transform:uppercase;color:var(--mute);margin:32px 0 8px}
 .find select{display:block;width:100%;max-width:400px;padding:16px;font:inherit;font-size:15px;
@@ -240,7 +287,7 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
   transition:color .2s var(--e),border-color .2s var(--e),background .2s var(--e)}
 .chip:hover{color:var(--ink);border-color:#B8B8B4}
 .chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
-/* แบดจ์ 4 tier — แยกกันโดยไม่ใช้แดง (โควตาข้อ 4) และไม่พึ่งสีอย่างเดียว: ข้อความ + ไอคอนต่างกัน */
+/* แบดจ์ 3 tier — แยกกันโดยไม่ใช้แดง (โควตาข้อ 4) และไม่พึ่งสีอย่างเดียว: ข้อความ + ไอคอนต่างกัน */
 .badge{flex:none;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;
   letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:4px 10px}
 .badge.center{background:var(--ink);color:#fff}
@@ -260,10 +307,7 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .toast.on{opacity:1;visibility:visible;transform:translate(-50%,0)}
 
 /* ปิดท้าย */
-.closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0;position:relative;overflow:hidden}
-.closing::before{content:'';position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 70% 60% at 50% 100%,rgba(204,27,27,.10),transparent 70%)}
-.closing .wrap{position:relative}
+.closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
 .closing h2{font-size:clamp(32px,5.4vw,72px);font-weight:700;letter-spacing:-.035em;color:#fff;max-width:18ch;margin:24px auto 0}
 .closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
 .closing .btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:48px}
@@ -273,18 +317,16 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 .f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
 .f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
 .f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
-.f-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.42);font-weight:500;margin-bottom:16px}
+.f-col h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.46);font-weight:500;margin-bottom:16px}
 .f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
 .f-col a:hover{color:var(--red-hot)}
-.f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.42)}
+.f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--mute-dark)}
 
 /* ---------------- responsive ---------------- */
 @media(max-width:1080px){
   .nav-links,.nav-cta{display:none}
   .burger{display:block}
   .drawer{display:flex}
-}
-@media(max-width:1080px){
   .hero-c{grid-template-columns:1fr;gap:48px}
   .loc{grid-template-columns:1fr}
   .tmap{order:-1}
@@ -301,13 +343,11 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .closing{padding:104px 0}
   .f-grid{grid-template-columns:1fr 1fr;gap:40px}
 }
-@media(max-width:640px){
+@media(max-width:620px){
   .cform{padding:32px 24px}
   .chan-box{padding:24px}
   .chan-row{flex-direction:column;gap:4px}
   .chan-row .k{width:auto}
-}
-@media(max-width:620px){
   .f-grid{grid-template-columns:1fr}
   .drawer a{font-size:22px;min-height:52px}
   .dcard .top{flex-direction:column;align-items:flex-start;gap:8px}
@@ -317,6 +357,16 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .rv,.rvl{opacity:1;transform:none}
 }
 </style>
+<!-- ไม่มี JS = .rv/.rvl ค้างที่ opacity:0 และ hero ค้างที่ translateY -> หน้าว่างเกือบทั้งหน้า
+     บล็อกนี้คืนสถานะปลายทางให้ทันที เนื้อหาจึงอ่านได้ครบแม้ JS ไม่ทำงาน
+     **เขียนเหมือนกันทั้ง 6 ไฟล์โดยตั้งใจ** — selector ที่หน้านั้นไม่มีก็ไม่มีผลอะไร
+     แต่ถ้าเขียนต่างกันรายไฟล์ สคริปต์ตรวจของร่วมจะอ่านเป็น .rv ที่ไม่ตรงกัน -->
+<noscript><style>
+  .rv,.rvl{opacity:1;transform:none}
+  .hero h1 .l span{transform:none}
+  .hero .eyebrow,.hero p.sub,.hero-cta{opacity:1;transform:none}
+  .sig-legend li{opacity:1}
+</style></noscript>
 </head>
 <body>
 
@@ -393,9 +443,9 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
         </form>
         <div class="form-ok" aria-live="polite">
           <div class="ck"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
-          <h3>ขอบคุณครับ</h3>
+          <h2>ขอบคุณครับ</h2>
           <p>ทีมงานจะติดต่อกลับภายใน 1 วันทำการ<br>(โหมดสาธิต — ยังไม่มีการส่งจริง)</p>
-          <a href="#" id="form-reset">ส่งข้อความอีกครั้ง</a>
+          <button type="button" class="again" id="form-reset">ส่งข้อความอีกครั้ง</button>
         </div>
       </div>
     </div>
@@ -485,11 +535,11 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
         <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
       </div>
       <div class="f-col">
-        <h4>บริษัท</h4>
+        <h3>บริษัท</h3>
         <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a><a href="gallery.html">ผลงาน</a>
       </div>
       <div class="f-col">
-        <h4>บริการ</h4>
+        <h3>บริการ</h3>
         <a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
       </div>
     </div>
@@ -506,6 +556,22 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <script>
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- reveal — ต้องอยู่ก่อนโค้ดเฉพาะหน้า ----
+     ถ้าบล็อกไหนข้างล่าง throw ขึ้นมา .rv จะค้างที่ opacity:0 ทั้งหน้า
+     เดิมบล็อกนี้อยู่ท้ายสุด จึงพังตามทุกครั้งที่โค้ดก่อนหน้ามีปัญหา
+     ห่อด้วย if(!reduce) ไม่ใช่ early return เพราะ return จะฆ่าโค้ดที่เหลือทั้งไฟล์ */
+  if(!reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.rv').forEach(function(el, i){
+      el.style.transitionDelay = (i % 4) * 60 + 'ms';
+      io.observe(el);
+    });
+  }
 
   /* ---- load ---- */
   window.addEventListener('load', function(){ document.body.classList.add('loaded'); });
@@ -723,18 +789,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     if(q && PROVS.indexOf(q) >= 0){ state.province = q; sel.value = q; }
   })();
   render();
-
-  /* ---- reveal ---- */
-  if(reduce) return;
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
-    });
-  }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
-  document.querySelectorAll('.rv').forEach(function(el, i){
-    el.style.transitionDelay = (i % 4) * 60 + 'ms';
-    io.observe(el);
-  });
 })();
 </script>
 </body>

@@ -5,10 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>เกี่ยวกับเรา — FINNIX FILM</title>
 <meta name="description" content="บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ทำไมต้องฟินนิกซ์ ที่มาของบริษัท สิ่งที่ฟิล์มทั้งห้าซีรีส์ทำได้จริง และมาตรฐานที่ใช้อ้างอิงตัวเลขทุกตัว">
+
+<!-- Open Graph — ใส่เฉพาะที่ไม่ต้องใช้โดเมน
+     og:url · canonical · og:image ยังไม่ใส่โดยตั้งใจ: โดเมนยังไม่นิ่ง (ค้างข้อ 15)
+     และ MODE B ไม่มีภาพ 1200x630 ให้ใช้ — **ห้ามป้อนค่า placeholder ให้ crawler** -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FINNIX FILM">
+<meta property="og:locale" content="th_TH">
+<meta property="og:title" content="เกี่ยวกับเรา — FINNIX FILM">
+<meta property="og:description" content="บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ทำไมต้องฟินนิกซ์ ที่มาของบริษัท สิ่งที่ฟิล์มทั้งห้าซีรีส์ทำได้จริง และมาตรฐานที่ใช้อ้างอิงตัวเลขทุกตัว">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ============================================================================
+   about.html — เกี่ยวกับเรา  (/about)
+
+   อ่านก่อนแก้ไฟล์นี้
+     CLAUDE.md .................. กฎที่ละเมิดแล้วงานไม่ผ่าน + สคริปต์ตรวจ
+     docs/master-prompt.md ...... บรีฟหลัก อ้างอิงเป็น "ข้อ 1-12" เสมอ
+     docs/CHANGELOG.md .......... ท้ายไฟล์มี "ค้างอยู่" กับ "ตัวแปรที่ต้องขอ"
+
+   ข้อ 9 บังคับว่าหนึ่งหน้าจบในไฟล์เดียว — CSS กับ JS อยู่ในไฟล์นี้ ห้ามแยกออกไป
+   request ภายนอกมีได้แค่ Google Fonts (+ แผนที่ Google ที่ contact.html เท่านั้น)
+
+   ลำดับบล็อกใน <style> นี้ (ค้นด้วยชื่อ อย่าค้นด้วยเลขบรรทัด มันเลื่อนทุกรอบ)
+      1. reveal
+      2. nav
+      3. เมนูมือถือ
+      4. ปุ่ม
+      5. หัวหน้า
+      6. section
+      7. ปิดท้าย
+      8. footer
+      9. responsive
+
+   ของร่วม — แก้ที่ไฟล์นี้ต้องแก้ครบทั้ง 6 ไฟล์พร้อมกันเสมอ ไม่งั้นสลับหน้าแล้วเลย์เอาต์ขยับ
+     :root tokens · nav · drawer · footer · .btn · .rv · .var · SEO meta · บล็อก noscript
+   จุดตัด responsive ของทั้งเว็บมีสามจุด: 1080 (พับเมนู) · 900 · 620 — อย่าเพิ่มจุดใหม่
+   ทุกระยะต้องหารด้วย 8 ลงตัว · สีข้อความต้องผ่าน WCAG AA 4.5:1 วัดก่อนเปลี่ยนทุกครั้ง
+   ============================================================================ */
 :root{
   --void:#050505;
   --ink:#0C0C0C;
@@ -16,7 +53,7 @@
   --smoke:#F4F4F3;
   --line:#E3E3E1;
   --line-dark:rgba(255,255,255,.10);
-  --mute:#75756F;
+  --mute:#70706A;
   --mute-dark:rgba(255,255,255,.52);
   --red:#CC1B1B;
   --red-hot:#E82323;
@@ -27,16 +64,24 @@
 
   --e:cubic-bezier(.16,1,.3,1);
   --e-in:cubic-bezier(.7,0,.3,1);
+
+  /* ให้ block-size ไล่ค่าระหว่าง 0 กับ auto ได้ ใช้กับ accordion ที่ /faq และ FAQ ย่อหน้าแรก
+     ใส่ครบทั้ง 6 ไฟล์เพราะ :root ต้องแฮชตรงกัน หน้าที่ไม่มี <details> ก็ไม่มีผลอะไร
+     เบราว์เซอร์ที่ยังไม่รองรับจะข้ามบรรทัดนี้ไปเฉยๆ accordion เปิดทันทีแบบเดิม ไม่พัง */
+  interpolate-size:allow-keywords;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+/* nav ลอยสูง 76px — ถ้าไม่กันระยะไว้ หัวข้อปลายทางของ anchor จะไปมุดใต้แถบ nav
+   รวมถึง #main ที่ skip link ชี้ไป ซึ่งเป็นเรื่อง accessibility ตรงๆ (ข้อ 9) */
+[id]{scroll-margin-top:96px}
 body{
   background:var(--paper);color:var(--ink);
   font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
   font-size:17px;line-height:1.75;font-weight:400;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
-h1,h2,h3,h4,.disp{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
+h1,h2,h3,h4{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 :focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
@@ -129,15 +174,24 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .sec{padding:132px 0}
 .sec.smoke{background:var(--smoke)}
 .sec-head{max-width:800px;margin-bottom:72px}
+/* แถบซ้ายนำหัวข้อ — คลาสเสริมเฉพาะหน้านี้ ไม่แก้ .sec-head เพราะ index/technology ใช้ตัวเดียวกัน
+   **แถบเป็น --ink ไม่ใช่แดง** ต่างจากหน้าต้นแบบโดยตั้งใจ — ข้อ 4 อนุญาตให้แดงอยู่ได้เฉพาะ
+   ปุ่มหลัก · จุด eyebrow · ชั้นเซรามิก · focus/error และหนึ่งหน้าจอมองเห็นแถบได้พร้อมกันสองอัน
+   จุดแดงของบล็อกจึงยังเป็น .dot ใน eyebrow เหมือนอีก 5 หน้า */
+.sec-head.bar{border-left:3px solid var(--ink);padding-left:24px}
+.sec-head.bar .eyebrow{display:block;margin-bottom:8px}
 .sec-head h2{font-size:clamp(30px,4.4vw,56px);margin-top:24px}
 .sec-head p{margin-top:24px;font-size:18px;color:var(--mute);max-width:56ch}
 
 /* ส่วนที่ 1 — ทำไมต้องฟินนิกซ์ */
+/* อยู่ในแนว .wrap เดียวกับหัวข้อ — เดิมเป็น full-bleed เต็มจอ ขอบซ้ายจึงไม่ตรงกับหัวข้อ (แก้ v2.9) */
 .why{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:56px}
 .why-cell{background:var(--paper);padding:44px 32px 48px;transition:background .5s var(--e)}
 .why-cell:hover{background:var(--smoke)}
-.why-cell .ic{width:38px;height:38px;color:var(--red)}
+/* ไอคอนเป็น --ink ไม่ใช่แดง — การ์ด 4 ใบอยู่ในหน้าจอเดียวกัน ไอคอนแดงจึงเป็นแดง 4 จุดรวด
+   เกินโควตาข้อ 4 มาตั้งแต่ v1.8 · จุดแดงของบล็อกนี้เหลือ .dot ที่ eyebrow จุดเดียว (แก้ v2.9) */
+.why-cell .ic{width:38px;height:38px;color:var(--ink)}
 .why-cell h3{font-size:20px;margin:28px 0 12px;letter-spacing:-.01em}
 .why-cell p{font-size:15px;color:var(--mute);line-height:1.7}
 .why-note{margin-top:40px;font-size:14px;color:var(--mute);max-width:72ch}
@@ -154,15 +208,30 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 /* ส่วนที่ 3 — ตารางระดับซีรีส์
    overflow-y:hidden ต้องเขียนตรงๆ — สเปก CSS บังคับให้ visible กลายเป็น auto
    เมื่ออีกแกนไม่ใช่ visible ทำให้ scrollbar แนวตั้งโผล่ทั้งที่ความสูงไม่ล้น */
-.spec-wrap{overflow-x:auto;overflow-y:hidden;border:1px solid var(--line);border-radius:16px}
-.spec{width:100%;border-collapse:collapse;min-width:800px;font-size:15px}
-.spec th,.spec td{padding:24px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
-.spec thead th{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);
-  font-weight:500;background:var(--smoke);white-space:nowrap}
-.spec tbody th{font-family:'Anuphan',sans-serif;font-weight:600;font-size:18px;letter-spacing:-.01em;white-space:nowrap}
-.spec tbody td{color:var(--mute)}
-.spec td.num{font-family:'Anuphan',sans-serif;font-weight:600;font-size:20px;letter-spacing:-.02em;color:var(--ink);white-space:nowrap}
-.spec tbody tr:last-child th,.spec tbody tr:last-child td{border-bottom:0}
+/* ห้าซีรีส์ — เดิมเป็นตาราง 5 คอลัมน์ที่กว้าง 1110px แต่มีข้อมูลน้อย อ่านเป็นแถวยาวได้ยาก
+   v2.9 เปลี่ยนเป็น "เลือกซีรีส์ทางซ้าย · อ่านค่าทางขวา" ตามหน้าต้นแบบ
+   เป็นสถานะ UI แบบเดียวกับแท็บใน /gallery **ไม่นับเป็น motion ข้อ 5** */
+.pick{display:grid;grid-template-columns:320px 1fr;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:56px}
+.pk-list{display:flex;flex-direction:column;background:var(--smoke);border-right:1px solid var(--line)}
+.pk-item{appearance:none;background:none;border:0;border-bottom:1px solid var(--line);width:100%;
+  text-align:left;padding:24px;cursor:pointer;color:var(--mute);
+  font-family:'Anuphan',system-ui,sans-serif;font-size:19px;font-weight:600;letter-spacing:-.01em;
+  transition:color .3s var(--e),background .3s var(--e)}
+.pk-item:last-child{border-bottom:0}
+.pk-item:hover{color:var(--ink)}
+.pk-item[aria-selected="true"]{color:var(--ink);background:var(--paper)}
+.pk-body{padding:40px}
+.pk-tech{font-size:15px;color:var(--mute);margin-bottom:32px}
+.pk-row{display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:start;padding:24px 0;border-top:1px solid var(--line)}
+.pk-row:first-of-type{border-top:0;padding-top:0}
+.pk-row dt{font-size:14px;color:var(--mute);padding-top:8px}
+.pk-row dd b{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;font-size:26px;letter-spacing:-.02em;color:var(--ink)}
+/* แถบช่วงค่า — สเกล 0-100% เท่ากันทุกซีรีส์ จึงเทียบข้ามซีรีส์ได้ตอนสลับแถว
+   ค่าคงที่ ไม่มี transition จึงไม่กินงบ motion */
+.pk-bar{display:block;position:relative;height:4px;max-width:416px;background:var(--line);border-radius:2px;margin-top:8px}
+.pk-bar i{position:absolute;top:0;bottom:0;left:calc(var(--a) * 1%);right:calc((100 - var(--b)) * 1%);
+  background:var(--ink);border-radius:2px;min-width:3px}
+.pk-note{margin-top:32px;font-size:14px;color:var(--mute);max-width:72ch}
 
 /* แจ้งว่ายังไม่มีข้อมูล — ข้อ 3 และข้อ 10 บังคับให้ระบุที่มาของทุกตัวเลขและทุกข้อความ */
 .notice{background:var(--smoke);border:1px dashed #B8B8B4;border-radius:16px;padding:32px 40px;
@@ -181,22 +250,26 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 .f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
 .f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
 .f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
-.f-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.42);font-weight:500;margin-bottom:16px}
+.f-col h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.46);font-weight:500;margin-bottom:16px}
 .f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
 .f-col a:hover{color:var(--red-hot)}
-.f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.42)}
+.f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--mute-dark)}
 
 /* ---------------- responsive ---------------- */
-@media(max-width:1080px){
-  .origin{grid-template-columns:1fr;gap:40px}
-  .why{grid-template-columns:repeat(2,1fr)}
-}
 @media(max-width:1080px){
   .nav-links,.nav-cta{display:none}
   .burger{display:block}
   .drawer{display:flex}
+  .origin{grid-template-columns:1fr;gap:40px}
+  .why{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:900px){
+  /* ตัวเลือกซีรีส์พับเป็นแถวนอนเลื่อนได้ — overflow-y:hidden จำเป็น ไม่งั้น scrollbar แนวตั้งโผล่ทั้งที่ความสูงไม่ล้น */
+  .pick{grid-template-columns:1fr}
+  .pk-list{flex-direction:row;overflow-x:auto;overflow-y:hidden;border-right:0;border-bottom:1px solid var(--line)}
+  .pk-item{width:auto;border-bottom:0;border-right:1px solid var(--line);white-space:nowrap;font-size:17px;padding:16px 24px}
+  .pk-body{padding:32px 24px}
+  .pk-row{grid-template-columns:1fr;gap:8px;padding:24px 0}
   :root{--pad:24px}
   .sec{padding:88px 0}
   .page-head{padding:152px 0 72px}
@@ -214,6 +287,16 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .rv,.rvl{opacity:1;transform:none}
 }
 </style>
+<!-- ไม่มี JS = .rv/.rvl ค้างที่ opacity:0 และ hero ค้างที่ translateY -> หน้าว่างเกือบทั้งหน้า
+     บล็อกนี้คืนสถานะปลายทางให้ทันที เนื้อหาจึงอ่านได้ครบแม้ JS ไม่ทำงาน
+     **เขียนเหมือนกันทั้ง 6 ไฟล์โดยตั้งใจ** — selector ที่หน้านั้นไม่มีก็ไม่มีผลอะไร
+     แต่ถ้าเขียนต่างกันรายไฟล์ สคริปต์ตรวจของร่วมจะอ่านเป็น .rv ที่ไม่ตรงกัน -->
+<noscript><style>
+  .rv,.rvl{opacity:1;transform:none}
+  .hero h1 .l span{transform:none}
+  .hero .eyebrow,.hero p.sub,.hero-cta{opacity:1;transform:none}
+  .sig-legend li{opacity:1}
+</style></noscript>
 </head>
 <body>
 
@@ -260,13 +343,13 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <!-- ส่วนที่ 1 — ทำไมต้องฟินนิกซ์ -->
 <section class="sec" style="padding-bottom:0">
   <div class="wrap">
-    <div class="sec-head rv">
+    <div class="sec-head rv bar">
       <div class="eyebrow"><span class="dot"></span>ทำไมต้องฟินนิกซ์</div>
       <h2>สี่เรื่องที่เราออกแบบมาให้ต่าง</h2>
       <p>ความเข้มคือการลดแสงที่ตามองเห็น ส่วนความร้อนอยู่ในคลื่นอินฟราเรดที่มองไม่เห็น เราออกแบบฟิล์มโดยจับที่คลื่นความร้อนโดยตรง ไม่ได้จับที่ความมืด</p>
     </div>
-  </div>
-  <div class="why rv">
+
+    <div class="why rv">
     <div class="why-cell">
       <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
       <h3>ลดความร้อนที่ต้นทาง</h3>
@@ -287,8 +370,8 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
       <h3>รับประกัน 7 ปีจากบริษัท</h3>
       <p>ครอบคลุมการซีด ลอก เป็นฟอง และเปลี่ยนสี ทุกซีรีส์ได้ระยะเท่ากัน ไม่ต้องจำว่ารุ่นไหนได้กี่ปี</p>
     </div>
-  </div>
-  <div class="wrap">
+    </div>
+
     <p class="why-note rv">ข้อที่สองระบุเป็นรายซีรีส์โดยตั้งใจ — CRYSTALIZE ใช้เทคโนโลยีเคลือบโลหะหลายชั้น จึงไม่อยู่ในกลุ่มที่ไม่มีชั้นโลหะ ส่วน TITANIUM เอกสารยังไม่ระบุ ดูตารางในส่วนถัดไป</p>
   </div>
 </section>
@@ -296,7 +379,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <!-- ส่วนที่ 2 — แหล่งผลิต -->
 <section class="sec smoke">
   <div class="wrap">
-    <div class="sec-head rv">
+    <div class="sec-head rv bar">
       <div class="eyebrow"><span class="dot"></span>แหล่งผลิต</div>
       <h2>ฟิล์มที่เราขาย ผลิตมาจากที่ใด</h2>
       <p>ตัวเลขบริษัทกับที่มาของการก่อตั้งอยู่ที่ <a href="index.html" style="border-bottom:1px solid var(--line)">หน้าแรก</a> — หน้านี้พูดเฉพาะเรื่องผู้ผลิตและสิ่งที่ตรวจสอบได้เกี่ยวกับตัวฟิล์ม</p>
@@ -320,62 +403,64 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <!-- ส่วนที่ 3 — สิ่งที่ฟิล์มทำได้จริง -->
 <section class="sec">
   <div class="wrap">
-    <div class="sec-head rv">
+    <div class="sec-head rv bar">
       <div class="eyebrow"><span class="dot"></span>สิ่งที่ฟิล์มทำได้</div>
       <h2>ห้า<span class="nb">ซีรีส์</span> กับสิ่งที่แต่ละแบบถนัดคนละอย่าง</h2>
       <p>ค่าที่แสดงเป็นช่วงจากรหัสที่อ่อนที่สุดถึงเข้มที่สุดของแต่ละซีรีส์ ถอดจากเอกสารผลิตภัณฑ์ของบริษัทปี 2567 ค่ารายรหัสสอบถามได้ที่ศูนย์ติดตั้ง</p>
     </div>
 
-    <div class="spec-wrap rv">
-      <table class="spec">
-        <thead>
-          <tr>
-            <th scope="col">ซีรีส์</th>
-            <th scope="col">เทคโนโลยี</th>
-            <th scope="col">ลดความร้อน</th>
-            <th scope="col">ป้องกันยูวี</th>
-            <th scope="col">แสงส่องผ่าน</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">TITANIUM</th>
-            <td><span class="var">{{TECH_TITANIUM}}</span></td>
-            <td class="num">81–96%</td>
-            <td class="num">99%</td>
-            <td class="num">10–40%</td>
-          </tr>
-          <tr>
-            <th scope="row">CERAMIC</th>
-            <td>เซรามิก ไม่มีชั้นโลหะ</td>
-            <td class="num">80–90%</td>
-            <td class="num">99%</td>
-            <td class="num">5–30%</td>
-          </tr>
-          <tr>
-            <th scope="row">CRYSTALIZE</th>
-            <td>เคลือบโลหะหลายชั้น (sputtering)</td>
-            <td class="num">55–85%</td>
-            <td class="num">99%</td>
-            <td class="num">22–70%</td>
-          </tr>
-          <tr>
-            <th scope="row">EXTRA CLEAR</th>
-            <td>เซรามิก ไม่มีชั้นโลหะ</td>
-            <td class="num">61–67%</td>
-            <td class="num">100%</td>
-            <td class="num">5–35%</td>
-          </tr>
-          <tr>
-            <th scope="row">UV GUARD</th>
-            <td>เซรามิก ไม่มีชั้นโลหะ</td>
-            <td class="num">52–63%</td>
-            <td class="num">100%</td>
-            <td class="num">5–40%</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="pick rv">
+      <div class="pk-list" role="tablist" aria-orientation="vertical" aria-label="เลือกซีรีส์ฟิล์ม">
+        <button class="pk-item" role="tab" id="tb-SY" aria-controls="pn-SY" aria-selected="true" tabindex="0">TITANIUM</button>
+        <button class="pk-item" role="tab" id="tb-CM" aria-controls="pn-CM" aria-selected="false" tabindex="-1">CERAMIC</button>
+        <button class="pk-item" role="tab" id="tb-CT" aria-controls="pn-CT" aria-selected="false" tabindex="-1">CRYSTALIZE</button>
+        <button class="pk-item" role="tab" id="tb-XT" aria-controls="pn-XT" aria-selected="false" tabindex="-1">EXTRA CLEAR</button>
+        <button class="pk-item" role="tab" id="tb-SM" aria-controls="pn-SM" aria-selected="false" tabindex="-1">UV GUARD</button>
+      </div>
+      <div class="pk-body">
+      <div class="pk-panel" role="tabpanel" id="pn-SY" aria-labelledby="tb-SY" tabindex="0">
+        <p class="pk-tech">เทคโนโลยี — <span class="var">{{TECH_TITANIUM}}</span></p>
+        <dl>
+          <div class="pk-row"><dt>ลดความร้อน</dt><dd><b>81–96%</b><span class="pk-bar" style="--a:81;--b:96" aria-hidden="true"><i></i></span></dd></div>
+          <div class="pk-row"><dt>ป้องกันยูวี</dt><dd><b>99%</b></dd></div>
+          <div class="pk-row"><dt>แสงส่องผ่าน</dt><dd><b>10–40%</b><span class="pk-bar" style="--a:10;--b:40" aria-hidden="true"><i></i></span></dd></div>
+        </dl>
+      </div>
+      <div class="pk-panel" role="tabpanel" id="pn-CM" aria-labelledby="tb-CM" tabindex="0" hidden>
+        <p class="pk-tech">เทคโนโลยี — เซรามิก ไม่มีชั้นโลหะ</p>
+        <dl>
+          <div class="pk-row"><dt>ลดความร้อน</dt><dd><b>80–90%</b><span class="pk-bar" style="--a:80;--b:90" aria-hidden="true"><i></i></span></dd></div>
+          <div class="pk-row"><dt>ป้องกันยูวี</dt><dd><b>99%</b></dd></div>
+          <div class="pk-row"><dt>แสงส่องผ่าน</dt><dd><b>5–30%</b><span class="pk-bar" style="--a:5;--b:30" aria-hidden="true"><i></i></span></dd></div>
+        </dl>
+      </div>
+      <div class="pk-panel" role="tabpanel" id="pn-CT" aria-labelledby="tb-CT" tabindex="0" hidden>
+        <p class="pk-tech">เทคโนโลยี — เคลือบโลหะหลายชั้น (sputtering)</p>
+        <dl>
+          <div class="pk-row"><dt>ลดความร้อน</dt><dd><b>55–85%</b><span class="pk-bar" style="--a:55;--b:85" aria-hidden="true"><i></i></span></dd></div>
+          <div class="pk-row"><dt>ป้องกันยูวี</dt><dd><b>99%</b></dd></div>
+          <div class="pk-row"><dt>แสงส่องผ่าน</dt><dd><b>22–70%</b><span class="pk-bar" style="--a:22;--b:70" aria-hidden="true"><i></i></span></dd></div>
+        </dl>
+      </div>
+      <div class="pk-panel" role="tabpanel" id="pn-XT" aria-labelledby="tb-XT" tabindex="0" hidden>
+        <p class="pk-tech">เทคโนโลยี — เซรามิก ไม่มีชั้นโลหะ</p>
+        <dl>
+          <div class="pk-row"><dt>ลดความร้อน</dt><dd><b>61–67%</b><span class="pk-bar" style="--a:61;--b:67" aria-hidden="true"><i></i></span></dd></div>
+          <div class="pk-row"><dt>ป้องกันยูวี</dt><dd><b>100%</b></dd></div>
+          <div class="pk-row"><dt>แสงส่องผ่าน</dt><dd><b>5–35%</b><span class="pk-bar" style="--a:5;--b:35" aria-hidden="true"><i></i></span></dd></div>
+        </dl>
+      </div>
+      <div class="pk-panel" role="tabpanel" id="pn-SM" aria-labelledby="tb-SM" tabindex="0" hidden>
+        <p class="pk-tech">เทคโนโลยี — เซรามิก ไม่มีชั้นโลหะ</p>
+        <dl>
+          <div class="pk-row"><dt>ลดความร้อน</dt><dd><b>52–63%</b><span class="pk-bar" style="--a:52;--b:63" aria-hidden="true"><i></i></span></dd></div>
+          <div class="pk-row"><dt>ป้องกันยูวี</dt><dd><b>100%</b></dd></div>
+          <div class="pk-row"><dt>แสงส่องผ่าน</dt><dd><b>5–40%</b><span class="pk-bar" style="--a:5;--b:40" aria-hidden="true"><i></i></span></dd></div>
+        </dl>
+      </div>
+      </div>
     </div>
+    <p class="pk-note rv">แถบใต้ตัวเลขใช้สเกล 0–100% เท่ากันทุกซีรีส์ สลับซีรีส์แล้วเทียบตำแหน่งกันได้โดยตรง · ค่าที่แสดงเป็นช่วงจากรหัสที่อ่อนที่สุดถึงเข้มที่สุดของซีรีส์นั้น</p>
 
     <div class="notice rv" style="margin-top:56px">
       <b>ค่าทั้งหมดในตารางนี้ถอดจากเอกสารผลิตภัณฑ์ของบริษัท แต่ยังขาดชื่อมาตรฐานการวัด</b>
@@ -387,7 +472,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <!-- ส่วนที่ 4 — มาตรฐานและการรับรอง -->
 <section class="sec smoke">
   <div class="wrap">
-    <div class="sec-head rv">
+    <div class="sec-head rv bar">
       <div class="eyebrow"><span class="dot"></span>มาตรฐานและการรับรอง</div>
       <h2>เราจะไม่ติดตราที่พิสูจน์ไม่ได้</h2>
       <p>หน้าเกี่ยวกับเราของแบรนด์ฟิล์มส่วนใหญ่จบด้วยแถวโลโก้สถาบันรับรอง ตราแต่ละอันมีความหมายต่อกันคนละเรื่อง และบางอันรับรองโรงงาน ไม่ได้รับรองฟิล์มที่ขายในไทย</p>
@@ -424,11 +509,11 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
         <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
       </div>
       <div class="f-col">
-        <h4>บริษัท</h4>
+        <h3>บริษัท</h3>
         <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a><a href="gallery.html">ผลงาน</a>
       </div>
       <div class="f-col">
-        <h4>บริการ</h4>
+        <h3>บริการ</h3>
         <a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
       </div>
     </div>
@@ -442,6 +527,22 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <script>
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- reveal — ต้องอยู่ก่อนโค้ดเฉพาะหน้า ----
+     ถ้าบล็อกไหนข้างล่าง throw ขึ้นมา .rv จะค้างที่ opacity:0 ทั้งหน้า
+     เดิมบล็อกนี้อยู่ท้ายสุด จึงพังตามทุกครั้งที่โค้ดก่อนหน้ามีปัญหา
+     ห่อด้วย if(!reduce) ไม่ใช่ early return เพราะ return จะฆ่าโค้ดที่เหลือทั้งไฟล์ */
+  if(!reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.rv').forEach(function(el, i){
+      el.style.transitionDelay = (i % 4) * 60 + 'ms';
+      io.observe(el);
+    });
+  }
 
   /* ---- load ---- */
   window.addEventListener('load', function(){ document.body.classList.add('loaded'); });
@@ -475,16 +576,28 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     if(e.matches) setMenu(false);
   });
 
-  /* ---- reveal ---- */
-  if(reduce) return;
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+  /* ---- เลือกซีรีส์ — สถานะ UI ไม่ใช่ motion (แบบเดียวกับแท็บใน /gallery)
+         อยู่ก่อน if(reduce) โดยตั้งใจ คนที่ปิด motion ต้องสลับซีรีส์ได้เหมือนกัน ---- */
+  var picks = Array.prototype.slice.call(document.querySelectorAll('.pk-item'));
+  function selectPick(t){
+    picks.forEach(function(x){
+      var on = x === t;
+      x.setAttribute('aria-selected', on ? 'true' : 'false');
+      x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
     });
-  }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
-  document.querySelectorAll('.rv').forEach(function(el, i){
-    el.style.transitionDelay = (i % 4) * 60 + 'ms';
-    io.observe(el);
+  }
+  picks.forEach(function(t, i){
+    t.addEventListener('click', function(){ selectPick(t); });
+    t.addEventListener('keydown', function(e){
+      var n;
+      if(e.key === 'ArrowDown') n = picks[(i + 1) % picks.length];
+      else if(e.key === 'ArrowUp') n = picks[(i - 1 + picks.length) % picks.length];
+      else if(e.key === 'Home') n = picks[0];
+      else if(e.key === 'End') n = picks[picks.length - 1];
+      else return;
+      e.preventDefault(); selectPick(n); n.focus();
+    });
   });
 })();
 </script>
