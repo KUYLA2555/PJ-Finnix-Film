@@ -1,0 +1,10 @@
+/* ---------------- footer ---------------- */
+footer{background:var(--void);color:#fff;padding:96px 0 40px}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
+/* footer เป็นพื้นมืดเสมอ จึงใช้โลโก้ขาวล้วนตลอด */
+.f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
+.f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
+.f-col h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.46);font-weight:500;margin-bottom:16px}
+.f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
+.f-col a:hover{color:var(--red-hot)}
+.f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--mute-dark)}

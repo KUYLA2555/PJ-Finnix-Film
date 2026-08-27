@@ -46,6 +46,7 @@
    จุดตัด responsive ของทั้งเว็บมีสามจุด: 1080 (พับเมนู) · 900 · 620 — อย่าเพิ่มจุดใหม่
    ทุกระยะต้องหารด้วย 8 ลงตัว · สีข้อความต้องผ่าน WCAG AA 4.5:1 วัดก่อนเปลี่ยนทุกครั้ง
    ============================================================================ */
+/* @shared:TOKENS */
 :root{
   --void:#050505;
   --ink:#0C0C0C;
@@ -70,6 +71,7 @@
      เบราว์เซอร์ที่ยังไม่รองรับจะข้ามบรรทัดนี้ไปเฉยๆ accordion เปิดทันทีแบบเดิม ไม่พัง */
   interpolate-size:allow-keywords;
 }
+/* @end:TOKENS */
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 /* nav ลอยสูง 76px — ถ้าไม่กันระยะไว้ หัวข้อปลายทางของ anchor จะไปมุดใต้แถบ nav
@@ -108,17 +110,23 @@ img{display:block;max-width:100%}
 .rvl{opacity:0;transform:translateY(20px);transition:opacity .9s var(--e),transform .9s var(--e)}
 body.loaded .rvl{opacity:1;transform:none}
 
+/* @shared:NAV_CSS */
 /* ---------------- nav ---------------- */
 .nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .5s var(--e),border-color .5s var(--e),backdrop-filter .5s}
 .nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:transparent;transition:background .5s var(--e)}
 .nav.solid{background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(20px)}
 .nav.solid::after{background:var(--line)}
 .nav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:76px;display:flex;align-items:center;gap:48px}
+/* โลโก้ — กำหนด aspect-ratio ไว้ล่วงหน้าเพื่อไม่ให้เกิด layout shift ตามข้อ 9 */
 .brand{flex:none;display:block;line-height:0}
 .brand img{display:block;width:auto;height:24px;aspect-ratio:817/96}
-/* ไม่ใส่ transition บน filter โดยตั้งใจ — บั๊ก v1.3 */
+/* พื้นมืดใช้โลโก้ขาวล้วน — ตัวอักษร FINNIX เป็นสีดำจึงจมหายบนพื้น --void
+   และการตัดแดงออกช่วยให้ hero ไม่แดงเกินโควตาข้อ 4 */
+/* ไม่ใส่ transition บน filter โดยตั้งใจ — เบราว์เซอร์ interpolate filter list ข้ามสถานะไม่ได้
+   ทำให้ค่าค้างที่ขาวแล้วโลโก้หายไปบนพื้นขาว การสลับทันทีมองไม่ออกอยู่แล้วเพราะ nav เปลี่ยนพื้นหลังพร้อมกัน */
 .nav .brand img{filter:brightness(0) invert(1)}
 .nav.solid .brand img{filter:none}
+/* ลิงก์สูง 44px ตามเกณฑ์ขนาดพื้นที่กดในข้อ 9 */
 .nav-links{display:flex;gap:30px;margin-left:auto;font-size:15px;font-weight:400}
 .nav-links a{color:rgba(255,255,255,.78);position:relative;display:flex;align-items:center;height:44px;transition:color .4s var(--e)}
 .nav.solid .nav-links a{color:var(--mute)}
@@ -126,17 +134,23 @@ body.loaded .rvl{opacity:1;transform:none}
 .nav-links a:hover{color:#fff}
 .nav.solid .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after{right:0}
+/* ลิงก์ของหน้าปัจจุบัน — เส้นใต้ใช้ currentColor จางๆ **ไม่ใช่แดง**
+   หน้าจอบนสุดมี nav CTA แดง + จุด eyebrow แดงอยู่แล้ว ถ้าเส้นนี้เป็นแดงด้วยจะเป็นจุดที่ 3 ทุกหน้า
+   เกินโควตาข้อ 4 · technology.html ทำถูกมาตั้งแต่ต้น อีก 5 หน้าคัดลอกไปแล้วทำเป็นแดง
+   v3.3 ยกเวอร์ชันของ technology ขึ้นเป็นฉบับจริงแล้ว */
 .nav-links a[aria-current]{color:#fff}
 .nav.solid .nav-links a[aria-current]{color:var(--ink)}
-.nav-links a[aria-current]::after{right:0}
+.nav-links a[aria-current]::after{right:0;background:currentColor;opacity:.28}
 .nav-cta{flex:none;display:flex;align-items:center;background:var(--red);color:#fff;font-size:14px;font-weight:500;height:44px;padding:0 22px;border-radius:12px;transition:background .3s var(--e),transform .3s var(--e)}
 .nav-cta:hover{background:var(--red-hot);transform:translateY(-1px)}
 .burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
 .burger span{position:absolute;left:11px;right:11px;height:1.5px;background:#fff;transition:.4s var(--e)}
 .burger span:nth-child(1){top:17px}.burger span:nth-child(2){bottom:17px}
 .nav.solid .burger span{background:var(--ink)}
-
+/* @end:NAV_CSS */
+/* @shared:DRAWER_CSS */
 /* ---------------- เมนูมือถือ ---------------- */
+/* สถานะ UI ไม่ใช่ motion เพื่อการตกแต่ง จึงไม่นับรวมในงบ 4 อย่างของข้อ 5 */
 .drawer{display:none;position:fixed;inset:0;z-index:99;background:var(--void);
   flex-direction:column;justify-content:center;padding:76px var(--pad) 40px;
   opacity:0;visibility:hidden;transition:opacity .4s var(--e),visibility .4s var(--e)}
@@ -153,6 +167,7 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
   border-bottom:1px solid var(--line-dark)}
 .drawer .drawer-cta{margin-top:40px;justify-content:center;background:#fff;color:var(--ink);
   border:0;border-radius:14px;font-size:16px;min-height:56px}
+/* @end:DRAWER_CSS */
 
 /* ---------------- ปุ่ม ---------------- */
 .btn{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 30px;border-radius:14px;font-size:15px;font-weight:500;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:transform .35s var(--e),background .35s var(--e),border-color .35s var(--e),color .35s var(--e)}
@@ -232,15 +247,18 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
 .closing .btn{margin-top:48px}
 
+/* @shared:FOOTER_CSS */
 /* ---------------- footer ---------------- */
 footer{background:var(--void);color:#fff;padding:96px 0 40px}
 .f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
+/* footer เป็นพื้นมืดเสมอ จึงใช้โลโก้ขาวล้วนตลอด */
 .f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
 .f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
 .f-col h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.46);font-weight:500;margin-bottom:16px}
 .f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
 .f-col a:hover{color:var(--red-hot)}
 .f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--mute-dark)}
+/* @end:FOOTER_CSS */
 
 /* ---------------- responsive ---------------- */
 @media(max-width:1080px){
@@ -267,6 +285,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .rv,.rvl{opacity:1;transform:none}
 }
 </style>
+<!-- @shared:NOSCRIPT -->
 <!-- ไม่มี JS = .rv/.rvl ค้างที่ opacity:0 และ hero ค้างที่ translateY -> หน้าว่างเกือบทั้งหน้า
      บล็อกนี้คืนสถานะปลายทางให้ทันที เนื้อหาจึงอ่านได้ครบแม้ JS ไม่ทำงาน
      **เขียนเหมือนกันทั้ง 6 ไฟล์โดยตั้งใจ** — selector ที่หน้านั้นไม่มีก็ไม่มีผลอะไร
@@ -277,12 +296,14 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .hero .eyebrow,.hero p.sub,.hero-cta{opacity:1;transform:none}
   .sig-legend li{opacity:1}
 </style></noscript>
+<!-- @end:NOSCRIPT -->
 </head>
 <body>
 
 <a href="#main" class="skip">ข้ามไปยังเนื้อหาหลัก</a>
 
 <!-- NAV -->
+<!-- @shared:NAV_HTML -->
 <nav class="nav" id="nav">
   <div class="nav-in">
     <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
@@ -297,8 +318,10 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
   </div>
 </nav>
+<!-- @end:NAV_HTML -->
 
 <!-- เมนูมือถือ -->
+<!-- @shared:DRAWER_HTML -->
 <div class="drawer" id="drawer">
   <a href="index.html">หน้าแรก</a>
   <a href="about.html">เกี่ยวกับเรา</a>
@@ -308,6 +331,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   <a href="contact.html">ติดต่อ</a>
   <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
 </div>
+<!-- @end:DRAWER_HTML -->
 
 <main id="main">
 
@@ -459,6 +483,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 </main>
 
 <!-- FOOTER -->
+<!-- @shared:FOOTER_HTML -->
 <footer>
   <div class="wrap">
     <div class="f-grid">
@@ -481,6 +506,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     </div>
   </div>
 </footer>
+<!-- @end:FOOTER_HTML -->
 
 <script>
 (function(){
@@ -506,6 +532,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   window.addEventListener('load', function(){ document.body.classList.add('loaded'); });
   setTimeout(function(){ document.body.classList.add('loaded'); }, 400);
 
+<!-- @shared:JS_NAV -->
   /* ---- nav ---- */
   var nav = document.getElementById('nav');
   function onScrollNav(){ nav.classList.toggle('solid', window.scrollY > 40); }
@@ -529,9 +556,11 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
       setMenu(false); burger.focus();
     }
   });
+  /* กลับมากว้างกว่า 900px แล้วต้องไม่ค้างสถานะเมนูเปิด */
   window.matchMedia('(min-width:1081px)').addEventListener('change', function(e){
     if(e.matches) setMenu(false);
   });
+<!-- @end:JS_NAV -->
 
   /* ---- แท็บประเภทงาน — สถานะ UI ไม่ใช่ motion (แบบเดียวกับ drawer) · ผูกด้วย aria-controls จึงไม่ต้องแก้เวลาเปลี่ยนแท็บ ---- */
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));

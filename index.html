@@ -45,6 +45,7 @@
    จุดตัด responsive ของทั้งเว็บมีสามจุด: 1080 (พับเมนู) · 900 · 620 — อย่าเพิ่มจุดใหม่
    ทุกระยะต้องหารด้วย 8 ลงตัว · สีข้อความต้องผ่าน WCAG AA 4.5:1 วัดก่อนเปลี่ยนทุกครั้ง
    ============================================================================ */
+/* @shared:TOKENS */
 :root{
   --void:#050505;
   --ink:#0C0C0C;
@@ -69,6 +70,7 @@
      เบราว์เซอร์ที่ยังไม่รองรับจะข้ามบรรทัดนี้ไปเฉยๆ accordion เปิดทันทีแบบเดิม ไม่พัง */
   interpolate-size:allow-keywords;
 }
+/* @end:TOKENS */
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 /* nav ลอยสูง 76px — ถ้าไม่กันระยะไว้ หัวข้อปลายทางของ anchor จะไปมุดใต้แถบ nav
@@ -102,6 +104,7 @@ img{display:block;max-width:100%}
 .rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--e),transform .8s var(--e)}
 .rv.in{opacity:1;transform:none}
 
+/* @shared:NAV_CSS */
 /* ---------------- nav ---------------- */
 .nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .5s var(--e),border-color .5s var(--e),backdrop-filter .5s}
 .nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:transparent;transition:background .5s var(--e)}
@@ -125,16 +128,21 @@ img{display:block;max-width:100%}
 .nav-links a:hover{color:#fff}
 .nav.solid .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after{right:0}
+/* ลิงก์ของหน้าปัจจุบัน — เส้นใต้ใช้ currentColor จางๆ **ไม่ใช่แดง**
+   หน้าจอบนสุดมี nav CTA แดง + จุด eyebrow แดงอยู่แล้ว ถ้าเส้นนี้เป็นแดงด้วยจะเป็นจุดที่ 3 ทุกหน้า
+   เกินโควตาข้อ 4 · technology.html ทำถูกมาตั้งแต่ต้น อีก 5 หน้าคัดลอกไปแล้วทำเป็นแดง
+   v3.3 ยกเวอร์ชันของ technology ขึ้นเป็นฉบับจริงแล้ว */
 .nav-links a[aria-current]{color:#fff}
 .nav.solid .nav-links a[aria-current]{color:var(--ink)}
-.nav-links a[aria-current]::after{right:0}
+.nav-links a[aria-current]::after{right:0;background:currentColor;opacity:.28}
 .nav-cta{flex:none;display:flex;align-items:center;background:var(--red);color:#fff;font-size:14px;font-weight:500;height:44px;padding:0 22px;border-radius:12px;transition:background .3s var(--e),transform .3s var(--e)}
 .nav-cta:hover{background:var(--red-hot);transform:translateY(-1px)}
 .burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
 .burger span{position:absolute;left:11px;right:11px;height:1.5px;background:#fff;transition:.4s var(--e)}
 .burger span:nth-child(1){top:17px}.burger span:nth-child(2){bottom:17px}
 .nav.solid .burger span{background:var(--ink)}
-
+/* @end:NAV_CSS */
+/* @shared:DRAWER_CSS */
 /* ---------------- เมนูมือถือ ---------------- */
 /* สถานะ UI ไม่ใช่ motion เพื่อการตกแต่ง จึงไม่นับรวมในงบ 4 อย่างของข้อ 5 */
 .drawer{display:none;position:fixed;inset:0;z-index:99;background:var(--void);
@@ -153,6 +161,7 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
   border-bottom:1px solid var(--line-dark)}
 .drawer .drawer-cta{margin-top:40px;justify-content:center;background:#fff;color:var(--ink);
   border:0;border-radius:14px;font-size:16px;min-height:56px}
+/* @end:DRAWER_CSS */
 
 /* ---------------- hero ----------------
    v3.0 จัดกลางตามหน้าต้นแบบ spms-est.com — เดิมเป็น hero เต็มจอจัดล่างซ้ายพร้อมตัวเลื่อนเทียบก่อน-หลัง
@@ -311,6 +320,7 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
 .closing .btn{margin-top:48px}
 
+/* @shared:FOOTER_CSS */
 /* ---------------- footer ---------------- */
 footer{background:var(--void);color:#fff;padding:96px 0 40px}
 .f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
@@ -321,6 +331,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 .f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
 .f-col a:hover{color:var(--red-hot)}
 .f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--mute-dark)}
+/* @end:FOOTER_CSS */
 
 /* ---------------- responsive ---------------- */
 @media(max-width:1080px){
@@ -361,6 +372,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .hero p.sub,.hero-cta,.hero .eyebrow{opacity:1;transform:none}
 }
 </style>
+<!-- @shared:NOSCRIPT -->
 <!-- ไม่มี JS = .rv/.rvl ค้างที่ opacity:0 และ hero ค้างที่ translateY -> หน้าว่างเกือบทั้งหน้า
      บล็อกนี้คืนสถานะปลายทางให้ทันที เนื้อหาจึงอ่านได้ครบแม้ JS ไม่ทำงาน
      **เขียนเหมือนกันทั้ง 6 ไฟล์โดยตั้งใจ** — selector ที่หน้านั้นไม่มีก็ไม่มีผลอะไร
@@ -371,12 +383,14 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .hero .eyebrow,.hero p.sub,.hero-cta{opacity:1;transform:none}
   .sig-legend li{opacity:1}
 </style></noscript>
+<!-- @end:NOSCRIPT -->
 </head>
 <body>
 
 <a href="#main" class="skip">ข้ามไปยังเนื้อหาหลัก</a>
 
 <!-- NAV -->
+<!-- @shared:NAV_HTML -->
 <nav class="nav" id="nav">
   <div class="nav-in">
     <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
@@ -391,8 +405,10 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
   </div>
 </nav>
+<!-- @end:NAV_HTML -->
 
 <!-- เมนูมือถือ -->
+<!-- @shared:DRAWER_HTML -->
 <div class="drawer" id="drawer">
   <a href="index.html" aria-current="page">หน้าแรก</a>
   <a href="about.html">เกี่ยวกับเรา</a>
@@ -402,6 +418,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   <a href="contact.html">ติดต่อ</a>
   <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
 </div>
+<!-- @end:DRAWER_HTML -->
 
 <main id="main">
 
@@ -563,6 +580,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 </main>
 
 <!-- FOOTER -->
+<!-- @shared:FOOTER_HTML -->
 <footer>
   <div class="wrap">
     <div class="f-grid">
@@ -585,6 +603,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     </div>
   </div>
 </footer>
+<!-- @end:FOOTER_HTML -->
 
 <script>
 (function(){
@@ -610,6 +629,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   window.addEventListener('load', function(){ document.body.classList.add('loaded'); });
   setTimeout(function(){ document.body.classList.add('loaded'); }, 400);
 
+<!-- @shared:JS_NAV -->
   /* ---- nav ---- */
   var nav = document.getElementById('nav');
   function onScrollNav(){ nav.classList.toggle('solid', window.scrollY > 40); }
@@ -637,6 +657,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   window.matchMedia('(min-width:1081px)').addEventListener('change', function(e){
     if(e.matches) setMenu(false);
   });
+<!-- @end:JS_NAV -->
 
   /* ---- ชิปเลือกหมวดสินค้า — สถานะ UI ไม่ใช่ motion (แบบเดียวกับแท็บใน /about กับ /gallery)
          อยู่ก่อน if(reduce) โดยตั้งใจ คนที่ปิด motion ต้องสลับหมวดได้ ---- */

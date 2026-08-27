@@ -1,0 +1,9 @@
+<div class="drawer" id="drawer">
+  <a href="index.html"@CUR:index@>หน้าแรก</a>
+  <a href="about.html"@CUR:about@>เกี่ยวกับเรา</a>
+  <a href="technology.html"@CUR:technology@>เทคโนโลยี</a>
+  <a href="gallery.html"@CUR:gallery@>ผลงาน</a>
+  <a href="faq.html"@CUR:faq@>คำถามที่พบบ่อย</a>
+  <a href="contact.html"@CUR:contact@>ติดต่อ</a>
+  <a href="https://finnixcenterth.com" class="drawer-cta">หาศูนย์ติดตั้ง</a>
+</div>

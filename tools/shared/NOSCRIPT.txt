@@ -1,0 +1,10 @@
+<!-- ไม่มี JS = .rv/.rvl ค้างที่ opacity:0 และ hero ค้างที่ translateY -> หน้าว่างเกือบทั้งหน้า
+     บล็อกนี้คืนสถานะปลายทางให้ทันที เนื้อหาจึงอ่านได้ครบแม้ JS ไม่ทำงาน
+     **เขียนเหมือนกันทั้ง 6 ไฟล์โดยตั้งใจ** — selector ที่หน้านั้นไม่มีก็ไม่มีผลอะไร
+     แต่ถ้าเขียนต่างกันรายไฟล์ สคริปต์ตรวจของร่วมจะอ่านเป็น .rv ที่ไม่ตรงกัน -->
+<noscript><style>
+  .rv,.rvl{opacity:1;transform:none}
+  .hero h1 .l span{transform:none}
+  .hero .eyebrow,.hero p.sub,.hero-cta{opacity:1;transform:none}
+  .sig-legend li{opacity:1}
+</style></noscript>
