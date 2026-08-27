@@ -22,7 +22,7 @@ python -m http.server 8000     # แล้วเปิด http://localhost:8000/
 PJ_Finnix_Film/
 ├── *.html          7 หน้าจริง — หนึ่งหน้าจบในไฟล์เดียว ห้ามแยก CSS/JS ออก (ข้อ 9)
 ├── tools/          sync-shared.py — ทำให้ "ของร่วม" ทุกหน้าตรงกัน (ไม่ใช่ build system)
-├── assets/         ภาพที่เว็บเรียกใช้ + ภาพอ้างอิงภายใน
+├── assets/         ภาพที่เว็บเรียกใช้ + ภาพอ้างอิงภายใน + Brochure/ (PDF 5 ซีรีส์)
 ├── data/           films.json — source of truth ของตัวเลขทุกตัว
 ├── scans/          สแกนโบรชัวร์ 17 หน้า แยกตามซีรีส์ (ถอดเป็นข้อความครบแล้ว)
 └── docs/           บรีฟ · CHANGELOG · film-data · review.html (หน้าตรวจงานภายใน)
