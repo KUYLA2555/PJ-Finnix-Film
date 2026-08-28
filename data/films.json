@@ -10,8 +10,8 @@
     "installedArea": "3 ล้านตารางฟุตทั่วประเทศ",
     "currency": "THB",
     "priceYear": 2024,
-    "priceDisplayOnSite": false,
-    "priceDisplayNote": "ข้อเสนอ — ไม่แสดงราคาบนเว็บนี้ เพราะบรีฟข้อ 1 ระบุว่าไม่ใช่ร้านค้า ให้ส่งต่อไป finnixcenterth.com",
+    "priceDisplayOnSite": true,
+    "priceDisplayNote": "v3.8 ผู้สั่งงานสั่งให้ทำบล็อกโบรชัวร์ตามต้นฉบับแบบตรงตัว ซึ่งหน้า 2 ของโบรชัวร์จริงคือตารางราคา ราคาจึงขึ้นเว็บแล้วที่ #brochure ใน /technology เท่านั้น — กลับข้างข้อเสนอเดิมที่ให้ส่งต่อไป finnixcenterth.com (โดเมนนั้นยังเป็น parking page อยู่ ค้างข้อ 15) · มีข้อมูลแค่ 3 ซีรีส์ อีก 2 ซีรีส์เป็น null และห้ามเดา",
     "units": "ทุกค่าเป็นเปอร์เซ็นต์",
     "fields": {
       "darkness": "ความเข้ม",
