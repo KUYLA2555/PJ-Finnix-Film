@@ -1,0 +1,15 @@
+# ทุกไฟล์ข้อความเก็บใน git เป็น LF และเขียนลง working tree เป็น LF
+# ดัชนี git เป็น LF อยู่แล้วทั้ง repo ไฟล์นี้แค่ทำให้แน่นอนและไม่ขึ้นกับ
+# core.autocrlf ของแต่ละเครื่อง — ก่อนหน้านี้ core.autocrlf=true มาจาก
+# gitconfig ระดับเครื่อง ไม่ใช่ค่าของ repo คนที่ clone ไปจึงได้ผลต่างกัน
+* text=auto eol=lf
+
+# ไบนารี ห้ามแตะ
+*.pdf  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.webp binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
