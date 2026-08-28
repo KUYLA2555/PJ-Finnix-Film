@@ -419,6 +419,29 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 
 .bro-note{margin-top:16px;font-size:11px;color:var(--mute);line-height:1.6}
 
+/* ---- มุมมองต้นฉบับ : รูปสแกนจริงของโบรชัวร์ (v4.0) ----
+   ผู้สั่งงานสั่งให้ใส่รูป จึงยก MODE B เฉพาะบล็อกนี้ — เป็นเอกสารของแบรนด์เอง ไม่ใช่ภาพ stock
+   ค่าเริ่มต้นไม่มีคลาส facsimile เพื่อให้คนที่ JS ไม่ทำงานยังได้มุมมองข้อมูลที่อ่านได้
+   JS เป็นคนใส่คลาสตอนเริ่ม แล้วปุ่ม .bro-view สลับไปมา */
+.bro-scan{display:none;width:100%;height:100%;object-fit:contain;background:#fff}
+.bro-card.facsimile .bro-scan{display:block}
+.bro-card.facsimile .bro-data{display:none}
+.bro-card.facsimile .bro-inner{padding:0}
+.bro-cv-scan{position:absolute;inset:0;object-fit:cover;object-position:top center}
+.bro-card.facsimile .bro-cover{padding:0;justify-content:flex-end;align-items:center}
+.bro-card.facsimile .bro-cover::before{display:none}
+.bro-card.facsimile .bro-cover>*:not(.bro-cv-scan):not(.bro-open){display:none}
+/* ปุ่มลอยบนภาพถ่าย ต้องมีพื้นทึบของตัวเอง ไม่งั้นตก contrast บนปกที่สว่าง */
+.bro-card.facsimile .bro-open{margin:0 0 24px;background:rgba(12,12,12,.86);border-color:transparent}
+.bro-card.facsimile .bro-open:hover{background:#fff;color:var(--ink)}
+
+.bro-view{appearance:none;cursor:pointer;margin-top:8px;width:112px;
+  padding:8px 16px;text-align:left;font-family:'IBM Plex Sans Thai',sans-serif;font-size:12px;
+  background:none;border:1px dashed #B8B8B4;border-radius:3px;color:var(--mute);
+  transition:color .2s,border-color .2s}
+.bro-view:hover{color:var(--ink);border-color:var(--ink)}
+.bro-view[aria-pressed="true"]{color:var(--ink);border-style:solid;border-color:var(--ink)}
+
 /* แถบเปลี่ยนหน้าแบบกระดาษโน้ตติดขอบเล่ม — คลิกใบไหนก็กระโดดไปหน้านั้นได้เลย
    ใบแรกคือ "ปก" จึงใช้เป็นปุ่มปิดกลับไปหน้าปกในตัว ไม่ต้องมีปุ่มปิดแยก */
 .bro-tabs{position:absolute;left:100%;top:40px;z-index:3;
@@ -825,6 +848,9 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
         <div class="bro-obj">
           <div class="bro-inner">
             <section class="bro-page" data-pg="2" aria-label="หน้า 2 จาก 4">
+              <img class="bro-scan" src="assets/brochure-pages/sy-2.jpg" loading="lazy" decoding="async"
+                alt="หน้า 2 ของโบรชัวร์ TITANIUM ฉบับจริง">
+              <div class="bro-data">
             <p class="bro-tag">ความเป็นมา</p>
             <p class="bro-origin">นวัตกรรมฟิล์มกรองแสงจากแหล่งที่มาที่เชื่อถือได้ ทางเราได้คิดค้นและพัฒนาฟิล์มกรองแสง จนได้มาเป็น 3 รุ่นหลัก ถูกติดตั้งไปทั่วประเทศกว่า 3 ล้านตารางฟุต ด้วยความไว้ใจในแบรนด์ ฟินนิกซ์ ฟิล์ม และความเชื่อถือของลูกค้าในคุณภาพของผลิตภัณฑ์</p>
             <p class="bro-sub2">ตารางราคาฟิล์มกรองแสง ฟินนิกซ์ ไทเทเนี่ยม ฟิล์ม อัพเดทล่าสุดปี 2024</p>
@@ -840,8 +866,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
               </tbody></table>
             <p class="bro-tech2"><span class="var">{{TECH_TITANIUM}}</span></p>
 <ul class="bro-icons"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg><span>กันรังสี UV</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 12c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 7c2-3 4-3 6 0s4 3 6 0 4-3 4 0"/></svg><span>กันรังสี IR</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z M12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg><span>ทัศนวิสัยเคลียร์ชัด</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3.6v5.6c0 5-3.2 8-7.5 9.8-4.3-1.8-7.5-4.8-7.5-9.8V6.1z M9 12l2.2 2.2L15.5 10"/></svg><span>ฟิล์มใสสบายตา</span></li></ul>
+              </div>
             </section>
             <section class="bro-page" data-pg="3" hidden aria-label="หน้า 3 จาก 4">
+              <img class="bro-scan" src="assets/brochure-pages/sy-3.jpg" loading="lazy" decoding="async"
+                alt="หน้า 3 ของโบรชัวร์ TITANIUM ฉบับจริง">
+              <div class="bro-data">
             <p class="bro-sw-cap">มองจากภายนอกห้องโดยสาร</p>
             <div class="bro-sw">
               <p class="bro-sw-code">SY40</p>
@@ -858,8 +888,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
               <div class="bro-sw-glass" style="--vlt:10"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>96%</b></p></div>
               <p class="bro-sw-line">แสงส่องผ่าน 10% · สะท้อนแสง 0.24% · ป้องกัน UV 99% · IR 98%</p>
             </div>
+              </div>
             </section>
             <section class="bro-page" data-pg="4" hidden aria-label="หน้า 4 จาก 4">
+              <img class="bro-scan" src="assets/brochure-pages/sy-4.jpg" loading="lazy" decoding="async"
+                alt="หน้า 4 ของโบรชัวร์ TITANIUM ฉบับจริง">
+              <div class="bro-data">
             <p class="bro-tag">ค่าสเปกทั้ง 3 รหัส</p>
             <table class="bro-tbl"><caption class="vh">ค่าสเปกของ TITANIUM ทั้ง 3 รหัส</caption>
               <thead><tr><td></td><th scope="col">SY10</th><th scope="col">SY20</th><th scope="col">SY40</th></tr></thead>
@@ -871,9 +905,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
                 <tr><th scope="row">ป้องกันรังสี IR</th><td>98%</td><td>95%</td><td>91%</td></tr>
               </tbody></table>
             <p class="bro-note">ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
+              </div>
             </section>
           </div>
           <div class="bro-cover">
+            <img class="bro-scan bro-cv-scan" src="assets/brochure-pages/sy-1.jpg" loading="lazy" decoding="async"
+              alt="ปกโบรชัวร์ TITANIUM ฉบับจริง">
             <div class="bro-cv-top"><span class="bro-wm"><span class="bro-wm-a">FINNIX</span><svg class="bro-arw" viewBox="0 0 24 16" aria-hidden="true"><path d="M0 3h13V0l11 8-11 8v-3H0z"/></svg><span class="bro-wm-b">FILM</span></span><div class="bro-shield"><svg viewBox="0 0 72 84" aria-hidden="true"><path d="M36 2 68 12v30c0 22-14 33-32 40C18 75 4 64 4 42V12z"/></svg><b>7</b><span>ปี</span></div></div>
             <h3 class="bro-cv-name">TITANIUM</h3>
             <p class="bro-cv-sub">FILM SERIES PROTECTION UV</p>
@@ -889,6 +926,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           <button type="button" class="bro-tab" data-go="2"><i>2</i><span>ราคา</span></button>
           <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
           <button type="button" class="bro-tab" data-go="4"><i>4</i><span>สเปก</span></button>
+          <button type="button" class="bro-view" aria-pressed="true">ต้นฉบับ</button>
         </nav>
         <a class="bro-dl" href="assets/Brochure/Finnix-Titanium.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 4 หน้า · 2.4 MB</span></a>
       </article>
@@ -896,6 +934,9 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
         <div class="bro-obj">
           <div class="bro-inner">
             <section class="bro-page" data-pg="2" aria-label="หน้า 2 จาก 4">
+              <img class="bro-scan" src="assets/brochure-pages/cm-2.jpg" loading="lazy" decoding="async"
+                alt="หน้า 2 ของโบรชัวร์ CERAMIC ฉบับจริง">
+              <div class="bro-data">
             <p class="bro-tag">ความเป็นมา</p>
             <p class="bro-origin">นวัตกรรมฟิล์มกรองแสงจากแหล่งที่มาที่เชื่อถือได้ ทางเราได้คิดค้นและพัฒนาฟิล์มกรองแสง จนได้มาเป็น 3 รุ่นหลัก ถูกติดตั้งไปทั่วประเทศกว่า 3 ล้านตารางฟุต ด้วยความไว้ใจในแบรนด์ ฟินนิกซ์ ฟิล์ม และความเชื่อถือของลูกค้าในคุณภาพของผลิตภัณฑ์</p>
             <p class="bro-sub2">ตารางราคาฟิล์มกรองแสง ฟินนิกซ์ เซรามิค ฟิล์ม อัพเดทล่าสุดปี 2024</p>
@@ -911,8 +952,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
               </tbody></table>
             <p class="bro-tech2">ฟิล์มเซรามิคกันความร้อน ทัศนวิสัยดีเยี่ยม</p>
 <ul class="bro-icons"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg><span>กันรังสี UV</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 12c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 7c2-3 4-3 6 0s4 3 6 0 4-3 4 0"/></svg><span>กันรังสี IR</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z M12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg><span>ทัศนวิสัยเคลียร์ชัด</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3.6v5.6c0 5-3.2 8-7.5 9.8-4.3-1.8-7.5-4.8-7.5-9.8V6.1z M9 12l2.2 2.2L15.5 10"/></svg><span>ฟิล์มใสสบายตา</span></li></ul>
+              </div>
             </section>
             <section class="bro-page" data-pg="3" hidden aria-label="หน้า 3 จาก 4">
+              <img class="bro-scan" src="assets/brochure-pages/cm-3.jpg" loading="lazy" decoding="async"
+                alt="หน้า 3 ของโบรชัวร์ CERAMIC ฉบับจริง">
+              <div class="bro-data">
             <p class="bro-sw-cap">มองจากภายนอกห้องโดยสาร</p>
             <div class="bro-sw">
               <p class="bro-sw-code">CM35</p>
@@ -929,8 +974,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
               <div class="bro-sw-glass" style="--vlt:5"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>90%</b></p></div>
               <p class="bro-sw-line">แสงส่องผ่าน 5% · สะท้อนแสง 0.19% · ป้องกัน UV 99% · IR 98%</p>
             </div>
+              </div>
             </section>
             <section class="bro-page" data-pg="4" hidden aria-label="หน้า 4 จาก 4">
+              <img class="bro-scan" src="assets/brochure-pages/cm-4.jpg" loading="lazy" decoding="async"
+                alt="หน้า 4 ของโบรชัวร์ CERAMIC ฉบับจริง">
+              <div class="bro-data">
             <p class="bro-tag">ค่าสเปกทั้ง 3 รหัส</p>
             <table class="bro-tbl"><caption class="vh">ค่าสเปกของ CERAMIC ทั้ง 3 รหัส</caption>
               <thead><tr><td></td><th scope="col">CM05</th><th scope="col">CM15</th><th scope="col">CM35</th></tr></thead>
@@ -942,9 +991,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
                 <tr><th scope="row">ป้องกันรังสี IR</th><td>98%</td><td>95%</td><td>91%</td></tr>
               </tbody></table>
             <p class="bro-note">ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
+              </div>
             </section>
           </div>
           <div class="bro-cover">
+            <img class="bro-scan bro-cv-scan" src="assets/brochure-pages/cm-1.jpg" loading="lazy" decoding="async"
+              alt="ปกโบรชัวร์ CERAMIC ฉบับจริง">
             <div class="bro-cv-top"><span class="bro-wm"><span class="bro-wm-a">FINNIX</span><svg class="bro-arw" viewBox="0 0 24 16" aria-hidden="true"><path d="M0 3h13V0l11 8-11 8v-3H0z"/></svg><span class="bro-wm-b">FILM</span></span><div class="bro-shield"><svg viewBox="0 0 72 84" aria-hidden="true"><path d="M36 2 68 12v30c0 22-14 33-32 40C18 75 4 64 4 42V12z"/></svg><b>7</b><span>ปี</span></div></div>
             <h3 class="bro-cv-name">CERAMIC</h3>
             <p class="bro-cv-sub">FILM SERIES PROTECTION UV</p>
@@ -960,6 +1012,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           <button type="button" class="bro-tab" data-go="2"><i>2</i><span>ราคา</span></button>
           <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
           <button type="button" class="bro-tab" data-go="4"><i>4</i><span>สเปก</span></button>
+          <button type="button" class="bro-view" aria-pressed="true">ต้นฉบับ</button>
         </nav>
         <a class="bro-dl" href="assets/Brochure/Finnix-Ceramic.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 4 หน้า · 2.4 MB</span></a>
       </article>
@@ -967,6 +1020,9 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
         <div class="bro-obj">
           <div class="bro-inner">
             <section class="bro-page" data-pg="2" aria-label="หน้า 2 จาก 3">
+              <img class="bro-scan" src="assets/brochure-pages/ct-2.jpg" loading="lazy" decoding="async"
+                alt="หน้า 2 ของโบรชัวร์ CRYSTALIZE ฉบับจริง">
+              <div class="bro-data">
             <p class="bro-tag">ความเป็นมา</p>
             <p class="bro-origin">นวัตกรรมฟิล์มกรองแสงจากแหล่งที่มาที่เชื่อถือได้ ทางเราได้คิดค้นและพัฒนาฟิล์มกรองแสง จนได้มาเป็น 3 รุ่นหลัก ถูกติดตั้งไปทั่วประเทศกว่า 3 ล้านตารางฟุต ด้วยความไว้ใจในแบรนด์ ฟินนิกซ์ ฟิล์ม และความเชื่อถือของลูกค้าในคุณภาพของผลิตภัณฑ์</p>
             <table class="bro-tbl"><caption class="vh">ค่าสเปกของ CRYSTALIZE ทั้ง 3 รหัส</caption>
@@ -980,8 +1036,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
               </tbody></table>
             <p class="bro-tech2">MULTI LAYER METALIZE SPUTTERING</p>
 <ul class="bro-icons"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg><span>กันรังสี UV</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 12c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 7c2-3 4-3 6 0s4 3 6 0 4-3 4 0"/></svg><span>กันรังสี IR</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z M12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg><span>ทัศนวิสัยเคลียร์ชัด</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3.6v5.6c0 5-3.2 8-7.5 9.8-4.3-1.8-7.5-4.8-7.5-9.8V6.1z M9 12l2.2 2.2L15.5 10"/></svg><span>ฟิล์มใสสบายตา</span></li></ul>
+              </div>
             </section>
             <section class="bro-page" data-pg="3" hidden aria-label="หน้า 3 จาก 3">
+              <img class="bro-scan" src="assets/brochure-pages/ct-3.jpg" loading="lazy" decoding="async"
+                alt="หน้า 3 ของโบรชัวร์ CRYSTALIZE ฉบับจริง">
+              <div class="bro-data">
             <p class="bro-sw-cap">มองจากภายนอกห้องโดยสาร</p>
             <div class="bro-sw">
               <p class="bro-sw-code">CT70</p>
@@ -999,9 +1059,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
               <p class="bro-sw-line">แสงส่องผ่าน 22% · สะท้อนแสง 7.6% · ป้องกัน UV 99% · IR 93%</p>
             </div>
                         <p class="bro-note">ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
+              </div>
             </section>
           </div>
           <div class="bro-cover">
+            <img class="bro-scan bro-cv-scan" src="assets/brochure-pages/ct-1.jpg" loading="lazy" decoding="async"
+              alt="ปกโบรชัวร์ CRYSTALIZE ฉบับจริง">
             <div class="bro-cv-top"><span class="bro-wm"><span class="bro-wm-a">FINNIX</span><svg class="bro-arw" viewBox="0 0 24 16" aria-hidden="true"><path d="M0 3h13V0l11 8-11 8v-3H0z"/></svg><span class="bro-wm-b">FILM</span></span><div class="bro-shield"><svg viewBox="0 0 72 84" aria-hidden="true"><path d="M36 2 68 12v30c0 22-14 33-32 40C18 75 4 64 4 42V12z"/></svg><b>7</b><span>ปี</span></div></div>
             <h3 class="bro-cv-name">CRYSTALIZE</h3>
             <p class="bro-cv-sub">FILM SERIES PROTECTION UV</p>
@@ -1016,6 +1079,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           <button type="button" class="bro-tab" data-go="1" aria-current="page"><i>1</i><span>ปก</span></button>
           <button type="button" class="bro-tab" data-go="2"><i>2</i><span>สเปก</span></button>
           <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
+          <button type="button" class="bro-view" aria-pressed="true">ต้นฉบับ</button>
         </nav>
         <a class="bro-dl" href="assets/Brochure/Finnix-Crystalize.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 3 หน้า · 1.7 MB</span></a>
       </article>
@@ -1023,6 +1087,9 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
         <div class="bro-obj">
           <div class="bro-inner">
             <section class="bro-page" data-pg="2" aria-label="หน้า 2 จาก 3">
+              <img class="bro-scan" src="assets/brochure-pages/xt-2.jpg" loading="lazy" decoding="async"
+                alt="หน้า 2 ของโบรชัวร์ EXTRA CLEAR ฉบับจริง">
+              <div class="bro-data">
             <p class="bro-tag">ความเป็นมา</p>
             <p class="bro-origin">นวัตกรรมฟิล์มกรองแสงจากแหล่งที่มาที่เชื่อถือได้ ทางเราได้คิดค้นและพัฒนาฟิล์มกรองแสง จนได้มาเป็น 3 รุ่นหลัก ถูกติดตั้งไปทั่วประเทศกว่า 3 ล้านตารางฟุต ด้วยความไว้ใจในแบรนด์ ฟินนิกซ์ ฟิล์ม และความเชื่อถือของลูกค้าในคุณภาพของผลิตภัณฑ์</p>
             <table class="bro-tbl"><caption class="vh">ค่าสเปกของ EXTRA CLEAR ทั้ง 3 รหัส</caption>
@@ -1036,8 +1103,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
               </tbody></table>
             <p class="bro-tech2">ฟิล์มเซรามิคกันความร้อน ทัศนวิสัยดีเยี่ยม</p>
 <ul class="bro-icons"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg><span>กันรังสี UV</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 12c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 7c2-3 4-3 6 0s4 3 6 0 4-3 4 0"/></svg><span>กันรังสี IR</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z M12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg><span>ทัศนวิสัยเคลียร์ชัด</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3.6v5.6c0 5-3.2 8-7.5 9.8-4.3-1.8-7.5-4.8-7.5-9.8V6.1z M9 12l2.2 2.2L15.5 10"/></svg><span>ฟิล์มใสสบายตา</span></li></ul>
+              </div>
             </section>
             <section class="bro-page" data-pg="3" hidden aria-label="หน้า 3 จาก 3">
+              <img class="bro-scan" src="assets/brochure-pages/xt-3.jpg" loading="lazy" decoding="async"
+                alt="หน้า 3 ของโบรชัวร์ EXTRA CLEAR ฉบับจริง">
+              <div class="bro-data">
             <p class="bro-sw-cap">มองจากภายนอกห้องโดยสาร</p>
             <div class="bro-sw">
               <p class="bro-sw-code">XT35</p>
@@ -1055,9 +1126,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
               <p class="bro-sw-line">แสงส่องผ่าน 5% · สะท้อนแสง 5.1% · ป้องกัน UV 100% · IR 98%</p>
             </div>
                         <p class="bro-note">ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
+              </div>
             </section>
           </div>
           <div class="bro-cover">
+            <img class="bro-scan bro-cv-scan" src="assets/brochure-pages/xt-1.jpg" loading="lazy" decoding="async"
+              alt="ปกโบรชัวร์ EXTRA CLEAR ฉบับจริง">
             <div class="bro-cv-top"><span class="bro-wm"><span class="bro-wm-a">FINNIX</span><svg class="bro-arw" viewBox="0 0 24 16" aria-hidden="true"><path d="M0 3h13V0l11 8-11 8v-3H0z"/></svg><span class="bro-wm-b">FILM</span></span><div class="bro-shield"><svg viewBox="0 0 72 84" aria-hidden="true"><path d="M36 2 68 12v30c0 22-14 33-32 40C18 75 4 64 4 42V12z"/></svg><b>7</b><span>ปี</span></div></div>
             <h3 class="bro-cv-name">EXTRA CLEAR</h3>
             <p class="bro-cv-sub">FILM SERIES PROTECTION UV</p>
@@ -1072,6 +1146,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           <button type="button" class="bro-tab" data-go="1" aria-current="page"><i>1</i><span>ปก</span></button>
           <button type="button" class="bro-tab" data-go="2"><i>2</i><span>สเปก</span></button>
           <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
+          <button type="button" class="bro-view" aria-pressed="true">ต้นฉบับ</button>
         </nav>
         <a class="bro-dl" href="assets/Brochure/Finnix-Extra-clear.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 3 หน้า · 1.8 MB</span></a>
       </article>
@@ -1079,6 +1154,9 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
         <div class="bro-obj">
           <div class="bro-inner">
             <section class="bro-page" data-pg="2" aria-label="หน้า 2 จาก 3">
+              <img class="bro-scan" src="assets/brochure-pages/sm-2.jpg" loading="lazy" decoding="async"
+                alt="หน้า 2 ของโบรชัวร์ UV GUARD ฉบับจริง">
+              <div class="bro-data">
             <p class="bro-tag">ความเป็นมา</p>
             <p class="bro-origin">นวัตกรรมฟิล์มกรองแสงจากแหล่งที่มาที่เชื่อถือได้ ทางเราได้คิดค้นและพัฒนาฟิล์มกรองแสง จนได้มาเป็น 3 รุ่นหลัก ถูกติดตั้งไปทั่วประเทศกว่า 3 ล้านตารางฟุต ด้วยความไว้ใจในแบรนด์ ฟินนิกซ์ ฟิล์ม และความเชื่อถือของลูกค้าในคุณภาพของผลิตภัณฑ์</p>
             <p class="bro-sub2">ตารางราคาฟิล์มกรองแสง ฟินนิกซ์ ยูวีการ์ด เซรามิค ฟิล์ม อัพเดทล่าสุดปี 2024</p>
@@ -1094,8 +1172,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
               </tbody></table>
             <p class="bro-tech2">ฟิล์มเซรามิคกันความร้อน ทัศนวิสัยดีเยี่ยม</p>
 <ul class="bro-icons"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg><span>กันรังสี UV</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 12c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 7c2-3 4-3 6 0s4 3 6 0 4-3 4 0"/></svg><span>กันรังสี IR</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z M12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg><span>ทัศนวิสัยเคลียร์ชัด</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3.6v5.6c0 5-3.2 8-7.5 9.8-4.3-1.8-7.5-4.8-7.5-9.8V6.1z M9 12l2.2 2.2L15.5 10"/></svg><span>ฟิล์มใสสบายตา</span></li></ul>
+              </div>
             </section>
             <section class="bro-page" data-pg="3" hidden aria-label="หน้า 3 จาก 3">
+              <img class="bro-scan" src="assets/brochure-pages/sm-3.jpg" loading="lazy" decoding="async"
+                alt="หน้า 3 ของโบรชัวร์ UV GUARD ฉบับจริง">
+              <div class="bro-data">
             <p class="bro-sw-cap">มองจากภายนอกห้องโดยสาร</p>
             <div class="bro-sw">
               <p class="bro-sw-code">SM35</p>
@@ -1113,9 +1195,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
               <p class="bro-sw-line">แสงส่องผ่าน 5% · สะท้อนแสง 5.1% · ป้องกัน UV 100% · IR 98%</p>
             </div>
                         <p class="bro-note">ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
+              </div>
             </section>
           </div>
           <div class="bro-cover">
+            <img class="bro-scan bro-cv-scan" src="assets/brochure-pages/sm-1.jpg" loading="lazy" decoding="async"
+              alt="ปกโบรชัวร์ UV GUARD ฉบับจริง">
             <div class="bro-cv-top"><span class="bro-wm"><span class="bro-wm-a">FINNIX</span><svg class="bro-arw" viewBox="0 0 24 16" aria-hidden="true"><path d="M0 3h13V0l11 8-11 8v-3H0z"/></svg><span class="bro-wm-b">FILM</span></span><div class="bro-shield"><svg viewBox="0 0 72 84" aria-hidden="true"><path d="M36 2 68 12v30c0 22-14 33-32 40C18 75 4 64 4 42V12z"/></svg><b>7</b><span>ปี</span></div></div>
             <h3 class="bro-cv-name">UV GUARD</h3>
             <p class="bro-cv-sub">FILM SERIES PROTECTION UV</p>
@@ -1130,6 +1215,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           <button type="button" class="bro-tab" data-go="1" aria-current="page"><i>1</i><span>ปก</span></button>
           <button type="button" class="bro-tab" data-go="2"><i>2</i><span>ราคา</span></button>
           <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
+          <button type="button" class="bro-view" aria-pressed="true">ต้นฉบับ</button>
         </nav>
         <a class="bro-dl" href="assets/Brochure/Finnix-Uvguard.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 3 หน้า · 1.9 MB</span></a>
       </article>
@@ -1356,6 +1442,22 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     tabs.forEach(function(t){
       t.addEventListener('click', function(){ show(+t.getAttribute('data-go')); });
     });
+
+    /* สลับ ต้นฉบับ (รูปสแกนจริง) กับ ข้อมูล (ค่าที่ generate จาก films.json)
+       ตั้งค่าเริ่มต้นเป็นต้นฉบับจาก JS ไม่ใช่จาก markup — คนที่ JS ไม่ทำงาน
+       จะได้มุมมองข้อมูลที่อ่านได้แทนที่จะเจอรูปอย่างเดียว */
+    var view = card.querySelector('.bro-view');
+    function setView(face){
+      card.classList.toggle('facsimile', face);
+      view.setAttribute('aria-pressed', face ? 'true' : 'false');
+      view.textContent = face ? 'ต้นฉบับ' : 'ข้อมูล';
+    }
+    if(view){
+      setView(true);
+      view.addEventListener('click', function(){
+        setView(!card.classList.contains('facsimile'));
+      });
+    }
     /* Esc กลับหน้าปก — กติกาเดียวกับ drawer · ลูกศรซ้ายขวาเปลี่ยนหน้าทีละใบ
        ข้ามเมื่อโฟกัสอยู่ที่ชิปเลือกซีรีส์ เพราะชิปใช้ลูกศรของตัวเองอยู่แล้ว */
     card.addEventListener('keydown', function(e){
