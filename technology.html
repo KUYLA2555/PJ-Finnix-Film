@@ -325,14 +325,24 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
   background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(12,12,12,.22),transparent 72%);
   filter:blur(3px);pointer-events:none}
 
-.bro-cover,.bro-inner{position:absolute;inset:0;border-radius:2px 6px 6px 2px;
-  box-shadow:0 18px 44px rgba(12,12,12,.16),0 2px 6px rgba(12,12,12,.08);backface-visibility:hidden}
+/* ปกกับหน้าในเป็นแผ่นกระดาษชนิดเดียวกัน พลิกรอบแกนซ้ายเหมือนกันทุกแผ่น (v4.0)
+   เดิมมีแต่ปกที่พลิก หน้าในสลับด้วย hidden แบบตัดภาพทันที */
+.bro-cover,.bro-page{position:absolute;inset:0;border-radius:2px 6px 6px 2px;
+  box-shadow:0 18px 44px rgba(12,12,12,.16),0 2px 6px rgba(12,12,12,.08);
+  backface-visibility:hidden;background:var(--paper);
+  transform-origin:left center;transform:translateZ(var(--pz,0px)) rotateY(0);
+  transition:transform .8s var(--e)}
+.bro-cover.flipped,.bro-page.flipped{transform:translateZ(var(--pz,0px)) rotateY(-158deg)}
+/* --pz คือความลึกของแผ่น JS เป็นคนใส่ให้ทีละแผ่น
+   **ห้ามกลับไปใช้ z-index จัดชั้น** — ในบริบท transform-style:preserve-3d เบราว์เซอร์เรียงชั้น
+   ตามตำแหน่ง Z ไม่ใช่ z-index ถ้าทุกแผ่นอยู่ Z เดียวกันจะตีกันจนหน้าที่เปิดอยู่หายไปเลย
+   (เหยียบมาแล้วตอนทำ v4.0 — หน้า 3 กับ 4 ขาวทั้งแผ่น) */
+/* .bro-inner ไม่มีหน้าตาของตัวเองแล้ว เป็นแค่กล่อง 3D ให้แผ่นกระดาษซ้อนกันข้างใน */
+.bro-inner{position:absolute;inset:0;transform:translateZ(-2px);transform-style:preserve-3d}
 
 /* ---- ปก = หน้า 1 ของโบรชัวร์จริง : พื้นมืด ชื่อซีรีส์โครเมียม ตราประกัน ---- */
-.bro-cover{background:var(--void);color:#fff;transform-origin:left center;
-  transform:rotateY(0);transition:transform .8s var(--e);z-index:2;
+.bro-cover{background:var(--void);color:#fff;z-index:99;
   display:flex;flex-direction:column;padding:32px 32px 28px;overflow:hidden}
-.bro-card.open .bro-cover{transform:rotateY(-158deg)}
 /* แสงกวาดบนปก — gradient ล้วน ไม่ใช่ภาพ (MODE B) */
 .bro-cover::before{content:'';position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(ellipse 90% 55% at 78% 22%,rgba(255,255,255,.13),transparent 62%),
@@ -374,11 +384,8 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 .bro-open:hover{background:#fff;color:var(--ink);border-color:#fff}
 
 /* ---- หน้าใน = หน้า 2 เป็นต้นไป ---- */
-.bro-inner{background:var(--paper);transform:translateZ(-2px);
-  padding:32px 28px;opacity:0;transition:opacity .3s var(--e) .28s;overflow:hidden}
-.bro-card.open .bro-inner{opacity:1}
 .bro-card:not(.open) .bro-inner{pointer-events:none}
-.bro-page[hidden]{display:none}
+.bro-page{padding:32px 28px;overflow:hidden}
 
 .bro-tag{display:inline-block;background:var(--ink);color:#fff;font-size:11px;
   letter-spacing:.16em;padding:6px 12px;border-radius:2px}
@@ -446,10 +453,6 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 .bro-tab[aria-current="page"]::before{background:rgba(255,255,255,.28)}
 .bro-tab[aria-current="page"]::after{border-color:transparent transparent rgba(255,255,255,.20) transparent}
 
-.bro-dl{display:flex;flex-direction:column;gap:4px;margin-top:24px;text-align:center;
-  font-size:14px;font-weight:500;color:var(--ink)}
-.bro-dl-t{text-decoration:underline;text-underline-offset:3px}
-.bro-meta{font-size:12px;color:var(--mute);font-weight:400}
 .bro-foot{margin-top:56px;text-align:center;font-size:14px;color:var(--mute);
   max-width:72ch;margin-left:auto;margin-right:auto}
 
@@ -507,7 +510,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .bro-tab::before{display:none}
   .bro-tab:hover,.bro-tab[aria-current="page"]{transform:rotate(0) translateY(-3px)}
   .bro-cover{padding:32px 24px 24px}
-  .bro-inner{padding:32px 24px}
+  .bro-page{padding:32px 24px}
 }
 @media(max-width:620px){
   .bro-chips{margin-bottom:40px}
@@ -515,7 +518,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .bro-card{width:min(400px,92vw)}
   .bro-obj{height:744px}
   .bro-cover{padding:24px 20px 20px}
-  .bro-inner{padding:24px 20px}
+  .bro-page{padding:24px 20px}
   .bro-icons{grid-template-columns:repeat(2,1fr);gap:12px 8px}
   .bro-tab{padding:8px 12px}
   .bro-tab span{font-size:12px}
@@ -890,7 +893,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
           <button type="button" class="bro-tab" data-go="4"><i>4</i><span>สเปก</span></button>
         </nav>
-        <a class="bro-dl" href="assets/Brochure/Finnix-Titanium.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 4 หน้า · 2.4 MB</span></a>
       </article>
       <article class="bro-card" role="tabpanel" id="bp-CM" aria-labelledby="bt-CM" hidden>
         <div class="bro-obj">
@@ -961,7 +963,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
           <button type="button" class="bro-tab" data-go="4"><i>4</i><span>สเปก</span></button>
         </nav>
-        <a class="bro-dl" href="assets/Brochure/Finnix-Ceramic.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 4 หน้า · 2.4 MB</span></a>
       </article>
       <article class="bro-card" role="tabpanel" id="bp-CT" aria-labelledby="bt-CT" hidden>
         <div class="bro-obj">
@@ -1017,7 +1018,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           <button type="button" class="bro-tab" data-go="2"><i>2</i><span>สเปก</span></button>
           <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
         </nav>
-        <a class="bro-dl" href="assets/Brochure/Finnix-Crystalize.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 3 หน้า · 1.7 MB</span></a>
       </article>
       <article class="bro-card" role="tabpanel" id="bp-XT" aria-labelledby="bt-XT" hidden>
         <div class="bro-obj">
@@ -1073,7 +1073,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           <button type="button" class="bro-tab" data-go="2"><i>2</i><span>สเปก</span></button>
           <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
         </nav>
-        <a class="bro-dl" href="assets/Brochure/Finnix-Extra-clear.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 3 หน้า · 1.8 MB</span></a>
       </article>
       <article class="bro-card" role="tabpanel" id="bp-SM" aria-labelledby="bt-SM" hidden>
         <div class="bro-obj">
@@ -1131,7 +1130,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           <button type="button" class="bro-tab" data-go="2"><i>2</i><span>ราคา</span></button>
           <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
         </nav>
-        <a class="bro-dl" href="assets/Brochure/Finnix-Uvguard.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 3 หน้า · 1.9 MB</span></a>
       </article>
       </div>
     </div>
@@ -1334,16 +1332,34 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     var open  = card.querySelector('.bro-open');
     var tabs  = Array.prototype.slice.call(card.querySelectorAll('.bro-tab'));
     var pages = Array.prototype.slice.call(card.querySelectorAll('.bro-page'));
+    var cover = card.querySelector('.bro-cover');
     /* ปกคือหน้า 1 ของโบรชัวร์จริง หน้าใน .bro-page จึงเริ่มนับที่ 2
        แท็บกระดาษโน้ตใบแรกคือ "ปก" จึงทำหน้าที่ปุ่มปิดในตัว ไม่มีปุ่มปิดแยก */
     var total = pages.length + 1;
     var cur   = 1;
 
+    /* แผ่นที่อยู่ก่อนหน้าปัจจุบันถูกพลิกไปทางซ้าย แผ่นที่อยู่ถัดไปนอนซ้อนรออยู่ข้างหลัง
+       ปกคือแผ่นที่ 1 ใช้กติกาเดียวกันทุกประการ — ทรานซิชันจึงเหมือนกันทุกหน้า
+       ไม่ใช้ hidden แล้ว เพราะ display:none จะตัดแอนิเมชันทิ้ง */
+    pages.forEach(function(p){
+      /* markup ยังใส่ hidden ไว้ให้คนที่ JS ไม่ทำงานเห็นแค่ปก ไม่ใช่แผ่นซ้อนกันมั่ว
+         พอ JS ทำงานต้องถอดออก ไม่งั้น display:none จะตัดแอนิเมชันทิ้งทั้งแผ่น
+         (เหยียบมาแล้วใน v4.0 — หน้า 3 กับ 4 ขาวทั้งแผ่นเพราะลืมถอด) */
+      p.removeAttribute('hidden');
+      p.style.setProperty('--pz', -(+p.getAttribute('data-pg') - 1) + 'px');
+    });
+
     function show(n){
       cur = Math.max(1, Math.min(total, n));
       card.classList.toggle('open', cur > 1);
+      cover.classList.toggle('flipped', cur > 1);
       open.setAttribute('aria-expanded', cur > 1 ? 'true' : 'false');
-      pages.forEach(function(p){ p.hidden = (+p.getAttribute('data-pg') !== cur); });
+      pages.forEach(function(p){
+        var pg = +p.getAttribute('data-pg');
+        p.classList.toggle('flipped', pg < cur);
+        /* เหลือให้เครื่องอ่านหน้าจออ่านแค่แผ่นที่เปิดอยู่ */
+        p.setAttribute('aria-hidden', pg === cur ? 'false' : 'true');
+      });
       tabs.forEach(function(t){
         if(+t.getAttribute('data-go') === cur) t.setAttribute('aria-current', 'page');
         else t.removeAttribute('aria-current');
