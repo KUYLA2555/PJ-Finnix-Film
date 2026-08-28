@@ -315,11 +315,11 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 
 .bro-stage{display:flex;justify-content:center;perspective:1600px}
 .bro-card[hidden]{display:none}
-.bro-card{display:flex;flex-direction:column;align-items:center}
+.bro-card{position:relative;flex:none;width:min(440px,88vw);display:flex;flex-direction:column;align-items:center}
 
 /* รูปทรง = หน้ากระดาษแนวตั้งตามโบรชัวร์จริง (เดิมเป็นขอบขวาโค้งครึ่งวงกลมตาม prompt ต้นแบบ
    v3.8 เปลี่ยนเป็นสี่เหลี่ยมสัดส่วน A4 เพราะผู้สั่งงานสั่งให้เหมือนโบรชัวร์ต้นฉบับ) */
-.bro-obj{position:relative;width:min(440px,88vw);height:680px;transform-style:preserve-3d;
+.bro-obj{position:relative;width:100%;height:680px;transform-style:preserve-3d;
   transform:rotateX(var(--rx,2deg)) rotateY(var(--ry,-7deg));transition:transform .5s var(--e)}
 .bro-obj::after{content:'';position:absolute;left:6%;right:6%;bottom:-28px;height:32px;
   background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(12,12,12,.22),transparent 72%);
@@ -419,19 +419,32 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 
 .bro-note{margin-top:16px;font-size:11px;color:var(--mute);line-height:1.6}
 
-/* ---- แถบเปลี่ยนหน้า ---- */
-.bro-pager{display:flex;align-items:center;gap:16px;margin-top:48px}
-.bro-nav{appearance:none;background:var(--paper);border:1px solid var(--line);color:var(--ink);
-  width:40px;height:40px;border-radius:999px;cursor:pointer;font-size:16px;line-height:1;
-  transition:border-color .2s,background .2s}
-.bro-nav:hover:not(:disabled){background:var(--ink);border-color:var(--ink);color:#fff}
-.bro-nav:disabled{color:#B8B8B4;cursor:not-allowed}
-.bro-pos{font-size:13px;color:var(--mute);min-width:80px;text-align:center}
-.bro-pos b{color:var(--ink);font-weight:600}
-.bro-close{appearance:none;background:none;border:0;padding:0;margin-left:8px;
-  font-family:'IBM Plex Sans Thai',sans-serif;font-size:13px;color:var(--mute);cursor:pointer;
-  text-decoration:underline;text-underline-offset:3px}
-.bro-close:hover{color:var(--ink)}
+/* แถบเปลี่ยนหน้าแบบกระดาษโน้ตติดขอบเล่ม — คลิกใบไหนก็กระโดดไปหน้านั้นได้เลย
+   ใบแรกคือ "ปก" จึงใช้เป็นปุ่มปิดกลับไปหน้าปกในตัว ไม่ต้องมีปุ่มปิดแยก */
+.bro-tabs{position:absolute;left:100%;top:40px;z-index:3;
+  display:flex;flex-direction:column;gap:8px;padding-left:8px}
+.bro-tab{position:relative;appearance:none;cursor:pointer;width:112px;min-height:56px;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;
+  padding:8px 16px 8px 16px;text-align:left;
+  font-family:'IBM Plex Sans Thai',sans-serif;color:var(--ink);
+  background:var(--paper);border:1px solid var(--line);border-left:0;border-radius:0 3px 3px 0;
+  box-shadow:2px 4px 10px rgba(12,12,12,.10);
+  transform:rotate(-1.1deg);
+  transition:transform .25s var(--e),background .2s,color .2s,box-shadow .25s var(--e)}
+.bro-tab:nth-child(2n){transform:rotate(1deg)}
+/* สันกาวด้านที่ติดกับเล่ม */
+.bro-tab::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--line)}
+/* มุมพับของกระดาษโน้ต */
+.bro-tab::after{content:'';position:absolute;right:0;bottom:0;border-width:0 0 12px 12px;
+  border-style:solid;border-color:transparent transparent rgba(12,12,12,.10) transparent}
+.bro-tab i{font-style:normal;font-size:10px;letter-spacing:.14em;color:var(--mute)}
+.bro-tab span{font-size:13px;font-weight:500;line-height:1.3}
+.bro-tab:hover{transform:rotate(0) translateX(4px)}
+.bro-tab[aria-current="page"]{background:var(--ink);color:#fff;transform:rotate(0) translateX(12px);
+  box-shadow:4px 7px 16px rgba(12,12,12,.22)}
+.bro-tab[aria-current="page"] i{color:rgba(255,255,255,.72)}
+.bro-tab[aria-current="page"]::before{background:rgba(255,255,255,.28)}
+.bro-tab[aria-current="page"]::after{border-color:transparent transparent rgba(255,255,255,.20) transparent}
 
 .bro-dl{display:flex;flex-direction:column;gap:4px;margin-top:24px;text-align:center;
   font-size:14px;font-weight:500;color:var(--ink)}
@@ -486,18 +499,26 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .seg-uv b{display:none}
 }
 @media(max-width:900px){
-  .bro-obj{width:min(408px,90vw);height:712px}
+  .bro-card{width:min(408px,90vw)}
+  .bro-obj{height:712px}
+  .bro-tabs{position:static;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:8px;padding-left:0;margin-top:32px}
+  .bro-tab{width:auto;min-height:0;flex-direction:row;align-items:center;gap:8px;
+    padding:10px 16px;border-left:1px solid var(--line);border-radius:3px}
+  .bro-tab::before{display:none}
+  .bro-tab:hover,.bro-tab[aria-current="page"]{transform:rotate(0) translateY(-3px)}
   .bro-cover{padding:32px 24px 24px}
   .bro-inner{padding:32px 24px}
 }
 @media(max-width:620px){
   .bro-chips{margin-bottom:40px}
   .bro-chip{padding:12px 16px;font-size:13px}
-  .bro-obj{width:min(400px,92vw);height:744px}
+  .bro-card{width:min(400px,92vw)}
+  .bro-obj{height:744px}
   .bro-cover{padding:24px 20px 20px}
   .bro-inner{padding:24px 20px}
   .bro-icons{grid-template-columns:repeat(2,1fr);gap:12px 8px}
-  .bro-pager{gap:8px;flex-wrap:wrap;justify-content:center}
+  .bro-tab{padding:8px 12px}
+  .bro-tab span{font-size:12px}
   .bro-tbl th,.bro-tbl td{padding:6px 4px}
 }
 @media(max-width:620px){
@@ -863,12 +884,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
             <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
           </div>
         </div>
-        <div class="bro-pager" hidden>
-          <button type="button" class="bro-nav" data-d="-1" aria-label="หน้าก่อนหน้า">&#8592;</button>
-          <p class="bro-pos" aria-live="polite">หน้า <b>1</b> / 4</p>
-          <button type="button" class="bro-nav" data-d="1" aria-label="หน้าถัดไป">&#8594;</button>
-          <button type="button" class="bro-close">ปิด</button>
-        </div>
+        <nav class="bro-tabs" aria-label="หน้าในโบรชัวร์">
+          <button type="button" class="bro-tab" data-go="1" aria-current="page"><i>1</i><span>ปก</span></button>
+          <button type="button" class="bro-tab" data-go="2"><i>2</i><span>ราคา</span></button>
+          <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
+          <button type="button" class="bro-tab" data-go="4"><i>4</i><span>สเปก</span></button>
+        </nav>
         <a class="bro-dl" href="assets/Brochure/Finnix-Titanium.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 4 หน้า · 2.4 MB</span></a>
       </article>
       <article class="bro-card" role="tabpanel" id="bp-CM" aria-labelledby="bt-CM" hidden>
@@ -934,12 +955,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
             <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
           </div>
         </div>
-        <div class="bro-pager" hidden>
-          <button type="button" class="bro-nav" data-d="-1" aria-label="หน้าก่อนหน้า">&#8592;</button>
-          <p class="bro-pos" aria-live="polite">หน้า <b>1</b> / 4</p>
-          <button type="button" class="bro-nav" data-d="1" aria-label="หน้าถัดไป">&#8594;</button>
-          <button type="button" class="bro-close">ปิด</button>
-        </div>
+        <nav class="bro-tabs" aria-label="หน้าในโบรชัวร์">
+          <button type="button" class="bro-tab" data-go="1" aria-current="page"><i>1</i><span>ปก</span></button>
+          <button type="button" class="bro-tab" data-go="2"><i>2</i><span>ราคา</span></button>
+          <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
+          <button type="button" class="bro-tab" data-go="4"><i>4</i><span>สเปก</span></button>
+        </nav>
         <a class="bro-dl" href="assets/Brochure/Finnix-Ceramic.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 4 หน้า · 2.4 MB</span></a>
       </article>
       <article class="bro-card" role="tabpanel" id="bp-CT" aria-labelledby="bt-CT" hidden>
@@ -991,12 +1012,11 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
             <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
           </div>
         </div>
-        <div class="bro-pager" hidden>
-          <button type="button" class="bro-nav" data-d="-1" aria-label="หน้าก่อนหน้า">&#8592;</button>
-          <p class="bro-pos" aria-live="polite">หน้า <b>1</b> / 3</p>
-          <button type="button" class="bro-nav" data-d="1" aria-label="หน้าถัดไป">&#8594;</button>
-          <button type="button" class="bro-close">ปิด</button>
-        </div>
+        <nav class="bro-tabs" aria-label="หน้าในโบรชัวร์">
+          <button type="button" class="bro-tab" data-go="1" aria-current="page"><i>1</i><span>ปก</span></button>
+          <button type="button" class="bro-tab" data-go="2"><i>2</i><span>สเปก</span></button>
+          <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
+        </nav>
         <a class="bro-dl" href="assets/Brochure/Finnix-Crystalize.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 3 หน้า · 1.7 MB</span></a>
       </article>
       <article class="bro-card" role="tabpanel" id="bp-XT" aria-labelledby="bt-XT" hidden>
@@ -1048,12 +1068,11 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
             <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
           </div>
         </div>
-        <div class="bro-pager" hidden>
-          <button type="button" class="bro-nav" data-d="-1" aria-label="หน้าก่อนหน้า">&#8592;</button>
-          <p class="bro-pos" aria-live="polite">หน้า <b>1</b> / 3</p>
-          <button type="button" class="bro-nav" data-d="1" aria-label="หน้าถัดไป">&#8594;</button>
-          <button type="button" class="bro-close">ปิด</button>
-        </div>
+        <nav class="bro-tabs" aria-label="หน้าในโบรชัวร์">
+          <button type="button" class="bro-tab" data-go="1" aria-current="page"><i>1</i><span>ปก</span></button>
+          <button type="button" class="bro-tab" data-go="2"><i>2</i><span>สเปก</span></button>
+          <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
+        </nav>
         <a class="bro-dl" href="assets/Brochure/Finnix-Extra-clear.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 3 หน้า · 1.8 MB</span></a>
       </article>
       <article class="bro-card" role="tabpanel" id="bp-SM" aria-labelledby="bt-SM" hidden>
@@ -1107,12 +1126,11 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
             <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
           </div>
         </div>
-        <div class="bro-pager" hidden>
-          <button type="button" class="bro-nav" data-d="-1" aria-label="หน้าก่อนหน้า">&#8592;</button>
-          <p class="bro-pos" aria-live="polite">หน้า <b>1</b> / 3</p>
-          <button type="button" class="bro-nav" data-d="1" aria-label="หน้าถัดไป">&#8594;</button>
-          <button type="button" class="bro-close">ปิด</button>
-        </div>
+        <nav class="bro-tabs" aria-label="หน้าในโบรชัวร์">
+          <button type="button" class="bro-tab" data-go="1" aria-current="page"><i>1</i><span>ปก</span></button>
+          <button type="button" class="bro-tab" data-go="2"><i>2</i><span>ราคา</span></button>
+          <button type="button" class="bro-tab" data-go="3"><i>3</i><span>ความเข้ม</span></button>
+        </nav>
         <a class="bro-dl" href="assets/Brochure/Finnix-Uvguard.pdf" download><span class="bro-dl-t">ดาวน์โหลดโบรชัวร์ต้นฉบับ</span><span class="bro-meta">PDF · 3 หน้า · 1.9 MB</span></a>
       </article>
       </div>
@@ -1314,12 +1332,10 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   broCards.forEach(function(card){
     var obj   = card.querySelector('.bro-obj');
     var open  = card.querySelector('.bro-open');
-    var shut  = card.querySelector('.bro-close');
-    var pager = card.querySelector('.bro-pager');
+    var tabs  = Array.prototype.slice.call(card.querySelectorAll('.bro-tab'));
     var pages = Array.prototype.slice.call(card.querySelectorAll('.bro-page'));
-    var navs  = Array.prototype.slice.call(card.querySelectorAll('.bro-nav'));
-    var pos   = card.querySelector('.bro-pos b');
-    /* ปกคือหน้า 1 ของโบรชัวร์จริง หน้าใน .bro-page จึงเริ่มนับที่ 2 */
+    /* ปกคือหน้า 1 ของโบรชัวร์จริง หน้าใน .bro-page จึงเริ่มนับที่ 2
+       แท็บกระดาษโน้ตใบแรกคือ "ปก" จึงทำหน้าที่ปุ่มปิดในตัว ไม่มีปุ่มปิดแยก */
     var total = pages.length + 1;
     var cur   = 1;
 
@@ -1327,28 +1343,25 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
       cur = Math.max(1, Math.min(total, n));
       card.classList.toggle('open', cur > 1);
       open.setAttribute('aria-expanded', cur > 1 ? 'true' : 'false');
-      pager.hidden = cur === 1;
       pages.forEach(function(p){ p.hidden = (+p.getAttribute('data-pg') !== cur); });
-      if(pos) pos.textContent = cur;
-      navs.forEach(function(b){
-        var d = +b.getAttribute('data-d');
-        b.disabled = (d < 0 && cur <= 2) || (d > 0 && cur >= total);
+      tabs.forEach(function(t){
+        if(+t.getAttribute('data-go') === cur) t.setAttribute('aria-current', 'page');
+        else t.removeAttribute('aria-current');
       });
     }
     /* ใช้ตอนสลับซีรีส์ — กลับไปหน้าปกเสมอ */
     card.broReset = function(){ show(1); };
 
     open.addEventListener('click', function(){ show(2); });
-    if(shut) shut.addEventListener('click', function(){ show(1); open.focus(); });
-    navs.forEach(function(b){
-      b.addEventListener('click', function(){ show(cur + (+b.getAttribute('data-d'))); });
+    tabs.forEach(function(t){
+      t.addEventListener('click', function(){ show(+t.getAttribute('data-go')); });
     });
-    /* Esc ปิดกลับไปหน้าปก — กติกาเดียวกับ drawer */
+    /* Esc กลับหน้าปก — กติกาเดียวกับ drawer · ลูกศรซ้ายขวาเปลี่ยนหน้าทีละใบ
+       ข้ามเมื่อโฟกัสอยู่ที่ชิปเลือกซีรีส์ เพราะชิปใช้ลูกศรของตัวเองอยู่แล้ว */
     card.addEventListener('keydown', function(e){
       if(e.key === 'Escape' && cur > 1){ show(1); open.focus(); return; }
-      if(cur < 2) return;
       var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if(d && e.target.className.indexOf('bro-chip') < 0){ e.preventDefault(); show(cur + d); }
+      if(d && cur > 1 && e.target.className.indexOf('bro-chip') < 0){ e.preventDefault(); show(cur + d); }
     });
     show(1);
 

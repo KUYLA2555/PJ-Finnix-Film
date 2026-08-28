@@ -155,6 +155,61 @@ print('about mismatches:',bad)
 EOF
 ```
 
+เทียบตัวเลข 4 ช่องของ `.usp` ในหน้าแรกกับ `films.json` — ต้องได้ `ตรวจ 4 ช่อง` และ `ผิด ไม่มี` พร้อมกัน **รันทุกครั้งที่แตะแถบจุดขายในหน้าแรก** (เพิ่มใน v3.9)
+
+```bash
+export PYTHONIOENCODING=utf-8
+python - <<'EOF'
+import io,re,json
+d=json.load(io.open('data/films.json',encoding='utf-8'))
+want={'01':str(d['meta']['warrantyYears']),
+      '02':str(max(v['heatReject'] for s in d['series'] for v in s['variants'])),
+      '03':str(min(v['uv'] for s in d['series'] for v in s['variants'])),
+      '04':str(sum(1 for s in d['series'] if s.get('metalFree') is True))}
+s=io.open('index.html',encoding='utf-8').read()
+got=dict(re.findall(r'<i class="usp-n">(\d\d)</i><p class="usp-v">(\d+)<em>',s))
+print('ตรวจ',len(got),'ช่อง (ต้องเป็น 4) | ค่า',got,'| ควรเป็น',want)
+print('ผิด:',[k for k in want if got.get(k)!=want[k]] or 'ไม่มี')
+EOF
+```
+
+เทียบทุกตัวเลขในบล็อกโบรชัวร์กับ `films.json` — ต้องได้ `ปก 5 · swatch 15 · ตารางสเปก 4 · ตารางราคา 3` และ `mismatches 0` พร้อมกัน **รันทุกครั้งที่แตะบล็อกโบรชัวร์** (เพิ่มใน v3.8)
+
+```bash
+export PYTHONIOENCODING=utf-8
+python - <<'EOF'
+import io,re,json
+d=json.load(io.open('data/films.json',encoding='utf-8')); S={s['codePrefix']:s for s in d['series']}
+h=io.open('technology.html',encoding='utf-8').read()
+blk=h[h.index('<section class="sec bro"'):h.index('<section class="closing"')]
+def n(x): return str(int(x)) if float(x)==int(x) else str(x)
+bad=c1=c2=c3=c4=0
+for m in re.finditer(r'id="bp-([A-Z]{2})"(.*?)</article>',blk,re.S):
+    code,b=m.group(1),m.group(2); s=S[code]
+    cv=re.search(r'<b>(\d+)%</b>',b[b.index('bro-cv-ir'):]); c1+=1
+    if int(cv.group(1))!=max(x['ir'] for x in s['variants']): print('MISMATCH ปก',code); bad+=1
+    for sw in re.finditer(r'bro-sw-code">([A-Z]{2}\d{2})</p>\s*<div class="bro-sw-glass" style="--vlt:(\d+)"><p class="bro-sw-heat">[^<]*<b>(\d+)%</b></p></div>\s*<p class="bro-sw-line">แสงส่องผ่าน ([\d.]+)% · สะท้อนแสง ([\d.]+)% · ป้องกัน UV ([\d.]+)% · IR ([\d.]+)%',b):
+        cd,vlt,ht,v2,rf,uv,ir=sw.groups(); c2+=1
+        v=[x for x in s['variants'] if x['code']==cd][0]
+        for g,e in [(vlt,v['vlt']),(ht,v['heatReject']),(v2,n(v['vlt'])),(rf,n(v['reflect'])),(uv,n(v['uv'])),(ir,n(v['ir']))]:
+            if str(g)!=str(e): print('MISMATCH swatch',cd,g,e); bad+=1
+    for tm in re.finditer(r'<thead><tr><td></td>((?:<th scope="col">[A-Z]{2}\d{2}</th>)+)</tr></thead>\s*<tbody>(.*?)</tbody>',b,re.S):
+        cols=re.findall(r'>([A-Z]{2}\d{2})<',tm.group(1)); c3+=1
+        if cols!=[x['code'] for x in reversed(s['variants'])]: print('MISMATCH คอลัมน์',code); bad+=1
+        for row,k in [('ลดความร้อนจากแสงแดดโดยรวม','heatReject'),('แสงส่องผ่าน','vlt'),('สะท้อนแสง','reflect'),('ป้องกันรังสี UV','uv'),('ป้องกันรังสี IR','ir')]:
+            rm=re.search(r'<th scope="row">'+re.escape(row)+r'</th>(.*?)</tr>',tm.group(2),re.S)
+            if re.findall(r'>([\d.]+)%<',rm.group(1))!=[n([x for x in s['variants'] if x['code']==cc][0][k]) for cc in cols]:
+                print('MISMATCH แถว',code,row); bad+=1
+    for pm in re.finditer(r'bro-price(.*?)</tbody>',b,re.S):
+        c4+=1
+        for (k,th),(g1,g2,g3) in zip([('pickup2','กระบะ 2 ประตู'),('pickup4','กระบะ 4 ประตู'),('sedan','รถเก๋ง'),('suv','รถ SUV'),('mpv','รถ MPV'),('van','รถตู้')],
+                                     re.findall(r'<th scope="row">([^<]+)</th><td>([\d,]+)\.-</td><td>([\d,]+)\.-</td>',pm.group(1))):
+            e=s['price'][k]
+            if g1!=th or g2!='{:,}'.format(e['front']) or g3!='{:,}'.format(e['full']): print('MISMATCH ราคา',code,k); bad+=1
+print(f'ปก {c1} · swatch {c2} · ตารางสเปก {c3} · ตารางราคา {c4} | mismatches {bad}')
+EOF
+```
+
 เทียบรายชื่อตัวแทนใน `centers.html` กับ `dealers.json` — ต้องได้ `id ตรงกัน: True` และ `ต่างกัน: ไม่มี` **รันทุกครั้งที่แตะรายชื่อตัวแทน**
 
 ```bash
@@ -296,7 +351,7 @@ nav มี **5 ลิงก์ตั้งแต่ v2.6** (หน้าแร�
 ~~บล็อกจุดขาย 4 บล็อก (v2.7)~~ ~~`.axes` สามช่อง~~ **ถูกแทนที่ทั้งหมดใน v3.0** — สาระย้ายไปอยู่ใน `.usp` กับการ์ดซีรีส์ใน `.cats` ซึ่งยังมาจาก `films.json` ทั้งหมด
 **ตัวเลขทุกตัวบนหน้าแรก generate จาก `data/films.json` ตอนสร้าง markup ไม่ได้พิมพ์มือ** — ถ้าจะแก้ ให้ generate ใหม่อย่าแก้ทีละตัว · **คำถามใน `.faq-lite` ดึงจาก `faq.html` ตรงๆ** ทั้งคำถามและย่อหน้าแรกของคำตอบ ถ้าแก้ที่ `/faq` ต้องมาแก้ที่นี่ด้วย
 **ลำดับพื้นหลังคือ void → smoke → ink → paper → smoke → paper → ink** (v3.5 หลังถอด `.figs` ที่เป็น paper ออก) · ไล่แล้วไม่มีสองบล็อกพื้นเดียวกันติดกัน **เปลี่ยนพื้นบล็อกไหนต้องไล่ทั้งลำดับใหม่**
-**ไอคอนใน `.usp-cell` เป็น `--ink` ไม่ใช่แดงแบบหน้าต้นแบบ** — สี่ช่องอยู่ในหน้าจอเดียวกันเสมอ (บทเรียนเดียวกับ `.why-cell` ที่ `/about`)
+**`.usp` ถูกรื้อจากการ์ดไอคอน 4 ใบเป็นแถบข้อความเชิงบรรณาธิการใน v3.9 ตามคำสั่งผู้สั่งงาน** (`.usp-list` / `.usp-item`) — **ไม่มีไอคอน ไม่มีกล่องขาว** เหลือเส้นคาดบน + เลขลำดับ `01`–`04` + ตัวเลขตัวใหญ่ + ป้าย + บรรทัดขยาย · 4 → 2 → 1 คอลัมน์ · พื้นยัง `--smoke` เหมือนเดิม **ลำดับพื้นหลังจึงไม่เปลี่ยน** · **ตัวเลขทั้ง 4 มาจาก `films.json` ไม่ได้พิมพ์มือ** (7 = `meta.warrantyYears` · 96 = `heatReject` สูงสุด · 99 = `uv` ต่ำสุด · 3 = จำนวนซีรีส์ที่ `metalFree` เป็น `true`) มีสคริปต์เทียบให้แล้วข้างบน · **มี `h2` ซ่อนสายตา (`.vh`) คุมบล็อก อย่าถอด** ไม่งั้นลำดับหัวข้อจะกระโดดจาก `h1` ไป `h3` · ~~ไอคอนใน `.usp-cell` เป็น `--ink`~~ หมดความหมายแล้วเพราะไม่มีไอคอนเหลือ **แต่กติกาเดิมยังใช้กับ `.why-cell` ที่ `/about`**
 
 **เส้นแบ่งเนื้อหาระหว่างหน้าแรกกับ `/about` — ห้ามให้ซ้ำกันอีก**
 ~~ตัวเลขระดับองค์กร (`{{YEAR_FOUNDED}}` · 3M+ ตารางฟุต · 7 ปี · `{{SERVICE_CENTERS}}`)~~ **v3.5 ผู้สั่งงานสั่งถอดบล็อกนี้ออกจากหน้าแรก — ตัวเลขระดับองค์กรจึงไม่มีอยู่ที่ไหนในเว็บอีกแล้ว** · `{{YEAR_FOUNDED}}` หายไปจากเว็บทั้งหมด · `{{SERVICE_CENTERS}}` เหลือที่ `centers.html` ที่เดียว (ในป้ายตัวอย่าง) · **ถ้าจะเอากลับ ต้องถามก่อนว่าจะวางที่ไหน อย่าเดาว่ากลับที่เดิม**
@@ -433,7 +488,9 @@ JS เป็น IIFE ตัวเดียวท้ายไฟล์ ไม่�
 - **ชนข้อ 6 จริง แก้ด้วยโค้ดไม่ได้** — signature ของเว็บคือ `#sig` ซึ่งอยู่**หน้าเดียวกันนี้** การ์ด 3D ที่เปิดได้จึงเป็นของว้าวชิ้นที่สองบนหน้าเดียวกัน · ลดความชนไว้แล้วเท่าที่ทำได้ (พื้นสว่าง · สูงเท่าเนื้อหาปกติ · ไม่ sticky · ไม่ผูกกับ scroll · วางท้ายหน้า) · **ถ้าจะปิดปมนี้ต้องเลือกว่าชิ้นไหนเป็น signature**
 - **จงใจไม่ใส่ keyframes ลอยวนไม่รู้จบ** เพราะหน้านี้ใช้ motion ครบ 4 แล้ว · ความรู้สึก "ลอย" มาจากการเอียงตามเคอร์เซอร์ (`rotateY ±8` `rotateX ±5`) ซึ่งเป็นสถานะจากการชี้ กติกาเดียวกับ `.btn:hover` ที่ไม่เคยถูกนับ · **`grep -o 'MOTION [1-4]' technology.html | sort -u | wc -l` ยังต้องได้ `4`** · **การเปลี่ยนหน้าเป็นสถานะ UI ไม่ใช่ motion** กติกาเดียวกับแท็บและ drawer
 - **ชิปเลือกซีรีส์เป็นแท็บแบบเดียวกับ `/gallery` และหน้าแรก** (`role=tablist` + roving tabindex + ลูกศรซ้ายขวา) · **สลับซีรีส์แล้วต้องกลับไปหน้าปกเสมอ** (`card.broReset()`) ไม่งั้นใบใหม่จะโผล่มาแบบเปิดค้างที่หน้ากลาง · Esc กลับหน้าปก · ลูกศรซ้ายขวาเปลี่ยนหน้าได้เมื่อไม่ได้โฟกัสอยู่ที่ชิป
-- **ปุ่มเปลี่ยนหน้าต้อง `disabled` ที่หัวและท้าย** และ `.bro-pager` ต้อง `hidden` ตอนอยู่หน้าปก — ทั้งสองอย่างมาจาก `show()` ที่เป็นทางเดียวที่เปลี่ยนสถานะการ์ด **อย่าสลับ `hidden` ของ `.bro-page` เอง**
+- **แถบเปลี่ยนหน้าเป็นแท็บกระดาษโน้ต `.bro-tabs` ติดขอบขวาของเล่ม (v3.9)** — คลิกใบไหนก็กระโดดไปหน้านั้นได้เลย ไม่ต้องกดทีละหน้า · **ใบแรกคือ "ปก" จึงเป็นปุ่มปิดในตัว ไม่มีปุ่มปิดแยกแล้ว** · ป้ายใบสร้างจากชนิดเนื้อหาของหน้านั้น (ปก · ราคา · ความเข้ม · สเปก) · `show()` ยังเป็นทางเดียวที่เปลี่ยนสถานะการ์ด **อย่าสลับ `hidden` ของ `.bro-page` หรือ `aria-current` ของแท็บเอง**
+- **แท็บย้ายไปเรียงเป็นแถวใต้เล่มที่ ≤900px** เพราะไม่มีที่ให้ยื่นออกข้าง · วัดแล้วทั้ง 7 ความกว้างแท็บไม่เคยหลุดออกนอกจอ
+- **`.bro-card` ต้องมี `flex:none`** — `.bro-stage` เป็น flex container ถ้าไม่ใส่ การ์ดจะถูกบีบแคบกว่าที่ตั้งไว้ (วัดได้ 310px แทน 342px ที่ 375px) แล้วข้อความห่อบรรทัดเพิ่มจนเนื้อหาล้นกรอบ **เจอมาแล้วตอนย้ายความกว้างจาก `.bro-obj` มาที่ `.bro-card` ใน v3.9**
 - **`.vh` (ซ่อนสายตา) ถูกเพิ่มเข้า `technology.html` ใน v3.8** เพราะ `<caption>` ของตารางต้องมีไว้ให้ screen reader แต่ไม่ต้องโชว์ — **นิยามต้องตรงกับ `gallery.html` และ `index.html` เป๊ะ** (เคยพลาดมาแล้ว: ใส่ `class="vh"` ก่อนแล้วลืมนิยาม caption จึงโผล่บนหน้า)
 - **เส้นใต้ของลิงก์ดาวน์โหลดอยู่ที่ `.bro-dl-t` ไม่ใช่ที่ `<a>`** — ถ้าย้ายไปที่ `<a>` เส้นจะลากผ่านบรรทัดขนาดไฟล์ด้วย และลูกยกเลิกเส้นใต้ของแม่ไม่ได้ตามสเปก CSS
 - **`{{TEST_STANDARD}}` อยู่บนการ์ดทุกใบ (5 จุด) และ `{{TECH_TITANIUM}}` อยู่บนใบ SY 2 จุด** (ปก + บรรทัดเทคโนโลยีหน้า 2) — **ตัวแปรทั้งเว็บเป็น 25 ชนิด / 39 จุด ตั้งแต่ v3.8**

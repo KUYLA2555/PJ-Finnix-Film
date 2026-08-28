@@ -231,13 +231,20 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
    บวก nav CTA = เกินโควตาข้อ 4 (บทเรียนเดียวกับ .why-cell ที่ /about แก้ไปใน v2.9)
    ทุกตัวเลขในแถบนี้มาจาก data/films.json ไม่มีตัวไหนแต่งขึ้น */
 .usp{background:var(--smoke);border-bottom:1px solid var(--line)}
-.usp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
-  border-left:1px solid var(--line);border-right:1px solid var(--line)}
-.usp-cell{background:var(--paper);padding:56px 32px;text-align:center}
-.usp-cell .ic{width:40px;height:40px;margin:0 auto;color:var(--ink)}
-.usp-cell b{display:block;margin-top:24px;font-family:'Anuphan',system-ui,sans-serif;
-  font-size:19px;font-weight:600;letter-spacing:-.01em}
-.usp-cell span{display:block;margin-top:8px;font-size:14px;color:var(--mute);line-height:1.6}
+/* v3.9 รื้อจากการ์ดไอคอน 4 ใบเป็นแถบข้อความเชิงบรรณาธิการ — ไม่มีกล่อง ไม่มีไอคอน
+   ตัวเลขทั้ง 4 มาจาก data/films.json (7 = meta.warrantyYears · 96 = heatReject สูงสุด
+   99 = uv ต่ำสุด · 3 = จำนวนซีรีส์ที่ metalFree เป็น true) มีสคริปต์เทียบให้แล้วใน CLAUDE.md */
+.usp-list{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:0 40px;
+  padding:80px 0 88px}
+.usp-item{border-top:1px solid #D2D2CF;padding-top:24px}
+.usp-n{font-style:normal;font-size:11px;letter-spacing:.18em;color:var(--mute)}
+.usp-v{font-family:'Anuphan',system-ui,sans-serif;font-size:clamp(40px,4.4vw,56px);font-weight:700;
+  letter-spacing:-.03em;line-height:1;margin-top:16px}
+.usp-v em{font-style:normal;font-size:.36em;font-weight:600;letter-spacing:0;margin-left:6px;
+  color:var(--mute);vertical-align:baseline}
+.usp-l{font-family:'Anuphan',system-ui,sans-serif;font-size:17px;font-weight:600;
+  letter-spacing:-.01em;margin-top:16px}
+.usp-s{font-size:14px;color:var(--mute);line-height:1.6;margin-top:8px}
 
 /* หมวดสินค้าพื้นมืด + ชิปเลือกหมวด — โครงจากหน้าต้นแบบ
    ชิปเป็นสถานะ UI แบบเดียวกับแท็บใน /about กับ /gallery **ไม่นับเป็น motion ข้อ 5** */
@@ -328,10 +335,11 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 }
 @media(max-width:900px){
   :root{--pad:24px}
-  /* .usp-grid กับ .cat-list เพิ่มเข้ามาใน v3.0 โดยไม่มี override เลย จึงคง 4 และ 5 คอลัมน์
-     ทุกความกว้าง — ที่ 375px เหลือเนื้อหาช่องละ 29px และ 17px ตามลำดับ และถูก
-     overflow-x:hidden ของ body ตัดหายไป ไม่ใช่เลื่อนดูได้ */
-  .usp-grid{grid-template-columns:repeat(2,1fr)}
+  /* .usp-grid กับ .cat-list เคยไม่มี override เลยตั้งแต่ v3.0 จึงคง 4 และ 5 คอลัมน์
+     ทุกความกว้าง — ที่ 375px เหลือเนื้อหาช่องละ 29px และ 17px แล้วถูก overflow-x:hidden
+     ของ body ตัดหายไป ไม่ใช่เลื่อนดูได้ · ใส่ override ให้ทั้งคู่แล้ว
+     (v3.9 .usp-grid ถูกแทนด้วย .usp-list ตอนรื้อบล็อกเป็นแถบข้อความ) */
+  .usp-list{grid-template-columns:repeat(2,1fr);gap:40px 32px;padding:64px 0 72px}
   .cat-list{grid-template-columns:repeat(2,1fr)}
   /* ห้าซีรีส์ในสองคอลัมน์เหลือเศษใบเดียว ให้ใบสุดท้ายกินเต็มแถว
      ไม่งั้นช่องที่ว่างจะโชว์พื้นหลังเส้นคั่นของกริดเป็นแถบทึบ */
@@ -341,7 +349,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .f-grid{grid-template-columns:1fr 1fr;gap:40px}
 }
 @media(max-width:620px){
-  .usp-grid{grid-template-columns:1fr}
+  .usp-list{grid-template-columns:1fr;gap:32px;padding:56px 0 64px}
   .cat-list{grid-template-columns:1fr}
   .hero-in{padding-bottom:88px}
   .f-grid{grid-template-columns:1fr}
@@ -427,14 +435,15 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 
 <!-- ตัวเลขบริษัท -->
 <!-- แถบจุดขาย 4 ช่อง — โครงจากหน้าแรก spms-est.com · ค่าทุกตัวจาก data/films.json -->
-<section class="usp">
-  <div class="wrap" style="padding:0">
-    <div class="usp-grid rv">
-      <div class="usp-cell"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l7.5 3.2v5.1c0 4.5-3.1 8.4-7.5 9.7-4.4-1.3-7.5-5.2-7.5-9.7V6.2L12 3Z"/><path d="M9.2 12.2l1.9 1.9 3.7-3.9"/></svg><b>รับประกัน 7 ปี</b><span>ทุกซีรีส์ได้ระยะเท่ากัน จากบริษัทโดยตรง</span></div>
-      <div class="usp-cell"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg><b>ลดความร้อนสูงสุด 96%</b><span>ค่าสูงสุดของไลน์ อยู่ที่ซีรีส์ TITANIUM</span></div>
-      <div class="usp-cell"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg><b>กันยูวี 99% ขึ้นไป</b><span>ทุกรหัสในทุกซีรีส์ ไม่มีข้อยกเว้น</span></div>
-      <div class="usp-cell"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 12.5a10 10 0 0 1 14 0M8 16a6 6 0 0 1 8 0"/><circle cx="12" cy="19" r="1.2" fill="currentColor" stroke="none"/><path d="M2 9a15 15 0 0 1 20 0"/></svg><b>ไม่มีชั้นโลหะ 3 ซีรีส์</b><span>สัญญาณ 5G · GPS · บัตรทางด่วนทำงานปกติ</span></div>
-    </div>
+<section class="usp" aria-labelledby="h-usp">
+  <div class="wrap">
+    <h2 id="h-usp" class="vh">จุดเด่นของไลน์ผลิตภัณฑ์</h2>
+    <ul class="usp-list rv">
+      <li class="usp-item"><i class="usp-n">01</i><p class="usp-v">7<em>ปี</em></p><h3 class="usp-l">รับประกันทุกซีรีส์</h3><p class="usp-s">ระยะเท่ากันทุกรุ่น ไม่ลดหลั่นตามราคา และรับประกันจากบริษัทโดยตรง</p></li>
+      <li class="usp-item"><i class="usp-n">02</i><p class="usp-v">96<em>%</em></p><h3 class="usp-l">ลดความร้อนสูงสุด</h3><p class="usp-s">ค่าสูงสุดของไลน์ อยู่ที่รหัสเข้มสุดของ <span class="nb">TITANIUM</span></p></li>
+      <li class="usp-item"><i class="usp-n">03</i><p class="usp-v">99<em>%</em></p><h3 class="usp-l">กันยูวีอย่างต่ำ</h3><p class="usp-s">ทุกรหัสในทุกซีรีส์ผ่านเกณฑ์นี้ ไม่มีข้อยกเว้น</p></li>
+      <li class="usp-item"><i class="usp-n">04</i><p class="usp-v">3<em>ซีรีส์</em></p><h3 class="usp-l">ไม่มีชั้นโลหะ</h3><p class="usp-s">สัญญาณ 5G · GPS · บัตรทางด่วน ทำงานตามปกติ</p></li>
+    </ul>
   </div>
 </section>
 
