@@ -47,52 +47,57 @@
      12. responsive
      13. reduced motion
 
-   ของร่วม — แก้ที่ไฟล์นี้ต้องแก้ครบทั้ง 6 ไฟล์พร้อมกันเสมอ ไม่งั้นสลับหน้าแล้วเลย์เอาต์ขยับ
+   ของร่วม — แก้ที่ไฟล์นี้ต้องแก้ครบทั้ง 8 ไฟล์พร้อมกันเสมอ ไม่งั้นสลับหน้าแล้วเลย์เอาต์ขยับ
      :root tokens · nav · drawer · footer · .btn · .rv · .var · SEO meta · บล็อก noscript
    จุดตัด responsive ของทั้งเว็บมีสามจุด: 1080 (พับเมนู) · 900 · 620 — อย่าเพิ่มจุดใหม่
    ทุกระยะต้องหารด้วย 8 ลงตัว · สีข้อความต้องผ่าน WCAG AA 4.5:1 วัดก่อนเปลี่ยนทุกครั้ง
    ============================================================================ */
 /* @shared:TOKENS */
 :root{
-  --void:#050505;
-  --ink:#0C0C0C;
+  /* ระบบดีไซน์ Car Dealership 128 — วัดจาก car-dealership-128.webflow.io เอง (v5.6)
+     **ค่าที่วัดจากเว็บจริงต่างจากชุดโทเคนที่ผู้สั่งงานส่งมาหลายจุด ยึดของจริงจากเว็บ**
+     มุมโค้ง 0 ทั้งเว็บ · ปุ่ม padding 18px 24px น้ำหนัก 400 · ระยะ section 130px · คอนเทนเนอร์ 1200px */
+  --void:#000000;
+  --ink:#0E0E0E;
   --paper:#FFFFFF;
   --smoke:#F4F4F3;
-  --line:#E3E3E1;
-  --line-dark:rgba(255,255,255,.10);
-  --mute:#70706A;
-  --mute-dark:rgba(255,255,255,.52);
-  --red:#CC1B1B;
-  --red-hot:#E82323;
+  --line:#E4E4E4;
+  --line-strong:rgba(14,14,14,.5);   /* เส้นผมของกล่องบนพื้นสว่าง ตามที่วัดได้ */
+  --line-dark:rgba(255,255,255,.20);
+  --mute:#535353;                    /* พื้นสว่าง 7.69:1 */
+  --mute-dark:#AFAFAF;               /* พื้นมืด 8.80:1 บน ink · 9.57:1 บนดำ */
+  --red:#9A0F39;                     /* สีเน้นเดียวของระบบ · ขาวบนสีนี้ = 8.40:1 */
+  --red-hot:#9A0F39;
 
   --u:8px;
-  --max:1440px;
+  --max:1200px;
   --pad:40px;
+  --r:0px;                           /* **มุมฉากทั้งเว็บ** วัดจากปุ่ม การ์ด และกล่องทุกชิ้นของเว็บต้นทาง */
 
   --e:cubic-bezier(.16,1,.3,1);
   --e-in:cubic-bezier(.7,0,.3,1);
 
   /* ให้ block-size ไล่ค่าระหว่าง 0 กับ auto ได้ ใช้กับ accordion ที่ /faq และ FAQ ย่อหน้าแรก
-     ใส่ครบทั้ง 6 ไฟล์เพราะ :root ต้องแฮชตรงกัน หน้าที่ไม่มี <details> ก็ไม่มีผลอะไร
+     ใส่ครบทั้ง 8 ไฟล์เพราะ :root ต้องแฮชตรงกัน หน้าที่ไม่มี <details> ก็ไม่มีผลอะไร
      เบราว์เซอร์ที่ยังไม่รองรับจะข้ามบรรทัดนี้ไปเฉยๆ accordion เปิดทันทีแบบเดิม ไม่พัง */
   interpolate-size:allow-keywords;
 }
 /* @end:TOKENS */
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-/* nav ลอยสูง 76px — ถ้าไม่กันระยะไว้ หัวข้อปลายทางของ anchor จะไปมุดใต้แถบ nav
+/* nav ลอยสูง 87px (v5.6) — ถ้าไม่กันระยะไว้ หัวข้อปลายทางของ anchor จะไปมุดใต้แถบ nav
    รวมถึง #main ที่ skip link ชี้ไป ซึ่งเป็นเรื่อง accessibility ตรงๆ (ข้อ 9) */
-[id]{scroll-margin-top:96px}
+[id]{scroll-margin-top:112px}
 body{
   background:var(--paper);color:var(--ink);
   font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
-  font-size:17px;line-height:1.75;font-weight:400;
+  font-size:16px;line-height:1.5;font-weight:400;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
-h1,h2,h3,h4{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
+h1,h2,h3,h4{font-family:'Anuphan',system-ui,sans-serif;font-weight:700;line-height:1.2;letter-spacing:0}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
-:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:var(--r)}
 .on-dark :focus-visible{outline-color:#fff}
 
 /* เบราว์เซอร์ตัดคำไทยด้วยพจนานุกรมที่ไม่มีคำทับศัพท์ — ครอบคำที่ตัดผิดด้วย .nb */
@@ -100,10 +105,10 @@ img{display:block;max-width:100%}
 .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
-.eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.eyebrow{font-size:12px;font-weight:400;letter-spacing:1px;line-height:1.2;text-transform:uppercase;color:var(--mute)}
 .eyebrow.on-dark{color:var(--mute-dark)}
-.eyebrow .dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;margin-right:10px;vertical-align:2px}
-.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:0 0 12px 0;z-index:200}
+.eyebrow .dot{display:inline-block;width:5px;height:5px;background:currentColor;border-radius:50%;margin-right:10px;vertical-align:2px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:var(--r);z-index:200}
 .skip:focus{left:0}
 
 /* ---------------- MOTION 2 · scroll reveal ---------------- */
@@ -112,37 +117,44 @@ img{display:block;max-width:100%}
 
 /* @shared:NAV_CSS */
 /* ---------------- nav ---------------- */
-.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .5s var(--e),border-color .5s var(--e),backdrop-filter .5s}
-.nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:transparent;transition:background .5s var(--e)}
-.nav.solid{background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(20px)}
+/* Car Dealership 128 — แถบโปร่งใสลอยทับ hero มืด ตัวอักษรขาว ขอบล่างเป็นเส้นผมขาว 1px
+   เว็บต้นทางเป็น position:absolute (เลื่อนแล้วหายไปกับ hero) **เราคง fixed ไว้**
+   เพราะทุกหน้าของเราต้องมีทางกลับตลอดเวลา และ 5 หน้าไม่มี hero เต็มจอให้ absolute เกาะ
+   สถานะ .solid ตอนเลื่อนจึงยังอยู่ แต่เปลี่ยนเป็นพื้นขาวทึบ ไม่ใช่ฝ้าเบลอ ตามภาษาแบนของระบบนี้ */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .4s var(--e),border-color .4s var(--e)}
+.nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:rgba(255,255,255,.32);transition:background .4s var(--e)}
+.nav.solid{background:var(--paper)}
 .nav.solid::after{background:var(--line)}
-.nav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:76px;display:flex;align-items:center;gap:48px}
+.nav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:87px;display:flex;align-items:center;gap:40px}
 /* โลโก้ — กำหนด aspect-ratio ไว้ล่วงหน้าเพื่อไม่ให้เกิด layout shift ตามข้อ 9 */
 .brand{flex:none;display:block;line-height:0}
 .brand img{display:block;width:auto;height:24px;aspect-ratio:817/96}
-/* พื้นมืดใช้โลโก้ขาวล้วน — ตัวอักษร FINNIX เป็นสีดำจึงจมหายบนพื้น --void
-   และการตัดแดงออกช่วยให้ hero ไม่แดงเกินโควตาข้อ 4 */
-/* ไม่ใส่ transition บน filter โดยตั้งใจ — เบราว์เซอร์ interpolate filter list ข้ามสถานะไม่ได้
+/* พื้นมืดใช้โลโก้ขาวล้วน — ตัวอักษร FINNIX เป็นสีดำจึงจมหายบนพื้นมืด
+   ไม่ใส่ transition บน filter โดยตั้งใจ — เบราว์เซอร์ interpolate filter list ข้ามสถานะไม่ได้
    ทำให้ค่าค้างที่ขาวแล้วโลโก้หายไปบนพื้นขาว การสลับทันทีมองไม่ออกอยู่แล้วเพราะ nav เปลี่ยนพื้นหลังพร้อมกัน */
 .nav .brand img{filter:brightness(0) invert(1)}
 .nav.solid .brand img{filter:none}
-/* ลิงก์สูง 44px ตามเกณฑ์ขนาดพื้นที่กดในข้อ 9 */
-.nav-links{display:flex;gap:30px;margin-left:auto;font-size:15px;font-weight:400}
-.nav-links a{color:rgba(255,255,255,.78);position:relative;display:flex;align-items:center;height:44px;transition:color .4s var(--e)}
+/* nav-link = 16/400 ไม่มี tracking · ลิงก์สูง 44px ตามเกณฑ์ขนาดพื้นที่กดในข้อ 9 */
+.nav-links{display:flex;gap:30px;margin-left:auto;font-size:16px;font-weight:400;line-height:1.2}
+.nav-links a{color:var(--paper);position:relative;display:flex;align-items:center;height:44px;transition:color .3s var(--e)}
 .nav.solid .nav-links a{color:var(--mute)}
-.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:11px;height:1px;background:var(--red);transition:right .45s var(--e)}
-.nav-links a:hover{color:#fff}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:11px;height:1px;background:currentColor;transition:right .4s var(--e)}
+.nav-links a:hover{color:var(--paper)}
 .nav.solid .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after{right:0}
-/* ลิงก์ของหน้าปัจจุบัน — เส้นใต้ใช้ currentColor จางๆ **ไม่ใช่แดง**
-   หน้าจอบนสุดมี nav CTA แดง + จุด eyebrow แดงอยู่แล้ว ถ้าเส้นนี้เป็นแดงด้วยจะเป็นจุดที่ 3 ทุกหน้า
-   เกินโควตาข้อ 4 · technology.html ทำถูกมาตั้งแต่ต้น อีก 5 หน้าคัดลอกไปแล้วทำเป็นแดง
-   v3.3 ยกเวอร์ชันของ technology ขึ้นเป็นฉบับจริงแล้ว */
-.nav-links a[aria-current]{color:#fff}
+/* ลิงก์ของหน้าปัจจุบัน — เส้นใต้ใช้ currentColor **ไม่ใช่สีเน้น**
+   สีเน้นของระบบนี้สงวนไว้ให้ปุ่มการกระทำเดียวต่อหน้าจอเท่านั้น */
+.nav-links a[aria-current]{color:var(--paper)}
 .nav.solid .nav-links a[aria-current]{color:var(--ink)}
-.nav-links a[aria-current]::after{right:0;background:currentColor;opacity:.28}
-.nav-cta{flex:none;display:flex;align-items:center;background:var(--red);color:#fff;font-size:14px;font-weight:500;height:44px;padding:0 22px;border-radius:12px;transition:background .3s var(--e),transform .3s var(--e)}
-.nav-cta:hover{background:var(--red-hot);transform:translateY(-1px)}
+.nav-links a[aria-current]::after{right:0;background:currentColor}
+/* CTA บนแถบ — เว็บต้นทางใช้ปุ่มขอบขาวโปร่ง ไม่ใช่ปุ่มทึบสีเน้น
+   **สีเน้นอยู่ที่ปุ่มปิดท้ายของแต่ละหน้าที่เดียว** แถบบนจึงไม่กินโควตาสีเน้น */
+.nav-cta{flex:none;display:flex;align-items:center;background:transparent;color:var(--paper);
+  font-size:16px;font-weight:400;line-height:1.2;min-height:44px;padding:10px 24px;
+  border:1px solid rgba(255,255,255,.5);border-radius:var(--r);transition:background .3s var(--e),color .3s var(--e),border-color .3s var(--e)}
+.nav-cta:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.nav.solid .nav-cta{color:var(--ink);border-color:var(--ink)}
+.nav.solid .nav-cta:hover{background:var(--ink);color:var(--paper)}
 .burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
 .burger span{position:absolute;left:11px;right:11px;height:1.5px;background:#fff;transition:.4s var(--e)}
 .burger span:nth-child(1){top:17px}.burger span:nth-child(2){bottom:17px}
@@ -152,7 +164,7 @@ img{display:block;max-width:100%}
 /* ---------------- เมนูมือถือ ---------------- */
 /* สถานะ UI ไม่ใช่ motion เพื่อการตกแต่ง จึงไม่นับรวมในงบ 4 อย่างของข้อ 5 */
 .drawer{display:none;position:fixed;inset:0;z-index:99;background:var(--void);
-  flex-direction:column;justify-content:center;padding:76px var(--pad) 40px;
+  flex-direction:column;justify-content:center;padding:87px var(--pad) 40px;
   opacity:0;visibility:hidden;transition:opacity .4s var(--e),visibility .4s var(--e)}
 body.menu-open .drawer{opacity:1;visibility:visible}
 body.menu-open{overflow:hidden}
@@ -162,11 +174,13 @@ body.menu-open .nav .brand img{filter:brightness(0) invert(1)}
 body.menu-open .burger span{background:#fff;top:50%;bottom:auto;margin-top:-1px}
 body.menu-open .burger span:nth-child(1){transform:rotate(45deg)}
 body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
+/* น้ำหนักคู่เดียว 400/700 ตามระบบ · ไม่มี tracking ที่ขนาดใหญ่ */
 .drawer a{display:flex;align-items:center;min-height:56px;font-family:'Anuphan',sans-serif;
-  font-size:26px;font-weight:600;letter-spacing:-.02em;color:#fff;
+  font-size:24px;font-weight:700;line-height:1.2;letter-spacing:0;color:var(--paper);
   border-bottom:1px solid var(--line-dark)}
-.drawer .drawer-cta{margin-top:40px;justify-content:center;background:#fff;color:var(--ink);
-  border:0;border-radius:14px;font-size:16px;min-height:56px}
+/* ปุ่มในลิ้นชักเป็นทรงเดียวกับ .btn ของระบบ — มุมฉาก ขอบ 1px padding 18px 24px */
+.drawer .drawer-cta{margin-top:40px;justify-content:center;background:var(--paper);color:var(--ink);
+  border:1px solid var(--paper);border-radius:var(--r);font-size:16px;font-weight:400;min-height:56px}
 /* @end:DRAWER_CSS */
 
 /* ---------------- hero ---------------- */
@@ -199,7 +213,7 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .loaded .hero p.sub{opacity:1;transform:none}
 
 /* ---------------- generic section ---------------- */
-.sec{padding:132px 0}
+.sec{padding:130px 0}
 .sec.smoke{background:var(--smoke)}
 .sec-head{max-width:820px;margin-bottom:72px}
 .sec-head h2{font-size:clamp(30px,4.4vw,56px);margin-top:24px}
@@ -209,23 +223,23 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 /* ---------------- 2 · spectrum ---------------- */
 .spectrum{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:56px 0 48px}
 .spec-scale{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:16px}
-.spec-bar{display:flex;height:88px;border-radius:12px;overflow:hidden;background:var(--smoke)}
-.spec-seg{position:relative;display:flex;align-items:flex-end;padding:0 0 16px 16px;color:#fff;font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;overflow:hidden}
+.spec-bar{display:flex;height:88px;border-radius:var(--r);overflow:hidden;background:var(--smoke)}
+.spec-seg{position:relative;display:flex;align-items:flex-end;padding:0 0 16px 16px;color:#fff;font-size:12px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;overflow:hidden}
 .seg-uv{flex:0 0 3.64%;background:linear-gradient(180deg,#7A5BD6,#5B3FB0)}
 .seg-vis{flex:0 0 18.18%;background:linear-gradient(90deg,#6E5BD2 0%,#3F7FD0 18%,#3FA96B 42%,#D8C03A 66%,#D2703A 86%,#8E3A3A 100%)}
 .seg-ir{flex:0 0 78.18%;background:linear-gradient(90deg,#2A2724 0%,#161513 55%,#0C0C0B 100%)}
-.spec-seg b{font-weight:500}
+.spec-seg b{font-weight:400}
 .seg-uv b{position:absolute;left:50%;bottom:16px;transform:translateX(-50%) rotate(-90deg);transform-origin:center;font-size:10px}
-.spec-key{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:32px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.spec-key{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:32px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .key-cell{background:var(--paper);padding:32px 24px}
-.key-cell .sw{width:28px;height:4px;border-radius:2px;margin-bottom:16px}
+.key-cell .sw{width:28px;height:4px;border-radius:var(--r);margin-bottom:16px}
 .key-cell h3{font-size:19px;letter-spacing:-.01em}
 .key-cell .nm{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-top:8px}
-.key-cell .val{font-family:'Anuphan',sans-serif;font-size:clamp(28px,3.2vw,40px);font-weight:600;letter-spacing:-.03em;margin-top:24px;line-height:1}
+.key-cell .val{font-family:'Anuphan',sans-serif;font-size:clamp(28px,3.2vw,40px);font-weight:700;letter-spacing:-.03em;margin-top:24px;line-height:1}
 .key-cell .val small{font-size:13px;font-weight:400;color:var(--mute);letter-spacing:0;display:block;margin-top:8px;font-family:'IBM Plex Sans Thai',sans-serif}
 .key-cell p{font-size:15px;color:var(--mute);line-height:1.65;margin-top:16px}
 /* ป้ายค่าที่ยังไม่ได้รับจากลูกค้า — ใช้สีกลาง ไม่ใช้แดง เพราะแดงสงวนไว้ตามข้อ 4 ของบรีฟ */
-.var{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--smoke);border:1px dashed #B8B8B4;border-radius:6px;padding:1px 8px;font-size:.72em;letter-spacing:0;color:#5C5C57;white-space:nowrap;font-weight:500}
+.var{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--smoke);border:1px dashed #B8B8B4;border-radius:var(--r);padding:2px 8px;font-size:.78em;letter-spacing:0;color:#535353;white-space:nowrap;font-weight:400}
 .sig .var,.closing .var{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.24);color:rgba(255,255,255,.82)}
 
 /* ---------------- 3 · SIGNATURE · layer stack ---------------- */
@@ -240,28 +254,29 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .sig-stage svg{width:100%;height:100%;overflow:visible}
 .layer{transition:transform .1s linear}
 .layer rect{stroke:rgba(255,255,255,.30);stroke-width:1}
-.layer .lbl{font-family:'IBM Plex Sans Thai',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;fill:rgba(255,255,255,.44);opacity:0;transition:opacity .5s var(--e)}
+.layer .lbl{font-family:'IBM Plex Sans Thai',sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;fill:rgba(255,255,255,.44);opacity:0;transition:opacity .5s var(--e)}
 .sun{opacity:0;transition:opacity .6s var(--e)}
 .sig-legend{list-style:none;margin-top:32px;display:grid;gap:2px}
 .sig-legend li{display:grid;grid-template-columns:16px 1fr;gap:16px;align-items:start;padding:8px 0;border-top:1px solid var(--line-dark);opacity:.34;transition:opacity .5s var(--e)}
 .sig-legend li.on{opacity:1}
-.sig-legend .sw{width:16px;height:16px;border-radius:4px;margin-top:5px;border:1px solid rgba(255,255,255,.24)}
-.sig-legend b{font-weight:600;font-size:15px}
+.sig-legend .sw{width:16px;height:16px;border-radius:var(--r);margin-top:5px;border:1px solid rgba(255,255,255,.24)}
+.sig-legend b{font-weight:700;font-size:15px}
 .sig-legend span.d{color:var(--mute-dark);font-size:14px;line-height:1.55;display:block}
 .sig-foot{margin-top:24px;font-size:15px;color:var(--mute-dark)}
 
 /* ---------------- 4 · slider proof ---------------- */
-.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .proof-pane{background:var(--paper);padding:40px}
-.win{position:relative;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:linear-gradient(170deg,#8FA6BC 0%,#B9C7D4 38%,#E2E7EB 100%)}
+.win{position:relative;aspect-ratio:4/3;border-radius:var(--r);overflow:hidden;background:linear-gradient(170deg,#8FA6BC 0%,#B9C7D4 38%,#E2E7EB 100%)}
 .win::before{content:'';position:absolute;inset:0;
   background:
     radial-gradient(42% 52% at 74% 22%, rgba(255,236,196,.92), rgba(255,214,150,0) 62%),
     linear-gradient(200deg,rgba(255,255,255,.42) 0%,transparent 44%)}
 .win-tint{position:absolute;inset:0;background:#0B1016;opacity:calc(1 - (var(--vlt,70) / 100));transition:opacity .18s linear}
-.win-tag{position:absolute;left:16px;bottom:14px;z-index:2;color:#fff;font-size:11px;letter-spacing:.18em;text-transform:uppercase;text-shadow:0 1px 10px rgba(0,0,0,.75)}
+.win-tag{position:absolute;left:16px;bottom:14px;z-index:2;color:#fff;font-size:12px;letter-spacing:.12em;text-transform:uppercase;text-shadow:0 1px 10px rgba(0,0,0,.75)}
 .slider-row{margin-top:32px}
-.slider-row label{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-bottom:16px}
+.slider-ticks{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums}
+.slider-row label{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:16px}
 input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;cursor:ew-resize;display:block}
 input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--line)}
 input[type=range]::-moz-range-track{height:2px;background:var(--line)}
@@ -269,15 +284,15 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;heigh
 input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:var(--ink);border:0}
 input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 .readout{display:grid;gap:24px}
-.ro{border:1px solid var(--line);border-radius:16px;padding:32px 24px}
-.ro .k{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
-.ro .v{font-family:'Anuphan',sans-serif;font-size:clamp(34px,4.6vw,54px);font-weight:600;letter-spacing:-.03em;line-height:1;margin-top:16px}
+.ro{border:1px solid var(--line);border-radius:var(--r);padding:32px 24px}
+.ro .k{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.ro .v{font-family:'Anuphan',sans-serif;font-size:clamp(34px,4.6vw,54px);font-weight:700;letter-spacing:-.03em;line-height:1;margin-top:16px}
 .ro .cap{font-size:14px;color:var(--mute);line-height:1.6;margin-top:16px}
-.meter{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:24px}
-.meter i{display:block;height:100%;border-radius:4px;background:var(--ink);transition:width .18s linear}
+.meter{height:8px;border-radius:var(--r);background:var(--line);overflow:hidden;margin-top:24px}
+.meter i{display:block;height:100%;border-radius:var(--r);background:var(--ink);transition:width .18s linear}
 .meter.fixed i{background:#3F3F3B}
 .ro.pin{background:var(--smoke);border-style:solid}
-.verdict{margin-top:32px;padding:32px;border-left:2px solid var(--ink);background:var(--paper);border-radius:0 12px 12px 0}
+.verdict{margin-top:32px;padding:32px;border-left:2px solid var(--ink);background:var(--paper);border-radius:var(--r)}
 .verdict p{font-size:17px;line-height:1.7;max-width:64ch}
 
 /* ---------------- 5 · glossary ---------------- */
@@ -287,7 +302,7 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 .gl h3{font-size:24px;margin:16px 0;letter-spacing:-.015em}
 .gl p{font-size:16px;color:var(--mute);line-height:1.7;max-width:48ch}
 .gl .mean{margin-top:16px;font-size:14px;color:var(--ink);border-top:1px solid var(--line);padding-top:16px}
-.gl .mean b{font-weight:600}
+.gl .mean b{font-weight:700}
 
 /* ---------------- 6 · โบรชัวร์ต้นฉบับ ----------------
    บล็อกนี้ทำตามภาพอ้างอิงที่ผู้สั่งงานส่งมา (3D opening card / semi-circular book)
@@ -308,18 +323,22 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 
 .bro-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:56px}
 .bro-chip{appearance:none;background:var(--paper);border:1px solid var(--line);color:var(--mute);
-  border-radius:999px;padding:14px 24px;font-family:'IBM Plex Sans Thai',sans-serif;font-size:14px;
-  font-weight:500;letter-spacing:.06em;cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+  border-radius:var(--r);padding:14px 24px;font-family:'IBM Plex Sans Thai',sans-serif;font-size:14px;
+  font-weight:400;letter-spacing:.06em;cursor:pointer;transition:color .2s,border-color .2s,background .2s}
 .bro-chip:hover{color:var(--ink);border-color:#B8B8B4}
 .bro-chip[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
 
+/* สีเล่มเข้มกว่าขาวตามคำสั่งผู้สั่งงาน (v5.7) — วัดแล้ว --ink 15.18:1 · --mute 6.05:1 ผ่าน AA ทั้งคู่
+   **ประกาศที่ #brochure ไม่ใช่ :root** เพราะ :root ถูกล็อกให้แฮชตรงกันทั้ง 8 ไฟล์
+   **เส้นตารางต้องมีโทเคนของตัวเอง** — --line ของระบบคือ #E4E4E4 ซึ่งเท่ากับสีพื้นเล่มพอดี ใช้แล้วเส้นหายทั้งตาราง */
+#brochure{--bro-paper:#E4E4E4;--bro-line:rgba(14,14,14,.24)}
 .bro-stage{display:flex;justify-content:center;perspective:1600px}
 .bro-card[hidden]{display:none}
 .bro-card{position:relative;flex:none;width:min(440px,88vw);display:flex;flex-direction:column;align-items:center}
 
 /* รูปทรง = หน้ากระดาษแนวตั้งตามโบรชัวร์จริง (เดิมเป็นขอบขวาโค้งครึ่งวงกลมตาม prompt ต้นแบบ
    v3.8 เปลี่ยนเป็นสี่เหลี่ยมสัดส่วน A4 เพราะผู้สั่งงานสั่งให้เหมือนโบรชัวร์ต้นฉบับ) */
-.bro-obj{position:relative;width:100%;height:680px;transform-style:preserve-3d;
+.bro-obj{position:relative;width:100%;height:744px;transform-style:preserve-3d;
   transform:rotateX(var(--rx,2deg)) rotateY(var(--ry,-7deg));transition:transform .5s var(--e)}
 .bro-obj::after{content:'';position:absolute;left:6%;right:6%;bottom:-28px;height:32px;
   background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(12,12,12,.22),transparent 72%);
@@ -327,9 +346,9 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 
 /* ปกกับหน้าในเป็นแผ่นกระดาษชนิดเดียวกัน พลิกรอบแกนซ้ายเหมือนกันทุกแผ่น (v4.0)
    เดิมมีแต่ปกที่พลิก หน้าในสลับด้วย hidden แบบตัดภาพทันที */
-.bro-cover,.bro-page{position:absolute;inset:0;border-radius:2px 6px 6px 2px;
-  box-shadow:0 18px 44px rgba(12,12,12,.16),0 2px 6px rgba(12,12,12,.08);
-  backface-visibility:hidden;background:var(--paper);
+.bro-cover,.bro-page{position:absolute;inset:0;border-radius:var(--r);
+  box-shadow:none;
+  backface-visibility:hidden;background:var(--bro-paper);
   transform-origin:left center;transform:translateZ(var(--pz,0px)) rotateY(0);
   transition:transform .8s var(--e)}
 .bro-cover.flipped,.bro-page.flipped{transform:translateZ(var(--pz,0px)) rotateY(-158deg)}
@@ -340,46 +359,38 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 /* .bro-inner ไม่มีหน้าตาของตัวเองแล้ว เป็นแค่กล่อง 3D ให้แผ่นกระดาษซ้อนกันข้างใน */
 .bro-inner{position:absolute;inset:0;transform:translateZ(-2px);transform-style:preserve-3d}
 
-/* ---- ปก = หน้า 1 ของโบรชัวร์จริง : พื้นมืด ชื่อซีรีส์โครเมียม ตราประกัน ---- */
-.bro-cover{background:var(--void);color:#fff;z-index:99;
-  display:flex;flex-direction:column;padding:32px 32px 28px;overflow:hidden}
-/* แสงกวาดบนปก — gradient ล้วน ไม่ใช่ภาพ (MODE B) */
-.bro-cover::before{content:'';position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 90% 55% at 78% 22%,rgba(255,255,255,.13),transparent 62%),
-             radial-gradient(ellipse 70% 40% at 20% 92%,rgba(255,255,255,.07),transparent 66%)}
-.bro-cover::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+/* ---- ปก = รูปสแกนหน้า 1 ของโบรชัวร์จริง (v4.6) ----
+   ผู้สั่งงานสั่งเอาไฟล์ปกจริงมาใส่ — **ยกข้อ "ห้าม render หน้า PDF บนหน้าเว็บ" ที่ตั้งไว้ตอน v3.6**
+   เส้นแบ่งเดิมยังอยู่: รูปพวกนี้เป็นเอกสารของแบรนด์เอง ไม่ใช่ภาพ stock · อีก 6 หน้ายังห้ามมีภาพถ่าย
+   **v4.9 เปลี่ยนเป็น background-size:cover ตามคำสั่ง "ปรับภาพปกให้เต็มกับตัวโบรชัวร์"**
+   เดิมเป็น contain ซึ่งเห็นปกครบแต่มีแถบพื้นเหลือบน-ล่าง ไม่เต็มเล่ม
+   **สิ่งที่แลกไป — cover ตัดขอบซ้ายขวา** เพราะสัดส่วนรูป .633 กว้างกว่ากรอบทุกเบรกพอยต์
+   ตัดข้างละ **3.3% ที่ >=1081 (440x744)** · **6.7% ที่ <=900 (408x744)** · **9.3% ที่ <=620 (400x776)**
+   (v5.7 เล่มสูงขึ้นเป็น 744 ทุกความกว้างยกเว้น <=620 จอใหญ่จึงตัดเพิ่มจาก 1.2% เป็น 3.3%)
+   **จอใหญ่แทบไม่เสียอะไร แต่จอแคบกินเข้าไปใกล้โลโก้ FINNIX ที่อยู่ราว 12% จากขอบซ้าย**
+   ถ้าเห็นว่าโลโก้โดนตัดที่มือถือ ทางแก้คือลดความสูง .bro-obj ที่เบรกพอยต์นั้น
+   **แต่ต้องวัดก่อนว่าเนื้อหาหน้าในไม่ล้น** เพราะ .bro-inner เป็น overflow:hidden ตัดทิ้งเงียบ */
+.bro-cover{background:var(--void);color:#fff;z-index:99;overflow:hidden}
+/* สันซ้ายของเล่ม เก็บไว้ให้ยังอ่านออกว่าเป็นกระดาษ ไม่ใช่รูปลอย
+   ~~.bro-cover::before~~ แสงกวาดถูกถอดใน v4.6 — ซ้อนบนรูปถ่ายแล้วภาพขุ่น ไม่เหมือนแสงบนกระดาษ */
+.bro-cover::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;z-index:2;
   background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,.05))}
-.bro-cover>*{position:relative}
-
-.bro-cv-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
-.bro-wm{display:inline-flex;align-items:center;gap:6px;font-family:'Anuphan',sans-serif;
-  font-size:15px;font-weight:600;letter-spacing:.12em}
-.bro-arw{width:18px;height:12px;fill:var(--red-hot);flex:none}
-.bro-shield{position:relative;width:48px;height:56px;flex:none;display:flex;
-  flex-direction:column;align-items:center;justify-content:center;line-height:1}
-.bro-shield svg{position:absolute;inset:0;width:100%;height:100%;
-  fill:rgba(255,255,255,.10);stroke:rgba(255,255,255,.42);stroke-width:3}
-.bro-shield b{position:relative;font-family:'Anuphan',sans-serif;font-size:22px;font-weight:700}
-.bro-shield span{position:relative;font-size:10px;letter-spacing:.08em;margin-top:2px;color:rgba(255,255,255,.72)}
-
-.bro-cv-name{font-family:'Anuphan',sans-serif;font-size:clamp(30px,7.4vw,42px);font-weight:700;
-  letter-spacing:.01em;line-height:1.05;margin-top:32px;color:#E9E9E7}
-@supports (background-clip:text) or (-webkit-background-clip:text){
-  .bro-cv-name{background:linear-gradient(176deg,#FFF 4%,#C9C9C6 26%,#8C8C88 44%,#F4F4F2 54%,#96968F 74%,#EDEDEA 96%);
-    -webkit-background-clip:text;background-clip:text;color:transparent}
-}
-.bro-cv-sub{font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.72);margin-top:8px}
-.bro-cv-slogan{font-family:'Anuphan',sans-serif;font-size:20px;font-weight:600;line-height:1.5;margin-top:32px}
-.bro-cv-slogan span{color:rgba(255,255,255,.82)}
-.bro-cv-th{font-size:13px;color:var(--mute-dark);margin-top:16px}
-.bro-cv-tech{font-size:12px;color:var(--mute-dark);margin-top:8px}
-.bro-cv-ir{margin-top:auto;display:flex;flex-direction:column;align-items:flex-end;
-  border-top:1px solid var(--line-dark);padding-top:16px}
-.bro-cv-ir span{font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.72)}
-.bro-cv-ir b{font-family:'Anuphan',sans-serif;font-size:36px;font-weight:700;line-height:1.1}
-.bro-open{margin-top:24px;align-self:flex-start;appearance:none;cursor:pointer;
-  background:none;border:1px solid rgba(255,255,255,.42);color:#fff;border-radius:999px;
-  padding:12px 24px;font-family:'IBM Plex Sans Thai',sans-serif;font-size:13px;font-weight:500;
+.bro-cv-img{position:absolute;inset:0;background:center/cover no-repeat}
+/* แถบล่างลอยทับรูป — ที่อยู่ของค่า IR ที่ generate จาก films.json กับปุ่มเปิด
+   ไล่เฉดจากใสไปทึบ ไม่ใช่แถบทึบ เพื่อไม่ให้ตัดปกออกเป็นสองส่วน */
+/* v4.9 ลดม่านดำลงมาก ให้เห็นสโลแกนบนปกจริง — เดิมสูง 72px และทึบถึง .94 ซึ่งกินข้อความท้ายปกหมด
+   ตอนนี้ม่านบางและเตี้ยลง แล้วย้ายหน้าที่เรื่อง contrast ไปไว้ที่ตัวชิปเองแทน
+   **ค่า IR กับปุ่มต้องมีพื้นของตัวเอง** เพราะลอยอยู่บนภาพถ่ายที่ความสว่างเดาไม่ได้ */
+.bro-cv-foot{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;
+  align-items:flex-end;justify-content:space-between;gap:16px;padding:32px 16px 16px;
+  background:linear-gradient(180deg,transparent,rgba(5,5,5,.30) 55%,rgba(5,5,5,.60))}
+.bro-cv-ir{display:flex;flex-direction:column;line-height:1.15;
+  background:rgba(5,5,5,.78);border-radius:var(--r);padding:8px 12px;backdrop-filter:blur(3px)}
+.bro-cv-ir span{font-size:12px;letter-spacing:.12em;color:rgba(255,255,255,.82)}
+.bro-cv-ir b{font-family:'Anuphan',sans-serif;font-size:28px;font-weight:700;line-height:1.1}
+.bro-open{flex:none;appearance:none;cursor:pointer;
+  background:rgba(5,5,5,.78);backdrop-filter:blur(3px);border:1px solid rgba(255,255,255,.52);color:#fff;border-radius:var(--r);
+  padding:12px 24px;font-family:'IBM Plex Sans Thai',sans-serif;font-size:13px;font-weight:400;
   transition:background .2s,color .2s,border-color .2s}
 .bro-open:hover{background:#fff;color:var(--ink);border-color:#fff}
 
@@ -387,44 +398,73 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 .bro-card:not(.open) .bro-inner{pointer-events:none}
 .bro-page{padding:32px 28px;overflow:hidden}
 
-.bro-tag{display:inline-block;background:var(--ink);color:#fff;font-size:11px;
-  letter-spacing:.16em;padding:6px 12px;border-radius:2px}
+.bro-tag{display:inline-block;background:var(--ink);color:#fff;font-size:12px;
+  letter-spacing:.12em;padding:6px 12px;border-radius:var(--r)}
 .bro-origin{font-size:12px;line-height:1.7;color:var(--mute);margin-top:16px}
 .bro-sub2{font-size:12px;color:var(--mute);margin-top:16px}
 
 .bro-tbl{width:100%;border-collapse:collapse;margin-top:16px;font-size:12px}
-.bro-tbl th,.bro-tbl td{padding:8px 6px;text-align:center;border-bottom:1px solid var(--line)}
-.bro-tbl thead th{background:var(--ink);color:#fff;font-weight:600;letter-spacing:.04em;border-bottom:0}
+.bro-tbl th,.bro-tbl td{padding:8px 6px;text-align:center;border-bottom:1px solid var(--bro-line)}
+.bro-tbl thead th{background:var(--ink);color:#fff;font-weight:700;letter-spacing:.04em;border-bottom:0}
 .bro-tbl tbody th{text-align:left;font-weight:400;color:var(--mute);white-space:nowrap}
-.bro-tbl .r-lead th,.bro-tbl .lead{font-weight:600;color:var(--ink)}
+.bro-tbl .r-lead th,.bro-tbl .lead{font-weight:700;color:var(--ink)}
 .bro-tbl .lead{font-family:'Anuphan',sans-serif;font-size:16px}
-.bro-price thead th span{display:block;font-size:10px;font-weight:400;opacity:.8}
+.bro-price thead th span{display:block;font-size:12px;font-weight:400;opacity:.8}
 .bro-price tbody th{white-space:nowrap}
-.bro-price td{font-family:'Anuphan',sans-serif;font-size:14px;font-weight:600}
-.bro-tech2{font-family:'Anuphan',sans-serif;font-size:14px;font-weight:600;
-  letter-spacing:.02em;margin-top:24px;line-height:1.4}
+.bro-price td{font-family:'Anuphan',sans-serif;font-size:14px;font-weight:700}
+.bro-tech2{font-family:'Anuphan',sans-serif;font-size:14px;font-weight:700;
+  letter-spacing:.02em;margin-top:24px;line-height:1.55}
 
 .bro-icons{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
 .bro-icons li{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
 .bro-icons svg{width:24px;height:24px;fill:none;stroke:var(--ink);stroke-width:1.5;
   stroke-linecap:round;stroke-linejoin:round}
-.bro-icons span{font-size:10px;line-height:1.3;color:var(--mute)}
+.bro-icons span{font-size:12px;line-height:1.5;color:var(--mute)}
 
 /* ตัวอย่างความเข้ม — กระจกจำลอง สูตรเดียวกับ .win-tint และการ์ดใน /gallery */
-.bro-sw-cap{font-size:11px;letter-spacing:.12em;color:var(--mute);text-align:center}
-.bro-sw{margin-top:16px}
-.bro-sw-code{font-family:'Anuphan',sans-serif;font-size:14px;font-weight:600;text-align:center}
-.bro-sw-glass{position:relative;height:88px;margin-top:8px;border-radius:4px;overflow:hidden;
+/* ---- หน้าสเปกในเล่ม = โครงจาก assets/design1.jpg (v5.7) ----
+   ผู้สั่งงานสั่งให้ทุกซีรีส์ใช้ดีไซน์หน้านี้ · ต้นแบบคือหน้าสเปกของเล่ม EXTRA CLEAR
+   swatch กระจกซ้าย + ตารางค่า 5 บรรทัดขวา สามแถวต่อหน้า · ค่าทุกตัว generate จาก data/films.json
+   **ป้ายรหัสใช้พื้น --ink ไม่ใช่แดงตามต้นฉบับ** เพราะสามป้ายอยู่ในจอเดียวกับ nav CTA
+   จะได้แดง 4 จุด เกินโควตาข้อ 4 — ตัดสินแบบเดียวกับเลข IR ที่ /films ใน v4.1
+   **ความเข้มมีเฉพาะรหัสที่เอกสารระบุไว้** SY ทั้งสามรหัสกับ CT70 ไม่มีค่า จึงไม่มีป้ายนั้น (ข้อ 10 ห้ามเดา) */
+.bro-d1{display:flex;flex-direction:column;height:100%}
+.bro-d1-brand{font-family:'Anuphan',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.08em;text-align:center;line-height:1.2}
+.bro-d1-brand i{font-style:normal;margin:0 3px}
+.bro-d1-name{font-family:'Anuphan',sans-serif;font-size:24px;font-weight:700;
+  line-height:1.1;text-align:center}
+.bro-d1-sub{font-size:12px;letter-spacing:.08em;text-align:center;color:var(--mute);margin-top:2px}
+.bro-d1-sub b{font-weight:700;color:var(--ink)}
+.bro-d1-row{display:grid;grid-template-columns:.78fr 1.22fr;gap:8px;margin-top:8px}
+/* กระจกจำลอง สูตรเดียวกับ .win-tint และการ์ดที่ /gallery — gradient ล้วน ไม่ขัด MODE B */
+.bro-d1-glass{position:relative;overflow:hidden;border-radius:var(--r);min-height:96px;
   display:flex;align-items:center;justify-content:center;
   background:linear-gradient(140deg,#E8E8E6,#F6F6F5 44%,#DCDCDA)}
-.bro-sw-glass::after{content:'';position:absolute;inset:0;background:#101010;
+.bro-d1-glass::after{content:'';position:absolute;inset:0;background:#101010;
   opacity:calc(1 - var(--vlt)/100)}
-.bro-sw-heat{position:relative;z-index:1;background:rgba(12,12,12,.82);color:#fff;
-  font-size:11px;padding:6px 12px;border-radius:2px;text-align:center}
-.bro-sw-heat b{font-family:'Anuphan',sans-serif;font-size:14px;font-weight:700}
-.bro-sw-line{font-size:11px;color:var(--mute);margin-top:8px;text-align:center;line-height:1.5}
+/* โลโก้บนกระจกเป็นของตกแต่ง (aria-hidden) — เงาดำใต้ตัวขาวทำให้ยังอ่านออกทั้งบนแผ่นอ่อนและแผ่นเข้ม */
+.bro-d1-glass span{position:relative;z-index:1;font-family:'Anuphan',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.62);text-shadow:0 1px 3px rgba(0,0,0,.45)}
+.bro-d1-glass i{font-style:normal;margin:0 3px}
+.bro-d1-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bro-d1-code{font-family:'Anuphan',sans-serif;font-size:14px;font-weight:700;line-height:1.2;
+  color:#fff;background:var(--ink);padding:4px 10px;border-radius:var(--r)}
+.bro-d1-dark{font-size:12px;color:var(--mute)}
+/* แถวลดความร้อนเป็นแถบเต็มความกว้างเหมือนต้นฉบับ ไม่ใช่แถวหนึ่งในตาราง
+   **ที่ทำแบบนี้ไม่ใช่แค่ความสวย** — หัวข้อนี้ยาว 25 ตัวอักษร ถ้าอยู่ในคอลัมน์ซ้ายของตาราง
+   มันห่อสองบรรทัดทุกใบ แล้วหน้าล้นกรอบที่ .bro-inner ตัดทิ้งเงียบ */
+.bro-d1-lead{display:flex;align-items:center;justify-content:space-between;gap:8px;
+  margin-top:8px;border:1px solid var(--bro-line);padding:4px 8px;font-size:12px;line-height:1.35}
+.bro-d1-lead b{font-family:'Anuphan',sans-serif;font-size:16px;font-weight:700;line-height:1.2}
+.bro-d1-tbl{width:100%;border-collapse:collapse;font-size:12px;border-top:0}
+.bro-d1-tbl th,.bro-d1-tbl td{border:1px solid var(--bro-line);border-top:0;padding:3px 8px;line-height:1.35}
+.bro-d1-tbl tbody th{text-align:left;font-weight:400;color:var(--mute)}
+.bro-d1-tbl td{text-align:right;white-space:nowrap;width:52px;color:var(--ink)}
+.bro-d1-foot{margin-top:auto;padding-top:8px;font-size:12px;color:var(--mute);
+  text-align:center;line-height:1.5}
 
-.bro-note{margin-top:16px;font-size:11px;color:var(--mute);line-height:1.6}
+.bro-note{margin-top:16px;font-size:12px;color:var(--mute);line-height:1.65}
 
 /* แถบเปลี่ยนหน้าแบบกระดาษโน้ตติดขอบเล่ม — คลิกใบไหนก็กระโดดไปหน้านั้นได้เลย
    ใบแรกคือ "ปก" จึงใช้เป็นปุ่มปิดกลับไปหน้าปกในตัว ไม่ต้องมีปุ่มปิดแยก */
@@ -434,8 +474,8 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
   display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;
   padding:8px 16px 8px 16px;text-align:left;
   font-family:'IBM Plex Sans Thai',sans-serif;color:var(--ink);
-  background:var(--paper);border:1px solid var(--line);border-left:0;border-radius:0 3px 3px 0;
-  box-shadow:2px 4px 10px rgba(12,12,12,.10);
+  background:var(--paper);border:1px solid var(--line);border-left:0;border-radius:var(--r);
+  box-shadow:none;
   transform:rotate(-1.1deg);
   transition:transform .25s var(--e),background .2s,color .2s,box-shadow .25s var(--e)}
 .bro-tab:nth-child(2n){transform:rotate(1deg)}
@@ -444,11 +484,11 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 /* มุมพับของกระดาษโน้ต */
 .bro-tab::after{content:'';position:absolute;right:0;bottom:0;border-width:0 0 12px 12px;
   border-style:solid;border-color:transparent transparent rgba(12,12,12,.10) transparent}
-.bro-tab i{font-style:normal;font-size:10px;letter-spacing:.14em;color:var(--mute)}
-.bro-tab span{font-size:13px;font-weight:500;line-height:1.3}
+.bro-tab i{font-style:normal;font-size:11px;letter-spacing:.1em;color:var(--mute)}
+.bro-tab span{font-size:13px;font-weight:400;line-height:1.3}
 .bro-tab:hover{transform:rotate(0) translateX(4px)}
 .bro-tab[aria-current="page"]{background:var(--ink);color:#fff;transform:rotate(0) translateX(12px);
-  box-shadow:4px 7px 16px rgba(12,12,12,.22)}
+  box-shadow:none}
 .bro-tab[aria-current="page"] i{color:rgba(255,255,255,.72)}
 .bro-tab[aria-current="page"]::before{background:rgba(255,255,255,.28)}
 .bro-tab[aria-current="page"]::after{border-color:transparent transparent rgba(255,255,255,.20) transparent}
@@ -461,24 +501,43 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.14)}
 .closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
 .closing h2{font-size:clamp(32px,5.4vw,72px);font-weight:700;letter-spacing:-.035em;color:#fff;max-width:18ch;margin:24px auto 0}
 .closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
-.btn{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 30px;border-radius:14px;font-size:15px;font-weight:500;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:transform .35s var(--e),background .35s var(--e),border-color .35s var(--e),color .35s var(--e)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:18px 24px;border-radius:var(--r);font-size:16px;font-weight:400;line-height:1.2;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:background .3s var(--e),border-color .3s var(--e),color .3s var(--e)}
 .btn .ar{transition:transform .4s var(--e)}
 .btn:hover .ar{transform:translateX(5px)}
-.btn-light{background:#fff;color:var(--ink)}
+.btn-light{background:var(--paper);color:var(--ink);border-color:var(--paper)}
 .btn-light:hover{transform:translateY(-2px);background:#F0F0EE}
 .closing .btn{margin-top:48px}
 
 /* @shared:FOOTER_CSS */
 /* ---------------- footer ---------------- */
-footer{background:var(--void);color:#fff;padding:96px 0 40px}
-.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
+/* Car Dealership 128 — พื้นดำสนิท · โลโก้บนสุด · เส้นผมคาดใต้โลโก้
+   แล้วเป็นคอลัมน์ที่คั่นด้วยเส้นตั้ง หัวคอลัมน์ตัวหนา 20/700 จัดกลาง ลิงก์ 16/400 สี muted
+   วัดจากเว็บต้นทาง: พื้น #000 · padding 80px บน 60px ล่าง */
+footer{background:var(--void);color:var(--paper);padding:80px 0 60px}
+/* เส้นผมคาดใต้โลโก้ — ของต้นทางกินเต็มความกว้างคอนเทนเนอร์ */
+.f-brand{padding-bottom:30px;border-bottom:1px solid var(--line-dark);margin-bottom:50px}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:50px}
 /* footer เป็นพื้นมืดเสมอ จึงใช้โลโก้ขาวล้วนตลอด */
 .f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
-.f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
-.f-col h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.46);font-weight:500;margin-bottom:16px}
-.f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
-.f-col a:hover{color:var(--red-hot)}
-.f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--mute-dark)}
+.f-brand p{color:var(--mute-dark);font-size:16px;line-height:1.5;margin-top:20px;max-width:38ch}
+/* ช่องทางติดต่อแบบไอคอน (v5.7 · ผู้สั่งงานสั่งเพิ่ม) — โทรเป็น tel: จริงจุดเดียวของ footer
+   **LINE กับ Facebook ยังไม่มีค่าจริง (ค้างตัวแปร) จึงชี้ contact.html ที่รวมช่องทางไว้**
+   ห้ามเปลี่ยนเป็น href="#" หรือลิงก์เดา — เว็บนี้ไม่มีลิงก์ตายเหลือแล้ว
+   ไอคอนวาดเองเป็น SVG ฝังในไฟล์ ไม่ใช่ไอคอนฟอนต์หรือไลบรารีนอก (ข้อ 9)
+   สีเป็น currentColor ล้วน จึงไม่กินโควตาแดงข้อ 4 · กล่อง 44x44 ตามขนาดพื้นที่กดขั้นต่ำ */
+.f-social{display:flex;gap:8px;margin-top:24px}
+.f-social a{display:flex;align-items:center;justify-content:center;width:44px;height:44px;
+  border:1px solid var(--line-dark);color:var(--mute-dark);
+  transition:color .3s var(--e),border-color .3s var(--e)}
+.f-social a:hover{color:var(--paper);border-color:var(--paper)}
+.f-social svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round}
+/* หัวคอลัมน์ = h6 ของระบบ 20/700 สีขาว **ไม่ใช่ป้ายตัวเล็ก tracking กว้างแบบเดิม** */
+.f-col h3{font-family:'Anuphan',sans-serif;font-size:20px;font-weight:700;line-height:1.2;
+  letter-spacing:0;text-transform:none;color:var(--paper);margin-bottom:15px}
+.f-col a{display:flex;align-items:center;min-height:44px;color:var(--mute-dark);font-size:16px;line-height:1.5;transition:color .3s var(--e)}
+.f-col a:hover{color:var(--paper)}
+.f-bot{margin-top:60px;padding-top:24px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:14px;line-height:1.2;color:var(--mute-dark)}
 /* @end:FOOTER_CSS */
 
 /* ---------------- responsive ---------------- */
@@ -499,25 +558,30 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .proof-grid{grid-template-columns:1fr}
   .gloss{grid-template-columns:1fr}
   .spec-key{grid-template-columns:1fr}
-  .seg-uv b{display:none}
+  /* ป้ายในแถบสเปกตรัมกว้างตามสัดส่วนความยาวคลื่นจริง ไม่ได้กว้างตามข้อความ
+     ช่องแสงที่ตามองเห็นเป็นแค่ 18.18% ของแถบ = 59px ที่จอ 375 แต่ป้ายต้องการ 112px
+     **ใส่ไม่ได้แน่นอน ไม่ใช่เรื่องปรับขนาดตัวอักษร** และ .spec-bar เป็น overflow:hidden
+     ถ้าปล่อยไว้จะถูกตัดกลางคำ (วัดที่ 375 ขาด 55px · ที่ 620 ขาด 11px)
+     ซ่อนเหมือน .seg-uv b ได้เพราะชื่อทั้งสามย่านอยู่ใน .spec-key ใต้แถบ และใน aria-label ของแถบอยู่แล้ว */
+  .seg-uv b,.seg-vis b{display:none}
 }
 @media(max-width:900px){
   .bro-card{width:min(408px,90vw)}
-  .bro-obj{height:712px}
+  .bro-obj{height:776px}
   .bro-tabs{position:static;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:8px;padding-left:0;margin-top:32px}
   .bro-tab{width:auto;min-height:0;flex-direction:row;align-items:center;gap:8px;
-    padding:10px 16px;border-left:1px solid var(--line);border-radius:3px}
+    padding:10px 16px;border-left:1px solid var(--line);border-radius:var(--r)}
   .bro-tab::before{display:none}
   .bro-tab:hover,.bro-tab[aria-current="page"]{transform:rotate(0) translateY(-3px)}
-  .bro-cover{padding:32px 24px 24px}
+  .bro-cv-foot{padding:64px 16px 16px}
   .bro-page{padding:32px 24px}
 }
 @media(max-width:620px){
   .bro-chips{margin-bottom:40px}
   .bro-chip{padding:12px 16px;font-size:13px}
   .bro-card{width:min(400px,92vw)}
-  .bro-obj{height:744px}
-  .bro-cover{padding:24px 20px 20px}
+  .bro-cv-foot{padding:56px 16px 16px}
+  .bro-cv-ir b{font-size:28px}
   .bro-page{padding:24px 20px}
   .bro-icons{grid-template-columns:repeat(2,1fr);gap:12px 8px}
   .bro-tab{padding:8px 12px}
@@ -565,6 +629,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
     <div class="nav-links">
       <a href="index.html">หน้าแรก</a>
+      <a href="films.html">ฟิล์มรถยนต์</a>
       <a href="about.html">เกี่ยวกับเรา</a>
       <a href="technology.html" aria-current="page">เทคโนโลยี</a>
       <a href="gallery.html">ผลงาน</a>
@@ -580,6 +645,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <!-- @shared:DRAWER_HTML -->
 <div class="drawer" id="drawer">
   <a href="index.html">หน้าแรก</a>
+  <a href="films.html">ฟิล์มรถยนต์</a>
   <a href="about.html">เกี่ยวกับเรา</a>
   <a href="technology.html" aria-current="page">เทคโนโลยี</a>
   <a href="gallery.html">ผลงาน</a>
@@ -724,7 +790,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
       <div class="sec-head rv">
         <p class="eyebrow"><span class="dot"></span>ลองด้วยตัวเอง</p>
         <h2 id="h-proof">เลื่อนให้มืดลง<br>แล้วดูว่าความร้อนขยับไหม</h2>
-        <p>ตัวเลื่อนนี้ปรับค่า VLT ซึ่งคือปริมาณแสงที่ตามองเห็นที่ผ่านกระจกเข้ามา ลองเลื่อนจนมืดที่สุดแล้วสังเกตแถบความร้อนทางขวา</p>
+        <p>ตัวเลื่อนนี้ปรับค่า VLT ซึ่งคือปริมาณแสงที่ตามองเห็นที่ผ่านกระจกเข้ามา เลือกได้สามระดับคือ 40% 60% และ 80% ลองเลื่อนไปที่ค่าที่มืดที่สุดแล้วสังเกตแถบความร้อนทางขวา</p>
       </div>
 
       <div class="proof-grid rv">
@@ -735,8 +801,10 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           </div>
           <div class="slider-row">
             <label for="vlt">ความเข้มของฟิล์ม — ค่า VLT</label>
-            <input type="range" id="vlt" min="5" max="80" value="70" step="1"
-                   aria-describedby="vlt-out">
+            <input type="range" id="vlt" min="40" max="80" value="60" step="20"
+                   list="vlt-stops" aria-describedby="vlt-out">
+            <datalist id="vlt-stops"><option value="40"></option><option value="60"></option><option value="80"></option></datalist>
+            <p class="slider-ticks" aria-hidden="true"><span>40%</span><span>60%</span><span>80%</span></p>
           </div>
         </div>
 
@@ -744,8 +812,8 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
           <div class="readout">
             <div class="ro">
               <p class="k">แสงที่ตามองเห็นที่ผ่านเข้ามา — VLT</p>
-              <p class="v" id="vlt-out" aria-live="polite">70%</p>
-              <div class="meter"><i id="vlt-bar" style="width:70%"></i></div>
+              <p class="v" id="vlt-out" aria-live="polite">60%</p>
+              <div class="meter"><i id="vlt-bar" style="width:60%"></i></div>
               <p class="cap">ค่านี้เปลี่ยนตามตัวเลื่อน เพราะ VLT คือสิ่งที่ความเข้มของฟิล์มควบคุมโดยตรง</p>
             </div>
             <div class="ro pin">
@@ -805,13 +873,14 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   <!-- ============ 6 · CLOSING ============ -->
   <!-- 6 · โบรชัวร์ต้นฉบับ — ทำตามภาพอ้างอิงที่ผู้สั่งงานส่งมา แต่แปลงเป็นภาษาของเว็บนี้
      ค่าทุกตัวบนหน้าในของการ์ด generate จาก data/films.json **ไม่ได้พิมพ์มือ**
-     PDF เป็นสแกนภาพล้วนไม่มี text layer จึงใช้เป็นไฟล์ดาวน์โหลดอย่างเดียว ไม่ render บนหน้า (MODE B) -->
+     PDF เป็นสแกนภาพล้วนไม่มี text layer จึงไม่ render หน้าในบนเว็บ (MODE B) — มีแต่รูปปกที่ผู้สั่งงานวางมาให้
+     **v4.0 ตัดลิงก์ดาวน์โหลดออกทั้ง 5 ใบตามคำสั่งผู้สั่งงาน** คำโปรยหัวบล็อกจึงห้ามพูดถึงการดาวน์โหลดอีก (v5.3 แก้ประโยคที่ยังค้างอยู่) -->
 <section class="sec bro" id="brochure" aria-labelledby="h-bro">
   <div class="wrap">
     <div class="sec-head rv" style="max-width:none;text-align:center">
       <div class="eyebrow" style="justify-content:center"><span class="dot"></span>เอกสารต้นฉบับ</div>
       <h2 id="h-bro">โบรชัวร์ของทุกซีรีส์</h2>
-      <p style="margin-left:auto;margin-right:auto">ค่าที่เห็นบนหน้าเว็บทั้งหมดถอดมาจากเอกสารชุดนี้ เลือกซีรีส์แล้วเปิดปกเพื่อดูค่าหลัก หรือดาวน์โหลดต้นฉบับไปอ่านเองได้</p>
+      <p style="margin-left:auto;margin-right:auto">ค่าที่เห็นบนหน้าเว็บทั้งหมดถอดมาจากเอกสารชุดนี้ เลือกซีรีส์แล้วเปิดปกเพื่อพลิกดูทีละหน้า</p>
     </div>
 
     <div class="bro-stage-wrap rv">
@@ -845,22 +914,36 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <ul class="bro-icons"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg><span>กันรังสี UV</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 12c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 7c2-3 4-3 6 0s4 3 6 0 4-3 4 0"/></svg><span>กันรังสี IR</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z M12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg><span>ทัศนวิสัยเคลียร์ชัด</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3.6v5.6c0 5-3.2 8-7.5 9.8-4.3-1.8-7.5-4.8-7.5-9.8V6.1z M9 12l2.2 2.2L15.5 10"/></svg><span>ฟิล์มใสสบายตา</span></li></ul>
             </section>
             <section class="bro-page" data-pg="3" hidden aria-label="หน้า 3 จาก 4">
-            <p class="bro-sw-cap">มองจากภายนอกห้องโดยสาร</p>
-            <div class="bro-sw">
-              <p class="bro-sw-code">SY40</p>
-              <div class="bro-sw-glass" style="--vlt:40"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>81%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 40% · สะท้อนแสง 0.24% · ป้องกัน UV 99% · IR 91%</p>
-            </div>
-            <div class="bro-sw">
-              <p class="bro-sw-code">SY20</p>
-              <div class="bro-sw-glass" style="--vlt:20"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>89%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 20% · สะท้อนแสง 0.24% · ป้องกัน UV 99% · IR 95%</p>
-            </div>
-            <div class="bro-sw">
-              <p class="bro-sw-code">SY10</p>
-              <div class="bro-sw-glass" style="--vlt:10"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>96%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 10% · สะท้อนแสง 0.24% · ป้องกัน UV 99% · IR 98%</p>
-            </div>
+              <div class="bro-d1">
+                <p class="bro-d1-brand">FINNIX<i aria-hidden="true">▸</i>FILM</p>
+                <p class="bro-d1-name">TITANIUM</p>
+                <p class="bro-d1-sub">FILM SERIES <b>PROTECTION UV</b></p>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:40"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">SY40</b></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>81%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส SY40</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>40%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>0.24%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>99%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>91%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:20"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">SY20</b></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>89%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส SY20</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>20%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>0.24%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>99%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>95%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:10"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">SY10</b></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>96%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส SY10</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>10%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>0.24%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>99%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>98%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <p class="bro-d1-foot">ฟินนิกซ์ ไทเทเนี่ยม ฟิล์ม · มองจากภายนอกห้องโดยสาร</p>
+              </div>
             </section>
             <section class="bro-page" data-pg="4" hidden aria-label="หน้า 4 จาก 4">
             <p class="bro-tag">ค่าสเปกทั้ง 3 รหัส</p>
@@ -877,14 +960,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
             </section>
           </div>
           <div class="bro-cover">
-            <div class="bro-cv-top"><span class="bro-wm"><span class="bro-wm-a">FINNIX</span><svg class="bro-arw" viewBox="0 0 24 16" aria-hidden="true"><path d="M0 3h13V0l11 8-11 8v-3H0z"/></svg><span class="bro-wm-b">FILM</span></span><div class="bro-shield"><svg viewBox="0 0 72 84" aria-hidden="true"><path d="M36 2 68 12v30c0 22-14 33-32 40C18 75 4 64 4 42V12z"/></svg><b>7</b><span>ปี</span></div></div>
-            <h3 class="bro-cv-name">TITANIUM</h3>
-            <p class="bro-cv-sub">FILM SERIES PROTECTION UV</p>
-            <p class="bro-cv-slogan">สุดยอดฟิล์มชั้นนำ<br><span>“เทคโนโลยีระดับโลก”</span></p>
-            <p class="bro-cv-th">ฟินนิกซ์ ไทเทเนี่ยม ฟิล์ม</p>
-            <p class="bro-cv-tech"><span class="var">{{TECH_TITANIUM}}</span></p>
-            <div class="bro-cv-ir"><span>IR PROTECT</span><b>98%</b></div>
-            <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
+            <div class="bro-cv-img" role="img" aria-label="ปกโบรชัวร์ฟินนิกซ์ ซีรีส์ TITANIUM"
+                 style="background-image:url('assets/Brochure/cover-SY.jpg')"></div>
+            <div class="bro-cv-foot">
+              <div class="bro-cv-ir"><span>IR PROTECT</span><b>98%</b></div>
+              <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
+            </div>
           </div>
         </div>
         <nav class="bro-tabs" aria-label="หน้าในโบรชัวร์">
@@ -915,22 +996,36 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <ul class="bro-icons"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg><span>กันรังสี UV</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 12c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 7c2-3 4-3 6 0s4 3 6 0 4-3 4 0"/></svg><span>กันรังสี IR</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z M12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg><span>ทัศนวิสัยเคลียร์ชัด</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3.6v5.6c0 5-3.2 8-7.5 9.8-4.3-1.8-7.5-4.8-7.5-9.8V6.1z M9 12l2.2 2.2L15.5 10"/></svg><span>ฟิล์มใสสบายตา</span></li></ul>
             </section>
             <section class="bro-page" data-pg="3" hidden aria-label="หน้า 3 จาก 4">
-            <p class="bro-sw-cap">มองจากภายนอกห้องโดยสาร</p>
-            <div class="bro-sw">
-              <p class="bro-sw-code">CM35</p>
-              <div class="bro-sw-glass" style="--vlt:30"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>80%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 30% · สะท้อนแสง 0.19% · ป้องกัน UV 99% · IR 91%</p>
-            </div>
-            <div class="bro-sw">
-              <p class="bro-sw-code">CM15</p>
-              <div class="bro-sw-glass" style="--vlt:15"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>90%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 15% · สะท้อนแสง 0.19% · ป้องกัน UV 99% · IR 95%</p>
-            </div>
-            <div class="bro-sw">
-              <p class="bro-sw-code">CM05</p>
-              <div class="bro-sw-glass" style="--vlt:5"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>90%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 5% · สะท้อนแสง 0.19% · ป้องกัน UV 99% · IR 98%</p>
-            </div>
+              <div class="bro-d1">
+                <p class="bro-d1-brand">FINNIX<i aria-hidden="true">▸</i>FILM</p>
+                <p class="bro-d1-name">CERAMIC</p>
+                <p class="bro-d1-sub">FILM SERIES <b>PROTECTION UV</b></p>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:30"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">CM35</b><span class="bro-d1-dark">ความเข้ม 40%</span></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>80%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส CM35</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>30%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>0.19%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>99%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>91%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:15"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">CM15</b><span class="bro-d1-dark">ความเข้ม 60%</span></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>90%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส CM15</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>15%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>0.19%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>99%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>95%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:5"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">CM05</b><span class="bro-d1-dark">ความเข้ม 80%</span></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>90%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส CM05</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>5%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>0.19%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>99%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>98%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <p class="bro-d1-foot">ฟินนิกซ์ เซรามิค ฟิล์ม · มองจากภายนอกห้องโดยสาร</p>
+              </div>
             </section>
             <section class="bro-page" data-pg="4" hidden aria-label="หน้า 4 จาก 4">
             <p class="bro-tag">ค่าสเปกทั้ง 3 รหัส</p>
@@ -947,14 +1042,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
             </section>
           </div>
           <div class="bro-cover">
-            <div class="bro-cv-top"><span class="bro-wm"><span class="bro-wm-a">FINNIX</span><svg class="bro-arw" viewBox="0 0 24 16" aria-hidden="true"><path d="M0 3h13V0l11 8-11 8v-3H0z"/></svg><span class="bro-wm-b">FILM</span></span><div class="bro-shield"><svg viewBox="0 0 72 84" aria-hidden="true"><path d="M36 2 68 12v30c0 22-14 33-32 40C18 75 4 64 4 42V12z"/></svg><b>7</b><span>ปี</span></div></div>
-            <h3 class="bro-cv-name">CERAMIC</h3>
-            <p class="bro-cv-sub">FILM SERIES PROTECTION UV</p>
-            <p class="bro-cv-slogan">สุดยอดฟิล์มชั้นนำ<br><span>“เทคโนโลยีระดับโลก”</span></p>
-            <p class="bro-cv-th">ฟินนิกซ์ เซรามิค ฟิล์ม</p>
-            <p class="bro-cv-tech">ฟิล์มเซรามิคกันความร้อน ทัศนวิสัยดีเยี่ยม</p>
-            <div class="bro-cv-ir"><span>IR PROTECT</span><b>98%</b></div>
-            <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
+            <div class="bro-cv-img" role="img" aria-label="ปกโบรชัวร์ฟินนิกซ์ ซีรีส์ CERAMIC"
+                 style="background-image:url('assets/Brochure/cover-CM.jpg')"></div>
+            <div class="bro-cv-foot">
+              <div class="bro-cv-ir"><span>IR PROTECT</span><b>98%</b></div>
+              <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
+            </div>
           </div>
         </div>
         <nav class="bro-tabs" aria-label="หน้าในโบรชัวร์">
@@ -983,34 +1076,46 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <ul class="bro-icons"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg><span>กันรังสี UV</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 12c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 7c2-3 4-3 6 0s4 3 6 0 4-3 4 0"/></svg><span>กันรังสี IR</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z M12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg><span>ทัศนวิสัยเคลียร์ชัด</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3.6v5.6c0 5-3.2 8-7.5 9.8-4.3-1.8-7.5-4.8-7.5-9.8V6.1z M9 12l2.2 2.2L15.5 10"/></svg><span>ฟิล์มใสสบายตา</span></li></ul>
             </section>
             <section class="bro-page" data-pg="3" hidden aria-label="หน้า 3 จาก 3">
-            <p class="bro-sw-cap">มองจากภายนอกห้องโดยสาร</p>
-            <div class="bro-sw">
-              <p class="bro-sw-code">CT70</p>
-              <div class="bro-sw-glass" style="--vlt:70"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>55%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 70% · สะท้อนแสง 8.6% · ป้องกัน UV 99% · IR 89%</p>
-            </div>
-            <div class="bro-sw">
-              <p class="bro-sw-code">CT40</p>
-              <div class="bro-sw-glass" style="--vlt:35"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>75%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 35% · สะท้อนแสง 7.7% · ป้องกัน UV 99% · IR 90%</p>
-            </div>
-            <div class="bro-sw">
-              <p class="bro-sw-code">CT20</p>
-              <div class="bro-sw-glass" style="--vlt:22"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>85%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 22% · สะท้อนแสง 7.6% · ป้องกัน UV 99% · IR 93%</p>
-            </div>
-                        <p class="bro-note">ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
+              <div class="bro-d1">
+                <p class="bro-d1-brand">FINNIX<i aria-hidden="true">▸</i>FILM</p>
+                <p class="bro-d1-name">CRYSTALIZE</p>
+                <p class="bro-d1-sub">FILM SERIES <b>PROTECTION UV</b></p>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:70"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">CT70</b></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>55%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส CT70</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>70%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>8.6%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>99%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>89%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:35"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">CT40</b><span class="bro-d1-dark">ความเข้ม 40%</span></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>75%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส CT40</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>35%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>7.7%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>99%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>90%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:22"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">CT20</b><span class="bro-d1-dark">ความเข้ม 60%</span></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>85%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส CT20</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>22%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>7.6%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>99%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>93%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <p class="bro-d1-foot">ฟินนิกซ์ คริสตัลไลซ์ ฟิล์ม · มองจากภายนอกห้องโดยสาร</p>
+              </div>
+              <p class="bro-note">ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
             </section>
           </div>
           <div class="bro-cover">
-            <div class="bro-cv-top"><span class="bro-wm"><span class="bro-wm-a">FINNIX</span><svg class="bro-arw" viewBox="0 0 24 16" aria-hidden="true"><path d="M0 3h13V0l11 8-11 8v-3H0z"/></svg><span class="bro-wm-b">FILM</span></span><div class="bro-shield"><svg viewBox="0 0 72 84" aria-hidden="true"><path d="M36 2 68 12v30c0 22-14 33-32 40C18 75 4 64 4 42V12z"/></svg><b>7</b><span>ปี</span></div></div>
-            <h3 class="bro-cv-name">CRYSTALIZE</h3>
-            <p class="bro-cv-sub">FILM SERIES PROTECTION UV</p>
-            <p class="bro-cv-slogan">สุดยอดฟิล์มชั้นนำ<br><span>“เทคโนโลยีระดับโลก”</span></p>
-            <p class="bro-cv-th">ฟินนิกซ์ คริสตัลไลซ์ ฟิล์ม</p>
-            <p class="bro-cv-tech">MULTI LAYER METALIZE SPUTTERING</p>
-            <div class="bro-cv-ir"><span>IR PROTECT</span><b>93%</b></div>
-            <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
+            <div class="bro-cv-img" role="img" aria-label="ปกโบรชัวร์ฟินนิกซ์ ซีรีส์ CRYSTALIZE"
+                 style="background-image:url('assets/Brochure/cover-CT.jpg')"></div>
+            <div class="bro-cv-foot">
+              <div class="bro-cv-ir"><span>IR PROTECT</span><b>93%</b></div>
+              <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
+            </div>
           </div>
         </div>
         <nav class="bro-tabs" aria-label="หน้าในโบรชัวร์">
@@ -1038,34 +1143,46 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <ul class="bro-icons"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg><span>กันรังสี UV</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 12c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 7c2-3 4-3 6 0s4 3 6 0 4-3 4 0"/></svg><span>กันรังสี IR</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z M12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg><span>ทัศนวิสัยเคลียร์ชัด</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3.6v5.6c0 5-3.2 8-7.5 9.8-4.3-1.8-7.5-4.8-7.5-9.8V6.1z M9 12l2.2 2.2L15.5 10"/></svg><span>ฟิล์มใสสบายตา</span></li></ul>
             </section>
             <section class="bro-page" data-pg="3" hidden aria-label="หน้า 3 จาก 3">
-            <p class="bro-sw-cap">มองจากภายนอกห้องโดยสาร</p>
-            <div class="bro-sw">
-              <p class="bro-sw-code">XT35</p>
-              <div class="bro-sw-glass" style="--vlt:35"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>61%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 35% · สะท้อนแสง 5.8% · ป้องกัน UV 100% · IR 96%</p>
-            </div>
-            <div class="bro-sw">
-              <p class="bro-sw-code">XT15</p>
-              <div class="bro-sw-glass" style="--vlt:15"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>63%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 15% · สะท้อนแสง 5.1% · ป้องกัน UV 100% · IR 97%</p>
-            </div>
-            <div class="bro-sw">
-              <p class="bro-sw-code">XT05</p>
-              <div class="bro-sw-glass" style="--vlt:5"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>67%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 5% · สะท้อนแสง 5.1% · ป้องกัน UV 100% · IR 98%</p>
-            </div>
-                        <p class="bro-note">ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
+              <div class="bro-d1">
+                <p class="bro-d1-brand">FINNIX<i aria-hidden="true">▸</i>FILM</p>
+                <p class="bro-d1-name">EXTRA CLEAR</p>
+                <p class="bro-d1-sub">FILM SERIES <b>PROTECTION UV</b></p>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:35"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">XT35</b><span class="bro-d1-dark">ความเข้ม 40%</span></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>61%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส XT35</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>35%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>5.8%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>100%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>96%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:15"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">XT15</b><span class="bro-d1-dark">ความเข้ม 60%</span></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>63%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส XT15</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>15%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>5.1%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>100%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>97%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:5"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">XT05</b><span class="bro-d1-dark">ความเข้ม 80%</span></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>67%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส XT05</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>5%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>5.1%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>100%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>98%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <p class="bro-d1-foot">ฟินนิกซ์ เอ็กซ์ตร้า เคลียร์ · มองจากภายนอกห้องโดยสาร</p>
+              </div>
+              <p class="bro-note">ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
             </section>
           </div>
           <div class="bro-cover">
-            <div class="bro-cv-top"><span class="bro-wm"><span class="bro-wm-a">FINNIX</span><svg class="bro-arw" viewBox="0 0 24 16" aria-hidden="true"><path d="M0 3h13V0l11 8-11 8v-3H0z"/></svg><span class="bro-wm-b">FILM</span></span><div class="bro-shield"><svg viewBox="0 0 72 84" aria-hidden="true"><path d="M36 2 68 12v30c0 22-14 33-32 40C18 75 4 64 4 42V12z"/></svg><b>7</b><span>ปี</span></div></div>
-            <h3 class="bro-cv-name">EXTRA CLEAR</h3>
-            <p class="bro-cv-sub">FILM SERIES PROTECTION UV</p>
-            <p class="bro-cv-slogan">สุดยอดฟิล์มชั้นนำ<br><span>“เทคโนโลยีระดับโลก”</span></p>
-            <p class="bro-cv-th">ฟินนิกซ์ เอ็กซ์ตร้า เคลียร์</p>
-            <p class="bro-cv-tech">ฟิล์มเซรามิคกันความร้อน ทัศนวิสัยดีเยี่ยม</p>
-            <div class="bro-cv-ir"><span>IR PROTECT</span><b>98%</b></div>
-            <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
+            <div class="bro-cv-img" role="img" aria-label="ปกโบรชัวร์ฟินนิกซ์ ซีรีส์ EXTRA CLEAR"
+                 style="background-image:url('assets/Brochure/cover-XT.jpg')"></div>
+            <div class="bro-cv-foot">
+              <div class="bro-cv-ir"><span>IR PROTECT</span><b>98%</b></div>
+              <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
+            </div>
           </div>
         </div>
         <nav class="bro-tabs" aria-label="หน้าในโบรชัวร์">
@@ -1095,34 +1212,46 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <ul class="bro-icons"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg><span>กันรังสี UV</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 12c2-3 4-3 6 0s4 3 6 0 4-3 4 0M4 7c2-3 4-3 6 0s4 3 6 0 4-3 4 0"/></svg><span>กันรังสี IR</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z M12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg><span>ทัศนวิสัยเคลียร์ชัด</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3.6v5.6c0 5-3.2 8-7.5 9.8-4.3-1.8-7.5-4.8-7.5-9.8V6.1z M9 12l2.2 2.2L15.5 10"/></svg><span>ฟิล์มใสสบายตา</span></li></ul>
             </section>
             <section class="bro-page" data-pg="3" hidden aria-label="หน้า 3 จาก 3">
-            <p class="bro-sw-cap">มองจากภายนอกห้องโดยสาร</p>
-            <div class="bro-sw">
-              <p class="bro-sw-code">SM35</p>
-              <div class="bro-sw-glass" style="--vlt:40"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>52%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 40% · สะท้อนแสง 6.1% · ป้องกัน UV 100% · IR 95%</p>
-            </div>
-            <div class="bro-sw">
-              <p class="bro-sw-code">SM15</p>
-              <div class="bro-sw-glass" style="--vlt:15"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>59%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 15% · สะท้อนแสง 5.2% · ป้องกัน UV 100% · IR 95%</p>
-            </div>
-            <div class="bro-sw">
-              <p class="bro-sw-code">SM05</p>
-              <div class="bro-sw-glass" style="--vlt:5"><p class="bro-sw-heat">ลดความร้อนจากแสงแดดโดยรวม <b>63%</b></p></div>
-              <p class="bro-sw-line">แสงส่องผ่าน 5% · สะท้อนแสง 5.1% · ป้องกัน UV 100% · IR 98%</p>
-            </div>
-                        <p class="bro-note">ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
+              <div class="bro-d1">
+                <p class="bro-d1-brand">FINNIX<i aria-hidden="true">▸</i>FILM</p>
+                <p class="bro-d1-name">UV GUARD</p>
+                <p class="bro-d1-sub">FILM SERIES <b>PROTECTION UV</b></p>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:40"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">SM35</b><span class="bro-d1-dark">ความเข้ม 40%</span></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>52%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส SM35</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>40%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>6.1%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>100%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>95%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:15"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">SM15</b><span class="bro-d1-dark">ความเข้ม 60%</span></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>59%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส SM15</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>15%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>5.2%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>100%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>95%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <div class="bro-d1-row">
+                  <div class="bro-d1-glass" style="--vlt:5"><span aria-hidden="true">FINNIX<i>▸</i>FILM</span></div>
+                  <div class="bro-d1-data">
+                    <p class="bro-d1-top"><b class="bro-d1-code">SM05</b><span class="bro-d1-dark">ความเข้ม 80%</span></p>
+                    <p class="bro-d1-lead"><span>ลดความร้อนจากแสงแดดโดยรวม</span><b>63%</b></p>
+                    <table class="bro-d1-tbl"><caption class="vh">ค่าสเปกของรหัส SM05</caption><tbody><tr><th scope="row">แสงส่องผ่าน</th><td>5%</td></tr><tr><th scope="row">สะท้อนแสง</th><td>5.1%</td></tr><tr><th scope="row">ป้องกันรังสี UV</th><td>100%</td></tr><tr><th scope="row">ป้องกันรังสี IR</th><td>98%</td></tr></tbody></table>
+                  </div>
+                </div>
+                <p class="bro-d1-foot">ฟินนิกซ์ ยูวีการ์ด เซรามิค ฟิล์ม · มองจากภายนอกห้องโดยสาร</p>
+              </div>
+              <p class="bro-note">ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
             </section>
           </div>
           <div class="bro-cover">
-            <div class="bro-cv-top"><span class="bro-wm"><span class="bro-wm-a">FINNIX</span><svg class="bro-arw" viewBox="0 0 24 16" aria-hidden="true"><path d="M0 3h13V0l11 8-11 8v-3H0z"/></svg><span class="bro-wm-b">FILM</span></span><div class="bro-shield"><svg viewBox="0 0 72 84" aria-hidden="true"><path d="M36 2 68 12v30c0 22-14 33-32 40C18 75 4 64 4 42V12z"/></svg><b>7</b><span>ปี</span></div></div>
-            <h3 class="bro-cv-name">UV GUARD</h3>
-            <p class="bro-cv-sub">FILM SERIES PROTECTION UV</p>
-            <p class="bro-cv-slogan">สุดยอดฟิล์มชั้นนำ<br><span>“เทคโนโลยีระดับโลก”</span></p>
-            <p class="bro-cv-th">ฟินนิกซ์ ยูวีการ์ด เซรามิค ฟิล์ม</p>
-            <p class="bro-cv-tech">ฟิล์มเซรามิคกันความร้อน ทัศนวิสัยดีเยี่ยม</p>
-            <div class="bro-cv-ir"><span>IR PROTECT</span><b>98%</b></div>
-            <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
+            <div class="bro-cv-img" role="img" aria-label="ปกโบรชัวร์ฟินนิกซ์ ซีรีส์ UV GUARD"
+                 style="background-image:url('assets/Brochure/cover-SM.jpg')"></div>
+            <div class="bro-cv-foot">
+              <div class="bro-cv-ir"><span>IR PROTECT</span><b>98%</b></div>
+              <button type="button" class="bro-open" aria-expanded="false">เปิดดูโบรชัวร์</button>
+            </div>
           </div>
         </div>
         <nav class="bro-tabs" aria-label="หน้าในโบรชัวร์">
@@ -1155,7 +1284,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     <div class="f-grid">
       <div class="f-brand">
         <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
-        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
+        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับ<span class="nb">สภาพอากาศเมืองไทย</span></p>
+        <ul class="f-social">
+          <li><a href="tel:0635978497" aria-label="โทรหาฟินนิกซ์ ฟิล์ม 06-3597-8497"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 3.5h3.1l1.5 3.9-2 1.4a12 12 0 006.2 6.2l1.4-2 3.9 1.5v3.1a1.9 1.9 0 01-2.1 1.9A17.2 17.2 0 014.5 5.6 1.9 1.9 0 016.4 3.5z"/></svg></a></li>
+          <li><a href="contact.html" aria-label="ไลน์ของฟินนิกซ์ ฟิล์ม"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.3c-4.3 0-7.8 2.8-7.8 6.2 0 3.1 2.8 5.7 6.5 6.1.7.1.9.4.8 1l-.3 1.6c-.1.5.3.7.7.5 3.5-1.6 6-4 7.2-5.7a5.6 5.6 0 001.2-3.5c0-3.4-3.9-6.2-8.3-6.2z"/><path d="M8.6 8.9v3.4h2M12 8.9v3.4M14.2 12.3V8.9l2.3 3.4V8.9"/></svg></a></li>
+          <li><a href="contact.html" aria-label="เฟซบุ๊กของฟินนิกซ์ ฟิล์ม"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17"/><path d="M15.4 7.6h-1.6c-1 0-1.7.7-1.7 1.8v1.5h-1.8m5.1 0h-5.1m1.8 0v8.6"/></svg></a></li>
+        </ul>
       </div>
       <div class="f-col">
         <h3>บริษัท</h3>
@@ -1163,7 +1297,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
       </div>
       <div class="f-col">
         <h3>บริการ</h3>
-        <a href="centers.html">หาศูนย์ติดตั้ง</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+        <a href="films.html">ฟิล์มรถยนต์</a><a href="centers.html">หาศูนย์ติดตั้ง</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
       </div>
     </div>
     <div class="f-bot">

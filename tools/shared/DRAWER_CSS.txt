@@ -1,7 +1,7 @@
 /* ---------------- เมนูมือถือ ---------------- */
 /* สถานะ UI ไม่ใช่ motion เพื่อการตกแต่ง จึงไม่นับรวมในงบ 4 อย่างของข้อ 5 */
 .drawer{display:none;position:fixed;inset:0;z-index:99;background:var(--void);
-  flex-direction:column;justify-content:center;padding:76px var(--pad) 40px;
+  flex-direction:column;justify-content:center;padding:87px var(--pad) 40px;
   opacity:0;visibility:hidden;transition:opacity .4s var(--e),visibility .4s var(--e)}
 body.menu-open .drawer{opacity:1;visibility:visible}
 body.menu-open{overflow:hidden}
@@ -11,8 +11,10 @@ body.menu-open .nav .brand img{filter:brightness(0) invert(1)}
 body.menu-open .burger span{background:#fff;top:50%;bottom:auto;margin-top:-1px}
 body.menu-open .burger span:nth-child(1){transform:rotate(45deg)}
 body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
+/* น้ำหนักคู่เดียว 400/700 ตามระบบ · ไม่มี tracking ที่ขนาดใหญ่ */
 .drawer a{display:flex;align-items:center;min-height:56px;font-family:'Anuphan',sans-serif;
-  font-size:26px;font-weight:600;letter-spacing:-.02em;color:#fff;
+  font-size:24px;font-weight:700;line-height:1.2;letter-spacing:0;color:var(--paper);
   border-bottom:1px solid var(--line-dark)}
-.drawer .drawer-cta{margin-top:40px;justify-content:center;background:#fff;color:var(--ink);
-  border:0;border-radius:14px;font-size:16px;min-height:56px}
+/* ปุ่มในลิ้นชักเป็นทรงเดียวกับ .btn ของระบบ — มุมฉาก ขอบ 1px padding 18px 24px */
+.drawer .drawer-cta{margin-top:40px;justify-content:center;background:var(--paper);color:var(--ink);
+  border:1px solid var(--paper);border-radius:var(--r);font-size:16px;font-weight:400;min-height:56px}

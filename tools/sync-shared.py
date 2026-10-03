@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-sync-shared.py — ทำให้ "ของร่วม" ของทั้ง 7 หน้าตรงกันเสมอ โดยไม่ขัดข้อ 9
+sync-shared.py — ทำให้ "ของร่วม" ของทั้ง 8 หน้าตรงกันเสมอ โดยไม่ขัดข้อ 9
 
 ปัญหาที่แก้
   ข้อ 9 ของบรีฟบังคับว่าหนึ่งหน้าต้องจบในไฟล์เดียว CSS/JS จึงแยกออกไปเป็นไฟล์ร่วมไม่ได้
-  ผลคือของร่วม (tokens · nav · drawer · footer · noscript) ถูกคัดลอกไว้ 7 ชุด
-  แก้ทีหนึ่งต้องแก้ 7 จุด และที่ผ่านมามันไถลออกจากกันเรื่อยๆ จนต้องไล่ตามแก้ทุกเวอร์ชัน
+  ผลคือของร่วม (tokens · nav · drawer · footer · noscript) ถูกคัดลอกไว้ 8 ชุด
+  แก้ทีหนึ่งต้องแก้ 8 จุด และที่ผ่านมามันไถลออกจากกันเรื่อยๆ จนต้องไล่ตามแก้ทุกเวอร์ชัน
 
 วิธีแก้
   เก็บฉบับจริงไว้ที่ tools/shared/<REGION>.txt ที่เดียว
@@ -27,16 +27,26 @@ sync-shared.py — ทำให้ "ของร่วม" ของทั้ง
   หรือแก้ที่ tools/shared/ ตรงๆ แล้ว --write
 
 หมายเหตุเรื่อง line ending
-  ไฟล์หน้าเว็บใน working tree เป็น CRLF ส่วน tools/shared/ เก็บเป็น LF
-  สคริปต์แปลงให้ตอนอ่าน/เขียน **ห้ามแปลงซ้ำสองรอบ** จะได้ CR CR LF แล้ว git
-  จะมองไฟล์เป็น w/-text (ดูหัวข้อ line ending ใน CLAUDE.md)
+  ตั้งแต่ .gitattributes ของ v3.7 (* text=auto eol=lf) ทั้ง repo เป็น LF หมด
+  ทั้งไฟล์หน้าเว็บและ tools/shared/ สคริปต์นี้จึงไม่แปลงอะไรอีกแล้ว
+  (ก่อนหน้านั้นหน้าเว็บเป็น CRLF และต้องแปลงตอนอ่าน/เขียน — ห้ามแปลงซ้ำสองรอบ
+   จะได้ CR CR LF แล้ว git มองไฟล์เป็น w/-text · ดูหัวข้อ line ending ใน CLAUDE.md)
 """
 import io, os, re, sys, glob
 
+# stdout ของ Windows เป็น cp1252 ซึ่งพิมพ์ภาษาไทยไม่ได้ — สคริปต์นี้พิมพ์ผลเป็นไทยล้วน
+# ถ้าไม่บรรทัดนี้ จะตายด้วย UnicodeEncodeError ทุกครั้งที่รันโดยไม่ได้ตั้ง PYTHONIOENCODING
+# (เหยียบมาแล้ว 1 ก.ย. 2569 — คำสั่งที่ CLAUDE.md เขียนไว้รันตรงๆ แล้วพัง)
+try:
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
+except AttributeError:
+    pass
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SHARED = os.path.join(ROOT, 'tools', 'shared')
-PAGES = ['about.html', 'centers.html', 'contact.html', 'faq.html', 'gallery.html', 'index.html',
-         'technology.html']
+PAGES = ['about.html', 'centers.html', 'contact.html', 'faq.html', 'films.html', 'gallery.html',
+         'index.html', 'technology.html']
 
 # ชื่อบริเวณ -> (เป็น CSS หรือ HTML, คำอธิบายสั้นๆ)
 # CSS ใช้เครื่องหมาย /* */ ส่วน HTML/JS ใช้ <!-- -->

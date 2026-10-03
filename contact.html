@@ -43,67 +43,72 @@
       8. footer
       9. responsive
 
-   ของร่วม — แก้ที่ไฟล์นี้ต้องแก้ครบทั้ง 6 ไฟล์พร้อมกันเสมอ ไม่งั้นสลับหน้าแล้วเลย์เอาต์ขยับ
+   ของร่วม — แก้ที่ไฟล์นี้ต้องแก้ครบทั้ง 8 ไฟล์พร้อมกันเสมอ ไม่งั้นสลับหน้าแล้วเลย์เอาต์ขยับ
      :root tokens · nav · drawer · footer · .btn · .rv · .var · SEO meta · บล็อก noscript
    จุดตัด responsive ของทั้งเว็บมีสามจุด: 1080 (พับเมนู) · 900 · 620 — อย่าเพิ่มจุดใหม่
    ทุกระยะต้องหารด้วย 8 ลงตัว · สีข้อความต้องผ่าน WCAG AA 4.5:1 วัดก่อนเปลี่ยนทุกครั้ง
    ============================================================================ */
 /* @shared:TOKENS */
 :root{
-  --void:#050505;
-  --ink:#0C0C0C;
+  /* ระบบดีไซน์ Car Dealership 128 — วัดจาก car-dealership-128.webflow.io เอง (v5.6)
+     **ค่าที่วัดจากเว็บจริงต่างจากชุดโทเคนที่ผู้สั่งงานส่งมาหลายจุด ยึดของจริงจากเว็บ**
+     มุมโค้ง 0 ทั้งเว็บ · ปุ่ม padding 18px 24px น้ำหนัก 400 · ระยะ section 130px · คอนเทนเนอร์ 1200px */
+  --void:#000000;
+  --ink:#0E0E0E;
   --paper:#FFFFFF;
   --smoke:#F4F4F3;
-  --line:#E3E3E1;
-  --line-dark:rgba(255,255,255,.10);
-  --mute:#70706A;
-  --mute-dark:rgba(255,255,255,.52);
-  --red:#CC1B1B;
-  --red-hot:#E82323;
+  --line:#E4E4E4;
+  --line-strong:rgba(14,14,14,.5);   /* เส้นผมของกล่องบนพื้นสว่าง ตามที่วัดได้ */
+  --line-dark:rgba(255,255,255,.20);
+  --mute:#535353;                    /* พื้นสว่าง 7.69:1 */
+  --mute-dark:#AFAFAF;               /* พื้นมืด 8.80:1 บน ink · 9.57:1 บนดำ */
+  --red:#9A0F39;                     /* สีเน้นเดียวของระบบ · ขาวบนสีนี้ = 8.40:1 */
+  --red-hot:#9A0F39;
 
   --u:8px;
-  --max:1440px;
+  --max:1200px;
   --pad:40px;
+  --r:0px;                           /* **มุมฉากทั้งเว็บ** วัดจากปุ่ม การ์ด และกล่องทุกชิ้นของเว็บต้นทาง */
 
   --e:cubic-bezier(.16,1,.3,1);
   --e-in:cubic-bezier(.7,0,.3,1);
 
   /* ให้ block-size ไล่ค่าระหว่าง 0 กับ auto ได้ ใช้กับ accordion ที่ /faq และ FAQ ย่อหน้าแรก
-     ใส่ครบทั้ง 6 ไฟล์เพราะ :root ต้องแฮชตรงกัน หน้าที่ไม่มี <details> ก็ไม่มีผลอะไร
+     ใส่ครบทั้ง 8 ไฟล์เพราะ :root ต้องแฮชตรงกัน หน้าที่ไม่มี <details> ก็ไม่มีผลอะไร
      เบราว์เซอร์ที่ยังไม่รองรับจะข้ามบรรทัดนี้ไปเฉยๆ accordion เปิดทันทีแบบเดิม ไม่พัง */
   interpolate-size:allow-keywords;
 }
 /* @end:TOKENS */
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-/* nav ลอยสูง 76px — ถ้าไม่กันระยะไว้ หัวข้อปลายทางของ anchor จะไปมุดใต้แถบ nav
+/* nav ลอยสูง 87px (v5.6) — ถ้าไม่กันระยะไว้ หัวข้อปลายทางของ anchor จะไปมุดใต้แถบ nav
    รวมถึง #main ที่ skip link ชี้ไป ซึ่งเป็นเรื่อง accessibility ตรงๆ (ข้อ 9) */
-[id]{scroll-margin-top:96px}
+[id]{scroll-margin-top:112px}
 body{
   background:var(--paper);color:var(--ink);
   font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
-  font-size:17px;line-height:1.75;font-weight:400;
+  font-size:16px;line-height:1.5;font-weight:400;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
-h1,h2,h3,h4{font-family:'Anuphan',system-ui,sans-serif;font-weight:600;line-height:1.06;letter-spacing:-.02em}
+h1,h2,h3,h4{font-family:'Anuphan',system-ui,sans-serif;font-weight:700;line-height:1.2;letter-spacing:0}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
-:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:var(--r)}
 
 /* ข้ามไปเนื้อหาหลัก — ต้องมีทุกหน้าเพื่อให้คนใช้คีย์บอร์ดไม่ต้องไล่ผ่าน nav ทุกครั้ง (ข้อ 9) */
-.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:0 0 12px 0;z-index:200}
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:var(--r);z-index:200}
 .skip:focus{left:0}
 
 /* เบราว์เซอร์ตัดคำไทยด้วยพจนานุกรมที่ไม่มีคำทับศัพท์ — ครอบคำที่ตัดผิดด้วย .nb */
 .nb{white-space:nowrap}
 
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
-.eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.eyebrow{font-size:12px;font-weight:400;letter-spacing:1px;line-height:1.2;text-transform:uppercase;color:var(--mute)}
 .eyebrow.on-dark{color:var(--mute-dark)}
-.eyebrow .dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;margin-right:10px;vertical-align:2px}
+.eyebrow .dot{display:inline-block;width:5px;height:5px;background:currentColor;border-radius:50%;margin-right:10px;vertical-align:2px}
 
 /* ค่าที่ยังไม่ได้รับจากลูกค้า — ข้อ 10 ห้ามแต่งตัวเลขหรือข้อความแทน */
-.var{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--smoke);border:1px dashed #B8B8B4;border-radius:6px;padding:1px 8px;font-size:.72em;letter-spacing:0;color:#5C5C57;white-space:nowrap;font-weight:500}
+.var{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--smoke);border:1px dashed #B8B8B4;border-radius:var(--r);padding:2px 8px;font-size:.78em;letter-spacing:0;color:#535353;white-space:nowrap;font-weight:400}
 .on-void .var{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.24);color:rgba(255,255,255,.82)}
 
 /* ---------------- reveal ---------------- */
@@ -114,37 +119,44 @@ body.loaded .rvl{opacity:1;transform:none}
 
 /* @shared:NAV_CSS */
 /* ---------------- nav ---------------- */
-.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .5s var(--e),border-color .5s var(--e),backdrop-filter .5s}
-.nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:transparent;transition:background .5s var(--e)}
-.nav.solid{background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(20px)}
+/* Car Dealership 128 — แถบโปร่งใสลอยทับ hero มืด ตัวอักษรขาว ขอบล่างเป็นเส้นผมขาว 1px
+   เว็บต้นทางเป็น position:absolute (เลื่อนแล้วหายไปกับ hero) **เราคง fixed ไว้**
+   เพราะทุกหน้าของเราต้องมีทางกลับตลอดเวลา และ 5 หน้าไม่มี hero เต็มจอให้ absolute เกาะ
+   สถานะ .solid ตอนเลื่อนจึงยังอยู่ แต่เปลี่ยนเป็นพื้นขาวทึบ ไม่ใช่ฝ้าเบลอ ตามภาษาแบนของระบบนี้ */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .4s var(--e),border-color .4s var(--e)}
+.nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:rgba(255,255,255,.32);transition:background .4s var(--e)}
+.nav.solid{background:var(--paper)}
 .nav.solid::after{background:var(--line)}
-.nav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:76px;display:flex;align-items:center;gap:48px}
+.nav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:87px;display:flex;align-items:center;gap:40px}
 /* โลโก้ — กำหนด aspect-ratio ไว้ล่วงหน้าเพื่อไม่ให้เกิด layout shift ตามข้อ 9 */
 .brand{flex:none;display:block;line-height:0}
 .brand img{display:block;width:auto;height:24px;aspect-ratio:817/96}
-/* พื้นมืดใช้โลโก้ขาวล้วน — ตัวอักษร FINNIX เป็นสีดำจึงจมหายบนพื้น --void
-   และการตัดแดงออกช่วยให้ hero ไม่แดงเกินโควตาข้อ 4 */
-/* ไม่ใส่ transition บน filter โดยตั้งใจ — เบราว์เซอร์ interpolate filter list ข้ามสถานะไม่ได้
+/* พื้นมืดใช้โลโก้ขาวล้วน — ตัวอักษร FINNIX เป็นสีดำจึงจมหายบนพื้นมืด
+   ไม่ใส่ transition บน filter โดยตั้งใจ — เบราว์เซอร์ interpolate filter list ข้ามสถานะไม่ได้
    ทำให้ค่าค้างที่ขาวแล้วโลโก้หายไปบนพื้นขาว การสลับทันทีมองไม่ออกอยู่แล้วเพราะ nav เปลี่ยนพื้นหลังพร้อมกัน */
 .nav .brand img{filter:brightness(0) invert(1)}
 .nav.solid .brand img{filter:none}
-/* ลิงก์สูง 44px ตามเกณฑ์ขนาดพื้นที่กดในข้อ 9 */
-.nav-links{display:flex;gap:30px;margin-left:auto;font-size:15px;font-weight:400}
-.nav-links a{color:rgba(255,255,255,.78);position:relative;display:flex;align-items:center;height:44px;transition:color .4s var(--e)}
+/* nav-link = 16/400 ไม่มี tracking · ลิงก์สูง 44px ตามเกณฑ์ขนาดพื้นที่กดในข้อ 9 */
+.nav-links{display:flex;gap:30px;margin-left:auto;font-size:16px;font-weight:400;line-height:1.2}
+.nav-links a{color:var(--paper);position:relative;display:flex;align-items:center;height:44px;transition:color .3s var(--e)}
 .nav.solid .nav-links a{color:var(--mute)}
-.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:11px;height:1px;background:var(--red);transition:right .45s var(--e)}
-.nav-links a:hover{color:#fff}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:11px;height:1px;background:currentColor;transition:right .4s var(--e)}
+.nav-links a:hover{color:var(--paper)}
 .nav.solid .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after{right:0}
-/* ลิงก์ของหน้าปัจจุบัน — เส้นใต้ใช้ currentColor จางๆ **ไม่ใช่แดง**
-   หน้าจอบนสุดมี nav CTA แดง + จุด eyebrow แดงอยู่แล้ว ถ้าเส้นนี้เป็นแดงด้วยจะเป็นจุดที่ 3 ทุกหน้า
-   เกินโควตาข้อ 4 · technology.html ทำถูกมาตั้งแต่ต้น อีก 5 หน้าคัดลอกไปแล้วทำเป็นแดง
-   v3.3 ยกเวอร์ชันของ technology ขึ้นเป็นฉบับจริงแล้ว */
-.nav-links a[aria-current]{color:#fff}
+/* ลิงก์ของหน้าปัจจุบัน — เส้นใต้ใช้ currentColor **ไม่ใช่สีเน้น**
+   สีเน้นของระบบนี้สงวนไว้ให้ปุ่มการกระทำเดียวต่อหน้าจอเท่านั้น */
+.nav-links a[aria-current]{color:var(--paper)}
 .nav.solid .nav-links a[aria-current]{color:var(--ink)}
-.nav-links a[aria-current]::after{right:0;background:currentColor;opacity:.28}
-.nav-cta{flex:none;display:flex;align-items:center;background:var(--red);color:#fff;font-size:14px;font-weight:500;height:44px;padding:0 22px;border-radius:12px;transition:background .3s var(--e),transform .3s var(--e)}
-.nav-cta:hover{background:var(--red-hot);transform:translateY(-1px)}
+.nav-links a[aria-current]::after{right:0;background:currentColor}
+/* CTA บนแถบ — เว็บต้นทางใช้ปุ่มขอบขาวโปร่ง ไม่ใช่ปุ่มทึบสีเน้น
+   **สีเน้นอยู่ที่ปุ่มปิดท้ายของแต่ละหน้าที่เดียว** แถบบนจึงไม่กินโควตาสีเน้น */
+.nav-cta{flex:none;display:flex;align-items:center;background:transparent;color:var(--paper);
+  font-size:16px;font-weight:400;line-height:1.2;min-height:44px;padding:10px 24px;
+  border:1px solid rgba(255,255,255,.5);border-radius:var(--r);transition:background .3s var(--e),color .3s var(--e),border-color .3s var(--e)}
+.nav-cta:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.nav.solid .nav-cta{color:var(--ink);border-color:var(--ink)}
+.nav.solid .nav-cta:hover{background:var(--ink);color:var(--paper)}
 .burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
 .burger span{position:absolute;left:11px;right:11px;height:1.5px;background:#fff;transition:.4s var(--e)}
 .burger span:nth-child(1){top:17px}.burger span:nth-child(2){bottom:17px}
@@ -154,7 +166,7 @@ body.loaded .rvl{opacity:1;transform:none}
 /* ---------------- เมนูมือถือ ---------------- */
 /* สถานะ UI ไม่ใช่ motion เพื่อการตกแต่ง จึงไม่นับรวมในงบ 4 อย่างของข้อ 5 */
 .drawer{display:none;position:fixed;inset:0;z-index:99;background:var(--void);
-  flex-direction:column;justify-content:center;padding:76px var(--pad) 40px;
+  flex-direction:column;justify-content:center;padding:87px var(--pad) 40px;
   opacity:0;visibility:hidden;transition:opacity .4s var(--e),visibility .4s var(--e)}
 body.menu-open .drawer{opacity:1;visibility:visible}
 body.menu-open{overflow:hidden}
@@ -164,21 +176,21 @@ body.menu-open .nav .brand img{filter:brightness(0) invert(1)}
 body.menu-open .burger span{background:#fff;top:50%;bottom:auto;margin-top:-1px}
 body.menu-open .burger span:nth-child(1){transform:rotate(45deg)}
 body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
+/* น้ำหนักคู่เดียว 400/700 ตามระบบ · ไม่มี tracking ที่ขนาดใหญ่ */
 .drawer a{display:flex;align-items:center;min-height:56px;font-family:'Anuphan',sans-serif;
-  font-size:26px;font-weight:600;letter-spacing:-.02em;color:#fff;
+  font-size:24px;font-weight:700;line-height:1.2;letter-spacing:0;color:var(--paper);
   border-bottom:1px solid var(--line-dark)}
-.drawer .drawer-cta{margin-top:40px;justify-content:center;background:#fff;color:var(--ink);
-  border:0;border-radius:14px;font-size:16px;min-height:56px}
+/* ปุ่มในลิ้นชักเป็นทรงเดียวกับ .btn ของระบบ — มุมฉาก ขอบ 1px padding 18px 24px */
+.drawer .drawer-cta{margin-top:40px;justify-content:center;background:var(--paper);color:var(--ink);
+  border:1px solid var(--paper);border-radius:var(--r);font-size:16px;font-weight:400;min-height:56px}
 /* @end:DRAWER_CSS */
 
 /* ---------------- ปุ่ม ---------------- */
-.btn{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 30px;border-radius:14px;font-size:15px;font-weight:500;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:transform .35s var(--e),background .35s var(--e),border-color .35s var(--e),color .35s var(--e)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:18px 24px;border-radius:var(--r);font-size:16px;font-weight:400;line-height:1.2;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:background .3s var(--e),border-color .3s var(--e),color .3s var(--e)}
 .btn .ar{transition:transform .4s var(--e)}
 .btn:hover .ar{transform:translateX(5px)}
 /* แดงสงวนไว้ให้ nav CTA เท่านั้นในหน้านี้ — ปุ่มในเนื้อหาใช้ดำ ปุ่มบนพื้นมืดใช้ขาว (ข้อ 4) */
-.btn-dark{background:var(--ink);color:#fff}
-.btn-dark:hover{transform:translateY(-2px);background:#000}
-.btn-light{background:#fff;color:var(--ink)}
+.btn-light{background:var(--paper);color:var(--ink);border-color:var(--paper)}
 .btn-light:hover{transform:translateY(-2px);background:#F0F0EE}
 
 /* ---------------- หัวหน้า — hero มืด + vignette (MODE B: ไม่มีภาพถ่าย ใช้ gradient แทน) ---------------- */
@@ -193,66 +205,51 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 .page-head p{color:var(--mute-dark);margin-top:32px;max-width:52ch;font-size:18px}
 
 /* ---------------- section ---------------- */
-.sec{padding:132px 0}
+.sec{padding:130px 0}
 
-/* ---------------- hero สองคอลัมน์ตามหน้าต้นแบบ — ข้อมูลติดต่อซ้าย · ฟอร์มขวา ---------------- */
-.hero-c{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+/* ---------------- hero — v5.1 เหลือคอลัมน์เดียว ----------------
+   **ฟอร์ม 3 ช่องถูกถอดออกทั้งชุดตามคำสั่งผู้สั่งงาน** (markup · CSS · JS · .btn-dark ที่ใช้กับปุ่มส่งอย่างเดียว)
+   เดิมเป็นสองคอลัมน์ตามหน้าต้นแบบ — ข้อมูลติดต่อซ้าย ฟอร์มขวา · พอไม่มีฟอร์มก็เหลือคอลัมน์ลอย ๆ ข้างเดียว
+   จัดใหม่เป็น ข้อความบน + ช่องทางติดต่อเป็นกริดเต็มความกว้างข้างล่าง
+   **ปิดปมฟอร์มโหมดสาธิตที่ค้างมาตั้งแต่ v2.2 ไปด้วย** — ไม่มีฟอร์มที่ส่งแล้วหายเงียบเหลือแล้ว
+   ช่องทางติดต่อจริงคือ Hotline ที่กดโทรได้ กับ LINE/Facebook/Instagram ที่ยังรอค่าจริง
+   เส้นคั่นมาจาก gap 1px ที่เห็นพื้นของกล่องผ่านขึ้นมา ไม่ได้ใช้ border รายช่อง
+   **ทำแบบนี้เพราะจำนวนคอลัมน์เปลี่ยนตามเบรกพอยต์** ถ้าใช้ border ต้องมาไล่ปิดขอบท้ายแถวทุกจุดตัด */
+.hero-c{display:grid;gap:56px}
+.hero-c-t{max-width:56ch}
 .hero-c .rule{width:56px;height:2px;background:rgba(255,255,255,.32);margin:32px 0}
-.chan-box{margin-top:40px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);
-  border-radius:16px;padding:32px 32px 24px}
-.chan-row{display:flex;align-items:baseline;gap:16px;padding-bottom:16px;margin-bottom:16px;
-  border-bottom:1px solid rgba(255,255,255,.10)}
-.chan-row:last-child{border-bottom:0;margin-bottom:0}
-.chan-row .k{flex:none;width:96px;font-size:13px;color:var(--mute-dark)}
-.chan-row b{font-weight:500;font-size:16px;word-break:break-word}
-.chan-row a{border-bottom:1px solid rgba(255,255,255,.32)}
-.chan-row a:hover{border-bottom-color:#fff}
+.chan-box{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--r);overflow:hidden}
+.chan-cell{background:var(--void);padding:32px 24px}
+/* ป้ายช่องทางมีไอคอนนำหน้าตั้งแต่ v5.7 (ผู้สั่งงานสั่งเพิ่ม) — SVG ฝังในไฟล์ ไม่ใช่ไลบรารีนอก (ข้อ 9)
+   เส้นเป็น currentColor ล้วน จึงไม่กินโควตาแดงข้อ 4 · ชุดเดียวกับไอคอนใน footer */
+.chan-cell .k{display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute-dark)}
+.chan-ic{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round}
+.chan-cell b{display:block;margin-top:16px;font-weight:400;font-size:16px;word-break:break-word}
+.chan-cell a{border-bottom:1px solid rgba(255,255,255,.32)}
+.chan-cell a:hover{border-bottom-color:#fff}
 
-/* ฟอร์ม — การ์ดขาวลอยบนพื้นมืด · 3 ช่องตามหน้าต้นแบบ */
-.cform{background:var(--paper);color:var(--ink);border-radius:16px;padding:40px}
-.fld{position:relative;margin-bottom:24px}
-.fld input,.fld textarea{display:block;width:100%;padding:24px 16px 8px;
-  font:inherit;font-size:15px;color:var(--ink);background:var(--paper);
-  border:1px solid var(--line);border-radius:12px}
-.fld textarea{resize:vertical;min-height:160px}
-.fld label{position:absolute;left:16px;top:16px;font-size:15px;color:var(--mute);
-  pointer-events:none;transition:transform .18s var(--e),font-size .18s var(--e);transform-origin:left top}
-.fld input:focus + label,.fld input:not(:placeholder-shown) + label,
-.fld textarea:focus + label,.fld textarea:not(:placeholder-shown) + label{transform:translateY(-10px);font-size:11px}
-.fld input:focus,.fld textarea:focus{border-color:var(--ink)}
-.fld.err input,.fld.err textarea{border-color:var(--red)}
-.fld .msg{display:none;margin-top:8px;font-size:13px;color:var(--red)}
-.fld.err .msg{display:block}
-.hp{position:absolute;left:-9999px;top:0;height:1px;width:1px;overflow:hidden}
-.cform .btn{width:100%;justify-content:center}
-.cform .btn .spin{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.35);
-  border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.cform.busy .btn .spin{display:inline-block}
-.cform.busy .btn{opacity:.7;pointer-events:none}
-/* การ์ดฟอร์มอยู่ในโซนพื้นมืด — ต้องชนะ .page-head p ที่เป็นสีขาว ไม่งั้นตัวหนังสือหายไปบนการ์ดขาว */
-.cform .form-note{margin-top:16px;font-size:13px;color:var(--mute);line-height:1.7}
-.cform .form-ok p{color:var(--mute)}
-.form-ok{display:none;text-align:center;padding:32px 0}
-.form-ok .ck{width:56px;height:56px;margin:0 auto;border-radius:50%;background:var(--ink);
-  display:flex;align-items:center;justify-content:center;color:#fff}
-.form-ok h2{font-size:22px;margin-top:24px}
-.form-ok p{color:var(--mute);margin-top:8px;font-size:15px}
-.form-ok .again{display:inline-block;margin-top:24px;font:inherit;font-size:15px;font-weight:500;
-  color:var(--ink);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
-.cform.sent form{display:none}
-.cform.sent .form-ok{display:block}
-.form-err{display:none;margin-bottom:24px;padding:16px;border:1px solid var(--red);
-  border-radius:12px;background:#FBECEC;color:#B02020;font-size:14px}
-.cform.fail .form-err{display:block}
+
 
 /* สำนักงานใหญ่ — v3.4 ตัดคอลัมน์ "ค้นหาตัวแทน" กับตัวคั่น OR ออก
    ตัวค้นหาตัวแทนทั้งชุดย้ายไป centers.html แล้ว หน้านี้เหลือหน้าที่เดียวคือบอกช่องทางติดต่อ */
-.hq{max-width:640px}
 .hq h2{font-size:24px;letter-spacing:-.02em}
+/* v5.1 กระจายเป็นสองคอลัมน์ เพราะหน้าโล่งขึ้นมากหลังถอดฟอร์ม */
+.hq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 64px;margin-top:8px}
 .hq .grp{margin-top:24px;font-size:15px;line-height:1.8}
-.hq .grp span{display:block;font-size:13px;color:var(--mute)}
-.hq .tel{font-weight:500}
+/* **ต้องยกเว้น .var ออกจากกฎนี้** — เดิมเขียน `.hq .grp span` เฉยๆ ซึ่งจับ .var ด้วย
+   พอ .var กลายเป็น display:block มันยืดเต็มความกว้างคอลัมน์เป็นแถบเทา
+   **หน้าตาเหมือนช่องกรอกฟอร์มที่ว่างเปล่า** ซึ่งชวนเข้าใจผิดหนักขึ้นหลัง v5.1 ถอดฟอร์มออกไปแล้ว
+   .var ออกแบบมาเป็นชิปอินไลน์ (nowrap + padding แคบ) ต้องปล่อยให้กว้างเท่าข้อความเท่านั้น */
+.hq .grp > span:not(.var){display:block;font-size:13px;color:var(--mute)}
+.hq .grp .var{display:inline-block}
+.hq .tel{font-weight:400}
+/* v5.1 เดิมใช้ .form-note ซึ่งกฎจริงเป็น .cform .form-note — พอถอดฟอร์มออก ย่อหน้านี้เลยกำพร้า
+   ไม่มีสไตล์เลยและสคริปต์หา CSS ตายมองไม่เห็น เพราะมันไล่ CSS ที่ไม่มี markup ไม่ใช่ทางกลับกัน */
+.hq-note{margin-top:40px;font-size:14px;color:var(--mute);line-height:1.8}
+.hq-note a{border-bottom:1px solid var(--line)}
 
 /* ปิดท้าย */
 .closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
@@ -262,15 +259,34 @@ body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
 
 /* @shared:FOOTER_CSS */
 /* ---------------- footer ---------------- */
-footer{background:var(--void);color:#fff;padding:96px 0 40px}
-.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px}
+/* Car Dealership 128 — พื้นดำสนิท · โลโก้บนสุด · เส้นผมคาดใต้โลโก้
+   แล้วเป็นคอลัมน์ที่คั่นด้วยเส้นตั้ง หัวคอลัมน์ตัวหนา 20/700 จัดกลาง ลิงก์ 16/400 สี muted
+   วัดจากเว็บต้นทาง: พื้น #000 · padding 80px บน 60px ล่าง */
+footer{background:var(--void);color:var(--paper);padding:80px 0 60px}
+/* เส้นผมคาดใต้โลโก้ — ของต้นทางกินเต็มความกว้างคอนเทนเนอร์ */
+.f-brand{padding-bottom:30px;border-bottom:1px solid var(--line-dark);margin-bottom:50px}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:50px}
 /* footer เป็นพื้นมืดเสมอ จึงใช้โลโก้ขาวล้วนตลอด */
 .f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
-.f-brand p{color:var(--mute-dark);font-size:15px;margin-top:20px;max-width:32ch}
-.f-col h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.46);font-weight:500;margin-bottom:16px}
-.f-col a{display:flex;align-items:center;min-height:44px;color:rgba(255,255,255,.72);font-size:15px;transition:color .3s var(--e)}
-.f-col a:hover{color:var(--red-hot)}
-.f-bot{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--mute-dark)}
+.f-brand p{color:var(--mute-dark);font-size:16px;line-height:1.5;margin-top:20px;max-width:38ch}
+/* ช่องทางติดต่อแบบไอคอน (v5.7 · ผู้สั่งงานสั่งเพิ่ม) — โทรเป็น tel: จริงจุดเดียวของ footer
+   **LINE กับ Facebook ยังไม่มีค่าจริง (ค้างตัวแปร) จึงชี้ contact.html ที่รวมช่องทางไว้**
+   ห้ามเปลี่ยนเป็น href="#" หรือลิงก์เดา — เว็บนี้ไม่มีลิงก์ตายเหลือแล้ว
+   ไอคอนวาดเองเป็น SVG ฝังในไฟล์ ไม่ใช่ไอคอนฟอนต์หรือไลบรารีนอก (ข้อ 9)
+   สีเป็น currentColor ล้วน จึงไม่กินโควตาแดงข้อ 4 · กล่อง 44x44 ตามขนาดพื้นที่กดขั้นต่ำ */
+.f-social{display:flex;gap:8px;margin-top:24px}
+.f-social a{display:flex;align-items:center;justify-content:center;width:44px;height:44px;
+  border:1px solid var(--line-dark);color:var(--mute-dark);
+  transition:color .3s var(--e),border-color .3s var(--e)}
+.f-social a:hover{color:var(--paper);border-color:var(--paper)}
+.f-social svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round}
+/* หัวคอลัมน์ = h6 ของระบบ 20/700 สีขาว **ไม่ใช่ป้ายตัวเล็ก tracking กว้างแบบเดิม** */
+.f-col h3{font-family:'Anuphan',sans-serif;font-size:20px;font-weight:700;line-height:1.2;
+  letter-spacing:0;text-transform:none;color:var(--paper);margin-bottom:15px}
+.f-col a{display:flex;align-items:center;min-height:44px;color:var(--mute-dark);font-size:16px;line-height:1.5;transition:color .3s var(--e)}
+.f-col a:hover{color:var(--paper)}
+.f-bot{margin-top:60px;padding-top:24px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:14px;line-height:1.2;color:var(--mute-dark)}
 /* @end:FOOTER_CSS */
 
 /* ---------------- responsive ---------------- */
@@ -281,6 +297,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .hero-c{grid-template-columns:1fr;gap:48px}
 }
 @media(max-width:900px){
+  .chan-box{grid-template-columns:repeat(2,1fr)}
   :root{--pad:24px}
   .sec{padding:88px 0}
   .page-head{padding:152px 0 72px}
@@ -288,10 +305,9 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   .f-grid{grid-template-columns:1fr 1fr;gap:40px}
 }
 @media(max-width:620px){
-  .cform{padding:32px 24px}
   .chan-box{padding:24px}
-  .chan-row{flex-direction:column;gap:4px}
-  .chan-row .k{width:auto}
+  .chan-box{grid-template-columns:1fr}
+  .hq-grid{grid-template-columns:1fr;gap:0}
   .f-grid{grid-template-columns:1fr}
   .drawer a{font-size:22px;min-height:52px}
 }
@@ -324,6 +340,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
     <div class="nav-links">
       <a href="index.html">หน้าแรก</a>
+      <a href="films.html">ฟิล์มรถยนต์</a>
       <a href="about.html">เกี่ยวกับเรา</a>
       <a href="technology.html">เทคโนโลยี</a>
       <a href="gallery.html">ผลงาน</a>
@@ -339,6 +356,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <!-- @shared:DRAWER_HTML -->
 <div class="drawer" id="drawer">
   <a href="index.html">หน้าแรก</a>
+  <a href="films.html">ฟิล์มรถยนต์</a>
   <a href="about.html">เกี่ยวกับเรา</a>
   <a href="technology.html">เทคโนโลยี</a>
   <a href="gallery.html">ผลงาน</a>
@@ -355,47 +373,17 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
 <header class="page-head on-void">
   <div class="wrap">
     <div class="hero-c">
-      <div>
+      <div class="hero-c-t">
         <div class="eyebrow on-dark rvl"><span class="dot"></span>CONTACT</div>
         <h1 class="rvl" style="transition-delay:.08s">ติดต่อเรา</h1>
         <div class="rule rvl" style="transition-delay:.12s"></div>
         <p class="rvl" style="transition-delay:.16s">บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มใสกันรอยรถยนต์ <span class="nb">ห้าซีรีส์</span> สำหรับสภาพอากาศเมืองไทย</p>
-        <div class="chan-box rvl" style="transition-delay:.24s">
-          <div class="chan-row"><span class="k">Hotline</span><b><a href="tel:0635978497">06-3597-8497</a></b></div>
-          <div class="chan-row"><span class="k">LINE</span><b><span class="var">{{LINE_OA_ID}}</span></b></div>
-          <div class="chan-row"><span class="k">Facebook</span><b><span class="var">{{FACEBOOK_URL}}</span></b></div>
-          <div class="chan-row"><span class="k">Instagram</span><b><span class="var">{{INSTAGRAM_URL}}</span></b></div>
-        </div>
       </div>
-
-      <div class="cform rvl" id="cform-wrap" style="transition-delay:.2s">
-        <form id="cform" novalidate>
-          <div class="form-err" role="alert">ส่งไม่สำเร็จ — ข้อความของคุณยังอยู่ครบ ลองอีกครั้งหรือโทรหาเราแทน</div>
-          <div class="fld">
-            <input id="f-name" name="name" type="text" placeholder=" " autocomplete="name" required>
-            <label for="f-name">ชื่อ</label>
-            <p class="msg" id="f-name-err">กรอกชื่อ</p>
-          </div>
-          <div class="fld">
-            <input id="f-mail" name="email" type="email" placeholder=" " autocomplete="email" required>
-            <label for="f-mail">อีเมล</label>
-            <p class="msg" id="f-mail-err">รูปแบบอีเมลไม่ถูกต้อง</p>
-          </div>
-          <div class="fld">
-            <textarea id="f-msg" name="message" placeholder=" " required></textarea>
-            <label for="f-msg">ข้อความ</label>
-            <p class="msg" id="f-msg-err">พิมพ์ข้อความที่อยากสอบถาม</p>
-          </div>
-          <div class="hp" aria-hidden="true"><label>ห้ามกรอกช่องนี้<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
-          <button type="submit" class="btn btn-dark">ส่ง <span class="spin" aria-hidden="true"></span></button>
-          <p class="form-note">โหมดสาธิต — ข้อความยังไม่ถูกส่งไปที่ใด จนกว่าระบบรับจะเชื่อมกับ <span class="var">{{COMPANY_EMAIL}}</span> · ระหว่างนี้โทรหรือทัก LINE ได้เลย</p>
-        </form>
-        <div class="form-ok" aria-live="polite">
-          <div class="ck"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
-          <h2>ขอบคุณครับ</h2>
-          <p>ทีมงานจะติดต่อกลับภายใน 1 วันทำการ<br>(โหมดสาธิต — ยังไม่มีการส่งจริง)</p>
-          <button type="button" class="again" id="form-reset">ส่งข้อความอีกครั้ง</button>
-        </div>
+      <div class="chan-box rvl" style="transition-delay:.24s">
+        <div class="chan-cell"><span class="k"><svg class="chan-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 3.5h3.1l1.5 3.9-2 1.4a12 12 0 006.2 6.2l1.4-2 3.9 1.5v3.1a1.9 1.9 0 01-2.1 1.9A17.2 17.2 0 014.5 5.6 1.9 1.9 0 016.4 3.5z"/></svg>Hotline</span><b><a href="tel:0635978497">06-3597-8497</a></b></div>
+        <div class="chan-cell"><span class="k"><svg class="chan-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.3c-4.3 0-7.8 2.8-7.8 6.2 0 3.1 2.8 5.7 6.5 6.1.7.1.9.4.8 1l-.3 1.6c-.1.5.3.7.7.5 3.5-1.6 6-4 7.2-5.7a5.6 5.6 0 001.2-3.5c0-3.4-3.9-6.2-8.3-6.2z"/><path d="M8.6 8.9v3.4h2M12 8.9v3.4M14.2 12.3V8.9l2.3 3.4V8.9"/></svg>LINE</span><b><span class="var">{{LINE_OA_ID}}</span></b></div>
+        <div class="chan-cell"><span class="k"><svg class="chan-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17"/><path d="M15.4 7.6h-1.6c-1 0-1.7.7-1.7 1.8v1.5h-1.8m5.1 0h-5.1m1.8 0v8.6"/></svg>Facebook</span><b><span class="var">{{FACEBOOK_URL}}</span></b></div>
+        <div class="chan-cell"><span class="k"><svg class="chan-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9"/></svg>Instagram</span><b><span class="var">{{INSTAGRAM_URL}}</span></b></div>
       </div>
     </div>
   </div>
@@ -406,12 +394,14 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   <div class="wrap">
     <div class="hq rv">
       <h2>สำนักงานใหญ่</h2>
-      <div class="grp"><span>ที่อยู่</span><span class="var">{{COMPANY_ADDRESS}}</span></div>
-      <div class="grp"><span>โทรศัพท์</span><a href="tel:0635978497" class="tel">06-3597-8497</a></div>
-      <div class="grp"><span>อีเมล</span><span class="var">{{COMPANY_EMAIL}}</span></div>
-      <div class="grp"><span>เวลาทำการ</span><span class="var">{{OFFICE_HOURS}}</span></div>
-      <div class="grp"><span>เลขทะเบียนนิติบุคคล</span><span class="var">{{COMPANY_REG_NO}}</span></div>
-      <p class="form-note" style="margin-top:32px">อยากรู้ว่าติดตั้งได้ที่ไหนใกล้บ้าน ดูรายชื่อตัวแทนพร้อมแผนที่ได้ที่ <a href="centers.html">หาศูนย์ติดตั้ง</a></p>
+      <div class="hq-grid">
+        <div class="grp"><span>ที่อยู่</span><span class="var">{{COMPANY_ADDRESS}}</span></div>
+        <div class="grp"><span>โทรศัพท์</span><a href="tel:0635978497" class="tel">06-3597-8497</a></div>
+        <div class="grp"><span>อีเมล</span><span class="var">{{COMPANY_EMAIL}}</span></div>
+        <div class="grp"><span>เวลาทำการ</span><span class="var">{{OFFICE_HOURS}}</span></div>
+        <div class="grp"><span>เลขทะเบียนนิติบุคคล</span><span class="var">{{COMPANY_REG_NO}}</span></div>
+      </div>
+      <p class="hq-note">อยากรู้ว่าติดตั้งได้ที่ไหนใกล้บ้าน ดูรายชื่อตัวแทนพร้อมแผนที่ได้ที่ <a href="centers.html">หาศูนย์ติดตั้ง</a></p>
     </div>
   </div>
 </section>
@@ -437,7 +427,12 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
     <div class="f-grid">
       <div class="f-brand">
         <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
-        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
+        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับ<span class="nb">สภาพอากาศเมืองไทย</span></p>
+        <ul class="f-social">
+          <li><a href="tel:0635978497" aria-label="โทรหาฟินนิกซ์ ฟิล์ม 06-3597-8497"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 3.5h3.1l1.5 3.9-2 1.4a12 12 0 006.2 6.2l1.4-2 3.9 1.5v3.1a1.9 1.9 0 01-2.1 1.9A17.2 17.2 0 014.5 5.6 1.9 1.9 0 016.4 3.5z"/></svg></a></li>
+          <li><a href="contact.html" aria-label="ไลน์ของฟินนิกซ์ ฟิล์ม"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.3c-4.3 0-7.8 2.8-7.8 6.2 0 3.1 2.8 5.7 6.5 6.1.7.1.9.4.8 1l-.3 1.6c-.1.5.3.7.7.5 3.5-1.6 6-4 7.2-5.7a5.6 5.6 0 001.2-3.5c0-3.4-3.9-6.2-8.3-6.2z"/><path d="M8.6 8.9v3.4h2M12 8.9v3.4M14.2 12.3V8.9l2.3 3.4V8.9"/></svg></a></li>
+          <li><a href="contact.html" aria-label="เฟซบุ๊กของฟินนิกซ์ ฟิล์ม"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17"/><path d="M15.4 7.6h-1.6c-1 0-1.7.7-1.7 1.8v1.5h-1.8m5.1 0h-5.1m1.8 0v8.6"/></svg></a></li>
+        </ul>
       </div>
       <div class="f-col">
         <h3>บริษัท</h3>
@@ -445,7 +440,7 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
       </div>
       <div class="f-col">
         <h3>บริการ</h3>
-        <a href="centers.html">หาศูนย์ติดตั้ง</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+        <a href="films.html">ฟิล์มรถยนต์</a><a href="centers.html">หาศูนย์ติดตั้ง</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
       </div>
     </div>
     <div class="f-bot">
@@ -512,46 +507,6 @@ footer{background:var(--void);color:#fff;padding:96px 0 40px}
   });
 <!-- @end:JS_NAV -->
 
-  /* ==== ฟอร์ม 3 ช่องตามหน้าต้นแบบ — validate on blur · โหมดสาธิต ==== */
-  // TODO: wire to email — ยังไม่มีปลายทางจริง (COMPANY_EMAIL ยังค้าง) หน้าแสดงป้าย "โหมดสาธิต" กำกับไว้แล้ว
-  var wrap = document.getElementById('cform-wrap');
-  var form = document.getElementById('cform');
-  function setErr(id, bad){
-    var el = document.getElementById(id);
-    el.closest('.fld').classList.toggle('err', bad);
-    el.setAttribute('aria-invalid', bad ? 'true' : 'false');
-    if(bad) el.setAttribute('aria-describedby', id + '-err');
-  }
-  var checks = {
-    'f-name': function(v){ return v.trim().length > 0; },
-    'f-mail': function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); },
-    'f-msg':  function(v){ return v.trim().length > 0; }
-  };
-  Object.keys(checks).forEach(function(id){
-    var el = document.getElementById(id);
-    el.addEventListener('blur', function(){ setErr(id, !checks[id](el.value)); });
-  });
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    if(form.elements.website.value) return; // honeypot
-    var bad = false;
-    Object.keys(checks).forEach(function(id){
-      var el = document.getElementById(id);
-      var ok = checks[id](el.value);
-      setErr(id, !ok);
-      if(!ok && !bad){ bad = true; el.focus(); }
-    });
-    if(bad) return;
-    wrap.classList.add('busy');
-    setTimeout(function(){                       // จำลอง request — โหมดสาธิต
-      wrap.classList.remove('busy');
-      wrap.classList.add('sent');
-    }, 600);
-  });
-  document.getElementById('form-reset').addEventListener('click', function(e){
-    e.preventDefault();
-    wrap.classList.remove('sent', 'fail');
-  });
 })();
 </script>
 </body>

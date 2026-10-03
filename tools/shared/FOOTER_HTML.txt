@@ -3,7 +3,12 @@
     <div class="f-grid">
       <div class="f-brand">
         <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
-        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับสภาพอากาศเมืองไทย</p>
+        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับ<span class="nb">สภาพอากาศเมืองไทย</span></p>
+        <ul class="f-social">
+          <li><a href="tel:0635978497" aria-label="โทรหาฟินนิกซ์ ฟิล์ม 06-3597-8497"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 3.5h3.1l1.5 3.9-2 1.4a12 12 0 006.2 6.2l1.4-2 3.9 1.5v3.1a1.9 1.9 0 01-2.1 1.9A17.2 17.2 0 014.5 5.6 1.9 1.9 0 016.4 3.5z"/></svg></a></li>
+          <li><a href="contact.html" aria-label="ไลน์ของฟินนิกซ์ ฟิล์ม"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.3c-4.3 0-7.8 2.8-7.8 6.2 0 3.1 2.8 5.7 6.5 6.1.7.1.9.4.8 1l-.3 1.6c-.1.5.3.7.7.5 3.5-1.6 6-4 7.2-5.7a5.6 5.6 0 001.2-3.5c0-3.4-3.9-6.2-8.3-6.2z"/><path d="M8.6 8.9v3.4h2M12 8.9v3.4M14.2 12.3V8.9l2.3 3.4V8.9"/></svg></a></li>
+          <li><a href="contact.html" aria-label="เฟซบุ๊กของฟินนิกซ์ ฟิล์ม"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17"/><path d="M15.4 7.6h-1.6c-1 0-1.7.7-1.7 1.8v1.5h-1.8m5.1 0h-5.1m1.8 0v8.6"/></svg></a></li>
+        </ul>
       </div>
       <div class="f-col">
         <h3>บริษัท</h3>
@@ -11,7 +16,7 @@
       </div>
       <div class="f-col">
         <h3>บริการ</h3>
-        <a href="centers.html">หาศูนย์ติดตั้ง</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
+        <a href="films.html">ฟิล์มรถยนต์</a><a href="centers.html">หาศูนย์ติดตั้ง</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
       </div>
     </div>
     <div class="f-bot">
