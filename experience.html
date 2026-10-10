@@ -1,0 +1,122 @@
+<!-- JOB: TURN INTEREST INTO INTENT | USER FEELS: แล้วมันกันร้อนจริงไหม | NEXT: /dealers.html -->
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ลองของจริง | FINNIX FILM</title>
+  <meta name="description" content="ลองสัมผัสฟิล์มฟินนิกซ์ที่จุดทดลอง ก่อนตัดสินใจ">
+  <!-- @assets -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/journey.css">
+  <link rel="stylesheet" href="/merge.css">
+  <script src="/content.js" defer></script>
+  <script src="/app.js" defer></script>
+  <!-- @end assets -->
+</head>
+<body class="inner-page">
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<!-- @header -->
+<header>
+  <a href="/" class="logo"><img src="/assets/logo-finnix-web.png" alt="FINNIX FILM หน้าแรก" width="817" height="96"></a>
+  <nav id="nav" aria-label="เมนูหลัก">
+    <a href="/">หน้าแรก</a>
+    <a href="/films.html">ฟิล์ม</a>
+    <a href="/works.html">ผลงาน</a>
+    <a href="/experience.html" aria-current="page">ลองของจริง</a>
+    <a href="/about.html">เกี่ยวกับเรา</a>
+    <a class="nav-extra" href="/dealers.html">หาร้านใกล้คุณ</a>
+  </nav>
+  <a class="pill nav-dealer" href="/dealers.html">หาร้านใกล้คุณ</a>
+  <button id="menu" aria-label="เปิดเมนู" aria-controls="nav" aria-expanded="false"><span></span><span></span></button>
+</header>
+<!-- @end header -->
+
+<main id="main">
+
+  <!-- หัวหน้าแบบเต็ม (v7.7) — ภาพบรรยากาศ AI จากต้นแบบ ไม่ใช่งานลูกค้า -->
+  <section class="page-hero">
+    <div class="page-hero-media" aria-hidden="true"><img src="/assets/car.jpg" alt="" style="object-position:60% center"></div>
+    <div class="page-hero-wash"></div>
+    <div class="page-hero-copy">
+      <div class="eyebrow"><span></span> TRY IT YOURSELF <em class="eyebrow-th">ลองของจริง</em></div>
+      <h1>ลองเอามือสัมผัสเอง</h1>
+      <p>ดูฟิล์มผ่านจุดทดลอง แล้วเลือกจากสิ่งที่คุณสัมผัส ไม่ใช่จากความเข้มที่เดาไว้</p>
+    </div>
+  </section>
+
+  <section class="content-section experience-layout">
+    <!-- ภาพชั่วคราว (data-temp) รอ {{TEST_CABINET_IMAGES}} -->
+    <figure class="temp-figure" data-temp>
+      <img src="/assets/design1.jpg" alt="แผ่นตัวอย่างฟิล์ม EXTRA CLEAR สามระดับความเข้ม XT35 XT15 XT05" width="465" height="730" loading="lazy">
+      <span class="temp-tag">ภาพชั่วคราว</span>
+      <figcaption>แผ่นตัวอย่างฟิล์ม EXTRA CLEAR สามระดับความเข้ม · รอภาพจุดทดลองจริง</figcaption>
+    </figure>
+
+    <div>
+      <div class="eyebrow red"><span></span> HOW IT WORKS</div>
+      <h2>ห้าขั้นจากสงสัยถึงเลือก</h2>
+      <ol class="experience-flow">
+        <li><span>01</span><h3>เห็น</h3><p>ดูแผ่นตัวอย่างทุกความเข้มของจริง</p></li>
+        <li><span>02</span><h3>สงสัย</h3><p>ถามช่างเรื่องความร้อน สัญญาณ และกฎหมาย</p></li>
+        <li><span>03</span><h3>ลอง</h3><p>ส่องผ่านฟิล์มทั้งในที่สว่างและที่แสงน้อย</p></li>
+        <li><span>04</span><h3>รู้สึก</h3><p>เอามือรองใต้แผ่นฟิล์มเทียบความร้อน</p></li>
+        <li><span>05</span><h3>เลือก</h3><p>เลือกซีรีส์และความเข้มที่เหมาะกับการใช้งานจริง</p></li>
+      </ol>
+      <p class="lead">ให้ช่างที่ผ่านการอบรมจากเราวัดกระจกและแนะนำซีรีส์ที่เหมาะกับการใช้งานจริงของคุณ · <span class="nb">ตรวจสอบ</span>กับร้านก่อนเดินทางว่ามีจุดทดลอง FINNIX</p>
+    </div>
+  </section>
+
+  <!-- แถบ "ตอนต่อไป" — ปลายทางและข้อความอยู่ที่ NEXT ใน build.py -->
+  <!-- @next -->
+  <nav class="next-chapter dark" aria-label="ตอนต่อไป">
+    <a href="/dealers.html?experience=1">
+      <span class="eyebrow">NEXT <span></span> FIND FINNIX <em class="eyebrow-th">หาร้านใกล้คุณ</em></span>
+      <strong><span>หาร้านที่มีจุดทดลองใกล้คุณ</span></strong>
+      <i aria-hidden="true">→</i>
+    </a>
+  </nav>
+  <!-- @end next -->
+
+</main>
+
+<!-- @footer -->
+<footer class="home-footer">
+<div class="home-footer-grid">
+  <div class="home-footer-brand">
+    <a class="home-footer-logo" href="/"><img src="/assets/logo-finnix-white.png" alt="FINNIX FILM หน้าแรก" width="720" height="88" loading="lazy"></a>
+    <p>ฟิล์มกรองแสงสำหรับรถยนต์<br>ความสบายที่อยู่กับคุณในทุกการเดินทาง</p>
+    <p class="home-footer-company">บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</p>
+    <div class="home-footer-social"><span class="foot-icon is-pending" role="img" aria-label="Facebook — ยังไม่มีลิงก์" title="Facebook · รอ {{FACEBOOK_URL}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5H16l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8.1v3h2.5V21z"/></svg></span><span class="foot-icon is-pending" role="img" aria-label="LINE — ยังไม่มีลิงก์" title="LINE · รอ {{LINE_OA_ID}}"><svg class="ico-line" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.3.1.8.2.9.6.1.3.1.8 0 1.1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6.1-3.6 8.3-6.2 1.5-1.7 2.3-3.4 2.3-5.4 0-4.7-4.7-8.5-10.5-8.5z"/><text x="12" y="13.3" text-anchor="middle">LINE</text></svg></span><a class="foot-icon" href="tel:0635978497" aria-label="โทร 06-3597-8497"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></a></div>
+  </div>
+  <nav aria-label="รู้จัก FINNIX">
+    <h2>รู้จัก FINNIX</h2>
+    <a href="/about.html">เกี่ยวกับเรา</a>
+    <a href="/works.html">ผลงานที่ติดตั้ง</a>
+  </nav>
+  <nav aria-label="ผลิตภัณฑ์">
+    <h2>ผลิตภัณฑ์</h2>
+    <a href="/films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
+    <a href="/films.html#price">ราคา</a>
+    <a href="/experience.html">ลองของจริง</a>
+  </nav>
+  <div class="home-footer-contact">
+    <h2>บริการและการติดต่อ</h2>
+    <a href="/dealers.html">ค้นหาร้าน FINNIX</a>
+    <a href="/dealers.html#contact">ติดต่อสำนักงานใหญ่</a>
+    <span class="foot-line is-pending" title="LINE · รอ {{LINE_OA_ID}}"><svg class="ico-line" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.3.1.8.2.9.6.1.3.1.8 0 1.1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6.1-3.6 8.3-6.2 1.5-1.7 2.3-3.4 2.3-5.4 0-4.7-4.7-8.5-10.5-8.5z"/><text x="12" y="13.3" text-anchor="middle">LINE</text></svg>LINE FINNIX <small>(เร็ว ๆ นี้)</small></span>
+    <p>ให้ร้านช่วยแนะนำรุ่นและเฉด<br>ที่เหมาะกับรถของคุณ</p>
+  </div>
+</div>
+<div class="home-footer-bottom">
+  <span>© 2026 บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</span>
+  <span>BEAUTIFULLY REAL.</span>
+  <span>CLEARER PEOPLE. BRIGHTER TOMORROW.</span>
+</div>
+</footer>
+<!-- @end footer -->
+</body>
+</html>

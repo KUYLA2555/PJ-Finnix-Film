@@ -1,669 +1,213 @@
-<!DOCTYPE html>
+<!-- JOB: TRUST / BELONG | USER FEELS: FINNIX คือใคร คิดอะไรอยู่ | NEXT: /experience.html -->
+<!-- v8.3 หน้าเกี่ยวกับเรา — แทนหน้าเทคโนโลยีเดิม (technology.html) · ดีไซน์และข้อความตามไฟล์ต้นแบบ C:\Claude\technology (1).html
+     ปรับฟอนต์ สี header footer ให้เป็นของเว็บนี้ · ข้อความแนวคิดแบรนด์เป็นข้อความใหม่จากไฟล์ต้นแบบ (ไม่มีตัวเลข ประวัติ หรือรางวัล) รอบริษัทตรวจ
+     ภาพทั้งหมดเป็นภาพประกอบบรรยากาศ (AI) ไม่ใช่สำนักงาน ทีมงาน หรือผลงานลูกค้า · CSS หมวด 9 ของ merge.css -->
+<!doctype html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>เกี่ยวกับเรา — FINNIX FILM</title>
-<meta name="description" content="บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ทำไมต้องฟินนิกซ์ ที่มาของบริษัท สิ่งที่ฟิล์มทั้งห้าซีรีส์ทำได้จริง และมาตรฐานที่ใช้อ้างอิงตัวเลขทุกตัว">
-
-<!-- Open Graph — ใส่เฉพาะที่ไม่ต้องใช้โดเมน
-     og:url · canonical · og:image ยังไม่ใส่โดยตั้งใจ: โดเมนยังไม่นิ่ง (ค้างข้อ 15)
-     และ MODE B ไม่มีภาพ 1200x630 ให้ใช้ — **ห้ามป้อนค่า placeholder ให้ crawler** -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="FINNIX FILM">
-<meta property="og:locale" content="th_TH">
-<meta property="og:title" content="เกี่ยวกับเรา — FINNIX FILM">
-<meta property="og:description" content="บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ทำไมต้องฟินนิกซ์ ที่มาของบริษัท สิ่งที่ฟิล์มทั้งห้าซีรีส์ทำได้จริง และมาตรฐานที่ใช้อ้างอิงตัวเลขทุกตัว">
-<meta name="twitter:card" content="summary">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-/* ============================================================================
-   about.html — เกี่ยวกับเรา  (/about)
-
-   อ่านก่อนแก้ไฟล์นี้
-     CLAUDE.md .................. กฎที่ละเมิดแล้วงานไม่ผ่าน + สคริปต์ตรวจ
-     docs/master-prompt.md ...... บรีฟหลัก อ้างอิงเป็น "ข้อ 1-12" เสมอ
-     docs/CHANGELOG.md .......... ท้ายไฟล์มี "ค้างอยู่" กับ "ตัวแปรที่ต้องขอ"
-
-   ข้อ 9 บังคับว่าหนึ่งหน้าจบในไฟล์เดียว — CSS กับ JS อยู่ในไฟล์นี้ ห้ามแยกออกไป
-   request ภายนอกมีได้แค่ Google Fonts (+ แผนที่ Google ที่ contact.html เท่านั้น)
-
-   ลำดับบล็อกใน <style> นี้ (ค้นด้วยชื่อ อย่าค้นด้วยเลขบรรทัด มันเลื่อนทุกรอบ)
-      1. reveal
-      2. nav
-      3. เมนูมือถือ
-      4. ปุ่ม
-      5. หัวหน้า
-      6. section
-      7. ปิดท้าย
-      8. footer
-      9. responsive
-
-   ของร่วม — แก้ที่ไฟล์นี้ต้องแก้ครบทั้ง 8 ไฟล์พร้อมกันเสมอ ไม่งั้นสลับหน้าแล้วเลย์เอาต์ขยับ
-     :root tokens · nav · drawer · footer · .btn · .rv · .var · SEO meta · บล็อก noscript
-   จุดตัด responsive ของทั้งเว็บมีสามจุด: 1080 (พับเมนู) · 900 · 620 — อย่าเพิ่มจุดใหม่
-   ทุกระยะต้องหารด้วย 8 ลงตัว · สีข้อความต้องผ่าน WCAG AA 4.5:1 วัดก่อนเปลี่ยนทุกครั้ง
-   ============================================================================ */
-/* @shared:TOKENS */
-:root{
-  /* ระบบดีไซน์ Car Dealership 128 — วัดจาก car-dealership-128.webflow.io เอง (v5.6)
-     **ค่าที่วัดจากเว็บจริงต่างจากชุดโทเคนที่ผู้สั่งงานส่งมาหลายจุด ยึดของจริงจากเว็บ**
-     มุมโค้ง 0 ทั้งเว็บ · ปุ่ม padding 18px 24px น้ำหนัก 400 · ระยะ section 130px · คอนเทนเนอร์ 1200px */
-  --void:#000000;
-  --ink:#0E0E0E;
-  --paper:#FFFFFF;
-  --smoke:#F4F4F3;
-  --line:#E4E4E4;
-  --line-strong:rgba(14,14,14,.5);   /* เส้นผมของกล่องบนพื้นสว่าง ตามที่วัดได้ */
-  --line-dark:rgba(255,255,255,.20);
-  --mute:#535353;                    /* พื้นสว่าง 7.69:1 */
-  --mute-dark:#AFAFAF;               /* พื้นมืด 8.80:1 บน ink · 9.57:1 บนดำ */
-  --red:#9A0F39;                     /* สีเน้นเดียวของระบบ · ขาวบนสีนี้ = 8.40:1 */
-  --red-hot:#9A0F39;
-
-  --u:8px;
-  --max:1200px;
-  --pad:40px;
-  --r:0px;                           /* **มุมฉากทั้งเว็บ** วัดจากปุ่ม การ์ด และกล่องทุกชิ้นของเว็บต้นทาง */
-
-  --e:cubic-bezier(.16,1,.3,1);
-  --e-in:cubic-bezier(.7,0,.3,1);
-
-  /* ให้ block-size ไล่ค่าระหว่าง 0 กับ auto ได้ ใช้กับ accordion ที่ /faq และ FAQ ย่อหน้าแรก
-     ใส่ครบทั้ง 8 ไฟล์เพราะ :root ต้องแฮชตรงกัน หน้าที่ไม่มี <details> ก็ไม่มีผลอะไร
-     เบราว์เซอร์ที่ยังไม่รองรับจะข้ามบรรทัดนี้ไปเฉยๆ accordion เปิดทันทีแบบเดิม ไม่พัง */
-  interpolate-size:allow-keywords;
-}
-/* @end:TOKENS */
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-/* nav ลอยสูง 87px (v5.6) — ถ้าไม่กันระยะไว้ หัวข้อปลายทางของ anchor จะไปมุดใต้แถบ nav
-   รวมถึง #main ที่ skip link ชี้ไป ซึ่งเป็นเรื่อง accessibility ตรงๆ (ข้อ 9) */
-[id]{scroll-margin-top:112px}
-body{
-  background:var(--paper);color:var(--ink);
-  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
-  font-size:16px;line-height:1.5;font-weight:400;
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
-}
-h1,h2,h3,h4{font-family:'Anuphan',system-ui,sans-serif;font-weight:700;line-height:1.2;letter-spacing:0}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:var(--r)}
-/* เบราว์เซอร์ตัดคำไทยด้วยพจนานุกรมที่ไม่มีคำทับศัพท์ — ครอบคำที่ตัดผิดด้วย .nb */
-.nb{white-space:nowrap}
-/* ข้ามไปเนื้อหาหลัก — ต้องมีทุกหน้าเพื่อให้คนใช้คีย์บอร์ดไม่ต้องไล่ผ่าน nav ทุกครั้ง (ข้อ 9) */
-.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:var(--r);z-index:200}
-.skip:focus{left:0}
-
-.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
-.eyebrow{font-size:12px;font-weight:400;letter-spacing:1px;line-height:1.2;text-transform:uppercase;color:var(--mute)}
-.eyebrow.on-dark{color:var(--mute-dark)}
-.eyebrow .dot{display:inline-block;width:5px;height:5px;background:currentColor;border-radius:50%;margin-right:10px;vertical-align:2px}
-
-/* ค่าที่ยังไม่ได้รับจากลูกค้า — ข้อ 10 ห้ามแต่งตัวเลขหรือข้อความแทน */
-.var{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--smoke);border:1px dashed #B8B8B4;border-radius:var(--r);padding:2px 8px;font-size:.78em;letter-spacing:0;color:#535353;white-space:nowrap;font-weight:400}
-.on-void .var{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.24);color:rgba(255,255,255,.82)}
-
-/* ---------------- reveal ---------------- */
-.rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--e),transform .8s var(--e)}
-.rv.in{opacity:1;transform:none}
-.rvl{opacity:0;transform:translateY(20px);transition:opacity .9s var(--e),transform .9s var(--e)}
-body.loaded .rvl{opacity:1;transform:none}
-
-/* @shared:NAV_CSS */
-/* ---------------- nav ---------------- */
-/* Car Dealership 128 — แถบโปร่งใสลอยทับ hero มืด ตัวอักษรขาว ขอบล่างเป็นเส้นผมขาว 1px
-   เว็บต้นทางเป็น position:absolute (เลื่อนแล้วหายไปกับ hero) **เราคง fixed ไว้**
-   เพราะทุกหน้าของเราต้องมีทางกลับตลอดเวลา และ 5 หน้าไม่มี hero เต็มจอให้ absolute เกาะ
-   สถานะ .solid ตอนเลื่อนจึงยังอยู่ แต่เปลี่ยนเป็นพื้นขาวทึบ ไม่ใช่ฝ้าเบลอ ตามภาษาแบนของระบบนี้ */
-.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .4s var(--e),border-color .4s var(--e)}
-.nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:rgba(255,255,255,.32);transition:background .4s var(--e)}
-.nav.solid{background:var(--paper)}
-.nav.solid::after{background:var(--line)}
-.nav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:87px;display:flex;align-items:center;gap:40px}
-/* โลโก้ — กำหนด aspect-ratio ไว้ล่วงหน้าเพื่อไม่ให้เกิด layout shift ตามข้อ 9 */
-.brand{flex:none;display:block;line-height:0}
-.brand img{display:block;width:auto;height:24px;aspect-ratio:817/96}
-/* พื้นมืดใช้โลโก้ขาวล้วน — ตัวอักษร FINNIX เป็นสีดำจึงจมหายบนพื้นมืด
-   ไม่ใส่ transition บน filter โดยตั้งใจ — เบราว์เซอร์ interpolate filter list ข้ามสถานะไม่ได้
-   ทำให้ค่าค้างที่ขาวแล้วโลโก้หายไปบนพื้นขาว การสลับทันทีมองไม่ออกอยู่แล้วเพราะ nav เปลี่ยนพื้นหลังพร้อมกัน */
-.nav .brand img{filter:brightness(0) invert(1)}
-.nav.solid .brand img{filter:none}
-/* nav-link = 16/400 ไม่มี tracking · ลิงก์สูง 44px ตามเกณฑ์ขนาดพื้นที่กดในข้อ 9 */
-.nav-links{display:flex;gap:30px;margin-left:auto;font-size:16px;font-weight:400;line-height:1.2}
-.nav-links a{color:var(--paper);position:relative;display:flex;align-items:center;height:44px;transition:color .3s var(--e)}
-.nav.solid .nav-links a{color:var(--mute)}
-.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:11px;height:1px;background:currentColor;transition:right .4s var(--e)}
-.nav-links a:hover{color:var(--paper)}
-.nav.solid .nav-links a:hover{color:var(--ink)}
-.nav-links a:hover::after{right:0}
-/* ลิงก์ของหน้าปัจจุบัน — เส้นใต้ใช้ currentColor **ไม่ใช่สีเน้น**
-   สีเน้นของระบบนี้สงวนไว้ให้ปุ่มการกระทำเดียวต่อหน้าจอเท่านั้น */
-.nav-links a[aria-current]{color:var(--paper)}
-.nav.solid .nav-links a[aria-current]{color:var(--ink)}
-.nav-links a[aria-current]::after{right:0;background:currentColor}
-/* CTA บนแถบ — เว็บต้นทางใช้ปุ่มขอบขาวโปร่ง ไม่ใช่ปุ่มทึบสีเน้น
-   **สีเน้นอยู่ที่ปุ่มปิดท้ายของแต่ละหน้าที่เดียว** แถบบนจึงไม่กินโควตาสีเน้น */
-.nav-cta{flex:none;display:flex;align-items:center;background:transparent;color:var(--paper);
-  font-size:16px;font-weight:400;line-height:1.2;min-height:44px;padding:10px 24px;
-  border:1px solid rgba(255,255,255,.5);border-radius:var(--r);transition:background .3s var(--e),color .3s var(--e),border-color .3s var(--e)}
-.nav-cta:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
-.nav.solid .nav-cta{color:var(--ink);border-color:var(--ink)}
-.nav.solid .nav-cta:hover{background:var(--ink);color:var(--paper)}
-.burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
-.burger span{position:absolute;left:11px;right:11px;height:1.5px;background:#fff;transition:.4s var(--e)}
-.burger span:nth-child(1){top:17px}.burger span:nth-child(2){bottom:17px}
-.nav.solid .burger span{background:var(--ink)}
-/* @end:NAV_CSS */
-/* @shared:DRAWER_CSS */
-/* ---------------- เมนูมือถือ ---------------- */
-/* สถานะ UI ไม่ใช่ motion เพื่อการตกแต่ง จึงไม่นับรวมในงบ 4 อย่างของข้อ 5 */
-.drawer{display:none;position:fixed;inset:0;z-index:99;background:var(--void);
-  flex-direction:column;justify-content:center;padding:87px var(--pad) 40px;
-  opacity:0;visibility:hidden;transition:opacity .4s var(--e),visibility .4s var(--e)}
-body.menu-open .drawer{opacity:1;visibility:visible}
-body.menu-open{overflow:hidden}
-body.menu-open .nav,body.menu-open .nav.solid{background:transparent;backdrop-filter:none}
-body.menu-open .nav::after{background:transparent}
-body.menu-open .nav .brand img{filter:brightness(0) invert(1)}
-body.menu-open .burger span{background:#fff;top:50%;bottom:auto;margin-top:-1px}
-body.menu-open .burger span:nth-child(1){transform:rotate(45deg)}
-body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
-/* น้ำหนักคู่เดียว 400/700 ตามระบบ · ไม่มี tracking ที่ขนาดใหญ่ */
-.drawer a{display:flex;align-items:center;min-height:56px;font-family:'Anuphan',sans-serif;
-  font-size:24px;font-weight:700;line-height:1.2;letter-spacing:0;color:var(--paper);
-  border-bottom:1px solid var(--line-dark)}
-/* ปุ่มในลิ้นชักเป็นทรงเดียวกับ .btn ของระบบ — มุมฉาก ขอบ 1px padding 18px 24px */
-.drawer .drawer-cta{margin-top:40px;justify-content:center;background:var(--paper);color:var(--ink);
-  border:1px solid var(--paper);border-radius:var(--r);font-size:16px;font-weight:400;min-height:56px}
-/* @end:DRAWER_CSS */
-
-/* ---------------- ปุ่ม ---------------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:18px 24px;border-radius:var(--r);font-size:16px;font-weight:400;line-height:1.2;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:background .3s var(--e),border-color .3s var(--e),color .3s var(--e)}
-.btn .ar{transition:transform .4s var(--e)}
-.btn:hover .ar{transform:translateX(5px)}
-/* พื้นมืดใช้ปุ่มขาว ไม่ใช่ปุ่มแดง — nav CTA เป็นแดงอยู่แล้วและติดหน้าจอตลอด
-   ถ้าปุ่มปิดท้ายเป็นแดงด้วยจะกลายเป็นแดง 3 จุดในหน้าจอเดียว เกินโควตาข้อ 4 */
-.btn-light{background:var(--paper);color:var(--ink);border-color:var(--paper)}
-.btn-light:hover{transform:translateY(-2px);background:#F0F0EE}
-
-/* ---------------- หัวหน้า ---------------- */
-.page-head{background:var(--void);color:#fff;padding:200px 0 104px}
-.page-head h1{font-size:clamp(38px,6.4vw,80px);font-weight:700;letter-spacing:-.035em;margin-top:24px;max-width:16ch}
-.page-head p{color:var(--mute-dark);margin-top:32px;max-width:52ch;font-size:18px}
-
-/* ---------------- section ---------------- */
-.sec{padding:130px 0}
-.sec.smoke{background:var(--smoke)}
-.sec-head{max-width:800px;margin-bottom:72px}
-/* แถบซ้ายนำหัวข้อ — คลาสเสริมเฉพาะหน้านี้ ไม่แก้ .sec-head เพราะ index/technology ใช้ตัวเดียวกัน
-   **แถบเป็น --ink ไม่ใช่แดง** ต่างจากหน้าต้นแบบโดยตั้งใจ — ข้อ 4 อนุญาตให้แดงอยู่ได้เฉพาะ
-   ปุ่มหลัก · จุด eyebrow · ชั้นเซรามิก · focus/error และหนึ่งหน้าจอมองเห็นแถบได้พร้อมกันสองอัน
-   จุดแดงของบล็อกจึงยังเป็น .dot ใน eyebrow เหมือนอีก 5 หน้า */
-.sec-head.bar{border-left:3px solid var(--ink);padding-left:24px}
-.sec-head.bar .eyebrow{display:block;margin-bottom:8px}
-.sec-head h2{font-size:clamp(30px,4.4vw,56px);margin-top:24px}
-.sec-head p{margin-top:24px;font-size:18px;color:var(--mute);max-width:56ch}
-
-/* ส่วนที่ 1 — ทำไมต้องฟินนิกซ์ */
-/* อยู่ในแนว .wrap เดียวกับหัวข้อ — เดิมเป็น full-bleed เต็มจอ ขอบซ้ายจึงไม่ตรงกับหัวข้อ (แก้ v2.9) */
-.why{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
-  border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:56px}
-.why-cell{background:var(--paper);padding:44px 32px 48px;transition:background .5s var(--e)}
-.why-cell:hover{background:var(--smoke)}
-/* ไอคอนเป็น --ink ไม่ใช่แดง — การ์ด 4 ใบอยู่ในหน้าจอเดียวกัน ไอคอนแดงจึงเป็นแดง 4 จุดรวด
-   เกินโควตาข้อ 4 มาตั้งแต่ v1.8 · จุดแดงของบล็อกนี้เหลือ .dot ที่ eyebrow จุดเดียว (แก้ v2.9) */
-.why-cell .ic{width:38px;height:38px;color:var(--ink)}
-.why-cell h3{font-size:20px;margin:28px 0 12px;letter-spacing:-.01em}
-.why-cell p{font-size:15px;color:var(--mute);line-height:1.7}
-.why-note{margin-top:40px;font-size:14px;color:var(--mute);max-width:72ch}
-
-/* ส่วนที่ 2 — แหล่งผลิต
-   บล็อกตัวเลขบริษัทกับเรื่องที่มาของบริษัทย้ายไปหน้าแรกแล้วใน v1.9 **ห้ามใส่กลับ**
-   หน้านี้รับเฉพาะเรื่องผู้ผลิต ซึ่งตรงกับส่วน Manufacturing Heritage ของ IA ต้นแบบ */
-.origin{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-.origin h3{font-size:22px;margin-bottom:16px;letter-spacing:-.015em}
-.origin .lede{font-size:20px;line-height:1.65;letter-spacing:-.01em}
-.origin p{color:var(--mute)}
-.origin p+p{margin-top:24px}
-
-/* ส่วนที่ 3 — ตารางระดับซีรีส์
-   overflow-y:hidden ต้องเขียนตรงๆ — สเปก CSS บังคับให้ visible กลายเป็น auto
-   เมื่ออีกแกนไม่ใช่ visible ทำให้ scrollbar แนวตั้งโผล่ทั้งที่ความสูงไม่ล้น */
-/* ห้าซีรีส์ — เดิมเป็นตาราง 5 คอลัมน์ที่กว้าง 1110px แต่มีข้อมูลน้อย อ่านเป็นแถวยาวได้ยาก
-   v2.9 เปลี่ยนเป็น "เลือกซีรีส์ทางซ้าย · อ่านค่าทางขวา" ตามหน้าต้นแบบ
-   เป็นสถานะ UI แบบเดียวกับแท็บใน /gallery **ไม่นับเป็น motion ข้อ 5** */
-.pick{display:grid;grid-template-columns:320px 1fr;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:56px}
-.pk-list{display:flex;flex-direction:column;background:var(--smoke);border-right:1px solid var(--line)}
-.pk-item{appearance:none;background:none;border:0;border-bottom:1px solid var(--line);width:100%;
-  text-align:left;padding:24px;cursor:pointer;color:var(--mute);
-  font-family:'Anuphan',system-ui,sans-serif;font-size:19px;font-weight:700;letter-spacing:-.01em;
-  transition:color .3s var(--e),background .3s var(--e)}
-.pk-item:last-child{border-bottom:0}
-.pk-item:hover{color:var(--ink)}
-.pk-item[aria-selected="true"]{color:var(--ink);background:var(--paper)}
-.pk-body{padding:40px}
-.pk-tech{font-size:15px;color:var(--mute);margin-bottom:32px}
-.pk-row{display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:start;padding:24px 0;border-top:1px solid var(--line)}
-.pk-row:first-of-type{border-top:0;padding-top:0}
-.pk-row dt{font-size:14px;color:var(--mute);padding-top:8px}
-.pk-row dd b{font-family:'Anuphan',system-ui,sans-serif;font-weight:700;font-size:26px;letter-spacing:-.02em;color:var(--ink)}
-/* แถบช่วงค่า — สเกล 0-100% เท่ากันทุกซีรีส์ จึงเทียบข้ามซีรีส์ได้ตอนสลับแถว
-   ค่าคงที่ ไม่มี transition จึงไม่กินงบ motion */
-.pk-bar{display:block;position:relative;height:4px;max-width:416px;background:var(--line);border-radius:var(--r);margin-top:8px}
-.pk-bar i{position:absolute;top:0;bottom:0;left:calc(var(--a) * 1%);right:calc((100 - var(--b)) * 1%);
-  background:var(--ink);border-radius:var(--r);min-width:3px}
-.pk-note{margin-top:32px;font-size:14px;color:var(--mute);max-width:72ch}
-
-/* แจ้งว่ายังไม่มีข้อมูล — ข้อ 3 และข้อ 10 บังคับให้ระบุที่มาของทุกตัวเลขและทุกข้อความ */
-.notice{background:var(--smoke);border:1px dashed #B8B8B4;border-radius:var(--r);padding:32px 40px;
-  font-size:15px;color:#5C5C57;line-height:1.7;max-width:900px}
-.notice b{color:var(--ink);font-weight:700;display:block;margin-bottom:8px;font-size:16px}
-.notice + .notice{margin-top:24px}
-
-/* ---------------- ปิดท้าย ---------------- */
-.closing{background:var(--ink);color:#fff;text-align:center;padding:160px 0}
-.closing h2{font-size:clamp(32px,5.4vw,72px);font-weight:700;letter-spacing:-.035em;color:#fff;max-width:18ch;margin:24px auto 0}
-.closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch;margin-left:auto;margin-right:auto}
-.closing .btn{margin-top:48px}
-
-/* @shared:FOOTER_CSS */
-/* ---------------- footer ---------------- */
-/* Car Dealership 128 — พื้นดำสนิท · โลโก้บนสุด · เส้นผมคาดใต้โลโก้
-   แล้วเป็นคอลัมน์ที่คั่นด้วยเส้นตั้ง หัวคอลัมน์ตัวหนา 20/700 จัดกลาง ลิงก์ 16/400 สี muted
-   วัดจากเว็บต้นทาง: พื้น #000 · padding 80px บน 60px ล่าง */
-footer{background:var(--void);color:var(--paper);padding:80px 0 60px}
-/* เส้นผมคาดใต้โลโก้ — ของต้นทางกินเต็มความกว้างคอนเทนเนอร์ */
-.f-brand{padding-bottom:30px;border-bottom:1px solid var(--line-dark);margin-bottom:50px}
-.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:50px}
-/* footer เป็นพื้นมืดเสมอ จึงใช้โลโก้ขาวล้วนตลอด */
-.f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
-.f-brand p{color:var(--mute-dark);font-size:16px;line-height:1.5;margin-top:20px;max-width:38ch}
-/* ช่องทางติดต่อแบบไอคอน (v5.7 · ผู้สั่งงานสั่งเพิ่ม) — โทรเป็น tel: จริงจุดเดียวของ footer
-   **LINE กับ Facebook ยังไม่มีค่าจริง (ค้างตัวแปร) จึงชี้ contact.html ที่รวมช่องทางไว้**
-   ห้ามเปลี่ยนเป็น href="#" หรือลิงก์เดา — เว็บนี้ไม่มีลิงก์ตายเหลือแล้ว
-   ไอคอนวาดเองเป็น SVG ฝังในไฟล์ ไม่ใช่ไอคอนฟอนต์หรือไลบรารีนอก (ข้อ 9)
-   สีเป็น currentColor ล้วน จึงไม่กินโควตาแดงข้อ 4 · กล่อง 44x44 ตามขนาดพื้นที่กดขั้นต่ำ */
-.f-social{display:flex;gap:8px;margin-top:24px}
-.f-social a{display:flex;align-items:center;justify-content:center;width:44px;height:44px;
-  border:1px solid var(--line-dark);color:var(--mute-dark);
-  transition:color .3s var(--e),border-color .3s var(--e)}
-.f-social a:hover{color:var(--paper);border-color:var(--paper)}
-.f-social svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;
-  stroke-linecap:round;stroke-linejoin:round}
-/* หัวคอลัมน์ = h6 ของระบบ 20/700 สีขาว **ไม่ใช่ป้ายตัวเล็ก tracking กว้างแบบเดิม** */
-.f-col h3{font-family:'Anuphan',sans-serif;font-size:20px;font-weight:700;line-height:1.2;
-  letter-spacing:0;text-transform:none;color:var(--paper);margin-bottom:15px}
-.f-col a{display:flex;align-items:center;min-height:44px;color:var(--mute-dark);font-size:16px;line-height:1.5;transition:color .3s var(--e)}
-.f-col a:hover{color:var(--paper)}
-.f-bot{margin-top:60px;padding-top:24px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:14px;line-height:1.2;color:var(--mute-dark)}
-/* @end:FOOTER_CSS */
-
-/* ---------------- responsive ---------------- */
-@media(max-width:1080px){
-  .nav-links,.nav-cta{display:none}
-  .burger{display:block}
-  .drawer{display:flex}
-  .origin{grid-template-columns:1fr;gap:40px}
-  .why{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:900px){
-  /* ตัวเลือกซีรีส์พับเป็นแถวนอนเลื่อนได้ — overflow-y:hidden จำเป็น ไม่งั้น scrollbar แนวตั้งโผล่ทั้งที่ความสูงไม่ล้น */
-  .pick{grid-template-columns:1fr}
-  .pk-list{flex-direction:row;overflow-x:auto;overflow-y:hidden;border-right:0;border-bottom:1px solid var(--line)}
-  .pk-item{width:auto;border-bottom:0;border-right:1px solid var(--line);white-space:nowrap;font-size:17px;padding:16px 24px}
-  .pk-body{padding:32px 24px}
-  .pk-row{grid-template-columns:1fr;gap:8px;padding:24px 0}
-  :root{--pad:24px}
-  .sec{padding:88px 0}
-  .page-head{padding:152px 0 72px}
-  .closing{padding:104px 0}
-  .notice{padding:24px}
-  .f-grid{grid-template-columns:1fr 1fr;gap:40px}
-}
-@media(max-width:620px){
-  .why{grid-template-columns:1fr}
-  .f-grid{grid-template-columns:1fr}
-  .drawer a{font-size:22px;min-height:52px}
-}
-@media(prefers-reduced-motion:reduce){
-  *{animation:none!important;transition-duration:.01ms!important}
-  .rv,.rvl{opacity:1;transform:none}
-}
-</style>
-<!-- @shared:NOSCRIPT -->
-<!-- ไม่มี JS = .rv/.rvl ค้างที่ opacity:0 และ hero ค้างที่ translateY -> หน้าว่างเกือบทั้งหน้า
-     บล็อกนี้คืนสถานะปลายทางให้ทันที เนื้อหาจึงอ่านได้ครบแม้ JS ไม่ทำงาน
-     **เขียนเหมือนกันทั้ง 6 ไฟล์โดยตั้งใจ** — selector ที่หน้านั้นไม่มีก็ไม่มีผลอะไร
-     แต่ถ้าเขียนต่างกันรายไฟล์ สคริปต์ตรวจของร่วมจะอ่านเป็น .rv ที่ไม่ตรงกัน -->
-<noscript><style>
-  .rv,.rvl{opacity:1;transform:none}
-  .hero h1 .l span{transform:none}
-  .hero .eyebrow,.hero p.sub,.hero-cta{opacity:1;transform:none}
-  .sig-legend li{opacity:1}
-</style></noscript>
-<!-- @end:NOSCRIPT -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>เกี่ยวกับเรา · รู้จัก FINNIX | FINNIX FILM</title>
+  <meta name="description" content="รู้จัก FINNIX FILM แนวคิดของเรา ผลิตภัณฑ์ฟิล์มรถยนต์ และการเลือกฟิล์มจากการใช้งานจริง ติดต่อบริษัท ฟินนิกซ์ ฟิล์ม จำกัด">
+  <!-- @assets -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/journey.css">
+  <link rel="stylesheet" href="/merge.css">
+  <script src="/content.js" defer></script>
+  <script src="/app.js" defer></script>
+  <!-- @end assets -->
 </head>
-<body>
-
-<a href="#main" class="skip">ข้ามไปยังเนื้อหาหลัก</a>
-
-<!-- NAV -->
-<!-- @shared:NAV_HTML -->
-<nav class="nav" id="nav">
-  <div class="nav-in">
-    <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
-    <div class="nav-links">
-      <a href="index.html">หน้าแรก</a>
-      <a href="films.html">ฟิล์มรถยนต์</a>
-      <a href="about.html" aria-current="page">เกี่ยวกับเรา</a>
-      <a href="technology.html">เทคโนโลยี</a>
-      <a href="gallery.html">ผลงาน</a>
-      <a href="contact.html">ติดต่อ</a>
-    </div>
-    <a href="centers.html" class="nav-cta">หาศูนย์ติดตั้ง</a>
-    <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
-  </div>
-</nav>
-<!-- @end:NAV_HTML -->
-
-<!-- เมนูมือถือ -->
-<!-- @shared:DRAWER_HTML -->
-<div class="drawer" id="drawer">
-  <a href="index.html">หน้าแรก</a>
-  <a href="films.html">ฟิล์มรถยนต์</a>
-  <a href="about.html" aria-current="page">เกี่ยวกับเรา</a>
-  <a href="technology.html">เทคโนโลยี</a>
-  <a href="gallery.html">ผลงาน</a>
-  <a href="faq.html">คำถามที่พบบ่อย</a>
-  <a href="contact.html">ติดต่อ</a>
-  <a href="centers.html" class="drawer-cta">หาศูนย์ติดตั้ง</a>
-</div>
-<!-- @end:DRAWER_HTML -->
+<body class="inner-page">
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<!-- @header -->
+<header>
+  <a href="/" class="logo"><img src="/assets/logo-finnix-web.png" alt="FINNIX FILM หน้าแรก" width="817" height="96"></a>
+  <nav id="nav" aria-label="เมนูหลัก">
+    <a href="/">หน้าแรก</a>
+    <a href="/films.html">ฟิล์ม</a>
+    <a href="/works.html">ผลงาน</a>
+    <a href="/experience.html">ลองของจริง</a>
+    <a href="/about.html" aria-current="page">เกี่ยวกับเรา</a>
+    <a class="nav-extra" href="/dealers.html">หาร้านใกล้คุณ</a>
+  </nav>
+  <a class="pill nav-dealer" href="/dealers.html">หาร้านใกล้คุณ</a>
+  <button id="menu" aria-label="เปิดเมนู" aria-controls="nav" aria-expanded="false"><span></span><span></span></button>
+</header>
+<!-- @end header -->
 
 <main id="main">
 
-<!-- หัวหน้า -->
-<header class="page-head on-void">
-  <div class="wrap">
-    <div class="eyebrow on-dark rvl"><span class="dot"></span>เกี่ยวกับเรา</div>
-    <h1 class="rvl" style="transition-delay:.08s">เราขายฟิล์ม<br>ด้วยการอธิบายว่ามันทำงานอย่างไร</h1>
-    <p class="rvl" style="transition-delay:.16s">ไม่ใช่ด้วยการบอกว่ามันดีแค่ไหน หน้านี้รวมสิ่งที่ตรวจสอบได้เกี่ยวกับบริษัทและฟิล์มของเราไว้ที่เดียว</p>
-  </div>
-</header>
+  <nav class="sp-crumb" aria-label="เส้นทางหน้าเว็บ"><a href="/">หน้าแรก</a><span aria-hidden="true">/</span><span aria-current="page">เกี่ยวกับเรา</span></nav>
 
-<!-- ส่วนที่ 1 — ทำไมต้องฟินนิกซ์ -->
-<section class="sec" style="padding-bottom:0">
-  <div class="wrap">
-    <div class="sec-head rv bar">
-      <div class="eyebrow"><span class="dot"></span>ทำไมต้องฟินนิกซ์</div>
-      <h2>สี่เรื่องที่เราออกแบบมาให้ต่าง</h2>
-      <p>ความเข้มคือการลดแสงที่ตามองเห็น ส่วนความร้อนอยู่ในคลื่นอินฟราเรดที่มองไม่เห็น เราออกแบบฟิล์มโดยจับที่คลื่นความร้อนโดยตรง ไม่ได้จับที่ความมืด</p>
+  <!-- ภาพใหญ่พื้นมืด — ข้อความครึ่งขวา -->
+  <section class="ab-hero">
+    <img class="ab-hero-photo" src="/assets/hero.jpg" alt="ภาพประกอบผู้โดยสารในรถ มองเมืองกรุงเทพฯ ผ่านกระจกในแสงยามเย็น" fetchpriority="high">
+    <div class="ab-hero-copy">
+      <div class="eyebrow"><span></span> ABOUT US <em class="eyebrow-th">รู้จัก FINNIX</em></div>
+      <h1>ความสบายที่ดี<br>เริ่มจากความเข้าใจ</h1>
+      <p>เข้าใจคน เข้าใจการเดินทาง<br>และสิ่งที่คุณต้องการจากฟิล์มรถยนต์</p>
+      <a class="pill light" href="#about">เรื่องราวของเรา <span aria-hidden="true">↓</span></a>
     </div>
+    <div class="ab-hero-bottom">
+      <div><p class="ab-signature">Beautifully Real.</p><p class="ab-caption">FINNIX FILM · ภาพประกอบบรรยากาศ</p></div>
+      <a class="ab-scroll" href="#about" aria-label="เลื่อนลงเพื่อรู้จัก FINNIX">DISCOVER <span aria-hidden="true">↓</span></a>
+    </div>
+  </section>
 
-    <div class="why rv">
-    <div class="why-cell">
-      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
-      <h3>ลดความร้อนที่ต้นทาง</h3>
-      <p>อนุภาคเซรามิกดูดซับพลังงานอินฟราเรดก่อนที่มันจะเข้าห้องโดยสาร แอร์ทำงานน้อยลง น้ำมันลดลงตาม</p>
-    </div>
-    <div class="why-cell">
-      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 12.5a10 10 0 0 1 14 0M8 16a6 6 0 0 1 8 0"/><circle cx="12" cy="19" r="1.2" fill="currentColor" stroke="none"/><path d="M2 9a15 15 0 0 1 20 0"/></svg>
-      <h3><span class="nb">ซีรีส์</span>เซรามิกไม่รบกวนสัญญาณ</h3>
-      <p>CERAMIC · EXTRA CLEAR · UV GUARD ไม่มีชั้นโลหะในเนื้อฟิล์ม สัญญาณ 5G, GPS, กล้องหลัง และบัตรทางด่วนทำงานได้ตามปกติ</p>
-    </div>
-    <div class="why-cell">
-      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>
-      <h3>กลางคืนยังมองชัด</h3>
-      <p>ทุกซีรีส์มีรหัสที่แสงส่องผ่านสูงให้เลือก ไล่ตั้งแต่ 5% ถึง 70% เลือกได้ตามการใช้งานจริง ไม่ใช่เลือกจากความเข้มอย่างเดียว</p>
-    </div>
-    <div class="why-cell">
-      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l7.5 3.2v5.1c0 4.5-3.1 8.4-7.5 9.7-4.4-1.3-7.5-5.2-7.5-9.7V6.2L12 3Z"/><path d="M9.2 12.2l1.9 1.9 3.7-3.9"/></svg>
-      <h3>รับประกัน 7 ปีจากบริษัท</h3>
-      <p>ครอบคลุมการซีด ลอก เป็นฟอง และเปลี่ยนสี ทุกซีรีส์ได้ระยะเท่ากัน ไม่ต้องจำว่า<span class="nb">รุ่นไหนได้กี่ปี</span></p>
-    </div>
-    </div>
+  <nav class="sp-nav" aria-label="หัวข้อในหน้าเกี่ยวกับเรา">
+    <span class="sp-nav-title">INSIDE FINNIX</span>
+    <span class="sp-nav-links"><a href="#about">รู้จักเรา</a><a href="#belief">แนวคิดของเรา</a><a href="#products">ผลิตภัณฑ์</a><a href="#company">ติดต่อบริษัท</a></span>
+  </nav>
 
-    <p class="why-note rv">ข้อที่สองระบุเป็นรายซีรีส์โดยตั้งใจ — CRYSTALIZE ใช้เทคโนโลยีเคลือบโลหะหลายชั้น จึงไม่อยู่ในกลุ่มที่ไม่มีชั้นโลหะ ส่วน TITANIUM เอกสารยังไม่ระบุ ดูตารางในส่วนถัดไป</p>
-  </div>
-</section>
+  <!-- 01 เราคือใคร -->
+  <section class="ab-about" id="about">
+    <div class="ab-about-head">
+      <div class="eyebrow"><span></span> 01 / WHO WE ARE</div>
+      <h2>เราคือ<br><span>FINNIX FILM.</span></h2>
+      <span class="red-line" aria-hidden="true"></span>
+    </div>
+    <div class="ab-about-body">
+      <p class="ab-lead">ฟิล์มรถยนต์สำหรับชีวิตจริง<br>ที่เริ่มจากคนในรถเป็นสำคัญ</p>
+      <p>รถหนึ่งคันพาเราไปมากกว่าจุดหมาย ทั้งการไปทำงาน การกลับบ้าน และช่วงเวลาที่ได้อยู่กับคนสำคัญ สำหรับ FINNIX การเลือกฟิล์มจึงเริ่มจากคำถามง่าย ๆ ว่า คุณใช้ชีวิตบนรถแบบไหน</p>
+      <p>เราอยากให้คุณเลือกฟิล์มได้อย่างเข้าใจ ทั้งคุณสมบัติ เฉดสี และความเหมาะสมกับการใช้งาน เพื่อให้สิ่งที่เลือกมีคุณค่ากับทุกวันที่ใช้รถ</p>
+      <dl class="ab-identity">
+        <div><dt>OUR COMPANY</dt><dd>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</dd></div>
+        <div><dt>OUR BRAND</dt><dd>FINNIX FILM — Beautifully Real.</dd></div>
+      </dl>
+    </div>
+  </section>
 
-<!-- ส่วนที่ 2 — แหล่งผลิต -->
-<section class="sec smoke">
-  <div class="wrap">
-    <div class="sec-head rv bar">
-      <div class="eyebrow"><span class="dot"></span>แหล่งผลิต</div>
-      <h2>ฟิล์มที่เราขาย ผลิตมาจากที่ใด</h2>
-      <p>ตัวเลขบริษัทกับที่มาของการก่อตั้งอยู่ที่ <a href="index.html" style="border-bottom:1px solid var(--line)">หน้าแรก</a> — หน้านี้พูดเฉพาะเรื่องผู้ผลิตและสิ่งที่ตรวจสอบได้เกี่ยวกับตัวฟิล์ม</p>
-    </div>
-    <div class="origin">
-      <div class="rv">
-        <h3>ผู้ผลิตและประเทศต้นทาง</h3>
-        <p class="lede"><span class="var">{{FILM_SOURCE}}</span></p>
-        <p>เอกสารผลิตภัณฑ์ระบุเพียงว่า “เราคัดเลือกผลิตภัณฑ์ที่ดีที่สุดจากแหล่งที่มาที่เป็นที่ยอมรับในโลก” ซึ่งบอกไม่ได้ว่าผลิตที่ใด</p>
-        <p>สิ่งที่ต้องการคือ ประเทศและโรงงานผู้ผลิต และเหตุผลที่บริษัทเลือกแหล่งนั้น — เป็นข้อมูลที่คนเทียบแบรนด์ถามก่อนเสมอ</p>
+  <!-- 02 แนวคิด — พื้นมืด -->
+  <section class="ab-belief" id="belief">
+    <div class="ab-belief-top">
+      <div>
+        <div class="eyebrow"><span></span> 02 / WHAT WE BELIEVE</div>
+        <p>แนวคิดที่เราอยากส่งต่อ</p>
       </div>
-      <div class="rv">
-        <h3>ทำไมถึงต้องบอกให้ชัด</h3>
-        <p>แบรนด์ฟิล์มที่ขายในไทยส่วนใหญ่ไม่ได้ผลิตฟิล์มเอง แต่สั่งจากโรงงานแล้วติดตราของตัวเอง ซึ่งไม่ใช่เรื่องเสียหาย — เสียหายตรงที่ไม่บอก</p>
-        <p>เมื่อไม่รู้ว่าใครผลิต ก็ตรวจสอบไม่ได้ว่าค่าที่โฆษณามาจากห้องทดสอบไหน และเคลมประกันในอีกห้าปีข้างหน้าจะยังมีคนรับผิดชอบอยู่หรือไม่ เราจึงเว้นช่องนี้ไว้แทนที่จะเขียนคำกว้างๆ ให้ดูดี</p>
-      </div>
+      <h2 class="ab-quote">“ดีในสิ่งที่ควรดี”<br><span>และมีความหมายกับการใช้งานจริง</span></h2>
     </div>
-  </div>
-</section>
+    <div class="ab-values">
+      <article><span class="ab-value-no">01 /</span><h3>เริ่มต้นที่คนใช้รถ</h3><p>ความต้องการของแต่ละคนต่างกัน เราจึงให้ความสำคัญกับการใช้งานประจำวัน ความชอบ และงบประมาณของคุณ</p></article>
+      <article><span class="ab-value-no">02 /</span><h3>เลือกอย่างเข้าใจ</h3><p>เราเชื่อว่าข้อมูลที่ชัดเจนช่วยให้ตัดสินใจได้ดีขึ้น ทั้งคุณสมบัติ ความแตกต่าง และข้อจำกัดของฟิล์มแต่ละรุ่น</p></article>
+      <article><span class="ab-value-no">03 /</span><h3>ให้ของจริงช่วยตอบ</h3><p>ภาพและตัวเลขเป็นจุดเริ่มต้น ลองดูตัวอย่างฟิล์มและพูดคุยกับร้าน เพื่อหาทางเลือกที่เหมาะกับคุณก่อนตัดสินใจ</p></article>
+    </div>
+  </section>
 
-<!-- ส่วนที่ 3 — สิ่งที่ฟิล์มทำได้จริง -->
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head rv bar">
-      <div class="eyebrow"><span class="dot"></span>สิ่งที่ฟิล์มทำได้</div>
-      <h2>ห้า<span class="nb">ซีรีส์</span> กับสิ่งที่แต่ละแบบถนัดคนละอย่าง</h2>
-      <p>ค่าที่แสดงเป็นช่วงจากรหัสที่อ่อนที่สุดถึงเข้มที่สุดของแต่ละซีรีส์ ถอดจากเอกสารผลิตภัณฑ์ของบริษัทปี 2567 ค่ารายรหัสสอบถามได้ที่ศูนย์ติดตั้ง</p>
+  <!-- 03 ผลิตภัณฑ์ -->
+  <section class="ab-offerings" id="products">
+    <div class="ab-section-head">
+      <div>
+        <div class="eyebrow"><span></span> 03 / WHAT WE DO</div>
+        <h2>ดูแลมุมมอง<br>และรถที่คุณรัก</h2>
+      </div>
+      <p>ผลิตภัณฑ์สำหรับรถยนต์ที่คุณเลือกได้ตามความต้องการ เริ่มจากสิ่งที่อยากดูแล แล้วค่อยเลือกรุ่นที่เหมาะสม</p>
     </div>
+    <div class="ab-offering-grid">
+      <article class="ab-offering">
+        <p class="ab-label">AUTOMOTIVE WINDOW FILM</p>
+        <div class="ab-offering-top">
+          <h3>ฟิล์มกรองแสงรถยนต์</h3>
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 34V17c0-4 2-6 6-7l18-3c5 0 8 8 8 15v12Z"/><path d="M13 29h22M18 12v17M24 15l-5 6m12-6L20 26"/></svg>
+        </div>
+        <p>สำรวจซีรีส์และเฉดสี พร้อมข้อมูลผลิตภัณฑ์ เพื่อเลือกฟิล์มให้สอดคล้องกับการใช้รถของคุณ</p>
+        <a class="ab-text-link" href="/films.html">สำรวจฟิล์มทุกซีรีส์ <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="ab-offering">
+        <p class="ab-label">PAINT PROTECTION FILM</p>
+        <div class="ab-offering-top">
+          <h3>ฟิล์มใสกันรอยรถยนต์</h3>
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="m24 5 15 6v12c0 10-15 20-15 20S9 33 9 23V11Z"/><path d="m16 24 6 6 11-13"/></svg>
+        </div>
+        <p>สอบถามตัวเลือกฟิล์มใสกันรอย รายละเอียดผลิตภัณฑ์ และแนวทางการติดตั้งที่เหมาะกับรถของคุณ</p>
+        <a class="ab-text-link" href="/dealers.html#contact">สอบถามข้อมูลผลิตภัณฑ์ <span aria-hidden="true">↗</span></a>
+      </article>
+    </div>
+  </section>
 
-    <div class="pick rv">
-      <div class="pk-list" role="tablist" aria-orientation="vertical" aria-label="เลือกซีรีส์ฟิล์ม">
-        <button class="pk-item" role="tab" id="tb-SY" aria-controls="pn-SY" aria-selected="true" tabindex="0">TITANIUM</button>
-        <button class="pk-item" role="tab" id="tb-CM" aria-controls="pn-CM" aria-selected="false" tabindex="-1">CERAMIC</button>
-        <button class="pk-item" role="tab" id="tb-CT" aria-controls="pn-CT" aria-selected="false" tabindex="-1">CRYSTALIZE</button>
-        <button class="pk-item" role="tab" id="tb-XT" aria-controls="pn-XT" aria-selected="false" tabindex="-1">EXTRA CLEAR</button>
-        <button class="pk-item" role="tab" id="tb-SM" aria-controls="pn-SM" aria-selected="false" tabindex="-1">UV GUARD</button>
-      </div>
-      <div class="pk-body">
-      <div class="pk-panel" role="tabpanel" id="pn-SY" aria-labelledby="tb-SY" tabindex="0">
-        <p class="pk-tech">เทคโนโลยี — <span class="var">{{TECH_TITANIUM}}</span></p>
-        <dl>
-          <div class="pk-row"><dt>ลดความร้อน</dt><dd><b>81–96%</b><span class="pk-bar" style="--a:81;--b:96" aria-hidden="true"><i></i></span></dd></div>
-          <div class="pk-row"><dt>ป้องกันยูวี</dt><dd><b>99%</b></dd></div>
-          <div class="pk-row"><dt>แสงส่องผ่าน</dt><dd><b>10–40%</b><span class="pk-bar" style="--a:10;--b:40" aria-hidden="true"><i></i></span></dd></div>
-        </dl>
-      </div>
-      <div class="pk-panel" role="tabpanel" id="pn-CM" aria-labelledby="tb-CM" tabindex="0" hidden>
-        <p class="pk-tech">เทคโนโลยี — เซรามิก ไม่มีชั้นโลหะ</p>
-        <dl>
-          <div class="pk-row"><dt>ลดความร้อน</dt><dd><b>80–90%</b><span class="pk-bar" style="--a:80;--b:90" aria-hidden="true"><i></i></span></dd></div>
-          <div class="pk-row"><dt>ป้องกันยูวี</dt><dd><b>99%</b></dd></div>
-          <div class="pk-row"><dt>แสงส่องผ่าน</dt><dd><b>5–30%</b><span class="pk-bar" style="--a:5;--b:30" aria-hidden="true"><i></i></span></dd></div>
-        </dl>
-      </div>
-      <div class="pk-panel" role="tabpanel" id="pn-CT" aria-labelledby="tb-CT" tabindex="0" hidden>
-        <p class="pk-tech">เทคโนโลยี — เคลือบโลหะหลายชั้น (sputtering)</p>
-        <dl>
-          <div class="pk-row"><dt>ลดความร้อน</dt><dd><b>55–85%</b><span class="pk-bar" style="--a:55;--b:85" aria-hidden="true"><i></i></span></dd></div>
-          <div class="pk-row"><dt>ป้องกันยูวี</dt><dd><b>99%</b></dd></div>
-          <div class="pk-row"><dt>แสงส่องผ่าน</dt><dd><b>22–70%</b><span class="pk-bar" style="--a:22;--b:70" aria-hidden="true"><i></i></span></dd></div>
-        </dl>
-      </div>
-      <div class="pk-panel" role="tabpanel" id="pn-XT" aria-labelledby="tb-XT" tabindex="0" hidden>
-        <p class="pk-tech">เทคโนโลยี — เซรามิก ไม่มีชั้นโลหะ</p>
-        <dl>
-          <div class="pk-row"><dt>ลดความร้อน</dt><dd><b>61–67%</b><span class="pk-bar" style="--a:61;--b:67" aria-hidden="true"><i></i></span></dd></div>
-          <div class="pk-row"><dt>ป้องกันยูวี</dt><dd><b>100%</b></dd></div>
-          <div class="pk-row"><dt>แสงส่องผ่าน</dt><dd><b>5–35%</b><span class="pk-bar" style="--a:5;--b:35" aria-hidden="true"><i></i></span></dd></div>
-        </dl>
-      </div>
-      <div class="pk-panel" role="tabpanel" id="pn-SM" aria-labelledby="tb-SM" tabindex="0" hidden>
-        <p class="pk-tech">เทคโนโลยี — เซรามิก ไม่มีชั้นโลหะ</p>
-        <dl>
-          <div class="pk-row"><dt>ลดความร้อน</dt><dd><b>52–63%</b><span class="pk-bar" style="--a:52;--b:63" aria-hidden="true"><i></i></span></dd></div>
-          <div class="pk-row"><dt>ป้องกันยูวี</dt><dd><b>100%</b></dd></div>
-          <div class="pk-row"><dt>แสงส่องผ่าน</dt><dd><b>5–40%</b><span class="pk-bar" style="--a:5;--b:40" aria-hidden="true"><i></i></span></dd></div>
-        </dl>
-      </div>
-      </div>
+  <!-- ลองของจริง — ภาพซ้าย ข้อความขวา -->
+  <section class="ab-experience">
+    <figure class="ab-experience-photo">
+      <img src="/assets/glass.jpg" alt="ภาพประกอบมุมมองเมืองและแสงแดดผ่านกระจกรถยนต์" loading="lazy">
+      <figcaption>YOUR EVERYDAY VIEW / ภาพประกอบบรรยากาศ</figcaption>
+    </figure>
+    <div class="ab-experience-copy">
+      <div class="eyebrow"><span></span> THE FINNIX EXPERIENCE</div>
+      <h2>รู้จักเรามากขึ้น<br>ผ่านสิ่งที่คุณได้ลอง</h2>
+      <p>เริ่มจากดูสีฟิล์ม อ่านข้อมูลซีรีส์ที่สนใจ แล้วให้ร้านช่วยแนะนำจากรถและการใช้งานของคุณ เพราะการเลือกที่เหมาะสมควรมีทั้งข้อมูลและประสบการณ์จริงประกอบกัน</p>
+      <a class="pill filled" href="/experience.html">รู้จักการลอง FINNIX <span aria-hidden="true">↗</span></a>
+      <a class="ab-sub-link" href="/dealers.html?experience=1">สอบถามร้านที่มีจุดทดลอง</a>
     </div>
-    <p class="pk-note rv">แถบใต้ตัวเลขใช้สเกล 0–100% เท่ากันทุกซีรีส์ สลับซีรีส์แล้วเทียบตำแหน่งกันได้โดยตรง · ค่าที่แสดงเป็นช่วงจากรหัสที่อ่อนที่สุดถึงเข้มที่สุดของซีรีส์นั้น</p>
+  </section>
 
-    <div class="notice rv" style="margin-top:56px">
-      <b>ค่าทั้งหมดในตารางนี้ถอดจากเอกสารผลิตภัณฑ์ของบริษัท แต่ยังขาดชื่อมาตรฐานการวัด</b>
-      เอกสารระบุเพียงว่า “เป็นไปตามวิธีทดสอบตามมาตรฐานสากลของโลก” โดยไม่บอกชื่อมาตรฐาน ค่าที่วัดคนละมาตรฐานเอามาเทียบข้ามยี่ห้อไม่ได้ จึงต้องได้ <span class="var">{{TEST_STANDARD}}</span> มากำกับก่อนใช้ตัวเลขชุดนี้เทียบกับแบรนด์อื่น
+  <!-- ติดต่อบริษัท — ชื่อบริษัทกับเบอร์มาจาก SITE ใน build.py (@gen:company) -->
+  <section class="ab-company" id="company">
+    <div class="ab-company-title">
+      <div class="eyebrow"><span></span> LET’S CONNECT</div>
+      <h2>เริ่มต้นบทสนทนา<br>กับ FINNIX</h2>
+      <p>อยากรู้จักผลิตภัณฑ์ สอบถามร้านติดตั้ง หรือพูดคุยเรื่องธุรกิจ ติดต่อเราได้โดยตรง</p>
     </div>
-  </div>
-</section>
+    <div>
+      <!-- @gen:company -->
+      <dl class="ab-details">
+        <div><dt>บริษัท</dt><dd>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</dd></div>
+        <div><dt>ผลิตภัณฑ์</dt><dd>ฟิล์มกรองแสงและฟิล์มใสกันรอยรถยนต์</dd></div>
+        <div><dt>สำนักงานใหญ่</dt><dd><a class="ab-phone" href="tel:0635978497">06-3597-8497</a></dd></div>
+      </dl>
+      <!-- @end gen:company -->
+      <div class="ab-company-links"><a href="/dealers.html#contact">ติดต่อบริษัท <span aria-hidden="true">↗</span></a><a href="/dealers.html">หาร้านใกล้คุณ <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </section>
 
-<!-- ส่วนที่ 4 — มาตรฐานและการรับรอง -->
-<section class="sec smoke">
-  <div class="wrap">
-    <div class="sec-head rv bar">
-      <div class="eyebrow"><span class="dot"></span>มาตรฐานและการรับรอง</div>
-      <h2>เราจะไม่ติดตราที่พิสูจน์ไม่ได้</h2>
-      <p>หน้าเกี่ยวกับเราของแบรนด์ฟิล์มส่วนใหญ่จบด้วยแถวโลโก้สถาบันรับรอง ตราแต่ละอันมีความหมายต่อกันคนละเรื่อง และบางอันรับรองโรงงาน ไม่ได้รับรอง<span class="nb">ฟิล์มที่ขายในไทย</span></p>
-    </div>
-    <div class="notice rv">
-      <b>ส่วนนี้ยังไม่มีข้อมูลจากบริษัท</b>
-      รายการมาตรฐานและใบรับรองที่บริษัทหรือฟิล์มถืออยู่ต้องมาจากเอกสารจริงเท่านั้น <span class="var">{{CERTIFICATIONS}}</span> — สิ่งที่ต้องการคือ ชื่อสถาบัน · สิ่งที่ใบรับรองครอบคลุม (โรงงาน ผู้ผลิต หรือตัวฟิล์ม) · เลขที่และปีที่ออก
-    </div>
-    <div class="notice rv">
-      <b>ค่าที่ต้องได้เป็นลำดับแรกของทั้งเว็บ</b>
-      <span class="var">{{TEST_STANDARD}}</span> คือชื่อมาตรฐานที่ใช้วัดค่าฟิล์มทุกตัว ตราบใดที่ยังไม่ได้ ตัวเลขทุกตัวบนเว็บนี้ยังเทียบกับแบรนด์อื่นไม่ได้
-    </div>
-  </div>
-</section>
-
-<!-- ส่วนที่ 5 — ปิดท้าย -->
-<section class="closing">
-  <div class="wrap">
-    <div class="eyebrow on-dark" style="text-align:center"><span class="dot"></span>ขั้นตอนต่อไป</div>
-    <h2>อยากรู้ว่ารถของคุณควรใช้<span class="nb">รุ่นไหน?</span></h2>
-    <p>ให้ช่างที่ผ่านการอบรมจากเราวัดกระจกและแนะนำจากการใช้งานจริง ไม่ใช่จากความเข้มที่คุณเดาไว้</p>
-    <a href="centers.html" class="btn btn-light">หาศูนย์ติดตั้งใกล้คุณ <span class="ar">→</span></a>
-  </div>
-</section>
+  <!-- แถบ "ตอนต่อไป" — ปลายทางและข้อความอยู่ที่ NEXT ใน build.py -->
+  <!-- @next -->
+  <nav class="next-chapter dark" aria-label="ตอนต่อไป">
+    <a href="/experience.html">
+      <span class="eyebrow">NEXT <span></span> TRY IT YOURSELF <em class="eyebrow-th">ลองของจริง</em></span>
+      <strong><span>รู้จักฟิล์ม ผ่านการลองจริง</span></strong>
+      <i aria-hidden="true">→</i>
+    </a>
+  </nav>
+  <!-- @end next -->
 
 </main>
 
-<!-- FOOTER -->
-<!-- @shared:FOOTER_HTML -->
-<footer>
-  <div class="wrap">
-    <div class="f-grid">
-      <div class="f-brand">
-        <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
-        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับ<span class="nb">สภาพอากาศเมืองไทย</span></p>
-        <ul class="f-social">
-          <li><a href="tel:0635978497" aria-label="โทรหาฟินนิกซ์ ฟิล์ม 06-3597-8497"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 3.5h3.1l1.5 3.9-2 1.4a12 12 0 006.2 6.2l1.4-2 3.9 1.5v3.1a1.9 1.9 0 01-2.1 1.9A17.2 17.2 0 014.5 5.6 1.9 1.9 0 016.4 3.5z"/></svg></a></li>
-          <li><a href="contact.html" aria-label="ไลน์ของฟินนิกซ์ ฟิล์ม"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.3c-4.3 0-7.8 2.8-7.8 6.2 0 3.1 2.8 5.7 6.5 6.1.7.1.9.4.8 1l-.3 1.6c-.1.5.3.7.7.5 3.5-1.6 6-4 7.2-5.7a5.6 5.6 0 001.2-3.5c0-3.4-3.9-6.2-8.3-6.2z"/><path d="M8.6 8.9v3.4h2M12 8.9v3.4M14.2 12.3V8.9l2.3 3.4V8.9"/></svg></a></li>
-          <li><a href="contact.html" aria-label="เฟซบุ๊กของฟินนิกซ์ ฟิล์ม"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17"/><path d="M15.4 7.6h-1.6c-1 0-1.7.7-1.7 1.8v1.5h-1.8m5.1 0h-5.1m1.8 0v8.6"/></svg></a></li>
-        </ul>
-      </div>
-      <div class="f-col">
-        <h3>บริษัท</h3>
-        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a><a href="gallery.html">ผลงาน</a>
-      </div>
-      <div class="f-col">
-        <h3>บริการ</h3>
-        <a href="films.html">ฟิล์มรถยนต์</a><a href="centers.html">หาศูนย์ติดตั้ง</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
-      </div>
-    </div>
-    <div class="f-bot">
-      <span>© 2569 บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</span>
-      <span>นโยบายความเป็นส่วนตัว · นโยบายคุกกี้</span>
-    </div>
+<!-- @footer -->
+<footer class="home-footer">
+<div class="home-footer-grid">
+  <div class="home-footer-brand">
+    <a class="home-footer-logo" href="/"><img src="/assets/logo-finnix-white.png" alt="FINNIX FILM หน้าแรก" width="720" height="88" loading="lazy"></a>
+    <p>ฟิล์มกรองแสงสำหรับรถยนต์<br>ความสบายที่อยู่กับคุณในทุกการเดินทาง</p>
+    <p class="home-footer-company">บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</p>
+    <div class="home-footer-social"><span class="foot-icon is-pending" role="img" aria-label="Facebook — ยังไม่มีลิงก์" title="Facebook · รอ {{FACEBOOK_URL}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5H16l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8.1v3h2.5V21z"/></svg></span><span class="foot-icon is-pending" role="img" aria-label="LINE — ยังไม่มีลิงก์" title="LINE · รอ {{LINE_OA_ID}}"><svg class="ico-line" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.3.1.8.2.9.6.1.3.1.8 0 1.1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6.1-3.6 8.3-6.2 1.5-1.7 2.3-3.4 2.3-5.4 0-4.7-4.7-8.5-10.5-8.5z"/><text x="12" y="13.3" text-anchor="middle">LINE</text></svg></span><a class="foot-icon" href="tel:0635978497" aria-label="โทร 06-3597-8497"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></a></div>
   </div>
+  <nav aria-label="รู้จัก FINNIX">
+    <h2>รู้จัก FINNIX</h2>
+    <a href="/about.html">เกี่ยวกับเรา</a>
+    <a href="/works.html">ผลงานที่ติดตั้ง</a>
+  </nav>
+  <nav aria-label="ผลิตภัณฑ์">
+    <h2>ผลิตภัณฑ์</h2>
+    <a href="/films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
+    <a href="/films.html#price">ราคา</a>
+    <a href="/experience.html">ลองของจริง</a>
+  </nav>
+  <div class="home-footer-contact">
+    <h2>บริการและการติดต่อ</h2>
+    <a href="/dealers.html">ค้นหาร้าน FINNIX</a>
+    <a href="/dealers.html#contact">ติดต่อสำนักงานใหญ่</a>
+    <span class="foot-line is-pending" title="LINE · รอ {{LINE_OA_ID}}"><svg class="ico-line" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.3.1.8.2.9.6.1.3.1.8 0 1.1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6.1-3.6 8.3-6.2 1.5-1.7 2.3-3.4 2.3-5.4 0-4.7-4.7-8.5-10.5-8.5z"/><text x="12" y="13.3" text-anchor="middle">LINE</text></svg>LINE FINNIX <small>(เร็ว ๆ นี้)</small></span>
+    <p>ให้ร้านช่วยแนะนำรุ่นและเฉด<br>ที่เหมาะกับรถของคุณ</p>
+  </div>
+</div>
+<div class="home-footer-bottom">
+  <span>© 2026 บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</span>
+  <span>BEAUTIFULLY REAL.</span>
+  <span>CLEARER PEOPLE. BRIGHTER TOMORROW.</span>
+</div>
 </footer>
-<!-- @end:FOOTER_HTML -->
-
-<script>
-(function(){
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---- reveal — ต้องอยู่ก่อนโค้ดเฉพาะหน้า ----
-     ถ้าบล็อกไหนข้างล่าง throw ขึ้นมา .rv จะค้างที่ opacity:0 ทั้งหน้า
-     เดิมบล็อกนี้อยู่ท้ายสุด จึงพังตามทุกครั้งที่โค้ดก่อนหน้ามีปัญหา
-     ห่อด้วย if(!reduce) ไม่ใช่ early return เพราะ return จะฆ่าโค้ดที่เหลือทั้งไฟล์ */
-  if(!reduce){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
-      });
-    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
-    document.querySelectorAll('.rv').forEach(function(el, i){
-      el.style.transitionDelay = (i % 4) * 60 + 'ms';
-      io.observe(el);
-    });
-  }
-
-  /* ---- load ---- */
-  window.addEventListener('load', function(){ document.body.classList.add('loaded'); });
-  setTimeout(function(){ document.body.classList.add('loaded'); }, 400);
-
-<!-- @shared:JS_NAV -->
-  /* ---- nav ---- */
-  var nav = document.getElementById('nav');
-  function onScrollNav(){ nav.classList.toggle('solid', window.scrollY > 40); }
-  onScrollNav(); window.addEventListener('scroll', onScrollNav, {passive:true});
-
-  /* ---- เมนูมือถือ ---- */
-  var burger = document.getElementById('burger');
-  function setMenu(open){
-    document.body.classList.toggle('menu-open', open);
-    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    burger.setAttribute('aria-label', open ? 'ปิดเมนู' : 'เปิดเมนู');
-  }
-  burger.addEventListener('click', function(){
-    setMenu(!document.body.classList.contains('menu-open'));
-  });
-  document.querySelectorAll('#drawer a').forEach(function(a){
-    a.addEventListener('click', function(){ setMenu(false); });
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && document.body.classList.contains('menu-open')){
-      setMenu(false); burger.focus();
-    }
-  });
-  /* กลับมากว้างกว่า 900px แล้วต้องไม่ค้างสถานะเมนูเปิด */
-  window.matchMedia('(min-width:1081px)').addEventListener('change', function(e){
-    if(e.matches) setMenu(false);
-  });
-<!-- @end:JS_NAV -->
-
-  /* ---- เลือกซีรีส์ — สถานะ UI ไม่ใช่ motion (แบบเดียวกับแท็บใน /gallery)
-         อยู่ก่อน if(reduce) โดยตั้งใจ คนที่ปิด motion ต้องสลับซีรีส์ได้เหมือนกัน ---- */
-  var picks = Array.prototype.slice.call(document.querySelectorAll('.pk-item'));
-  function selectPick(t){
-    picks.forEach(function(x){
-      var on = x === t;
-      x.setAttribute('aria-selected', on ? 'true' : 'false');
-      x.tabIndex = on ? 0 : -1;
-      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
-    });
-  }
-  picks.forEach(function(t, i){
-    t.addEventListener('click', function(){ selectPick(t); });
-    t.addEventListener('keydown', function(e){
-      var n;
-      if(e.key === 'ArrowDown') n = picks[(i + 1) % picks.length];
-      else if(e.key === 'ArrowUp') n = picks[(i - 1 + picks.length) % picks.length];
-      else if(e.key === 'Home') n = picks[0];
-      else if(e.key === 'End') n = picks[picks.length - 1];
-      else return;
-      e.preventDefault(); selectPick(n); n.focus();
-    });
-  });
-})();
-</script>
+<!-- @end footer -->
 </body>
 </html>

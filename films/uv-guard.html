@@ -1,0 +1,226 @@
+<!-- JOB: CONSIDER | USER FEELS: รุ่นนี้เหมาะกับเราไหม | NEXT: /experience.html
+     สร้างโดย tools/build.py จาก data/films.json — ห้ามแก้ไฟล์นี้ตรง ๆ แก้ที่ series_page() ใน build.py
+     v8.2 ดีไซน์ตามไฟล์ต้นแบบ C:/Claude/ceramic.html (เนื้อหาเดิม) · CSS หมวด 7 ของ merge.css · JS ส่วนที่ 11 ของ app.js -->
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>UV GUARD | FINNIX FILM</title>
+  <meta name="description" content="ฟินนิกซ์ ยูวีการ์ด เซรามิค ฟิล์ม — ใส เคลียร์ ชัด">
+  <!-- @assets -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/journey.css">
+  <link rel="stylesheet" href="/merge.css">
+  <script src="/content.js" defer></script>
+  <script src="/app.js" defer></script>
+  <!-- @end assets -->
+</head>
+<body class="inner-page series-page">
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<!-- @header -->
+<header>
+  <a href="/" class="logo"><img src="/assets/logo-finnix-web.png" alt="FINNIX FILM หน้าแรก" width="817" height="96"></a>
+  <nav id="nav" aria-label="เมนูหลัก">
+    <a href="/">หน้าแรก</a>
+    <a href="/films.html">ฟิล์ม</a>
+    <a href="/works.html">ผลงาน</a>
+    <a href="/experience.html">ลองของจริง</a>
+    <a href="/about.html">เกี่ยวกับเรา</a>
+    <a class="nav-extra" href="/dealers.html">หาร้านใกล้คุณ</a>
+  </nav>
+  <a class="pill nav-dealer" href="/dealers.html">หาร้านใกล้คุณ</a>
+  <button id="menu" aria-label="เปิดเมนู" aria-controls="nav" aria-expanded="false"><span></span><span></span></button>
+</header>
+<!-- @end header -->
+
+<main id="main">
+
+  <nav class="sp-crumb" aria-label="เส้นทางหน้าเว็บ"><a href="/">หน้าแรก</a><span aria-hidden="true">/</span><a href="/films.html">ฟิล์มทุกซีรีส์</a><span aria-hidden="true">/</span><span aria-current="page">UV GUARD</span></nav>
+
+  <!-- ภาพใหญ่พื้นมืด — ภาพประกอบจาก SERIES_PHOTO ใน build.py (ไม่ใช่ผลงานติดตั้งจริง) -->
+  <section class="sp-hero" id="film-hero">
+    <img class="sp-hero-photo" src="/assets/hero.jpg" style="object-position:30% center" alt="" fetchpriority="high">
+    <div class="sp-hero-copy">
+      <div class="eyebrow">05 <span></span> SM SERIES · FINNIX FILM</div>
+      <h1>UV GUARD</h1>
+      <p class="sp-hero-th">ฟินนิกซ์ ยูวีการ์ด เซรามิค ฟิล์ม</p>
+      <span class="red-line" aria-hidden="true"></span>
+      <h2>ใส เคลียร์ ชัด</h2>
+      <p class="sp-hero-claim">เปิดรับทุกมิติการมอง ทั้งกลางวันและกลางคืน</p>
+      <div class="sp-hero-actions">
+        <a class="pill sp-white" href="#price">ดูราคา</a>
+        <a class="pill light" href="#spec">ดูค่าสเปก</a>
+      </div>
+    </div>
+    <span class="sp-hero-note">ภาพประกอบบรรยากาศ</span>
+  </section>
+
+  <nav class="sp-nav" aria-label="เนื้อหาในหน้านี้">
+    <span class="sp-nav-title">UV GUARD</span>
+    <span class="sp-nav-links"><a href="#overview">รู้จักซีรีส์</a><a href="#spec">ความเข้มและสเปก</a><a href="#price">ราคา</a><a href="/experience.html">ลองของจริง</a></span>
+  </nav>
+
+  <!-- ภาพรวม — โลโก้ + ปกโบรชัวร์ซ้าย · ค่าหลัก 6 ช่องขวา (ช่วงค่าจาก films.json) -->
+  <section class="sp-overview" id="overview">
+    <div class="sp-overview-brand">
+      <div class="eyebrow"><span></span> SM SERIES · 3 รหัสความเข้ม</div>
+      <p class="sp-logo"><img src="/assets/series/logo-uv-guard.png" alt="UV GUARD" width="800" height="233" loading="lazy"></p>
+      <p class="sp-codes">SM05 · SM15 · SM35</p>
+      <figure class="cover">
+        <img src="/assets/Brochure/cover-SM.jpg" alt="ปกโบรชัวร์ ฟินนิกซ์ ยูวีการ์ด เซรามิค ฟิล์ม" loading="lazy" width="880" height="1245">
+        <figcaption>ปกโบรชัวร์ต้นฉบับของบริษัท</figcaption>
+      </figure>
+    </div>
+    <dl class="sp-facts">
+      <div><dt>เทคโนโลยี</dt><dd>เซรามิก ไม่มีชั้นโลหะ</dd></div>
+      <div><dt>ชั้นโลหะ</dt><dd>ไม่มีชั้นโลหะ<small>ไม่รบกวนสัญญาณ 5G · GPS · บัตรทางด่วน</small></dd></div>
+      <div><dt>ลดความร้อน</dt><dd class="num">52–63%</dd></div>
+      <div><dt>แสงส่องผ่าน</dt><dd class="num">5–40%</dd></div>
+      <div><dt>กัน UV</dt><dd class="num">100%</dd></div>
+      <div><dt>รับประกัน</dt><dd class="num">7 <small>ปี</small></dd></div>
+    </dl>
+  </section>
+
+  <!-- ความเข้มและสเปก — ปุ่มเลือกรหัสไฮไลต์คอลัมน์ในตาราง (app.js ส่วนที่ 11) -->
+  <section class="sp-spec" id="spec">
+    <div class="sp-spec-intro">
+      <div class="eyebrow"><span></span> SPEC · 3 รหัสความเข้ม</div>
+      <h2>ค่าสเปกทั้ง 3 รหัส</h2>
+      <p class="note">ภาพจำลองความทึบจากค่าแสงส่องผ่าน ไม่ใช่สีจริงของฟิล์ม · กดรหัสเพื่อดูในตาราง</p>
+      <p class="sp-selection" id="sp-selection" aria-live="polite" hidden><strong id="sp-selected-code"></strong><span id="sp-selected-light"></span></p>
+    </div>
+    <div class="sp-shades" role="group" aria-label="เลือกรหัสเพื่อไฮไลต์ในตาราง">
+      <button type="button" class="sp-shade" data-col="1" aria-pressed="false" aria-label="เลือกรหัส SM05 แสงผ่าน 5%"><span class="sp-shade-scene" style="--shade:0.82"><img src="/assets/glass.jpg" alt="" loading="lazy"><span class="sp-shade-mark" aria-hidden="true">✓</span></span><b>SM05</b><small>แสงผ่าน 5%</small></button>
+      <button type="button" class="sp-shade" data-col="2" aria-pressed="false" aria-label="เลือกรหัส SM15 แสงผ่าน 15%"><span class="sp-shade-scene" style="--shade:0.62"><img src="/assets/glass.jpg" alt="" loading="lazy"><span class="sp-shade-mark" aria-hidden="true">✓</span></span><b>SM15</b><small>แสงผ่าน 15%</small></button>
+      <button type="button" class="sp-shade" data-col="3" aria-pressed="false" aria-label="เลือกรหัส SM35 แสงผ่าน 40%"><span class="sp-shade-scene" style="--shade:0.15"><img src="/assets/glass.jpg" alt="" loading="lazy"><span class="sp-shade-mark" aria-hidden="true">✓</span></span><b>SM35</b><small>แสงผ่าน 40%</small></button>
+    </div>
+    <div class="sp-spec-table">
+      <div class="table-wrap" tabindex="0" role="region" aria-label="ตารางสเปก — เลื่อนแนวนอนได้บนมือถือ">
+        <table class="spec-table sp-table" id="spec-table">
+          <thead><tr><th scope="col">ค่า</th><th scope="col">SM05</th><th scope="col">SM15</th><th scope="col">SM35</th></tr></thead>
+          <tbody>
+            <tr class="heat"><th scope="row">ลดความร้อนจากแสงแดด<span class="nb">โดยรวม</span></th><td>63%</td><td>59%</td><td>52%</td></tr>
+            <tr><th scope="row">แสงส่องผ่าน</th><td>5%</td><td>15%</td><td>40%</td></tr>
+            <tr><th scope="row">ความเข้ม</th><td>80%</td><td>60%</td><td>40%</td></tr>
+            <tr><th scope="row">สะท้อนแสง</th><td>5.1%</td><td>5.2%</td><td>6.1%</td></tr>
+            <tr><th scope="row">ป้องกันรังสี UV</th><td>100%</td><td>100%</td><td>100%</td></tr>
+            <tr><th scope="row">ป้องกันรังสี IR</th><td>98%</td><td>95%</td><td>95%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sp-source">ถอดจากโบรชัวร์ของบริษัทปี 2024 · ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
+    </div>
+  </section>
+
+  <section class="sp-price" id="price">
+    <div class="sp-inner">
+      <div class="sp-price-head">
+        <div>
+          <div class="eyebrow"><span></span> PRICE 2024</div>
+          <h2>ราคาตามเอกสารผลิตภัณฑ์</h2>
+        </div>
+        <p>ราคาจากโบรชัวร์ปี 2024 · ราคาจริงยืนยันที่ร้าน</p>
+      </div>
+      <div class="sp-price-layout">
+        <div class="sp-estimate" data-name="UV GUARD" hidden>
+          <div class="eyebrow">UV GUARD · ราคาตามเอกสารปี 2024</div>
+          <label for="sp-car">ประเภทรถ</label>
+          <select id="sp-car"><option value="pickup2">กระบะ 2 ประตู</option><option value="pickup4">กระบะ 4 ประตู</option><option value="sedan" selected>รถเก๋ง</option><option value="suv">รถ SUV</option><option value="mpv">รถ MPV</option><option value="van">รถตู้</option></select>
+          <fieldset>
+            <legend>ตำแหน่งกระจก</legend>
+            <div class="sp-positions"><label><input type="radio" name="sp-position" value="front">บานหน้า</label><label><input type="radio" name="sp-position" value="full" checked>รอบคัน</label></div>
+          </fieldset>
+          <div class="sp-result" aria-live="polite">
+            <small>ราคาตามเอกสารปี 2024</small>
+            <p class="sp-amount"><strong id="sp-amount">9,800</strong> <span>บาท</span></p>
+            <p class="sp-caption" id="sp-caption">รถเก๋ง · รอบคัน · UV GUARD</p>
+            <a class="pill" href="/dealers.html">หาร้านใกล้คุณ</a>
+          </div>
+        </div>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="ตารางราคา — เลื่อนแนวนอนได้บนมือถือ">
+          <table class="spec-table sp-price-table" id="sp-price-table">
+            <thead><tr><th scope="col">ประเภทรถ</th><th scope="col">บานหน้า (บาท)</th><th scope="col">รอบคัน (บาท)</th></tr></thead>
+            <tbody>
+            <tr data-car="pickup2"><th scope="row">กระบะ 2 ประตู</th><td>4,000</td><td>8,600</td></tr>
+            <tr data-car="pickup4"><th scope="row">กระบะ 4 ประตู</th><td>4,000</td><td>9,200</td></tr>
+            <tr data-car="sedan"><th scope="row">รถเก๋ง</th><td>4,000</td><td>9,800</td></tr>
+            <tr data-car="suv"><th scope="row">รถ SUV</th><td>4,000</td><td>12,000</td></tr>
+            <tr data-car="mpv"><th scope="row">รถ MPV</th><td>4,000</td><td>14,000</td></tr>
+            <tr data-car="van"><th scope="row">รถตู้</th><td>5,400</td><td>15,800</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sp-alts">
+    <div class="sp-alts-head">
+      <h2>ทางเลือกอื่นที่อยาก<span class="nb">ให้ลอง</span></h2>
+      <a class="sp-text-link" href="/films.html">ดูฟิล์มทุกซีรีส์</a>
+    </div>
+    <div class="sp-alt-grid">
+      <a class="sp-alt" href="/films/extra-clear.html">
+        <span class="sp-alt-photo"><img src="/assets/glass.jpg" style="object-position:70% center" alt="" loading="lazy"><span>ภาพประกอบบรรยากาศ</span></span>
+        <span class="sp-alt-copy"><span><strong>EXTRA CLEAR</strong><small>ลดความร้อน 61–67% · แสงส่องผ่าน 5–35%</small></span><i aria-hidden="true">↗</i></span>
+      </a>
+      <a class="sp-alt" href="/films/crystalize.html">
+        <span class="sp-alt-photo"><img src="/assets/sedan.jpg" style="object-position:100% center" alt="" loading="lazy"><span>ภาพประกอบบรรยากาศ</span></span>
+        <span class="sp-alt-copy"><span><strong>CRYSTALIZE</strong><small>ลดความร้อน 55–85% · แสงส่องผ่าน 22–70%</small></span><i aria-hidden="true">↗</i></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- @next -->
+  <nav class="next-chapter dark" aria-label="ตอนต่อไป">
+    <a href="/experience.html">
+      <span class="eyebrow">NEXT <span></span> TRY IT YOURSELF <em class="eyebrow-th">ลองของจริง</em></span>
+      <strong><span>ลองสัมผัสของจริงก่อนตัดสินใจ</span></strong>
+      <i aria-hidden="true">→</i>
+    </a>
+  </nav>
+  <!-- @end next -->
+
+</main>
+
+<!-- @footer -->
+<footer class="home-footer">
+<div class="home-footer-grid">
+  <div class="home-footer-brand">
+    <a class="home-footer-logo" href="/"><img src="/assets/logo-finnix-white.png" alt="FINNIX FILM หน้าแรก" width="720" height="88" loading="lazy"></a>
+    <p>ฟิล์มกรองแสงสำหรับรถยนต์<br>ความสบายที่อยู่กับคุณในทุกการเดินทาง</p>
+    <p class="home-footer-company">บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</p>
+    <div class="home-footer-social"><span class="foot-icon is-pending" role="img" aria-label="Facebook — ยังไม่มีลิงก์" title="Facebook · รอ {{FACEBOOK_URL}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5H16l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8.1v3h2.5V21z"/></svg></span><span class="foot-icon is-pending" role="img" aria-label="LINE — ยังไม่มีลิงก์" title="LINE · รอ {{LINE_OA_ID}}"><svg class="ico-line" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.3.1.8.2.9.6.1.3.1.8 0 1.1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6.1-3.6 8.3-6.2 1.5-1.7 2.3-3.4 2.3-5.4 0-4.7-4.7-8.5-10.5-8.5z"/><text x="12" y="13.3" text-anchor="middle">LINE</text></svg></span><a class="foot-icon" href="tel:0635978497" aria-label="โทร 06-3597-8497"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></a></div>
+  </div>
+  <nav aria-label="รู้จัก FINNIX">
+    <h2>รู้จัก FINNIX</h2>
+    <a href="/about.html">เกี่ยวกับเรา</a>
+    <a href="/works.html">ผลงานที่ติดตั้ง</a>
+  </nav>
+  <nav aria-label="ผลิตภัณฑ์">
+    <h2>ผลิตภัณฑ์</h2>
+    <a href="/films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
+    <a href="/films.html#price">ราคา</a>
+    <a href="/experience.html">ลองของจริง</a>
+  </nav>
+  <div class="home-footer-contact">
+    <h2>บริการและการติดต่อ</h2>
+    <a href="/dealers.html">ค้นหาร้าน FINNIX</a>
+    <a href="/dealers.html#contact">ติดต่อสำนักงานใหญ่</a>
+    <span class="foot-line is-pending" title="LINE · รอ {{LINE_OA_ID}}"><svg class="ico-line" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.3.1.8.2.9.6.1.3.1.8 0 1.1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6.1-3.6 8.3-6.2 1.5-1.7 2.3-3.4 2.3-5.4 0-4.7-4.7-8.5-10.5-8.5z"/><text x="12" y="13.3" text-anchor="middle">LINE</text></svg>LINE FINNIX <small>(เร็ว ๆ นี้)</small></span>
+    <p>ให้ร้านช่วยแนะนำรุ่นและเฉด<br>ที่เหมาะกับรถของคุณ</p>
+  </div>
+</div>
+<div class="home-footer-bottom">
+  <span>© 2026 บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</span>
+  <span>BEAUTIFULLY REAL.</span>
+  <span>CLEARER PEOPLE. BRIGHTER TOMORROW.</span>
+</div>
+</footer>
+<!-- @end footer -->
+</body>
+</html>

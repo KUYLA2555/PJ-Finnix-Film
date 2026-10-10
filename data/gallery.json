@@ -1,0 +1,378 @@
+{
+ "_readme": "รายการผลงานบนหน้า /works.html (ผลงานที่ติดตั้ง) · ย้ายมาจาก gallery.html ใน v6.0 · ทุกรายการยังเป็นตัวอย่างการแสดงผล ไม่ใช่บันทึกงานติดตั้งจริง (รอ {{PORTFOLIO_ITEMS}}) · series ต้องสะกดตรงกับชื่อซีรีส์ใน films.json · แก้ที่นี่แล้วรัน python tools/build.py",
+ "placeholder": true,
+ "items": [
+  {
+   "car": "Toyota Camry",
+   "series": "TITANIUM",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "SY40"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "SY20"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "SY20"
+    }
+   ]
+  },
+  {
+   "car": "Honda Accord",
+   "series": "TITANIUM",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "SY40"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "SY10"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "SY10"
+    }
+   ]
+  },
+  {
+   "car": "Mercedes-Benz C 220 d",
+   "series": "TITANIUM",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "SY40"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "SY20"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "SY10"
+    }
+   ]
+  },
+  {
+   "car": "Isuzu D-Max",
+   "series": "TITANIUM",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "SY40"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "SY10"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "SY10"
+    }
+   ]
+  },
+  {
+   "car": "Honda Civic",
+   "series": "CERAMIC",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "CM35"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "CM15"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "CM15"
+    }
+   ]
+  },
+  {
+   "car": "Toyota Corolla Cross",
+   "series": "CERAMIC",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "CM35"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "CM05"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "CM05"
+    }
+   ]
+  },
+  {
+   "car": "Mazda CX-5",
+   "series": "CERAMIC",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "CM35"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "CM15"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "CM05"
+    }
+   ]
+  },
+  {
+   "car": "BMW 320d",
+   "series": "CERAMIC",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "CM35"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "CM15"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "CM15"
+    },
+    {
+     "position": "หลังคาแก้ว",
+     "code": "CM05"
+    }
+   ]
+  },
+  {
+   "car": "Toyota Alphard",
+   "series": "CRYSTALIZE",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "CT70"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "CT20"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "CT20"
+    }
+   ]
+  },
+  {
+   "car": "Honda CR-V",
+   "series": "CRYSTALIZE",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "CT70"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "CT40"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "CT40"
+    }
+   ]
+  },
+  {
+   "car": "Tesla Model 3",
+   "series": "CRYSTALIZE",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "CT70"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "CT40"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "CT20"
+    },
+    {
+     "position": "หลังคาแก้ว",
+     "code": "CT20"
+    }
+   ]
+  },
+  {
+   "car": "Ford Ranger",
+   "series": "CRYSTALIZE",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "CT70"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "CT20"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "CT20"
+    }
+   ]
+  },
+  {
+   "car": "Toyota Yaris Ativ",
+   "series": "EXTRA CLEAR",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "XT35"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "XT15"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "XT15"
+    }
+   ]
+  },
+  {
+   "car": "Honda City",
+   "series": "EXTRA CLEAR",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "XT35"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "XT05"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "XT05"
+    }
+   ]
+  },
+  {
+   "car": "MG ZS",
+   "series": "EXTRA CLEAR",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "XT35"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "XT15"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "XT05"
+    }
+   ]
+  },
+  {
+   "car": "Nissan Almera",
+   "series": "EXTRA CLEAR",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "XT35"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "XT15"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "XT15"
+    }
+   ]
+  },
+  {
+   "car": "Toyota Fortuner",
+   "series": "UV GUARD",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "SM35"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "SM15"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "SM15"
+    }
+   ]
+  },
+  {
+   "car": "Honda HR-V",
+   "series": "UV GUARD",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "SM35"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "SM05"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "SM05"
+    }
+   ]
+  },
+  {
+   "car": "Mitsubishi Pajero Sport",
+   "series": "UV GUARD",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "SM35"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "SM15"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "SM05"
+    }
+   ]
+  },
+  {
+   "car": "BYD Atto 3",
+   "series": "UV GUARD",
+   "fit": [
+    {
+     "position": "บานหน้า",
+     "code": "SM35"
+    },
+    {
+     "position": "บานข้าง",
+     "code": "SM15"
+    },
+    {
+     "position": "บานหลัง",
+     "code": "SM15"
+    },
+    {
+     "position": "หลังคาแก้ว",
+     "code": "SM05"
+    }
+   ]
+  }
+ ]
+}

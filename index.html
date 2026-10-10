@@ -1,732 +1,285 @@
-<!DOCTYPE html>
+<!-- JOB: STOP → NOTICE → TRUST → CHOOSE | USER FEELS: FINNIX คืออะไร น่าสนใจไหม | NEXT: /films.html -->
+<!-- v6.4 ตามต้นแบบ C:\Claude\FINNIX-Website (เมนูยังเป็นของเว็บนี้) · v6.5 รวม FIND FINNIX + FRIENDS & FAMILY (ส่วน 06) · v7.1 ท้ายเว็บ 4 คอลัมน์ · v7.9 ส่วน 01–05 กลับเป็นแบบต้นแบบ แล้วจับคู่ 04+06 / 05+07 ของต้นแบบเป็นแถวละสองคอลัมน์ · ท้ายเว็บพื้นดำ · ส่วน 04 05 06 คุมด้วย app.js ส่วนที่ 3 -->
+<!doctype html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FINNIX FILM — ฟิล์มกรองแสงรถยนต์</title>
-<meta name="description" content="บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงรถยนต์ที่กันความร้อนด้วยการจับคลื่นอินฟราเรด ไม่ใช่ด้วยการทำให้มืด ตัวเลขทุกตัวบนเว็บนี้มีที่มา">
-
-<!-- Open Graph — ใส่เฉพาะที่ไม่ต้องใช้โดเมน
-     og:url · canonical · og:image ยังไม่ใส่โดยตั้งใจ: โดเมนยังไม่นิ่ง (ค้างข้อ 15)
-     และ MODE B ไม่มีภาพ 1200x630 ให้ใช้ — **ห้ามป้อนค่า placeholder ให้ crawler** -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="FINNIX FILM">
-<meta property="og:locale" content="th_TH">
-<meta property="og:title" content="FINNIX FILM — ฟิล์มกรองแสงรถยนต์">
-<meta property="og:description" content="บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงรถยนต์ที่กันความร้อนด้วยการจับคลื่นอินฟราเรด ไม่ใช่ด้วยการทำให้มืด ตัวเลขทุกตัวบนเว็บนี้มีที่มา">
-<meta name="twitter:card" content="summary">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-/* ============================================================================
-   index.html — หน้าแรก  (/)
-
-   อ่านก่อนแก้ไฟล์นี้
-     CLAUDE.md .................. กฎที่ละเมิดแล้วงานไม่ผ่าน + สคริปต์ตรวจ
-     docs/master-prompt.md ...... บรีฟหลัก อ้างอิงเป็น "ข้อ 1-12" เสมอ
-     docs/CHANGELOG.md .......... ท้ายไฟล์มี "ค้างอยู่" กับ "ตัวแปรที่ต้องขอ"
-
-   ข้อ 9 บังคับว่าหนึ่งหน้าจบในไฟล์เดียว — CSS กับ JS อยู่ในไฟล์นี้ ห้ามแยกออกไป
-   request ภายนอกมีได้แค่ Google Fonts (+ แผนที่ Google ที่ contact.html เท่านั้น)
-
-   ลำดับบล็อกใน <style> นี้ (ค้นด้วยชื่อ อย่าค้นด้วยเลขบรรทัด มันเลื่อนทุกรอบ)
-      1. reveal (+ .hero-neon พื้นหลังเวกเตอร์ของ hero)
-      2. nav
-      3. เมนูมือถือ
-      4. ปุ่ม
-      5. generic section
-      6. ปิดท้าย
-      7. footer
-      8. responsive
-
-   ของร่วม — แก้ที่ไฟล์นี้ต้องแก้ครบทั้ง 8 ไฟล์พร้อมกันเสมอ ไม่งั้นสลับหน้าแล้วเลย์เอาต์ขยับ
-     :root tokens · nav · drawer · footer · .btn · .rv · .var · SEO meta · บล็อก noscript
-   จุดตัด responsive ของทั้งเว็บมีสามจุด: 1080 (พับเมนู) · 900 · 620 — อย่าเพิ่มจุดใหม่
-   ทุกระยะต้องหารด้วย 8 ลงตัว · สีข้อความต้องผ่าน WCAG AA 4.5:1 วัดก่อนเปลี่ยนทุกครั้ง
-   ============================================================================ */
-/* @shared:TOKENS */
-:root{
-  /* ระบบดีไซน์ Car Dealership 128 — วัดจาก car-dealership-128.webflow.io เอง (v5.6)
-     **ค่าที่วัดจากเว็บจริงต่างจากชุดโทเคนที่ผู้สั่งงานส่งมาหลายจุด ยึดของจริงจากเว็บ**
-     มุมโค้ง 0 ทั้งเว็บ · ปุ่ม padding 18px 24px น้ำหนัก 400 · ระยะ section 130px · คอนเทนเนอร์ 1200px */
-  --void:#000000;
-  --ink:#0E0E0E;
-  --paper:#FFFFFF;
-  --smoke:#F4F4F3;
-  --line:#E4E4E4;
-  --line-strong:rgba(14,14,14,.5);   /* เส้นผมของกล่องบนพื้นสว่าง ตามที่วัดได้ */
-  --line-dark:rgba(255,255,255,.20);
-  --mute:#535353;                    /* พื้นสว่าง 7.69:1 */
-  --mute-dark:#AFAFAF;               /* พื้นมืด 8.80:1 บน ink · 9.57:1 บนดำ */
-  --red:#9A0F39;                     /* สีเน้นเดียวของระบบ · ขาวบนสีนี้ = 8.40:1 */
-  --red-hot:#9A0F39;
-
-  --u:8px;
-  --max:1200px;
-  --pad:40px;
-  --r:0px;                           /* **มุมฉากทั้งเว็บ** วัดจากปุ่ม การ์ด และกล่องทุกชิ้นของเว็บต้นทาง */
-
-  --e:cubic-bezier(.16,1,.3,1);
-  --e-in:cubic-bezier(.7,0,.3,1);
-
-  /* ให้ block-size ไล่ค่าระหว่าง 0 กับ auto ได้ ใช้กับ accordion ที่ /faq และ FAQ ย่อหน้าแรก
-     ใส่ครบทั้ง 8 ไฟล์เพราะ :root ต้องแฮชตรงกัน หน้าที่ไม่มี <details> ก็ไม่มีผลอะไร
-     เบราว์เซอร์ที่ยังไม่รองรับจะข้ามบรรทัดนี้ไปเฉยๆ accordion เปิดทันทีแบบเดิม ไม่พัง */
-  interpolate-size:allow-keywords;
-}
-/* @end:TOKENS */
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-/* nav ลอยสูง 87px (v5.6) — ถ้าไม่กันระยะไว้ หัวข้อปลายทางของ anchor จะไปมุดใต้แถบ nav
-   รวมถึง #main ที่ skip link ชี้ไป ซึ่งเป็นเรื่อง accessibility ตรงๆ (ข้อ 9) */
-[id]{scroll-margin-top:112px}
-body{
-  background:var(--paper);color:var(--ink);
-  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
-  font-size:16px;line-height:1.5;font-weight:400;
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
-}
-h1,h2,h3,h4{font-family:'Anuphan',system-ui,sans-serif;font-weight:700;line-height:1.2;letter-spacing:0}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:var(--r)}
-
-/* ข้ามไปเนื้อหาหลัก — ต้องมีทุกหน้าเพื่อให้คนใช้คีย์บอร์ดไม่ต้องไล่ผ่าน nav ทุกครั้ง (ข้อ 9) */
-.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:16px 24px;border-radius:var(--r);z-index:200}
-.skip:focus{left:0}
-.nb{white-space:nowrap}
-
-.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
-.eyebrow{font-size:12px;font-weight:400;letter-spacing:1px;line-height:1.2;text-transform:uppercase;color:var(--mute)}
-.eyebrow.on-dark{color:var(--mute-dark)}
-.eyebrow .dot{display:inline-block;width:5px;height:5px;background:currentColor;border-radius:50%;margin-right:10px;vertical-align:2px}
-
-/* ค่าที่ยังไม่ได้รับจากลูกค้า — ข้อ 10 ห้ามแต่งตัวเลขหรือข้อความแทน */
-.var{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--smoke);border:1px dashed #B8B8B4;border-radius:var(--r);padding:2px 8px;font-size:.78em;letter-spacing:0;color:#535353;white-space:nowrap;font-weight:400}
-
-/* ---------------- reveal ---------------- */
-.rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--e),transform .8s var(--e)}
-.rv.in{opacity:1;transform:none}
-
-/* @shared:NAV_CSS */
-/* ---------------- nav ---------------- */
-/* Car Dealership 128 — แถบโปร่งใสลอยทับ hero มืด ตัวอักษรขาว ขอบล่างเป็นเส้นผมขาว 1px
-   เว็บต้นทางเป็น position:absolute (เลื่อนแล้วหายไปกับ hero) **เราคง fixed ไว้**
-   เพราะทุกหน้าของเราต้องมีทางกลับตลอดเวลา และ 5 หน้าไม่มี hero เต็มจอให้ absolute เกาะ
-   สถานะ .solid ตอนเลื่อนจึงยังอยู่ แต่เปลี่ยนเป็นพื้นขาวทึบ ไม่ใช่ฝ้าเบลอ ตามภาษาแบนของระบบนี้ */
-.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .4s var(--e),border-color .4s var(--e)}
-.nav::after{content:'';position:absolute;inset:auto 0 0 0;height:1px;background:rgba(255,255,255,.32);transition:background .4s var(--e)}
-.nav.solid{background:var(--paper)}
-.nav.solid::after{background:var(--line)}
-.nav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:87px;display:flex;align-items:center;gap:40px}
-/* โลโก้ — กำหนด aspect-ratio ไว้ล่วงหน้าเพื่อไม่ให้เกิด layout shift ตามข้อ 9 */
-.brand{flex:none;display:block;line-height:0}
-.brand img{display:block;width:auto;height:24px;aspect-ratio:817/96}
-/* พื้นมืดใช้โลโก้ขาวล้วน — ตัวอักษร FINNIX เป็นสีดำจึงจมหายบนพื้นมืด
-   ไม่ใส่ transition บน filter โดยตั้งใจ — เบราว์เซอร์ interpolate filter list ข้ามสถานะไม่ได้
-   ทำให้ค่าค้างที่ขาวแล้วโลโก้หายไปบนพื้นขาว การสลับทันทีมองไม่ออกอยู่แล้วเพราะ nav เปลี่ยนพื้นหลังพร้อมกัน */
-.nav .brand img{filter:brightness(0) invert(1)}
-.nav.solid .brand img{filter:none}
-/* nav-link = 16/400 ไม่มี tracking · ลิงก์สูง 44px ตามเกณฑ์ขนาดพื้นที่กดในข้อ 9 */
-.nav-links{display:flex;gap:30px;margin-left:auto;font-size:16px;font-weight:400;line-height:1.2}
-.nav-links a{color:var(--paper);position:relative;display:flex;align-items:center;height:44px;transition:color .3s var(--e)}
-.nav.solid .nav-links a{color:var(--mute)}
-.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:11px;height:1px;background:currentColor;transition:right .4s var(--e)}
-.nav-links a:hover{color:var(--paper)}
-.nav.solid .nav-links a:hover{color:var(--ink)}
-.nav-links a:hover::after{right:0}
-/* ลิงก์ของหน้าปัจจุบัน — เส้นใต้ใช้ currentColor **ไม่ใช่สีเน้น**
-   สีเน้นของระบบนี้สงวนไว้ให้ปุ่มการกระทำเดียวต่อหน้าจอเท่านั้น */
-.nav-links a[aria-current]{color:var(--paper)}
-.nav.solid .nav-links a[aria-current]{color:var(--ink)}
-.nav-links a[aria-current]::after{right:0;background:currentColor}
-/* CTA บนแถบ — เว็บต้นทางใช้ปุ่มขอบขาวโปร่ง ไม่ใช่ปุ่มทึบสีเน้น
-   **สีเน้นอยู่ที่ปุ่มปิดท้ายของแต่ละหน้าที่เดียว** แถบบนจึงไม่กินโควตาสีเน้น */
-.nav-cta{flex:none;display:flex;align-items:center;background:transparent;color:var(--paper);
-  font-size:16px;font-weight:400;line-height:1.2;min-height:44px;padding:10px 24px;
-  border:1px solid rgba(255,255,255,.5);border-radius:var(--r);transition:background .3s var(--e),color .3s var(--e),border-color .3s var(--e)}
-.nav-cta:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
-.nav.solid .nav-cta{color:var(--ink);border-color:var(--ink)}
-.nav.solid .nav-cta:hover{background:var(--ink);color:var(--paper)}
-.burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
-.burger span{position:absolute;left:11px;right:11px;height:1.5px;background:#fff;transition:.4s var(--e)}
-.burger span:nth-child(1){top:17px}.burger span:nth-child(2){bottom:17px}
-.nav.solid .burger span{background:var(--ink)}
-/* @end:NAV_CSS */
-/* @shared:DRAWER_CSS */
-/* ---------------- เมนูมือถือ ---------------- */
-/* สถานะ UI ไม่ใช่ motion เพื่อการตกแต่ง จึงไม่นับรวมในงบ 4 อย่างของข้อ 5 */
-.drawer{display:none;position:fixed;inset:0;z-index:99;background:var(--void);
-  flex-direction:column;justify-content:center;padding:87px var(--pad) 40px;
-  opacity:0;visibility:hidden;transition:opacity .4s var(--e),visibility .4s var(--e)}
-body.menu-open .drawer{opacity:1;visibility:visible}
-body.menu-open{overflow:hidden}
-body.menu-open .nav,body.menu-open .nav.solid{background:transparent;backdrop-filter:none}
-body.menu-open .nav::after{background:transparent}
-body.menu-open .nav .brand img{filter:brightness(0) invert(1)}
-body.menu-open .burger span{background:#fff;top:50%;bottom:auto;margin-top:-1px}
-body.menu-open .burger span:nth-child(1){transform:rotate(45deg)}
-body.menu-open .burger span:nth-child(2){transform:rotate(-45deg)}
-/* น้ำหนักคู่เดียว 400/700 ตามระบบ · ไม่มี tracking ที่ขนาดใหญ่ */
-.drawer a{display:flex;align-items:center;min-height:56px;font-family:'Anuphan',sans-serif;
-  font-size:24px;font-weight:700;line-height:1.2;letter-spacing:0;color:var(--paper);
-  border-bottom:1px solid var(--line-dark)}
-/* ปุ่มในลิ้นชักเป็นทรงเดียวกับ .btn ของระบบ — มุมฉาก ขอบ 1px padding 18px 24px */
-.drawer .drawer-cta{margin-top:40px;justify-content:center;background:var(--paper);color:var(--ink);
-  border:1px solid var(--paper);border-radius:var(--r);font-size:16px;font-weight:400;min-height:56px}
-/* @end:DRAWER_CSS */
-
-/* ---------------- hero ----------------
-   v3.0 จัดกลางตามหน้าต้นแบบ spms-est.com — เดิมเป็น hero เต็มจอจัดล่างซ้ายพร้อมตัวเลื่อนเทียบก่อน-หลัง
-   **ตัวเลื่อนเทียบ (#scene · .filtered · .split-line · .handle · .scene-tag) ถูกถอดออกทั้งชุด**
-   ผู้สั่งงานเลือกเองโดยรู้ว่าเสีย motion 1 ใน 4 และเสีย hero เต็มจอหน้าเดียวของเว็บ
-
-   **v5.4 ผู้สั่งงานสั่งถอดรูปรถแดงกับดีเจปูมออกจากเว็บ — hero กลับเป็นข้อความล้วนบนพื้นเวกเตอร์**
-   `.hero-art` `.hero-car` `.hero-poom` ถูกถอดออกทั้ง markup และ CSS รวมถึง override ทุกเบรกพอยต์
-   **หน้าแรกจึงกลับเข้า MODE B ในส่วน hero อีกครั้ง** (ข้อยกเว้นภาพถ่ายที่เปิดไว้ตั้งแต่ v4.2 ถูกปิดโดยผู้สั่งงานเอง)
-   **โควตาแดงข้อ 4 กลับมาปกติด้วย** — สูทแดงที่เคยเป็นพื้นที่แดงก้อนใหญ่หายไป เหลือ nav CTA + จุด eyebrow = 2 จุดพอดี
-   **ภาพที่เหลือบนหน้าแรกคือรูปโชว์รูมในบล็อกที่มาเท่านั้น** ซึ่งผู้สั่งงานสั่งใส่เองใน v5.1
-   ไฟล์ assets/car-hero.png · assets/DJ_poom.png · assets/CAR.RED.png **ยังอยู่ในโฟลเดอร์ ไม่ได้ลบ** แต่ไม่มีหน้าไหนเรียกใช้แล้ว
-
-   **v4.6 เคยครอบ min-height ด้วย min(...,840px) + align-items:flex-end เพื่อไม่ให้เท้าดีเจปูมลอย**
-   เหตุผลนั้นหายไปพร้อมรูป จึงกลับไปใช้ 88svh + center ตามที่ตั้งใจไว้เดิมตั้งแต่ v3.0
-   88svh ไม่ใช่ 100svh โดยตั้งใจ — ให้ขอบแถบ .usp โผล่พ้นจอมานิดหนึ่ง เป็นสัญญาณว่ายังมีเนื้อหาต่อ */
-.hero{position:relative;min-height:88svh;background:var(--void);display:flex;align-items:center;overflow:hidden;isolation:isolate}
-.hero-bg{position:absolute;inset:0;z-index:0}
-/* v4.3 เปลี่ยนจากแสงอำพันเป็นแดงตามคำสั่งผู้สั่งงาน — ให้เข้าชุดกับเส้นนีออนใน .hero-neon
-   ดวงเรืองเอนไปทางขวา ฝั่งซ้ายเก็บไว้มืดเพื่อให้หัวเรื่องยังผ่าน AA
-   (เดิมที่ว่างฝั่งขวาเป็นที่ของดีเจปูม · v5.4 ถอดรูปออกแล้ว แต่ยังคงองค์ประกอบแสงไว้เหมือนเดิม) */
-.glare{position:absolute;inset:0;
-  background:
-    radial-gradient(54% 64% at 72% 42%, rgba(232,35,35,.30) 0%, rgba(204,27,27,.13) 36%, rgba(90,10,10,.06) 62%, transparent 78%),
-    radial-gradient(120% 100% at 62% 38%, rgba(140,16,16,.10) 0%, transparent 62%),
-    linear-gradient(180deg,#0A0404 0%,#070505 55%,#050505 100%);
-}
-/* เส้นแสงนีออนแดงวิ่งบนพื้นดำ — เวกเตอร์ล้วน วาดเอง ไม่ใช่ภาพถ่ายและไม่ใช่ของ stock
-   generate จาก tools ภายนอก seed ตายตัว · **ไม่ใช้ feGaussianBlur โดยตั้งใจ**
-   เรืองแสงมาจากการซ้อนสามชั้น (เรือง/กลาง/แกน) ซึ่งถูกกว่าและคมกว่าในการ paint
-   ชั้นม่านมืด nMask/nFade อยู่บนสุดของ SVG **ห้ามถอด** ไม่งั้นหัวเรื่องฝั่งซ้ายตกคอนทราสต์ */
-.hero-neon{position:absolute;inset:0;width:100%;height:100%;display:block}
-.grain{position:absolute;inset:0;opacity:.5;mix-blend-mode:overlay;
-  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px)}
-
-/* v5.4 เหลือคอลัมน์เดียวหลังถอดภาพฝั่งขวาออก — ความกว้างข้อความคุมด้วย max-width ของ h1/p.sub อยู่แล้ว
-   ไม่ต้องมี grid สองคอลัมน์ และไม่ต้องมี override ที่ 1080 อีก */
-.hero-in{position:relative;z-index:2;width:100%;max-width:var(--max);margin:0 auto;padding:160px var(--pad) 120px}
-.hero h1{font-size:clamp(46px,7.2vw,96px);font-weight:700;color:#fff;letter-spacing:-.035em;max-width:14ch;margin:0}
-.hero h1 .l{display:block;overflow:hidden}
-.hero h1 .l span{display:block;transform:translateY(105%);transition:transform 1.1s var(--e)}
-.loaded .hero h1 .l span{transform:none}
-.hero h1 .l:nth-child(2) span{transition-delay:.09s}
-.hero p.sub{margin:28px 0 0;max-width:46ch;font-size:18px;line-height:1.7;color:rgba(255,255,255,.66);opacity:0;transform:translateY(16px);transition:.9s var(--e) .34s}
-.loaded .hero p.sub{opacity:1;transform:none}
-.hero .eyebrow{margin-bottom:32px;opacity:0;transition:opacity .9s var(--e) .15s}
-.loaded .hero .eyebrow{opacity:1}
-.hero-cta{display:flex;gap:12px;margin-top:44px;flex-wrap:wrap;opacity:0;transform:translateY(16px);transition:.9s var(--e) .46s}
-.loaded .hero-cta{opacity:1;transform:none}
-
-/* ---------------- ปุ่ม ---------------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:18px 24px;border-radius:var(--r);font-size:16px;font-weight:400;line-height:1.2;font-family:'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;transition:background .3s var(--e),border-color .3s var(--e),color .3s var(--e)}
-.btn .ar{transition:transform .4s var(--e)}
-.btn:hover .ar{transform:translateX(5px)}
-/* พื้นมืดใช้ปุ่มขาว ไม่ใช่ปุ่มแดง — nav CTA เป็นแดงอยู่แล้วและติดหน้าจอตลอด
-   ถ้าปุ่มใน hero หรือปุ่มปิดท้ายเป็นแดงด้วย จะกลายเป็นปุ่มแดงสองปุ่มในหน้าจอเดียว เกินโควตาข้อ 4 */
-.btn-light{background:var(--paper);color:var(--ink);border-color:var(--paper)}
-.btn-light:hover{transform:translateY(-2px);background:#F0F0EE}
-.btn-ghost{background:transparent;border-color:rgba(255,255,255,.5);color:var(--paper)}
-/* ปุ่มขอบบนพื้นสว่าง — ใช้ในแถบค้นหาตัวแทนกับ FAQ ย่อ ซึ่งอยู่บนพื้น smoke/paper
-   ไม่ใช้แดงเพราะ nav CTA กินโควตาข้อ 4 ไปแล้ว */
-.btn-out{background:transparent;border-color:var(--line-strong);color:var(--ink)}
-.btn-out:hover{border-color:var(--ink);transform:translateY(-2px)}
-/* หัวข้อสำหรับโปรแกรมอ่านหน้าจอ — panel ของชิปต้องมีหัวข้อคั่นไม่ให้ h2 กระโดดไป h4 (ข้อ 9)
-   ซ่อนสายตาเพราะปุ่มชิปบอกชื่อประเภทงานอยู่แล้ว */
-.vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-
-.btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.05)}
-
-/* ที่มาของบริษัท — ย้ายมาจาก /about */
-.origin{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-/* รูปโชว์รูม — ผู้สั่งงานวางไฟล์ 20220316_EX1 nf.jpg (3000x2121 · 3.9 MB) มาเอง
-   ไฟล์ที่เว็บใช้คือ finnix-shopfront.jpg 1600x900 · 227 KB (ครอบ y 140-1827 ให้ได้ 16:9 โดยเก็บป้ายกับฐานอาคารครบ)
-   **หน้าแรกหลุด MODE B อยู่แล้วตั้งแต่ v4.2 รูปนี้จึงไม่ได้เปิดประตูใหม่**
-   แต่เป็น**ภาพแรกของเว็บที่อยู่นอก hero** — ข้อยกเว้นเดิมเขียนไว้ว่าจำกัดที่ hero เท่านั้น ผู้สั่งงานสั่งเอง
-   **v5.2 ย้ายเข้ามาอยู่ในคอลัมน์ซ้ายของ .origin แล้วย่อลง** เดิมเป็นแถบเต็มความกว้างใต้กริด
-   **v5.4 ผู้สั่งงานสั่งถอดย่อหน้าตัวแปรเรื่องที่มาออก รูปจึงเป็นของชิ้นเดียวในคอลัมน์ซ้าย** margin-top จึงเป็น 0
-   คอลัมน์กว้าง 640px ที่จอ 1440 (.wrap 1360 ลบ gap 80 หารสอง) 16:9 จึงสูง 360px
-   **จึงไม่ต้องครอบด้วย max-height/object-fit อีกแล้ว เห็นป้ายกับฐานอาคารครบทั้งเฟรม**
-   **max-width กันไว้ตอน .origin พับเป็นคอลัมน์เดียวที่ <=1080** ไม่งั้นรูปจะกางกลับไปกว้างเท่าเดิม
-   figure ไม่ต้องมีคลาส rv แล้วเพราะ div ที่ครอบอยู่มีให้ — rv ซ้อน rv จะคูณ opacity กันสองชั้นตอนเฟดเข้า
-   **ห้ามเขียนชื่อตัวแปรแบบมีวงเล็บปีกกาสองชั้นลงในคอมเมนต์นี้** สคริปต์นับตัวแปรใช้ grep จึงนับข้อความในคอมเมนต์เป็นจุดใช้งานด้วย
-   (เหยียบมาแล้วใน v5.2 นับได้ 40 จุดทั้งที่ของจริง 39 — กับดักเดียวกับที่ห้ามเขียนชื่อแท็ก html ลงในสารบัญ CSS) */
-.shopfront{max-width:640px}
-.shopfront img{display:block;width:100%;height:auto;border-radius:var(--r)}
-.shopfront figcaption{margin-top:16px;font-size:13px;color:var(--mute)}
-.origin p{color:var(--mute)}
-.origin p+p{margin-top:24px}
-
-/* ---------------- generic section ---------------- */
-.sec{padding:130px 0}
-.sec-head{max-width:800px;margin-bottom:72px}
-.sec-head h2{font-size:clamp(30px,4.4vw,56px);margin-top:24px}
-.sec-head p{margin-top:24px;font-size:18px;color:var(--mute);max-width:56ch}
-
-/* แถบจุดขาย 4 ช่อง — บล็อกแรกต่อจาก hero ตั้งแต่ v3.5 (บล็อกตัวเลขบริษัทถูกถอดออก)
-   โครงจากหน้าแรก spms-est.com (ไอคอน + ข้อความ จัดกลาง 4 ช่อง)
-   **ไอคอนเป็น --ink ไม่ใช่แดงแบบเขา** — สี่ช่องอยู่ในหน้าจอเดียวกันเสมอ ไอคอนแดงจะเป็นแดง 4 จุดรวด
-   บวก nav CTA = เกินโควตาข้อ 4 (บทเรียนเดียวกับ .why-cell ที่ /about แก้ไปใน v2.9)
-   ทุกตัวเลขในแถบนี้มาจาก data/films.json ไม่มีตัวไหนแต่งขึ้น */
-.usp{background:var(--smoke);border-bottom:1px solid var(--line)}
-/* v3.9 รื้อจากการ์ดไอคอน 4 ใบเป็นแถบข้อความเชิงบรรณาธิการ — ไม่มีกล่อง ไม่มีไอคอน
-   ตัวเลขทั้ง 4 มาจาก data/films.json (7 = meta.warrantyYears · 96 = heatReject สูงสุด
-   99 = uv ต่ำสุด · 3 = จำนวนซีรีส์ที่ metalFree เป็น true) มีสคริปต์เทียบให้แล้วใน CLAUDE.md */
-.usp-list{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:0 40px;
-  padding:80px 0 88px}
-.usp-item{border-top:1px solid #D2D2CF;padding-top:24px}
-.usp-n{font-style:normal;font-size:11px;letter-spacing:.18em;color:var(--mute)}
-.usp-v{font-family:'Anuphan',system-ui,sans-serif;font-size:clamp(40px,4.4vw,56px);font-weight:700;
-  letter-spacing:-.03em;line-height:1;margin-top:16px}
-.usp-v em{font-style:normal;font-size:.36em;font-weight:700;letter-spacing:0;margin-left:6px;
-  color:var(--mute);vertical-align:baseline}
-.usp-l{font-family:'Anuphan',system-ui,sans-serif;font-size:17px;font-weight:700;
-  letter-spacing:-.01em;margin-top:16px}
-.usp-s{font-size:14px;color:var(--mute);line-height:1.6;margin-top:8px}
-
-/* หมวดสินค้าพื้นมืด + ชิปเลือกหมวด — โครงจากหน้าต้นแบบ
-   ชิปเป็นสถานะ UI แบบเดียวกับแท็บใน /about กับ /gallery **ไม่นับเป็น motion ข้อ 5** */
-.cats{background:var(--ink);color:#fff;padding:120px 0}
-.cats .eyebrow{color:var(--mute-dark)}
-.cats h2{font-size:clamp(28px,4vw,48px);letter-spacing:-.03em;margin-top:24px;max-width:20ch;color:#fff}
-.cats .lede{margin-top:24px;color:var(--mute-dark);max-width:56ch;font-size:17px;line-height:1.8}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:40px}
-.chip{appearance:none;background:none;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.72);
-  border-radius:var(--r);padding:16px 24px;font-family:'IBM Plex Sans Thai',sans-serif;font-size:15px;
-  cursor:pointer;transition:background .3s var(--e),color .3s var(--e),border-color .3s var(--e)}
-.chip:hover{border-color:rgba(255,255,255,.5);color:#fff}
-.chip[aria-selected="true"]{background:#fff;color:var(--ink);border-color:#fff}
-.cat-panel{margin-top:56px}
-/* ~~.cat-list / .cat-item~~ ถูกถอดออกทั้งชุดใน v4.2 ตามคำสั่งผู้สั่งงาน
-   การ์ดค่าลดความร้อนสูงสุด 5 ใบย้ายไปอยู่ที่หน้า /films ซึ่งแสดงครบกว่าเดิม
-   **หน้าแรกจึงไม่มีตัวเลขสเปกรายซีรีส์เหลือแล้ว** — ถ้าจะเอากลับ ต้องถามก่อน */
-.cat-note{margin-top:32px;font-size:14px;color:var(--mute-dark);max-width:72ch}
-/* ปุ่มเข้าหน้า /films — ขาวบนพื้นมืด แดงสงวนให้ nav CTA (ข้อ 4) */
-.cat-cta{margin-top:40px}
-.cat-empty{border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:48px;color:var(--mute-dark);max-width:72ch}
-.cat-empty b{display:block;color:#fff;font-family:'Anuphan',system-ui,sans-serif;font-size:20px;margin-bottom:16px}
-
-/* แถบค้นหาตัวแทน — หน้าต้นแบบมีแถบนี้คั่นก่อน FAQ */
-.finder{background:var(--smoke);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.finder-in{display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;padding:80px 0}
-.finder h2{font-size:clamp(26px,3.2vw,38px);letter-spacing:-.025em;max-width:18ch}
-.finder p{margin-top:16px;color:var(--mute);max-width:52ch}
-
-/* FAQ ย่อ — ดึงคำถามจริงจาก /faq มาแสดง 4 ข้อ ใช้ <details> แบบเดียวกับหน้านั้น
-   native accordion จึงไม่ต้องใช้ JS และไม่กินงบ motion */
-.faq-lite{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-.faq-lite details{border-top:1px solid var(--line)}
-.faq-lite details:last-of-type{border-bottom:1px solid var(--line)}
-.faq-lite summary{cursor:pointer;list-style:none;padding:24px 0;font-family:'Anuphan',system-ui,sans-serif;
-  font-size:18px;font-weight:700;letter-spacing:-.01em;display:flex;gap:16px;align-items:flex-start}
-.faq-lite summary::-webkit-details-marker{display:none}
-.faq-lite summary::after{content:'';flex:none;width:14px;height:14px;margin-left:auto;margin-top:6px;
-  background:linear-gradient(var(--mute),var(--mute)) center/100% 1.5px no-repeat,
-             linear-gradient(var(--mute),var(--mute)) center/1.5px 100% no-repeat;
-  transition:transform .4s var(--e)}
-.faq-lite details[open] summary::after{transform:rotate(45deg)}
-.faq-lite .a{padding:0 0 24px;color:var(--mute);line-height:1.8;max-width:60ch}
-/* เปิด-ปิดแบบไล่ความสูง — **เป็นสถานะ UI แบบเดียวกับ drawer และแท็บ ไม่นับเป็น motion ข้อ 5**
-   (drawer ก็มี transition .4s และไม่เคยถูกนับเหมือนกัน) · หน้าแรกจึงยังเหลือโควตา motion อยู่ 1
-   @supports กันไว้ให้เบราว์เซอร์ที่ยังไม่รองรับข้ามไปทั้งบล็อก แล้วเปิดทันทีแบบเดิม
-   prefers-reduced-motion ถูกครอบด้วย transition-duration:.01ms!important ในบล็อกท้ายไฟล์อยู่แล้ว */
-@supports (interpolate-size:allow-keywords){
-  .faq-lite details::details-content{block-size:0;overflow:hidden;
-    transition:block-size .4s var(--e),content-visibility .4s allow-discrete}
-  .faq-lite details[open]::details-content{block-size:auto}
-}
-
-/* ---------------- ปิดท้าย ---------------- */
-/* **v5.4 หน้าแรกจัดชิดซ้าย ต่างจากอีก 6 หน้าที่ยังจัดกลาง — ผู้สั่งงานสั่งเอง**
-   สคริปต์เทียบ selector ของร่วมจะรายงาน .closing กับ .closing p ว่าไม่ตรงกันตั้งแต่นี้ **เป็นความต่างที่ตั้งใจ**
-   (เดิมมี .closing h2 ของหน้านี้ที่ต่างอยู่แล้วเพราะ clamp 76px ไม่ใช่ 72px) */
-.closing{background:var(--ink);color:#fff;text-align:left;padding:160px 0}
-.closing h2{font-size:clamp(32px,5.4vw,76px);font-weight:700;letter-spacing:-.035em;color:#fff;max-width:18ch;margin:24px 0 0}
-.closing p{color:var(--mute-dark);margin-top:28px;max-width:46ch}
-.closing .btn{margin-top:48px}
-
-/* @shared:FOOTER_CSS */
-/* ---------------- footer ---------------- */
-/* Car Dealership 128 — พื้นดำสนิท · โลโก้บนสุด · เส้นผมคาดใต้โลโก้
-   แล้วเป็นคอลัมน์ที่คั่นด้วยเส้นตั้ง หัวคอลัมน์ตัวหนา 20/700 จัดกลาง ลิงก์ 16/400 สี muted
-   วัดจากเว็บต้นทาง: พื้น #000 · padding 80px บน 60px ล่าง */
-footer{background:var(--void);color:var(--paper);padding:80px 0 60px}
-/* เส้นผมคาดใต้โลโก้ — ของต้นทางกินเต็มความกว้างคอนเทนเนอร์ */
-.f-brand{padding-bottom:30px;border-bottom:1px solid var(--line-dark);margin-bottom:50px}
-.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:50px}
-/* footer เป็นพื้นมืดเสมอ จึงใช้โลโก้ขาวล้วนตลอด */
-.f-brand .brand img{height:28px;filter:brightness(0) invert(1)}
-.f-brand p{color:var(--mute-dark);font-size:16px;line-height:1.5;margin-top:20px;max-width:38ch}
-/* ช่องทางติดต่อแบบไอคอน (v5.7 · ผู้สั่งงานสั่งเพิ่ม) — โทรเป็น tel: จริงจุดเดียวของ footer
-   **LINE กับ Facebook ยังไม่มีค่าจริง (ค้างตัวแปร) จึงชี้ contact.html ที่รวมช่องทางไว้**
-   ห้ามเปลี่ยนเป็น href="#" หรือลิงก์เดา — เว็บนี้ไม่มีลิงก์ตายเหลือแล้ว
-   ไอคอนวาดเองเป็น SVG ฝังในไฟล์ ไม่ใช่ไอคอนฟอนต์หรือไลบรารีนอก (ข้อ 9)
-   สีเป็น currentColor ล้วน จึงไม่กินโควตาแดงข้อ 4 · กล่อง 44x44 ตามขนาดพื้นที่กดขั้นต่ำ */
-.f-social{display:flex;gap:8px;margin-top:24px}
-.f-social a{display:flex;align-items:center;justify-content:center;width:44px;height:44px;
-  border:1px solid var(--line-dark);color:var(--mute-dark);
-  transition:color .3s var(--e),border-color .3s var(--e)}
-.f-social a:hover{color:var(--paper);border-color:var(--paper)}
-.f-social svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;
-  stroke-linecap:round;stroke-linejoin:round}
-/* หัวคอลัมน์ = h6 ของระบบ 20/700 สีขาว **ไม่ใช่ป้ายตัวเล็ก tracking กว้างแบบเดิม** */
-.f-col h3{font-family:'Anuphan',sans-serif;font-size:20px;font-weight:700;line-height:1.2;
-  letter-spacing:0;text-transform:none;color:var(--paper);margin-bottom:15px}
-.f-col a{display:flex;align-items:center;min-height:44px;color:var(--mute-dark);font-size:16px;line-height:1.5;transition:color .3s var(--e)}
-.f-col a:hover{color:var(--paper)}
-.f-bot{margin-top:60px;padding-top:24px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:14px;line-height:1.2;color:var(--mute-dark)}
-/* @end:FOOTER_CSS */
-
-/* ---------------- responsive ---------------- */
-@media(max-width:1080px){
-  /* หัวเรื่องกว้างขึ้นได้เมื่อไม่มีคอลัมน์ภาพมาบีบ (v5.4 ถอดภาพออกแล้ว แต่ค่านี้ยังเหมาะกับจอแคบ) */
-  .hero h1{max-width:18ch}
-  .origin{grid-template-columns:1fr;gap:40px}
-  /* FAQ ย่อพับพร้อม .origin เพราะเป็นสองคอลัมน์กว้างเท่ากัน */
-  .faq-lite{grid-template-columns:1fr;gap:48px}
-  .nav-links,.nav-cta{display:none}
-  .burger{display:block}
-  .drawer{display:flex}
-}
-@media(max-width:900px){
-  :root{--pad:24px}
-  /* .usp-grid เคยไม่มี override เลยตั้งแต่ v3.0 จึงคง 4 คอลัมน์ทุกความกว้าง
-     ที่ 375px เหลือเนื้อหาช่องละ 29px แล้วถูก overflow-x:hidden ของ body ตัดหายไป
-     ไม่ใช่เลื่อนดูได้ · ใส่ override ให้แล้ว
-     (v3.9 .usp-grid ถูกแทนด้วย .usp-list · v4.2 .cat-list ที่เคยอยู่คู่กันถูกถอดออกทั้งชุด) */
-  .usp-list{grid-template-columns:repeat(2,1fr);gap:40px 32px;padding:64px 0 72px}
-  .sec{padding:88px 0}
-  .closing{padding:104px 0}
-  .f-grid{grid-template-columns:1fr 1fr;gap:40px}
-}
-@media(max-width:620px){
-  .usp-list{grid-template-columns:1fr;gap:32px;padding:56px 0 64px}
-  .hero-in{padding-bottom:88px}
-  .f-grid{grid-template-columns:1fr}
-  .drawer a{font-size:22px;min-height:52px}
-}
-@media(prefers-reduced-motion:reduce){
-  *{animation:none!important;transition-duration:.01ms!important}
-  .rv{opacity:1;transform:none}
-  .hero h1 .l span{transform:none}
-  .hero p.sub,.hero-cta,.hero .eyebrow{opacity:1;transform:none}
-}
-</style>
-<!-- @shared:NOSCRIPT -->
-<!-- ไม่มี JS = .rv/.rvl ค้างที่ opacity:0 และ hero ค้างที่ translateY -> หน้าว่างเกือบทั้งหน้า
-     บล็อกนี้คืนสถานะปลายทางให้ทันที เนื้อหาจึงอ่านได้ครบแม้ JS ไม่ทำงาน
-     **เขียนเหมือนกันทั้ง 6 ไฟล์โดยตั้งใจ** — selector ที่หน้านั้นไม่มีก็ไม่มีผลอะไร
-     แต่ถ้าเขียนต่างกันรายไฟล์ สคริปต์ตรวจของร่วมจะอ่านเป็น .rv ที่ไม่ตรงกัน -->
-<noscript><style>
-  .rv,.rvl{opacity:1;transform:none}
-  .hero h1 .l span{transform:none}
-  .hero .eyebrow,.hero p.sub,.hero-cta{opacity:1;transform:none}
-  .sig-legend li{opacity:1}
-</style></noscript>
-<!-- @end:NOSCRIPT -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ฟิล์มกรองแสงรถยนต์ | FINNIX FILM</title>
+  <meta name="description" content="โลกภายนอกยังเป็นของคุณ ค้นพบ FINNIX FILM ทดลองเฉดฟิล์ม และเลือกสิ่งที่พอดีกับทุกการเดินทาง">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="FINNIX FILM">
+  <meta property="og:locale" content="th_TH">
+  <meta property="og:title" content="ฟิล์มกรองแสงรถยนต์ | FINNIX FILM">
+  <!-- @assets -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/journey.css">
+  <link rel="stylesheet" href="/merge.css">
+  <script src="/content.js" defer></script>
+  <script src="/app.js" defer></script>
+  <!-- @end assets -->
 </head>
 <body>
-
-<a href="#main" class="skip">ข้ามไปยังเนื้อหาหลัก</a>
-
-<!-- NAV -->
-<!-- @shared:NAV_HTML -->
-<nav class="nav" id="nav">
-  <div class="nav-in">
-    <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
-    <div class="nav-links">
-      <a href="index.html" aria-current="page">หน้าแรก</a>
-      <a href="films.html">ฟิล์มรถยนต์</a>
-      <a href="about.html">เกี่ยวกับเรา</a>
-      <a href="technology.html">เทคโนโลยี</a>
-      <a href="gallery.html">ผลงาน</a>
-      <a href="contact.html">ติดต่อ</a>
-    </div>
-    <a href="centers.html" class="nav-cta">หาศูนย์ติดตั้ง</a>
-    <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
-  </div>
-</nav>
-<!-- @end:NAV_HTML -->
-
-<!-- เมนูมือถือ -->
-<!-- @shared:DRAWER_HTML -->
-<div class="drawer" id="drawer">
-  <a href="index.html" aria-current="page">หน้าแรก</a>
-  <a href="films.html">ฟิล์มรถยนต์</a>
-  <a href="about.html">เกี่ยวกับเรา</a>
-  <a href="technology.html">เทคโนโลยี</a>
-  <a href="gallery.html">ผลงาน</a>
-  <a href="faq.html">คำถามที่พบบ่อย</a>
-  <a href="contact.html">ติดต่อ</a>
-  <a href="centers.html" class="drawer-cta">หาศูนย์ติดตั้ง</a>
-</div>
-<!-- @end:DRAWER_HTML -->
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<!-- @header -->
+<header>
+  <a href="/" class="logo"><img src="/assets/logo-finnix-web.png" alt="FINNIX FILM หน้าแรก" width="817" height="96"></a>
+  <nav id="nav" aria-label="เมนูหลัก">
+    <a href="/" aria-current="page">หน้าแรก</a>
+    <a href="/films.html">ฟิล์ม</a>
+    <a href="/works.html">ผลงาน</a>
+    <a href="/experience.html">ลองของจริง</a>
+    <a href="/about.html">เกี่ยวกับเรา</a>
+    <a class="nav-extra" href="/dealers.html">หาร้านใกล้คุณ</a>
+  </nav>
+  <a class="pill nav-dealer" href="/dealers.html">หาร้านใกล้คุณ</a>
+  <button id="menu" aria-label="เปิดเมนู" aria-controls="nav" aria-expanded="false"><span></span><span></span></button>
+</header>
+<!-- @end header -->
 
 <main id="main">
 
-<!-- HERO -->
-<header class="hero">
-  <div class="hero-bg" aria-hidden="true">
-    <div class="glare"></div>
-    <svg class="hero-neon" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><defs><linearGradient id="nGlow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#CC1B1B" stop-opacity="0"/><stop offset="0.2" stop-color="#CC1B1B" stop-opacity="0.55"/><stop offset="0.55" stop-color="#CC1B1B" stop-opacity="1"/><stop offset="0.86" stop-color="#CC1B1B" stop-opacity="0.35"/><stop offset="1" stop-color="#CC1B1B" stop-opacity="0"/></linearGradient><linearGradient id="nMid" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E82323" stop-opacity="0"/><stop offset="0.24" stop-color="#E82323" stop-opacity="0.6"/><stop offset="0.58" stop-color="#E82323" stop-opacity="1"/><stop offset="0.88" stop-color="#E82323" stop-opacity="0.3"/><stop offset="1" stop-color="#E82323" stop-opacity="0"/></linearGradient><linearGradient id="nCore" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF8A7A" stop-opacity="0"/><stop offset="0.3" stop-color="#FF8A7A" stop-opacity="0.45"/><stop offset="0.6" stop-color="#FF8A7A" stop-opacity="1"/><stop offset="0.9" stop-color="#FF8A7A" stop-opacity="0.25"/><stop offset="1" stop-color="#FF8A7A" stop-opacity="0"/></linearGradient><radialGradient id="nBloom"><stop offset="0" stop-color="#FF3B2E" stop-opacity=".42"/><stop offset=".45" stop-color="#CC1B1B" stop-opacity=".18"/><stop offset="1" stop-color="#CC1B1B" stop-opacity="0"/></radialGradient><linearGradient id="nMask" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#050505" stop-opacity=".94"/><stop offset=".34" stop-color="#050505" stop-opacity=".62"/><stop offset=".62" stop-color="#050505" stop-opacity=".12"/><stop offset="1" stop-color="#050505" stop-opacity="0"/></linearGradient><linearGradient id="nFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050505" stop-opacity=".55"/><stop offset=".38" stop-color="#050505" stop-opacity="0"/><stop offset=".78" stop-color="#050505" stop-opacity="0"/><stop offset="1" stop-color="#050505" stop-opacity=".72"/></linearGradient></defs><ellipse cx="1010" cy="430" rx="560" ry="430" fill="url(#nBloom)"/><ellipse cx="1320" cy="720" rx="330" ry="250" fill="url(#nBloom)" opacity=".7"/><g><rect x="283" y="724.1" width="430" height="32.1" rx="16.0" fill="url(#nGlow)" opacity="0.075" transform="rotate(6.3 498 740)"/><rect x="493" y="385.0" width="155" height="25.7" rx="12.8" fill="url(#nGlow)" opacity="0.086" transform="rotate(-7.9 571 398)"/><rect x="183" y="89.1" width="480" height="23.6" rx="11.8" fill="url(#nGlow)" opacity="0.064" transform="rotate(-10.7 423 101)"/><rect x="413" y="611.5" width="265" height="34.9" rx="17.5" fill="url(#nGlow)" opacity="0.082" transform="rotate(13.2 545 629)"/><rect x="220" y="821.7" width="319" height="37.5" rx="18.8" fill="url(#nGlow)" opacity="0.058" transform="rotate(5.2 379 840)"/><rect x="374" y="868.1" width="581" height="21.2" rx="10.6" fill="url(#nGlow)" opacity="0.099" transform="rotate(10.4 664 879)"/><rect x="177" y="605.8" width="320" height="25.3" rx="12.7" fill="url(#nGlow)" opacity="0.052" transform="rotate(7.7 337 618)"/><rect x="243" y="721.5" width="532" height="21.0" rx="10.5" fill="url(#nGlow)" opacity="0.077" transform="rotate(3.2 509 732)"/><rect x="580" y="232.5" width="619" height="29.7" rx="14.8" fill="url(#nGlow)" opacity="0.132" transform="rotate(-5.9 889 247)"/><rect x="536" y="498.1" width="656" height="29.1" rx="14.6" fill="url(#nGlow)" opacity="0.129" transform="rotate(12.2 864 513)"/><rect x="866" y="151.6" width="786" height="20.8" rx="10.4" fill="url(#nGlow)" opacity="0.160" transform="rotate(-5.1 1259 162)"/><rect x="182" y="80.5" width="437" height="30.5" rx="15.2" fill="url(#nGlow)" opacity="0.061" transform="rotate(-3.9 400 96)"/><rect x="1302" y="762.6" width="307" height="29.3" rx="14.7" fill="url(#nGlow)" opacity="0.160" transform="rotate(10.9 1455 777)"/><rect x="557" y="242.6" width="284" height="34.8" rx="17.4" fill="url(#nGlow)" opacity="0.104" transform="rotate(-3.3 699 260)"/><rect x="994" y="900.3" width="898" height="31.6" rx="15.8" fill="url(#nGlow)" opacity="0.160" transform="rotate(4.7 1443 916)"/><rect x="338" y="548.8" width="361" height="33.6" rx="16.8" fill="url(#nGlow)" opacity="0.078" transform="rotate(12.9 518 566)"/><rect x="360" y="53.6" width="285" height="29.1" rx="14.6" fill="url(#nGlow)" opacity="0.076" transform="rotate(-13.4 502 68)"/><rect x="837" y="548.0" width="410" height="29.9" rx="14.9" fill="url(#nGlow)" opacity="0.154" transform="rotate(3.8 1042 563)"/><rect x="596" y="9.4" width="417" height="36.8" rx="18.4" fill="url(#nGlow)" opacity="0.120" transform="rotate(-8.7 805 28)"/><rect x="1099" y="38.4" width="262" height="33.2" rx="16.6" fill="url(#nGlow)" opacity="0.160" transform="rotate(-12.7 1230 55)"/><rect x="176" y="373.2" width="271" height="37.3" rx="18.7" fill="url(#nGlow)" opacity="0.048" transform="rotate(-8.5 312 392)"/><rect x="393" y="-46.5" width="299" height="33.8" rx="16.9" fill="url(#nGlow)" opacity="0.082" transform="rotate(-3.5 543 -30)"/><rect x="406" y="236.0" width="148" height="31.9" rx="15.9" fill="url(#nGlow)" opacity="0.072" transform="rotate(-7.7 480 252)"/><rect x="988" y="172.4" width="564" height="37.6" rx="18.8" fill="url(#nGlow)" opacity="0.160" transform="rotate(-6.8 1270 191)"/><rect x="926" y="301.8" width="629" height="34.2" rx="17.1" fill="url(#nGlow)" opacity="0.160" transform="rotate(-9.2 1240 319)"/><rect x="420" y="505.5" width="376" height="27.3" rx="13.6" fill="url(#nGlow)" opacity="0.091" transform="rotate(12.5 608 519)"/><rect x="1161" y="869.5" width="337" height="33.4" rx="16.7" fill="url(#nGlow)" opacity="0.160" transform="rotate(10.6 1329 886)"/><rect x="432" y="102.5" width="602" height="28.2" rx="14.1" fill="url(#nGlow)" opacity="0.110" transform="rotate(-8.5 734 117)"/><rect x="233" y="526.6" width="238" height="20.3" rx="10.1" fill="url(#nGlow)" opacity="0.054" transform="rotate(12.0 352 537)"/><rect x="794" y="138.1" width="426" height="31.6" rx="15.8" fill="url(#nGlow)" opacity="0.149" transform="rotate(-4.8 1007 154)"/><rect x="1267" y="363.7" width="516" height="26.4" rx="13.2" fill="url(#nGlow)" opacity="0.160" transform="rotate(-10.0 1525 377)"/><rect x="1003" y="498.8" width="559" height="21.7" rx="10.8" fill="url(#nGlow)" opacity="0.160" transform="rotate(9.8 1282 510)"/><rect x="1064" y="287.3" width="476" height="37.4" rx="18.7" fill="url(#nGlow)" opacity="0.160" transform="rotate(-8.7 1302 306)"/><rect x="707" y="737.0" width="785" height="32.9" rx="16.5" fill="url(#nGlow)" opacity="0.160" transform="rotate(3.3 1099 753)"/></g><g><rect x="283" y="735.8" width="430" height="8.7" rx="4.3" fill="url(#nMid)" opacity="0.197" transform="rotate(6.3 498 740)"/><rect x="493" y="392.7" width="155" height="10.2" rx="5.1" fill="url(#nMid)" opacity="0.225" transform="rotate(-7.9 571 398)"/><rect x="183" y="98.4" width="480" height="5.1" rx="2.5" fill="url(#nMid)" opacity="0.168" transform="rotate(-10.7 423 101)"/><rect x="413" y="625.8" width="265" height="6.4" rx="3.2" fill="url(#nMid)" opacity="0.215" transform="rotate(13.2 545 629)"/><rect x="220" y="837.1" width="319" height="6.7" rx="3.3" fill="url(#nMid)" opacity="0.152" transform="rotate(5.2 379 840)"/><rect x="374" y="873.4" width="581" height="10.6" rx="5.3" fill="url(#nMid)" opacity="0.261" transform="rotate(10.4 664 879)"/><rect x="177" y="615.7" width="320" height="5.6" rx="2.8" fill="url(#nMid)" opacity="0.136" transform="rotate(7.7 337 618)"/><rect x="243" y="728.4" width="532" height="7.2" rx="3.6" fill="url(#nMid)" opacity="0.202" transform="rotate(3.2 509 732)"/><rect x="580" y="243.8" width="619" height="7.1" rx="3.6" fill="url(#nMid)" opacity="0.347" transform="rotate(-5.9 889 247)"/><rect x="536" y="508.4" width="656" height="8.6" rx="4.3" fill="url(#nMid)" opacity="0.337" transform="rotate(12.2 864 513)"/><rect x="866" y="158.7" width="786" height="6.6" rx="3.3" fill="url(#nMid)" opacity="0.420" transform="rotate(-5.1 1259 162)"/><rect x="182" y="90.6" width="437" height="10.2" rx="5.1" fill="url(#nMid)" opacity="0.160" transform="rotate(-3.9 400 96)"/><rect x="1302" y="774.2" width="307" height="6.0" rx="3.0" fill="url(#nMid)" opacity="0.420" transform="rotate(10.9 1455 777)"/><rect x="557" y="256.8" width="284" height="6.3" rx="3.2" fill="url(#nMid)" opacity="0.274" transform="rotate(-3.3 699 260)"/><rect x="994" y="911.0" width="898" height="10.2" rx="5.1" fill="url(#nMid)" opacity="0.420" transform="rotate(4.7 1443 916)"/><rect x="338" y="562.2" width="361" height="6.8" rx="3.4" fill="url(#nMid)" opacity="0.205" transform="rotate(12.9 518 566)"/><rect x="360" y="64.1" width="285" height="8.2" rx="4.1" fill="url(#nMid)" opacity="0.199" transform="rotate(-13.4 502 68)"/><rect x="837" y="557.6" width="410" height="10.7" rx="5.3" fill="url(#nMid)" opacity="0.405" transform="rotate(3.8 1042 563)"/><rect x="596" y="24.9" width="417" height="5.7" rx="2.8" fill="url(#nMid)" opacity="0.315" transform="rotate(-8.7 805 28)"/><rect x="1099" y="51.4" width="262" height="7.1" rx="3.5" fill="url(#nMid)" opacity="0.420" transform="rotate(-12.7 1230 55)"/><rect x="176" y="387.2" width="271" height="9.1" rx="4.6" fill="url(#nMid)" opacity="0.126" transform="rotate(-8.5 312 392)"/><rect x="393" y="-33.3" width="299" height="7.4" rx="3.7" fill="url(#nMid)" opacity="0.214" transform="rotate(-3.5 543 -30)"/><rect x="406" y="249.3" width="148" height="5.4" rx="2.7" fill="url(#nMid)" opacity="0.190" transform="rotate(-7.7 480 252)"/><rect x="988" y="188.5" width="564" height="5.4" rx="2.7" fill="url(#nMid)" opacity="0.420" transform="rotate(-6.8 1270 191)"/><rect x="926" y="315.1" width="629" height="7.7" rx="3.9" fill="url(#nMid)" opacity="0.420" transform="rotate(-9.2 1240 319)"/><rect x="420" y="514.4" width="376" height="9.5" rx="4.8" fill="url(#nMid)" opacity="0.239" transform="rotate(12.5 608 519)"/><rect x="1161" y="883.2" width="337" height="5.9" rx="3.0" fill="url(#nMid)" opacity="0.420" transform="rotate(10.6 1329 886)"/><rect x="432" y="113.7" width="602" height="5.7" rx="2.8" fill="url(#nMid)" opacity="0.287" transform="rotate(-8.5 734 117)"/><rect x="233" y="532.6" width="238" height="8.2" rx="4.1" fill="url(#nMid)" opacity="0.141" transform="rotate(12.0 352 537)"/><rect x="794" y="150.9" width="426" height="6.2" rx="3.1" fill="url(#nMid)" opacity="0.392" transform="rotate(-4.8 1007 154)"/><rect x="1267" y="372.7" width="516" height="8.2" rx="4.1" fill="url(#nMid)" opacity="0.420" transform="rotate(-10.0 1525 377)"/><rect x="1003" y="505.9" width="559" height="7.5" rx="3.8" fill="url(#nMid)" opacity="0.420" transform="rotate(9.8 1282 510)"/><rect x="1064" y="300.8" width="476" height="10.4" rx="5.2" fill="url(#nMid)" opacity="0.420" transform="rotate(-8.7 1302 306)"/><rect x="707" y="748.5" width="785" height="10.0" rx="5.0" fill="url(#nMid)" opacity="0.420" transform="rotate(3.3 1099 753)"/></g><g><rect x="283" y="739.3" width="430" height="1.6" rx="0.8" fill="url(#nCore)" opacity="0.432" transform="rotate(6.3 498 740)"/><rect x="493" y="396.9" width="155" height="1.8" rx="0.9" fill="url(#nCore)" opacity="0.493" transform="rotate(-7.9 571 398)"/><rect x="183" y="100.3" width="480" height="1.3" rx="0.6" fill="url(#nCore)" opacity="0.369" transform="rotate(-10.7 423 101)"/><rect x="413" y="627.8" width="265" height="2.4" rx="1.2" fill="url(#nCore)" opacity="0.472" transform="rotate(13.2 545 629)"/><rect x="220" y="839.3" width="319" height="2.3" rx="1.2" fill="url(#nCore)" opacity="0.333" transform="rotate(5.2 379 840)"/><rect x="374" y="878.0" width="581" height="1.4" rx="0.7" fill="url(#nCore)" opacity="0.572" transform="rotate(10.4 664 879)"/><rect x="177" y="617.7" width="320" height="1.4" rx="0.7" fill="url(#nCore)" opacity="0.297" transform="rotate(7.7 337 618)"/><rect x="243" y="731.4" width="532" height="1.3" rx="0.6" fill="url(#nCore)" opacity="0.442" transform="rotate(3.2 509 732)"/><rect x="580" y="246.6" width="619" height="1.5" rx="0.7" fill="url(#nCore)" opacity="0.760" transform="rotate(-5.9 889 247)"/><rect x="536" y="511.7" width="656" height="2.0" rx="1.0" fill="url(#nCore)" opacity="0.739" transform="rotate(12.2 864 513)"/><rect x="866" y="161.0" width="786" height="2.0" rx="1.0" fill="url(#nCore)" opacity="0.920" transform="rotate(-5.1 1259 162)"/><rect x="182" y="94.7" width="437" height="1.9" rx="1.0" fill="url(#nCore)" opacity="0.350" transform="rotate(-3.9 400 96)"/><rect x="1302" y="776.5" width="307" height="1.5" rx="0.7" fill="url(#nCore)" opacity="0.920" transform="rotate(10.9 1455 777)"/><rect x="557" y="259.2" width="284" height="1.5" rx="0.7" fill="url(#nCore)" opacity="0.601" transform="rotate(-3.3 699 260)"/><rect x="994" y="915.3" width="898" height="1.6" rx="0.8" fill="url(#nCore)" opacity="0.920" transform="rotate(4.7 1443 916)"/><rect x="338" y="564.6" width="361" height="1.9" rx="1.0" fill="url(#nCore)" opacity="0.449" transform="rotate(12.9 518 566)"/><rect x="360" y="67.6" width="285" height="1.2" rx="0.6" fill="url(#nCore)" opacity="0.436" transform="rotate(-13.4 502 68)"/><rect x="837" y="562.2" width="410" height="1.5" rx="0.8" fill="url(#nCore)" opacity="0.888" transform="rotate(3.8 1042 563)"/><rect x="596" y="27.1" width="417" height="1.4" rx="0.7" fill="url(#nCore)" opacity="0.689" transform="rotate(-8.7 805 28)"/><rect x="1099" y="54.2" width="262" height="1.5" rx="0.7" fill="url(#nCore)" opacity="0.920" transform="rotate(-12.7 1230 55)"/><rect x="176" y="391.1" width="271" height="1.4" rx="0.7" fill="url(#nCore)" opacity="0.276" transform="rotate(-8.5 312 392)"/><rect x="393" y="-30.6" width="299" height="1.9" rx="1.0" fill="url(#nCore)" opacity="0.470" transform="rotate(-3.5 543 -30)"/><rect x="406" y="250.7" width="148" height="2.5" rx="1.3" fill="url(#nCore)" opacity="0.417" transform="rotate(-7.7 480 252)"/><rect x="988" y="190.2" width="564" height="2.1" rx="1.1" fill="url(#nCore)" opacity="0.920" transform="rotate(-6.8 1270 191)"/><rect x="926" y="318.2" width="629" height="1.4" rx="0.7" fill="url(#nCore)" opacity="0.920" transform="rotate(-9.2 1240 319)"/><rect x="420" y="518.4" width="376" height="1.4" rx="0.7" fill="url(#nCore)" opacity="0.524" transform="rotate(12.5 608 519)"/><rect x="1161" y="885.0" width="337" height="2.3" rx="1.2" fill="url(#nCore)" opacity="0.920" transform="rotate(10.6 1329 886)"/><rect x="432" y="115.6" width="602" height="2.0" rx="1.0" fill="url(#nCore)" opacity="0.630" transform="rotate(-8.5 734 117)"/><rect x="233" y="535.8" width="238" height="1.9" rx="1.0" fill="url(#nCore)" opacity="0.309" transform="rotate(12.0 352 537)"/><rect x="794" y="152.7" width="426" height="2.5" rx="1.2" fill="url(#nCore)" opacity="0.859" transform="rotate(-4.8 1007 154)"/><rect x="1267" y="376.1" width="516" height="1.6" rx="0.8" fill="url(#nCore)" opacity="0.920" transform="rotate(-10.0 1525 377)"/><rect x="1003" y="508.9" width="559" height="1.5" rx="0.8" fill="url(#nCore)" opacity="0.920" transform="rotate(9.8 1282 510)"/><rect x="1064" y="304.8" width="476" height="2.4" rx="1.2" fill="url(#nCore)" opacity="0.920" transform="rotate(-8.7 1302 306)"/><rect x="707" y="752.6" width="785" height="1.8" rx="0.9" fill="url(#nCore)" opacity="0.920" transform="rotate(3.3 1099 753)"/></g><rect width="1440" height="900" fill="url(#nMask)"/><rect width="1440" height="900" fill="url(#nFade)"/></svg>
-    <div class="grain"></div>
-  </div>
+  <!-- 01 hero — ภาพ AI จากต้นแบบ -->
+  <section class="hero" id="home">
+    <div class="hero-media moving">
+      <img src="/assets/hero.jpg" alt="ผู้โดยสารมองกรุงเทพฯ ผ่านกระจกรถในแสงยามเย็น" fetchpriority="high">
+    </div>
+    <div class="hero-wash"></div>
+    <div class="hero-copy">
+      <div class="eyebrow">01 <span></span> LIFE, THROUGH A DIFFERENT LENS</div>
+      <h1>A CLEARER<br>TOMORROW</h1>
+      <p>มากกว่าความสบาย<br>คือวันข้างหน้าที่ชัดกว่า</p>
+      <a class="round-link" href="#glass"><span class="circle">↓</span> Discover FINNIX</a>
+    </div>
+    <div class="hero-bottom">
+      <span>BEAUTIFULLY REAL.</span>
+      <button id="motion" aria-pressed="false">Ⅱ <span>หยุดภาพเคลื่อนไหว</span></button>
+      <span>SCROLL TO EXPLORE</span>
+    </div>
+  </section>
 
-  <div class="hero-in">
-    <div class="hero-t">
-      <div class="eyebrow on-dark"><span class="dot"></span>ฟิล์มกรองแสงรถยนต์</div>
-      <h1>
-        <span class="l"><span>กันความร้อน</span></span>
-        <span class="l"><span>ไม่ใช่แค่ทำให้มืด</span></span>
-      </h1>
-      <p class="sub">ความมืดของฟิล์มคือการลดแสงที่ตามองเห็น ส่วนความร้อนเดินทางมากับคลื่นที่มองไม่เห็น เราออกแบบโดยจับที่คลื่นความร้อน ไม่ได้จับที่ความมืด</p>
-      <div class="hero-cta">
-        <a href="gallery.html" class="btn btn-light">ดูผลงานติดตั้ง <span class="ar">→</span></a>
-        <a href="centers.html" class="btn btn-ghost">หาศูนย์ติดตั้งใกล้คุณ</a>
+  <!-- 02 กระจก — ภาพเต็มแถวตามต้นแบบ -->
+  <section class="glass scene" id="glass">
+    <img src="/assets/glass.jpg" alt="มุมมองเมืองผ่านกระจกและกระจกมองข้างรถ" loading="lazy">
+    <div class="light-wash"></div>
+    <div class="scene-copy reveal">
+      <div class="eyebrow">02 <span></span> GLASS</div>
+      <h2>กระจก คือเส้นแบ่ง<br>ระหว่างสองโลก</h2>
+      <p>โลกที่อยู่ข้างนอก อาจร้อน เร่ง และวุ่นวาย<br>แต่คุณเลือกได้ว่าจะให้วันข้างในเป็นอย่างไร</p>
+      <a class="pill" href="#try">มองผ่านมุมใหม่</a>
+    </div>
+  </section>
+
+  <!-- 03 เรื่องราว — ภาพบรรยากาศแบรนด์ (AI) ไม่ใช่ภาพลูกค้า -->
+  <section class="stories section-row" id="stories">
+    <div class="section-intro reveal">
+      <div class="eyebrow">03 <span></span> EVERYDAY STORIES</div>
+      <h2>ทุกคนมี<br>เส้นทางของ<span class="nb">ตัวเอง</span></h2>
+      <p>บางวันเพื่อไปให้ถึง<br>บางวัน แค่ได้เดินทางด้วยกัน</p>
+    </div>
+    <div class="story-track">
+      <article class="story">
+        <img src="/assets/hero.jpg" alt="ช่วงเวลาสงบของผู้โดยสารในรถ" loading="lazy">
+        <div><small>01 / A LITTLE QUIET</small><h3>ช่วงเวลาสั้น ๆ<br>ที่ได้อยู่กับตัวเอง</h3></div>
+      </article>
+      <article class="story">
+        <img src="/assets/glass.jpg" alt="แสงอุ่นในเมือง" loading="lazy">
+        <div><small>02 / YOUR EVERYDAY</small><h3>เมืองเดิม<br>มุมมองใหม่</h3></div>
+      </article>
+      <article class="story">
+        <img src="/assets/car.jpg" alt="รถบนถนนในแสงเย็น" loading="lazy">
+        <div><small>03 / THE LONG WAY HOME</small><h3>ไม่ใช่แค่จุดหมาย<br>ระหว่างทางก็สำคัญ</h3></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 04 ลองความเข้ม + วิทยาศาสตร์ของแสง (v7.9 จับคู่ส่วน 04 กับ 06 ของต้นแบบ) — พื้นมืดผืนเดียว ซ้าย TRY · ขวา SCIENCE
+       ภาพจำลองชั้นสีเข้มบนภาพเดียวกัน ไม่ใช่ค่า VLT (v8.1 หน้า /try.html ลบแล้ว — ตัวเลื่อนเหลือที่นี่ที่เดียว) -->
+  <section class="dark home-pair try-science" id="try">
+    <div class="eyebrow home-pair-head">04 <span></span> TRY FINNIX · SCIENCE, SIMPLY</div>
+    <div class="home-pair-col reveal">
+      <h2>ลองด้วยตา<br>เลือกด้วยตัวคุณเอง</h2>
+      <p>มุมมองเดียวกัน ต่างความเข้ม<br>เลื่อนเพื่อสำรวจเฉดที่คุณชอบ</p>
+      <div class="tint-scene">
+        <img src="/assets/glass.jpg" alt="ภาพเมืองเดียวกันสำหรับทดลองความเข้ม" loading="lazy">
+        <div id="tint-overlay"></div>
+        <div class="tint-caption"><span>YOUR VIEW. YOUR CHOICE.</span><output id="tint-output" for="tint-range">60</output></div>
+      </div>
+      <div class="tint-controls">
+        <input id="tint-range" type="range" min="0" max="4" step="1" value="2" aria-label="ระดับความเข้มฟิล์ม">
+        <div class="tint-labels">
+          <button data-tint="0">Clear</button>
+          <button data-tint="1">40</button>
+          <button data-tint="2" class="active">60</button>
+          <button data-tint="3">80</button>
+          <button data-tint="4">Dark</button>
+        </div>
+      </div>
+      <div class="try-foot">
+        <p>ภาพจำลองความเข้มเพื่อเปรียบเทียบเท่านั้น ไม่ใช่ค่า VLT หรือการจำลองความร้อน<br>การมองเห็นจริงขึ้นกับรุ่นฟิล์ม กระจก แสง และ<span class="nb">หน้าจอ</span></p>
+        <a href="#dealer" class="pill light">สัมผัสฟิล์มจริงที่ร้าน</a>
       </div>
     </div>
-  </div>
-</header>
-
-<!-- ตัวเลขบริษัท -->
-<!-- แถบจุดขาย 4 ช่อง — โครงจากหน้าแรก spms-est.com · ค่าทุกตัวจาก data/films.json -->
-<section class="usp" aria-labelledby="h-usp">
-  <div class="wrap">
-    <h2 id="h-usp" class="vh">จุดเด่นของไลน์ผลิตภัณฑ์</h2>
-    <ul class="usp-list rv">
-      <li class="usp-item"><i class="usp-n">01</i><p class="usp-v">7<em>ปี</em></p><h3 class="usp-l">รับประกันทุกซีรีส์</h3><p class="usp-s">ระยะเท่ากันทุกรุ่น ไม่ลดหลั่นตามราคา และรับประกันจากบริษัทโดยตรง</p></li>
-      <li class="usp-item"><i class="usp-n">02</i><p class="usp-v">96<em>%</em></p><h3 class="usp-l">ลดความร้อนสูงสุด</h3><p class="usp-s">ค่าสูงสุดของไลน์ อยู่ที่รหัสเข้มสุดของ <span class="nb">TITANIUM</span></p></li>
-      <li class="usp-item"><i class="usp-n">03</i><p class="usp-v">99<em>%</em></p><h3 class="usp-l">กันยูวีอย่างต่ำ</h3><p class="usp-s">ทุกรหัสในทุกซีรีส์ผ่านเกณฑ์นี้ ไม่มีข้อยกเว้น</p></li>
-      <li class="usp-item"><i class="usp-n">04</i><p class="usp-v">3<em>ซีรีส์</em></p><h3 class="usp-l">ไม่มีชั้นโลหะ</h3><p class="usp-s">สัญญาณ 5G · GPS · บัตรทางด่วน ทำงานตามปกติ</p></li>
-    </ul>
-  </div>
-</section>
-
-<!-- หมวดสินค้าพื้นมืด + ชิปเลือกหมวด — โครงจากหน้าต้นแบบ -->
-<section class="cats">
-  <div class="wrap">
-    <div class="rv">
-      <div class="eyebrow"><span class="dot"></span>สิ่งที่เราทำ</div>
-      <h2>เลือกดูตามประเภทงาน</h2>
-      <p class="lede">ฟินนิกซ์ทำฟิล์มกรองแสงรถยนต์เป็นหลัก และมีฟิล์มใสกันรอยเป็นไลน์รอง</p>
-      <div class="chips" role="tablist" aria-label="ประเภทงาน">
-        <button class="chip" role="tab" id="c-auto" aria-controls="cp-auto" aria-selected="true" tabindex="0">ฟิล์มกรองแสงรถยนต์</button>
-        <button class="chip" role="tab" id="c-ppf" aria-controls="cp-ppf" aria-selected="false" tabindex="-1">ฟิล์มใสกันรอย</button>
+    <div class="home-pair-col reveal" id="science">
+      <h2>เข้าใจแสง<br>ก่อนเลือกฟิล์ม</h2>
+      <p>เริ่มจากสิ่งที่ผ่านกระจกเข้ามา<br>แล้วดูหลักฐานของฟิล์มแต่ละรุ่น</p>
+      <div class="light-diagram" role="img" aria-label="แผนภาพแสงอาทิตย์แบ่งเป็น UV แสงที่มองเห็น และอินฟราเรด ผ่านกระจกเข้าสู่ห้องโดยสาร">
+        <div class="sun-label">SUNLIGHT<span>แสงอาทิตย์</span></div>
+        <div class="rays">
+          <div class="ray uv"><b>UV</b><span>รังสีอัลตราไวโอเลต</span></div>
+          <div class="ray visible"><b>VISIBLE LIGHT</b><span>แสงที่ตามองเห็น</span></div>
+          <div class="ray ir"><b>INFRARED</b><span>รังสีอินฟราเรด</span></div>
+        </div>
+        <div class="glass-plane"></div>
+        <div class="cabin-label">YOUR<br>SPACE<span>ห้องโดยสาร</span></div>
+      </div>
+      <div class="proof-grid">
+        <details><summary><span>01</span> อ่านค่าให้ถูก</summary><p>VLT บอกสัดส่วนแสงที่มองเห็นซึ่งผ่านกระจกและฟิล์ม ส่วนค่าป้องกัน UV และค่าพลังงานความร้อนเป็นคนละเรื่องกัน</p></details>
+        <details><summary><span>02</span> ดูวิธีทดสอบ</summary><p>เปรียบเทียบภายใต้เงื่อนไขเดียวกัน ทั้งชนิดกระจก รุ่น เฉด และวิธีวัด ไม่ใช้ตัวเลขคนละวิธีมาสรุปแทนกัน</p></details>
+        <details><summary><span>03</span> ขอหลักฐานของรุ่นจริง</summary><p>ขอเอกสารทดสอบที่ระบุรุ่นและเฉดจากร้าน ก่อนตัดสินใจเลือกฟิล์มสำหรับรถของคุณ</p></details>
       </div>
     </div>
+  </section>
 
-    <div class="cat-panel rv" role="tabpanel" id="cp-auto" aria-labelledby="c-auto">
-      <h3 class="vh">ฟิล์มกรองแสงรถยนต์</h3>
-      <p class="cat-note"><span class="nb">ห้าซีรีส์</span> สิบห้ารหัสความเข้ม — ค่าลดความร้อนและช่วงความเข้มรายซีรีส์อยู่ที่หน้า <a href="films.html">ฟิล์มรถยนต์</a> · ตารางช่วงค่าเต็มอยู่ที่ <a href="about.html">หน้าเกี่ยวกับเรา</a> · ค่าทั้งหมดต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span></p>
-      <a href="films.html" class="btn btn-light cat-cta">ดูซีรีส์ทั้งหมด <span class="ar">→</span></a>
-    </div>
-
-    <div class="cat-panel rv" role="tabpanel" id="cp-ppf" aria-labelledby="c-ppf" hidden>
-      <h3 class="vh">ฟิล์มใสกันรอย</h3>
-      <div class="cat-empty">
-        <b>ยังไม่มีข้อมูลไลน์นี้บนเว็บ</b>
-        <p>ฟิล์มใสกันรอยยังไม่มีแม้แต่รหัสสินค้าในเอกสารที่เราได้รับ จึงยังไม่แสดงค่าใดทั้งสิ้น รอ <span class="var">{{PORTFOLIO_ITEMS_PPF}}</span> — เขียนไว้ตรงนี้ดีกว่าเดาแทนลูกค้า</p>
+  <!-- 05 ซีรีส์เด่น + เลือกตามการใช้ชีวิต (v7.9 จับคู่ส่วน 05 กับ 07 ของต้นแบบ) — ซ้ายการ์ดภาพรถ · ขวาการ์ดความต้องการ 5 ใบ
+       ซีรีส์เด่นสร้างจาก HERO_FILM + films.json (ต้นแบบเขียน "CERAMIC PLUS" ซึ่งไม่มีในโบรชัวร์)
+       การ์ดความต้องการกดแล้วเปิดหน้าต่างคำแนะนำ (ข้อความอยู่ที่ data-guide) + ซีรีส์ทั้งหมดจาก content.js -->
+  <section class="home-pair film-find" id="find">
+    <div class="eyebrow home-pair-head">05 <span></span> FIND YOUR FILM · FEATURED</div>
+    <div class="home-pair-col featured-card reveal" id="featured">
+      <div class="featured-photo"><img src="/assets/car.jpg" alt="รถสีกราไฟต์และแสงสะท้อนบนกระจกในยามเย็น" loading="lazy"></div>
+      <div class="feature-wash"></div>
+      <div class="featured-copy">
+        <h2>ดีในสิ่ง<br>ที่ควรดี</h2>
+        <!-- @gen:featured -->
+        <p class="product-name">FINNIX<br><strong>CERAMIC</strong></p>
+        <p>ฟินนิกซ์ เซรามิค ฟิล์ม · ใส เคลียร์ ชัด</p>
+        <a class="pill filled" href="/films/ceramic.html">สำรวจ CERAMIC</a>
+        <a class="text-button" href="/films.html">ดูฟิล์มทุกรุ่น</a>
+        <!-- @end gen:featured -->
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ที่มาของบริษัท -->
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow"><span class="dot"></span>ที่มา</div>
-      <h2>ทำไมถึงตั้งบริษัทนี้ขึ้นมา</h2>
-    </div>
-    <div class="origin">
-      <div class="rv">
-        <figure class="shopfront">
-          <img src="assets/finnix-shopfront.jpg" width="1600" height="900" loading="lazy"
-               alt="โชว์รูมฟินนิกซ์ ฟิล์ม อาคารกระจกใต้หลังคาคลุมพร้อมป้ายสูงริมถนน">
-          <figcaption>โชว์รูมฟินนิกซ์ ฟิล์ม</figcaption>
-        </figure>
-      </div>
-      <div class="rv">
-        <p>ส่วนนี้ยังรอข้อมูลจากบริษัท เราไม่เขียนเรื่องเล่าที่มาขึ้นเองเพราะเป็นข้อความที่ลูกค้าจะใช้ตัดสินว่าจะเชื่อแบรนด์หรือไม่ ถ้าเขียนแทนแล้วไม่ตรงกับความจริง ความเสียหายมากกว่าการปล่อยว่างไว้ก่อน</p>
-        <p>สิ่งที่ต้องการคือ ปีและเหตุผลที่ก่อตั้ง · ผู้ก่อตั้งและภูมิหลัง — ส่วนแหล่งผลิตฟิล์มอยู่ที่หน้า <a href="about.html" style="border-bottom:1px solid var(--line)">เกี่ยวกับเรา</a></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- แถบค้นหาตัวแทน — หน้าต้นแบบมีแถบนี้คั่นก่อน FAQ -->
-<section class="finder">
-  <div class="wrap">
-    <div class="finder-in rv">
-      <div>
-        <h2>หาตัวแทนใน<span class="nb">จังหวัดของคุณ</span></h2>
-        <p>เลือกจังหวัดแล้วดูตัวแทนที่ใกล้ที่สุด พร้อมเบอร์โทรและแผนที่</p>
-      </div>
-      <a href="contact.html#dealers" class="btn btn-out">ค้นหาตัวแทน <span class="ar">→</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ ย่อ — คำถาม 4 ข้อแรกดึงจาก /faq ตรงๆ ไม่ได้เขียนใหม่ -->
-<section class="sec">
-  <div class="wrap">
-    <div class="faq-lite">
-      <div class="rv">
-        <div class="eyebrow"><span class="dot"></span>คำถามที่พบบ่อย</div>
-        <h2 style="font-size:clamp(28px,4vw,48px);letter-spacing:-.03em;margin-top:24px;max-width:16ch">เรื่องที่คนเลือกฟิล์มถามบ่อยที่สุด</h2>
-        <p style="margin-top:24px;color:var(--mute);max-width:44ch">อีกแปดข้อพร้อมคำอธิบายเต็มอยู่ที่หน้าคำถามที่พบบ่อย</p>
-        <a href="faq.html" class="btn btn-out" style="margin-top:32px">ดูทั้งหมด <span class="ar">→</span></a>
-      </div>
-      <div class="rv">
-        <details>
-          <summary>ฟิล์มเข้มขึ้น แปลว่าเย็นขึ้นใช่ไหม</summary>
-          <div class="a">ไม่ใช่ ความเข้มของฟิล์มวัดจากปริมาณแสงที่ตามองเห็นซึ่งผ่านเข้ามาได้ ส่วนความร้อนส่วนใหญ่เดินทางมากับคลื่นอินฟราเรดที่ตามองไม่เห็น ฟิล์มจึงมืดลงได้โดยที่ความสามารถในการกันความร้อนไม่ได้เพิ่มตาม</div>
-        </details>
-        <details>
-          <summary>ควรเลือกจากอะไร ถ้าไม่ใช่ความเข้ม</summary>
-          <div class="a">เลือกจากค่าการลดความร้อนรวมเป็นหลัก แล้วค่อยเลือกความเข้มตามความชอบและทัศนวิสัยที่ต้องการ สองค่านี้แยกกันได้</div>
-        </details>
-        <details>
-          <summary>กระจกหน้าติดเข้มได้แค่ไหนตามกฎหมาย</summary>
-          <div class="a">มีข้อกำหนดตามกฎหมายไทยที่ระบุค่าแสงส่องผ่านขั้นต่ำไว้ ค่าที่ใช้อ้างอิงคือ <span class="var">{{LAW_VLT_MIN}}</span> ตามที่ระบุใน <span class="var">{{LAW_REFERENCE}}</span></div>
-        </details>
-        <details>
-          <summary>TSER กับ IR Rejection ต่างกันอย่างไร</summary>
-          <div class="a">IR Rejection บอกว่าฟิล์มกันคลื่นอินฟราเรดได้กี่เปอร์เซ็นต์ ส่วนค่าการลดความร้อนรวมบอกว่ากันพลังงานความร้อนทั้งหมดที่ตกกระทบได้กี่เปอร์เซ็นต์ ซึ่งรวมทั้งอินฟราเรด แสงที่ตามองเห็น และยูวี</div>
-        </details>
+    <div class="home-pair-col find-col reveal">
+      <h2>ฟิล์มที่ใช่<br>ในแบบของคุณ</h2>
+      <p>ทุกคนมีการใช้ชีวิตต่างกัน<br>เริ่มจากสิ่งที่สำคัญกับคุณ</p>
+      <div class="need-track">
+        <div class="need-item">
+          <button class="need" data-need="ชีวิตในเมือง" data-guide="เริ่มจากเวลาที่ใช้รถและด้านที่รับแดด ลองเทียบเฉดจริงในช่วงเวลาที่คุณขับเป็นประจำ">
+            <img src="/assets/glass.jpg" style="object-position:65% center" alt="" loading="lazy">
+            <span class="need-copy"><i aria-hidden="true">◉</i><small>CITY / EVERYDAY</small><strong>ชีวิตในเมือง</strong></span>
+          </button>
+          <a class="need-go" href="/films.html#series">ดูฟิล์ม <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="need-item">
+          <button class="need" data-need="เส้นทางไกล" data-guide="ลองมองผ่านฟิล์มทั้งกลางวันและในที่แสงน้อย เลือกให้เหมาะกับการมองเห็นของผู้ขับ">
+            <img src="/assets/car.jpg" style="object-position:70% center" alt="" loading="lazy">
+            <span class="need-copy"><i aria-hidden="true">⌁</i><small>ROAD TRIPS</small><strong>เส้นทางไกล</strong></span>
+          </button>
+          <a class="need-go" href="/films.html#series">ดูฟิล์ม <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="need-item">
+          <button class="need" data-need="คนที่เดินทางด้วย" data-guide="ลองนั่งในตำแหน่งผู้โดยสารด้วย เพราะแต่ละที่นั่งรับแสงต่างกัน">
+            <img src="/assets/hero.jpg" style="object-position:24% center" alt="" loading="lazy">
+            <span class="need-copy"><i aria-hidden="true">♡</i><small>FAMILY</small><strong>คนที่เดินทางด้วย</strong></span>
+          </button>
+          <a class="need-go" href="/films.html#series">ดูฟิล์ม <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="need-item">
+          <button class="need" data-need="พื้นที่ส่วนตัว" data-guide="เทียบมุมมองทั้งจากด้านนอกและด้านใน ความเป็นส่วนตัวขึ้นกับความต่างของแสงด้วย">
+            <img src="/assets/car.jpg" style="object-position:80% center" alt="" loading="lazy">
+            <span class="need-copy"><i aria-hidden="true">◐</i><small>PRIVACY</small><strong>พื้นที่ส่วนตัว</strong></span>
+          </button>
+          <a class="need-go" href="/films.html#series">ดูฟิล์ม <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="need-item">
+          <button class="need" data-need="ความพอดีของทุกวัน" data-guide="เริ่มจากเฉดที่มองสบาย แล้วเปรียบเทียบคุณสมบัติและงบประมาณกับร้านติดตั้ง">
+            <img src="/assets/glass.jpg" style="object-position:30% center" alt="" loading="lazy">
+            <span class="need-copy"><i aria-hidden="true">◎</i><small>BALANCED</small><strong>ความพอดีของ<span class="nb">ทุกวัน</span></strong></span>
+          </button>
+          <a class="need-go" href="/films.html#series">ดูฟิล์ม <span aria-hidden="true">→</span></a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ปิดท้าย -->
-<section class="closing">
-  <div class="wrap">
-    <div class="eyebrow on-dark"><span class="dot"></span>เริ่มต้นที่นี่</div>
-    <h2>รถของคุณจอดกลางแดด<br>วันละ<span class="nb">กี่ชั่วโมง?</span></h2>
-    <p>ให้ช่างที่ผ่านการอบรมจากเราวัดกระจกและแนะนำซีรีส์ที่เหมาะกับการใช้งานจริงของคุณ</p>
-    <a href="centers.html" class="btn btn-light">หาศูนย์ติดตั้งใกล้คุณ <span class="ar">→</span></a>
-  </div>
-</section>
+  <!-- 06 หาร้าน + เพื่อนร่วมทาง (v6.5 รวม FIND FINNIX กับ FRIENDS & FAMILY) — ซ้ายคอลลาจ ขวาค้นหา + แผนที่
+       ค้นผ่าน Google Maps ตามต้นแบบ (รายชื่อร้านเต็มอยู่ที่ /dealers.html) · ภาพบรรยากาศแบรนด์ (AI) -->
+  <section class="dealer find-family" id="dealer">
+    <div class="eyebrow find-family-head">06 <span></span> FIND FINNIX · FRIENDS &amp; FAMILY <em class="eyebrow-th">หาร้าน · เพื่อนร่วมทาง</em></div>
+    <div class="find-family-col reveal" id="family">
+      <h2>มากกว่าฟิล์ม<br>คือ<span class="nb">เพื่อนร่วมทาง</span></h2>
+      <p>คน รถ และเรื่องราวระหว่างทาง<br>โลกของ FINNIX เริ่มต้นที่คุณ</p>
+      <a class="pill" href="/dealers.html">พบ FINNIX ใกล้คุณ</a>
+      <div class="collage">
+        <figure><img src="/assets/car.jpg" alt="การเดินทางบนถนน" loading="lazy"><figcaption>On the road.</figcaption></figure>
+        <figure><img src="/assets/hero.jpg" alt="ความสงบระหว่างการเดินทาง" loading="lazy"><figcaption>A moment together.</figcaption></figure>
+        <figure><img src="/assets/glass.jpg" alt="เมืองผ่านกระจกรถ" loading="lazy"><figcaption>A different view.</figcaption></figure>
+        <span class="handwritten">Same Sun.<br>Different Stories.</span>
+      </div>
+    </div>
+    <div class="find-family-col dealer-copy">
+      <h2>FINNIX ใกล้คุณ</h2>
+      <p>เริ่มจากพื้นที่ที่สะดวก<br>แล้วไปดู ลอง และเลือกด้วยตัวเอง</p>
+      <form id="dealer-form">
+        <label for="dealer-query">จังหวัด เขต หรือพื้นที่</label>
+        <div class="search-wrap">
+          <input id="dealer-query" name="location" placeholder="เช่น บางแค กรุงเทพฯ" required>
+          <button type="submit" aria-label="ค้นหาร้าน FINNIX">⌕</button>
+        </div>
+      </form>
+      <button class="text-button location" id="locate">◎ ใช้ตำแหน่งปัจจุบัน</button>
+      <p id="location-status" class="small" role="status"></p>
+      <div class="map-panel">
+        <iframe title="ค้นหา FINNIX FILM บนแผนที่" src="https://maps.google.com/maps?q=FINNIX%20FILM%20Thailand&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <a id="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=FINNIX%20FILM%20Thailand" target="_blank" rel="noopener noreferrer" class="pill">เปิด Google Maps</a>
+      </div>
+      <p class="small">ค้นหาผ่าน Google Maps · ติดต่อร้านเพื่อยืนยันสินค้าและเวลาบริการก่อนเดินทาง</p>
+    </div>
+  </section>
 
 </main>
 
-<!-- FOOTER -->
-<!-- @shared:FOOTER_HTML -->
-<footer>
-  <div class="wrap">
-    <div class="f-grid">
-      <div class="f-brand">
-        <a href="index.html" class="brand"><img src="assets/logo-finnix-web.png" width="817" height="96" alt="FINNIX FILM"></a>
-        <p>บริษัท ฟินนิกซ์ ฟิล์ม จำกัด — ฟิล์มกรองแสงและฟิล์มกันรอยรถยนต์ สำหรับ<span class="nb">สภาพอากาศเมืองไทย</span></p>
-        <ul class="f-social">
-          <li><a href="tel:0635978497" aria-label="โทรหาฟินนิกซ์ ฟิล์ม 06-3597-8497"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 3.5h3.1l1.5 3.9-2 1.4a12 12 0 006.2 6.2l1.4-2 3.9 1.5v3.1a1.9 1.9 0 01-2.1 1.9A17.2 17.2 0 014.5 5.6 1.9 1.9 0 016.4 3.5z"/></svg></a></li>
-          <li><a href="contact.html" aria-label="ไลน์ของฟินนิกซ์ ฟิล์ม"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.3c-4.3 0-7.8 2.8-7.8 6.2 0 3.1 2.8 5.7 6.5 6.1.7.1.9.4.8 1l-.3 1.6c-.1.5.3.7.7.5 3.5-1.6 6-4 7.2-5.7a5.6 5.6 0 001.2-3.5c0-3.4-3.9-6.2-8.3-6.2z"/><path d="M8.6 8.9v3.4h2M12 8.9v3.4M14.2 12.3V8.9l2.3 3.4V8.9"/></svg></a></li>
-          <li><a href="contact.html" aria-label="เฟซบุ๊กของฟินนิกซ์ ฟิล์ม"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17"/><path d="M15.4 7.6h-1.6c-1 0-1.7.7-1.7 1.8v1.5h-1.8m5.1 0h-5.1m1.8 0v8.6"/></svg></a></li>
-        </ul>
-      </div>
-      <div class="f-col">
-        <h3>บริษัท</h3>
-        <a href="about.html">เกี่ยวกับเรา</a><a href="technology.html">เทคโนโลยี</a><a href="gallery.html">ผลงาน</a>
-      </div>
-      <div class="f-col">
-        <h3>บริการ</h3>
-        <a href="films.html">ฟิล์มรถยนต์</a><a href="centers.html">หาศูนย์ติดตั้ง</a><a href="faq.html">คำถามที่พบบ่อย</a><a href="contact.html">ติดต่อ</a>
-      </div>
-    </div>
-    <div class="f-bot">
-      <span>© 2569 บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</span>
-      <span>นโยบายความเป็นส่วนตัว · นโยบายคุกกี้</span>
-    </div>
+<!-- หน้าต่างรายละเอียด (การ์ดความต้องการ ส่วน 05) · v8.5 การ์ดมีลิงก์ "ดูฟิล์ม →" ไป /films.html ตรง ๆ ด้วย ไม่ต้องผ่านหน้าต่าง -->
+<dialog id="detail"><button class="dialog-close" aria-label="ปิด">×</button><div id="dialog-content"></div></dialog>
+
+<!-- ท้ายเว็บหน้าแรก (v7.1) — build.py สร้างแบบ 4 คอลัมน์ให้หน้านี้หน้าเดียว (home_footer_block · ไม่มีปุ่มโทรลอย) -->
+<!-- @footer -->
+<footer class="home-footer">
+<div class="home-footer-grid">
+  <div class="home-footer-brand">
+    <a class="home-footer-logo" href="/"><img src="/assets/logo-finnix-white.png" alt="FINNIX FILM หน้าแรก" width="720" height="88" loading="lazy"></a>
+    <p>ฟิล์มกรองแสงสำหรับรถยนต์<br>ความสบายที่อยู่กับคุณในทุกการเดินทาง</p>
+    <p class="home-footer-company">บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</p>
+    <div class="home-footer-social"><span class="foot-icon is-pending" role="img" aria-label="Facebook — ยังไม่มีลิงก์" title="Facebook · รอ {{FACEBOOK_URL}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5H16l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8.1v3h2.5V21z"/></svg></span><span class="foot-icon is-pending" role="img" aria-label="LINE — ยังไม่มีลิงก์" title="LINE · รอ {{LINE_OA_ID}}"><svg class="ico-line" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.3.1.8.2.9.6.1.3.1.8 0 1.1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6.1-3.6 8.3-6.2 1.5-1.7 2.3-3.4 2.3-5.4 0-4.7-4.7-8.5-10.5-8.5z"/><text x="12" y="13.3" text-anchor="middle">LINE</text></svg></span><a class="foot-icon" href="tel:0635978497" aria-label="โทร 06-3597-8497"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></a></div>
   </div>
+  <nav aria-label="รู้จัก FINNIX">
+    <h2>รู้จัก FINNIX</h2>
+    <a href="/about.html">เกี่ยวกับเรา</a>
+    <a href="/works.html">ผลงานที่ติดตั้ง</a>
+  </nav>
+  <nav aria-label="ผลิตภัณฑ์">
+    <h2>ผลิตภัณฑ์</h2>
+    <a href="/films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
+    <a href="/films.html#price">ราคา</a>
+    <a href="/experience.html">ลองของจริง</a>
+  </nav>
+  <div class="home-footer-contact">
+    <h2>บริการและการติดต่อ</h2>
+    <a href="/dealers.html">ค้นหาร้าน FINNIX</a>
+    <a href="/dealers.html#contact">ติดต่อสำนักงานใหญ่</a>
+    <span class="foot-line is-pending" title="LINE · รอ {{LINE_OA_ID}}"><svg class="ico-line" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.3.1.8.2.9.6.1.3.1.8 0 1.1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6.1-3.6 8.3-6.2 1.5-1.7 2.3-3.4 2.3-5.4 0-4.7-4.7-8.5-10.5-8.5z"/><text x="12" y="13.3" text-anchor="middle">LINE</text></svg>LINE FINNIX <small>(เร็ว ๆ นี้)</small></span>
+    <p>ให้ร้านช่วยแนะนำรุ่นและเฉด<br>ที่เหมาะกับรถของคุณ</p>
+  </div>
+</div>
+<div class="home-footer-bottom">
+  <span>© 2026 บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</span>
+  <span>BEAUTIFULLY REAL.</span>
+  <span>CLEARER PEOPLE. BRIGHTER TOMORROW.</span>
+</div>
 </footer>
-<!-- @end:FOOTER_HTML -->
-
-<script>
-(function(){
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---- reveal — ต้องอยู่ก่อนโค้ดเฉพาะหน้า ----
-     ถ้าบล็อกไหนข้างล่าง throw ขึ้นมา .rv จะค้างที่ opacity:0 ทั้งหน้า
-     เดิมบล็อกนี้อยู่ท้ายสุด จึงพังตามทุกครั้งที่โค้ดก่อนหน้ามีปัญหา
-     ห่อด้วย if(!reduce) ไม่ใช่ early return เพราะ return จะฆ่าโค้ดที่เหลือทั้งไฟล์ */
-  if(!reduce){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
-      });
-    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
-    document.querySelectorAll('.rv').forEach(function(el, i){
-      el.style.transitionDelay = (i % 4) * 60 + 'ms';
-      io.observe(el);
-    });
-  }
-
-  /* ---- load ---- */
-  window.addEventListener('load', function(){ document.body.classList.add('loaded'); });
-  setTimeout(function(){ document.body.classList.add('loaded'); }, 400);
-
-<!-- @shared:JS_NAV -->
-  /* ---- nav ---- */
-  var nav = document.getElementById('nav');
-  function onScrollNav(){ nav.classList.toggle('solid', window.scrollY > 40); }
-  onScrollNav(); window.addEventListener('scroll', onScrollNav, {passive:true});
-
-  /* ---- เมนูมือถือ ---- */
-  var burger = document.getElementById('burger');
-  function setMenu(open){
-    document.body.classList.toggle('menu-open', open);
-    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    burger.setAttribute('aria-label', open ? 'ปิดเมนู' : 'เปิดเมนู');
-  }
-  burger.addEventListener('click', function(){
-    setMenu(!document.body.classList.contains('menu-open'));
-  });
-  document.querySelectorAll('#drawer a').forEach(function(a){
-    a.addEventListener('click', function(){ setMenu(false); });
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && document.body.classList.contains('menu-open')){
-      setMenu(false); burger.focus();
-    }
-  });
-  /* กลับมากว้างกว่า 900px แล้วต้องไม่ค้างสถานะเมนูเปิด */
-  window.matchMedia('(min-width:1081px)').addEventListener('change', function(e){
-    if(e.matches) setMenu(false);
-  });
-<!-- @end:JS_NAV -->
-
-  /* ---- ชิปเลือกหมวดสินค้า — สถานะ UI ไม่ใช่ motion (แบบเดียวกับแท็บใน /about กับ /gallery)
-         อยู่ก่อน if(reduce) โดยตั้งใจ คนที่ปิด motion ต้องสลับหมวดได้ ---- */
-  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
-  function selectChip(t){
-    chips.forEach(function(x){
-      var on = x === t;
-      x.setAttribute('aria-selected', on ? 'true' : 'false');
-      x.tabIndex = on ? 0 : -1;
-      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
-    });
-  }
-  chips.forEach(function(t, i){
-    t.addEventListener('click', function(){ selectChip(t); });
-    t.addEventListener('keydown', function(e){
-      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if(!d) return;
-      e.preventDefault();
-      var n = chips[(i + d + chips.length) % chips.length];
-      selectChip(n); n.focus();
-    });
-  });
-
-})();
-</script>
+<!-- @end footer -->
 </body>
 </html>

@@ -1,5 +1,5 @@
 {
- "_readme": "source of truth ของรายชื่อตัวแทนบนหน้า /contact — ทุกรายยังเป็น placeholder:true (ตัวอย่างการแสดงผล ไม่ใช่ข้อมูลจริง) · แก้ที่นี่ก่อน แล้วคัดลอกก้อน dealers ลงบล็อก <script id=\"dealers-data\"> ใน contact.html (หน้าไม่ fetch ตอนรัน — ข้อ 9) · tier: center|automotive|sub · services: automotive|ppf (ฟิล์มอาคารถูกตัดออกจากเว็บใน v2.6)",
+ "_readme": "source of truth ของรายชื่อร้านบนหน้า /dealers.html — ทุกรายยังเป็น placeholder:true (ตัวอย่างการแสดงผล ไม่ใช่ข้อมูลจริง · รอ {{SERVICE_CENTERS}}) · แก้ที่นี่แล้วรัน python tools/build.py (ส่งต่อเข้า content.js) · tier: center|automotive|sub · services: automotive|ppf",
  "dealers": [
   {
    "id": "fnx-bkk-001",
