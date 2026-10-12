@@ -10,7 +10,8 @@
   3. บล็อกที่ใช้ซ้ำทุกหน้า    ← ใส่ระหว่างเครื่องหมายในหน้า HTML
         <!-- @assets -->  … <!-- @end assets -->    ลิงก์ CSS / JS ใน <head>
         <!-- @header -->  … <!-- @end header -->    แถบเมนูบน (ใส่ aria-current ให้เองตาม URL)
-        <!-- @footer -->  … <!-- @end footer -->    footer + ปุ่มติดต่อลอย
+        <!-- @footer -->  … <!-- @end footer -->    ท้ายเว็บ 4 คอลัมน์ (ไม่มีปุ่มติดต่อลอยแล้ว v8.1)
+        <!-- @next -->    … <!-- @end next -->      แถบ "ตอนต่อไป" (เฉพาะหน้าใน NEXT + หน้ารุ่น)
   4. บล็อกที่สร้างจากข้อมูล   ← <!-- @gen:ชื่อ --> … <!-- @end gen:ชื่อ -->  (ดูรายชื่อที่ GEN ท้ายไฟล์)
 
 ทุกอย่างระหว่างเครื่องหมายถูกเขียนทับทุกครั้งที่ build — แก้ที่ไฟล์นี้ ไม่ใช่ในหน้า
@@ -36,7 +37,7 @@ SITE = {
     'copyright_year': 2026,
     'hotline': '0635978497',              # ใช้ใน tel: (ตัวเลขล้วน)
     'hotline_display': '06-3597-8497',    # ใช้แสดงบนหน้า
-    'line_url': None,                     # เช่น 'https://lin.ee/xxxx' — ใส่แล้วปุ่มลอยกลายเป็นปุ่ม LINE เอง
+    'line_url': None,                     # เช่น 'https://lin.ee/xxxx' — ใส่แล้วไอคอน LINE ท้ายเว็บกดได้เอง
     'line_id': None,                      # {{LINE_OA_ID}}
     'facebook_url': None,                 # {{FACEBOOK_URL}}
     'instagram_url': None,                # {{INSTAGRAM_URL}}
