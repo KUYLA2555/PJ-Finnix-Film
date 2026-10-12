@@ -26,6 +26,9 @@ const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 const seriesById = (id) => data.series.find((s) => s.id === id);
+// v8.6 เว็บอยู่ใต้ path ย่อยได้ (GitHub Pages) — ลิงก์ที่ JS สร้างห้ามขึ้นต้นด้วย / ให้ต่อจาก ROOT
+// ROOT = ส่วนหน้า "app.js" ใน src ของสคริปต์นี้ ("" ที่หน้า root · "../" ที่หน้ารุ่น) — build.py ใส่ src แบบ relative ให้ทุกหน้า
+const ROOT = ((document.currentScript && document.currentScript.getAttribute("src")) || "").replace(/app\.js(\?.*)?$/, "");
 
 
 /* --------------------------------------------------------------------------
@@ -111,7 +114,7 @@ if ($("#detail")) {
   let lastFocus;
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const filmLinks = () => '<div class="film-grid">' + data.series.map((s) =>
-    `<a href="/films/${esc(s.id)}.html"><strong>${esc(s.name)}</strong><small>${esc(s.th)}</small></a>`).join("") + "</div>";
+    `<a href="${ROOT}films/${esc(s.id)}.html"><strong>${esc(s.name)}</strong><small>${esc(s.th)}</small></a>`).join("") + "</div>";
   const openDetail = (markup) => {
     lastFocus = document.activeElement;
     $("#dialog-content").innerHTML = markup;
@@ -189,7 +192,7 @@ if ($("#need-message")) {
     $("#film-name").textContent = chosen.name;
     $("#film-th").textContent = chosen.th;
     $("#film-tag").textContent = `${chosen.tag} · ลดความร้อน ${chosen.heat} · แสงส่องผ่าน ${chosen.vlt}`;
-    $("#hero-film-link").href = `/films/${chosen.id}.html`;
+    $("#hero-film-link").href = `${ROOT}films/${chosen.id}.html`;
 
     // ล้างผลของความต้องการก่อนหน้า (v7.7 สลับในหน้าได้หลายครั้ง)
     $$(".series-card.highlight").forEach((c) => c.classList.remove("highlight"));

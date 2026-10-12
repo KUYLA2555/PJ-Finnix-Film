@@ -69,7 +69,7 @@ window.FINNIX = {
      "full": 40600
     }
    },
-   "logo": "/assets/series/logo-titanium.png"
+   "logo": "assets/series/logo-titanium.png"
   },
   {
    "id": "ceramic",
@@ -131,7 +131,7 @@ window.FINNIX = {
      "full": 17000
     }
    },
-   "logo": "/assets/series/logo-ceramic.png"
+   "logo": "assets/series/logo-ceramic.png"
   },
   {
    "id": "crystalize",
@@ -168,7 +168,7 @@ window.FINNIX = {
     }
    ],
    "price": null,
-   "logo": "/assets/series/logo-crystalize.png"
+   "logo": "assets/series/logo-crystalize.png"
   },
   {
    "id": "extra-clear",
@@ -205,7 +205,7 @@ window.FINNIX = {
     }
    ],
    "price": null,
-   "logo": "/assets/series/logo-extra-clear.png"
+   "logo": "assets/series/logo-extra-clear.png"
   },
   {
    "id": "uv-guard",
@@ -267,7 +267,7 @@ window.FINNIX = {
      "full": 15800
     }
    },
-   "logo": "/assets/series/logo-uv-guard.png"
+   "logo": "assets/series/logo-uv-guard.png"
   }
  ],
  "dealers": [

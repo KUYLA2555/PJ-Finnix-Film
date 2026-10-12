@@ -10,27 +10,27 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex, nofollow">
-  <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="/journey.css">
-  <link rel="stylesheet" href="/merge.css">
-  <script src="/content.js" defer></script>
-  <script src="/app.js" defer></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="journey.css">
+  <link rel="stylesheet" href="merge.css">
+  <script src="content.js" defer></script>
+  <script src="app.js" defer></script>
   <!-- @end assets -->
 </head>
 <body class="inner-page">
 <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
 <!-- @header -->
 <header>
-  <a href="/" class="logo"><img src="/assets/logo-finnix-web.png" alt="FINNIX FILM หน้าแรก" width="817" height="96"></a>
+  <a href="./" class="logo"><img src="assets/logo-finnix-web.png" alt="FINNIX FILM หน้าแรก" width="817" height="96"></a>
   <nav id="nav" aria-label="เมนูหลัก">
-    <a href="/">หน้าแรก</a>
-    <a href="/films.html">ฟิล์ม</a>
-    <a href="/works.html">ผลงาน</a>
-    <a href="/experience.html">ลองของจริง</a>
-    <a href="/about.html">เกี่ยวกับเรา</a>
-    <a class="nav-extra" href="/dealers.html" aria-current="page">หาร้านใกล้คุณ</a>
+    <a href="./">หน้าแรก</a>
+    <a href="films.html">ฟิล์ม</a>
+    <a href="works.html">ผลงาน</a>
+    <a href="experience.html">ลองของจริง</a>
+    <a href="about.html">เกี่ยวกับเรา</a>
+    <a class="nav-extra" href="dealers.html" aria-current="page">หาร้านใกล้คุณ</a>
   </nav>
-  <a class="pill nav-dealer" href="/dealers.html" aria-current="page">หาร้านใกล้คุณ</a>
+  <a class="pill nav-dealer" href="dealers.html" aria-current="page">หาร้านใกล้คุณ</a>
   <button id="menu" aria-label="เปิดเมนู" aria-controls="nav" aria-expanded="false"><span></span><span></span></button>
 </header>
 <!-- @end header -->
@@ -41,7 +41,7 @@
 
   <!-- หัวหน้า -->
   <section class="dl-intro">
-    <nav class="dl-crumb" aria-label="เส้นทางหน้าเว็บ"><a href="/">หน้าแรก</a><span aria-hidden="true">/</span><span aria-current="page">หาร้านใกล้คุณ</span></nav>
+    <nav class="dl-crumb" aria-label="เส้นทางหน้าเว็บ"><a href="./">หน้าแรก</a><span aria-hidden="true">/</span><span aria-current="page">หาร้านใกล้คุณ</span></nav>
     <div class="eyebrow"><span></span> FIND FINNIX <em class="eyebrow-th">หาร้านใกล้คุณ</em></div>
     <div class="dl-intro-grid">
       <h1>FINNIX <em>ใกล้คุณ</em></h1>
@@ -124,7 +124,7 @@
   <!-- สำนักงานใหญ่ — ภาพซ้าย ข้อมูลขวา · ค่ามาจาก SITE ใน tools/build.py -->
   <section class="dl-contact" id="contact">
     <figure class="dl-contact-photo">
-      <img src="/assets/car.jpg" alt="ภาพประกอบรถยนต์บนถนนในกรุงเทพฯ ยามเย็น" loading="lazy">
+      <img src="assets/car.jpg" alt="ภาพประกอบรถยนต์บนถนนในกรุงเทพฯ ยามเย็น" loading="lazy">
       <figcaption>BEAUTIFULLY REAL. / ภาพประกอบบรรยากาศ</figcaption>
     </figure>
     <div class="dl-contact-copy">
@@ -152,7 +152,7 @@
   <!-- แถบ "ตอนต่อไป" — ปลายทางและข้อความอยู่ที่ NEXT ใน build.py -->
   <!-- @next -->
   <nav class="next-chapter dark" aria-label="ตอนต่อไป">
-    <a href="/works.html">
+    <a href="works.html">
       <span class="eyebrow">NEXT <span></span> OUR WORK <em class="eyebrow-th">ผลงานที่ติดตั้ง</em></span>
       <strong><span>ดูผลงานที่ติดตั้ง</span></strong>
       <i aria-hidden="true">→</i>
@@ -166,26 +166,26 @@
 <footer class="home-footer">
 <div class="home-footer-grid">
   <div class="home-footer-brand">
-    <a class="home-footer-logo" href="/"><img src="/assets/logo-finnix-white.png" alt="FINNIX FILM หน้าแรก" width="720" height="88" loading="lazy"></a>
+    <a class="home-footer-logo" href="./"><img src="assets/logo-finnix-white.png" alt="FINNIX FILM หน้าแรก" width="720" height="88" loading="lazy"></a>
     <p>ฟิล์มกรองแสงสำหรับรถยนต์<br>ความสบายที่อยู่กับคุณในทุกการเดินทาง</p>
     <p class="home-footer-company">บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</p>
     <div class="home-footer-social"><span class="foot-icon is-pending" role="img" aria-label="Facebook — ยังไม่มีลิงก์" title="Facebook · รอ {{FACEBOOK_URL}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5H16l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8.1v3h2.5V21z"/></svg></span><span class="foot-icon is-pending" role="img" aria-label="LINE — ยังไม่มีลิงก์" title="LINE · รอ {{LINE_OA_ID}}"><svg class="ico-line" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.3.1.8.2.9.6.1.3.1.8 0 1.1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6.1-3.6 8.3-6.2 1.5-1.7 2.3-3.4 2.3-5.4 0-4.7-4.7-8.5-10.5-8.5z"/><text x="12" y="13.3" text-anchor="middle">LINE</text></svg></span><a class="foot-icon" href="tel:0635978497" aria-label="โทร 06-3597-8497"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></a></div>
   </div>
   <nav aria-label="รู้จัก FINNIX">
     <h2>รู้จัก FINNIX</h2>
-    <a href="/about.html">เกี่ยวกับเรา</a>
-    <a href="/works.html">ผลงานที่ติดตั้ง</a>
+    <a href="about.html">เกี่ยวกับเรา</a>
+    <a href="works.html">ผลงานที่ติดตั้ง</a>
   </nav>
   <nav aria-label="ผลิตภัณฑ์">
     <h2>ผลิตภัณฑ์</h2>
-    <a href="/films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
-    <a href="/films.html#price">ราคา</a>
-    <a href="/experience.html">ลองของจริง</a>
+    <a href="films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
+    <a href="films.html#price">ราคา</a>
+    <a href="experience.html">ลองของจริง</a>
   </nav>
   <div class="home-footer-contact">
     <h2>บริการและการติดต่อ</h2>
-    <a href="/dealers.html">ค้นหาร้าน FINNIX</a>
-    <a href="/dealers.html#contact">ติดต่อสำนักงานใหญ่</a>
+    <a href="dealers.html">ค้นหาร้าน FINNIX</a>
+    <a href="dealers.html#contact">ติดต่อสำนักงานใหญ่</a>
     <span class="foot-line is-pending" title="LINE · รอ {{LINE_OA_ID}}"><svg class="ico-line" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.3.1.8.2.9.6.1.3.1.8 0 1.1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6.1-3.6 8.3-6.2 1.5-1.7 2.3-3.4 2.3-5.4 0-4.7-4.7-8.5-10.5-8.5z"/><text x="12" y="13.3" text-anchor="middle">LINE</text></svg>LINE FINNIX <small>(เร็ว ๆ นี้)</small></span>
     <p>ให้ร้านช่วยแนะนำรุ่นและเฉด<br>ที่เหมาะกับรถของคุณ</p>
   </div>

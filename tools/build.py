@@ -15,6 +15,7 @@
   4. บล็อกที่สร้างจากข้อมูล   ← <!-- @gen:ชื่อ --> … <!-- @end gen:ชื่อ -->  (ดูรายชื่อที่ GEN ท้ายไฟล์)
 
 ทุกอย่างระหว่างเครื่องหมายถูกเขียนทับทุกครั้งที่ build — แก้ที่ไฟล์นี้ ไม่ใช่ในหน้า
+สุดท้าย href="/…" src="/…" ทั้งหน้าถูกแปลงเป็น relative (relativize · v8.6) เพื่อให้เว็บอยู่ใต้ path ย่อยของ GitHub Pages ได้
 ไฟล์ผลลัพธ์เป็น static ล้วน ลบโฟลเดอร์ tools/ ทิ้งเว็บก็ยังทำงานเหมือนเดิม
 """
 import html
@@ -225,7 +226,7 @@ def series_summary(s):
         'uv': rng([x['uv'] for x in v]),
         'variants': [{'code': x['code'], 'darkness': x['darkness'], 'heat': x['heatReject'], 'vlt': x['vlt']} for x in v],
         'price': s.get('price'),
-        'logo': LOGO_SERIES.format(id=s['id']),
+        'logo': LOGO_SERIES.format(id=s['id']).lstrip('/'),   # v8.6 ไม่มี / นำหน้า — JS ต้องต่อ ROOT (app.js) ข้างหน้าเอง
     }
 
 
@@ -795,6 +796,22 @@ def fill(src, name, block):
     return pattern.subn(replace, src)
 
 
+# v8.6 เว็บขึ้น GitHub Pages ที่ path ย่อย (kuyla2555.github.io/PJ-Finnix-Film/) — ลิงก์ที่ขึ้นต้นด้วย / จะไปหาที่ root ของโดเมนแล้ว 404
+# จึงแปลง href="/…" src="/…" ทั้งหน้า (รวมส่วนที่เขียนมือนอกเครื่องหมาย) เป็น relative ตามความลึกของหน้า — ในโค้ดยังเขียนแบบ /films.html ได้เหมือนเดิม
+ROOT_LINK = re.compile(r'(?<=\s)(href|src)="/(?!/)([^"]*)"')
+
+
+def relativize(src, rel):
+    up = '../' * rel.count('/')
+
+    def replace(m):
+        target = up + m.group(2)
+        if not target or target[0] in '#?':   # หน้าแรก "/" "/#ส่วน" → "./" "./#ส่วน" (ถ้าเหลือแค่ "#ส่วน" จะกลายเป็นส่วนของหน้าเดิม)
+            target = './' + target
+        return f'{m.group(1)}="{target}"'
+    return ROOT_LINK.sub(replace, src)
+
+
 # ============================================================================
 #  เขียนทุกหน้า
 # ============================================================================
@@ -823,7 +840,7 @@ for page in sorted(pages):
         problems.append(f'{rel}: มีเครื่องหมาย @next แต่ไม่มีหน้านี้ใน NEXT ของ build.py')
     for name, make in GEN.items():
         src, _ = fill(src, f'gen:{name}', make())
-    write(rel, src)
+    write(rel, relativize(src, rel))
 
 print(f'หน้า {len(pages)} · ซีรีส์ {len(SERIES)} · ร้าน {len(dealers["dealers"])} · ผลงาน {len(gallery["items"])} · '
       f'need→film {need_to_film} | {"ต่าง" if CHECK else "เขียน"} {len(changed)} ไฟล์')
