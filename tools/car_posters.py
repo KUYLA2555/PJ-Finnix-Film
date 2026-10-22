@@ -38,7 +38,8 @@ PAGE = '''<!doctype html><meta charset="utf-8">
   const out = document.getElementById("out");
   const GLASS = %(glass)s, FILM = [0.02, 0.03, 0.035];
   // รอด้วย setTimeout ไม่ใช่ requestAnimationFrame — rAF แทบไม่เดินใน headless (ดู skill browser-verify) แต่เวลาเสมือนเดิน
-  const frame = () => new Promise((r) => setTimeout(r, 400));
+  // 2 วิต่อรอบ: โมเดลจริง (~250k สามเหลี่ยม) รอ 0.4 วิแล้วได้ภาพค้างจากระดับก่อน (ภาพ 40/60/80 ออกมาเหมือนกันทุกไบต์)
+  const frame = () => new Promise((r) => setTimeout(r, 2000));
   await import("/vendor/model-viewer.min.js");
   const mv = document.getElementById("mv");
   mv.addEventListener("error", (e) => { out.textContent += "ERROR " + JSON.stringify(e.detail) + "\\n"; });

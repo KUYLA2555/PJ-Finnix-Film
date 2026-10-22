@@ -1,0 +1,14 @@
+# v9.9 ค่าตั้ง GitHub Pages (Jekyll) — ไม่เผยแพร่เอกสารภายใน ตัวสร้าง และข้อมูลดิบเป็นหน้าเว็บ
+# เดิม Jekyll แปลง .md เป็นหน้า .html ที่ไม่มี noindex (เช่น /CLAUDE.html /docs/CHANGELOG.html) และเปิด data/ tools/ ได้ตรง ๆ
+# repo เป็น public จึงยังอ่านไฟล์พวกนี้ได้บน github.com — ไฟล์นี้กันแค่ไม่ให้อยู่บนเว็บที่ค้นเจอได้
+# เว็บอ่านข้อมูลจาก content.js ที่ tools/build.py สร้าง ไม่ได้ใช้ data/ docs/ tools/ ตอนรัน
+# เพิ่มไฟล์ .md หรือโฟลเดอร์เอกสารใหม่ที่ไม่ใช่หน้าเว็บ → เพิ่มชื่อที่นี่ด้วย (โฟลเดอร์ที่ขึ้นต้นด้วย . หรือ _ ไม่ถูกเผยแพร่อยู่แล้ว)
+exclude:
+  - CLAUDE.md
+  - README.md
+  - docs/
+  - tools/
+  - data/
+  - assets/README.md
+  - assets/Brochure/README.md
+  - vendor/README.md

@@ -97,8 +97,9 @@ if ($("#motion")) {
 
 // ตัวเลื่อนความเข้ม — ภาพจำลองเท่านั้น ไม่ใช่ค่า VLT · v9.5 ตัด Dark เหลือ Clear 40 60 80
 //   ภาพเมือง (#tint-overlay ม่านเข้ม) หรือรถ 3D (.car3d — build.py เลือกให้ตามไฟล์ที่มี · ค่าอยู่ที่ CAR_3D)
-//   รถ 3D: ก่อนกดโหลด สลับภาพนิ่ง car-<n>.jpg (มุมเดียวกัน) · กด "หมุนดูรถ 3D" แล้วค่อยโหลดไลบรารี vendor/ (~1 MB) กับโมเดล
-//   แล้วเปลี่ยนสีวัสดุกระจกของโมเดลแทน (ชื่อวัสดุมี glass/window · ไม่เจอ = วัสดุโปร่ง BLEND)
+//   รถ 3D: ระหว่างยังไม่โหลด สลับภาพนิ่ง car-<n>.jpg (มุมเดียวกัน) · v9.8 เลื่อนใกล้ถึงส่วนนี้แล้วโหลดไลบรารี vendor/ (~1 MB) กับโมเดลเอง
+//   (ผู้สั่งงานสั่งเอาปุ่มออก ลากหมุนได้ทันที) · ปุ่มเหลือไว้ลองใหม่เมื่อโหลดพลาด และเมื่อเบราว์เซอร์เปิดโหมดประหยัดเน็ต (ให้กดเอง)
+//   โหลดแล้วเปลี่ยนสีวัสดุกระจกของโมเดลแทน (ชื่อวัสดุมี glass/window · ไม่เจอ = วัสดุโปร่ง BLEND)
 if ($("#tint-range")) {
   const LEVELS = ["Clear", "40", "60", "80"];
   const NAMES = ["ไม่ติดฟิล์ม", "ติดฟิล์มความเข้ม 40", "ติดฟิล์มความเข้ม 60", "ติดฟิล์มความเข้ม 80"];
@@ -142,18 +143,22 @@ if ($("#tint-range")) {
   setTint(2);
 
   if (car) {
-    const button = $(".car3d-load");
+    const button = $(".car3d-load");         // ซ่อนอยู่ใน HTML — ไม่มี JS เห็นภาพนิ่งอย่างเดียว ไม่มีปุ่มค้าง
     const status = $(".car3d-status");
-    button.hidden = false;                   // ปุ่มทำงานด้วย JS เท่านั้น — ไม่มี JS เห็นภาพนิ่งกับปุ่มความเข้ม (ซึ่งก็ใช้ JS) ไม่มีปุ่มค้าง
+    let started = false;                     // viewer ได้ค่าหลัง import เสร็จ — กันเรียกซ้ำระหว่างนั้นด้วยตัวนี้
     const fail = () => {
-      status.textContent = "โหลดรถ 3D ไม่ได้ ลองใหม่อีกครั้ง";
+      started = false;
+      status.textContent = "โหลดรถ 3D ไม่ได้";
+      button.lastChild.nodeValue = " ลองใหม่";
       button.hidden = false;
       if (viewer) viewer.remove();
       viewer = null;
       glass = [];
       car.classList.remove("is-3d");
     };
-    button.addEventListener("click", () => {
+    const load = () => {
+      if (started) return;                   // กำลังโหลดหรือโหลดแล้ว
+      started = true;
       button.hidden = true;
       status.textContent = "กำลังโหลดรถ 3D…";
       import(new URL(ROOT + "vendor/model-viewer.min.js", document.baseURI).href).then(() => {
@@ -186,7 +191,20 @@ if ($("#tint-range")) {
         viewer.addEventListener("error", fail);
         $(".car3d-poster").after(viewer);   // ก่อนแถบปุ่มกับคำบรรยาย — สองอย่างนั้นจึงวาดทับรถ
       }).catch(fail);
-    });
+    };
+    button.addEventListener("click", load);
+    if (navigator.connection && navigator.connection.saveData) {
+      button.hidden = false;                 // โหมดประหยัดเน็ต — ~9.6 MB ให้ผู้ใช้เลือกเอง
+    } else if ("IntersectionObserver" in window) {
+      const near = new IntersectionObserver((entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        near.disconnect();
+        load();
+      }, { rootMargin: "50% 0px" });         // เริ่มก่อนถึงราวครึ่งจอ — เลื่อนถึงแล้วมักโหลดเสร็จหรือใกล้เสร็จ
+      near.observe(car);
+    } else {
+      load();
+    }
   }
 }
 
@@ -227,7 +245,7 @@ if ($("#dealer-form") && !$("#dealer-count")) {
     if (!frame) {
       frame = document.createElement("iframe");
       frame.title = "แผนที่ Google ค้นหาร้าน FINNIX";
-      frame.referrerPolicy = "no-referrer-when-downgrade";
+      frame.referrerPolicy = "strict-origin-when-cross-origin";   // v9.9 ส่งแค่โดเมน ไม่ส่ง URL หน้าเต็มให้ Google (ตรงกับ meta referrer ของเว็บ)
       $(".map-panel").prepend(frame);
       $(".map-panel").classList.add("is-live");
     }
@@ -273,16 +291,27 @@ if ($("#dealer-form") && !$("#dealer-count")) {
    4. /films.html — ?need=heat|clarity|privacy|balance → แนะนำซีรีส์ที่ตรง
       การจับคู่คำนวณใน build.py (needToFilm) — ยังเป็นร่าง รอบริษัทยืนยัน
       v8.0 ดีไซน์ตามไฟล์ต้นแบบ: การ์ดที่แนะนำ + ทางเลือกได้ขีดแดง (แทนกล่อง "ทางเลือกอื่น") ·
-      v8.5 เลิกหน้าต่างรายละเอียด — การ์ด / ปุ่มบนภาพไปหน้ารุ่นตรง ๆ · ปุ่มหยุดภาพเคลื่อนไหว
+      v8.5 เลิกหน้าต่างรายละเอียด — การ์ด / ปุ่มบนภาพไปหน้ารุ่นตรง ๆ · ปุ่มหยุดภาพเคลื่อนไหว ·
+      v9.9 ภาพใหญ่เปลี่ยนตามความต้องการ (config.needPhoto · ตำแหน่งภาพบนมือถือส่งผ่าน --photo-x ให้ merge.css)
    -------------------------------------------------------------------------- */
 const NEED_NAMES = { heat: "กันร้อน", clarity: "มองชัด", privacy: "เป็นส่วนตัว", balance: "สมดุล" };
 
 if ($("#need-message")) {
   const needOf = (a) => new URL(a.href).searchParams.get("need");
+  // v9.9 ภาพใหญ่เปลี่ยนตามความต้องการ (NEED_PHOTO ใน build.py) · ไม่ได้เลือก = ภาพที่เขียนไว้ใน HTML
+  const photo = $(".films-feature-photo");
+  const basePhoto = { src: photo.getAttribute("src"), alt: photo.alt };
 
   const applyNeed = (rawNeed) => {
     const need = NEED_NAMES[rawNeed] ? rawNeed : null;
     const chosen = seriesById((need && config.needToFilm[need]) || config.heroFilm);
+
+    const shot = need && (config.needPhoto || {})[need];
+    const src = shot ? ROOT + shot.src : basePhoto.src;
+    if (photo.getAttribute("src") !== src) photo.src = src;  // ภาพเดิมค้างไว้จนภาพใหม่โหลดเสร็จ (เบราว์เซอร์ทำเอง)
+    photo.alt = shot ? shot.alt : basePhoto.alt;
+    if (shot) photo.style.setProperty("--photo-x", shot.x);
+    else photo.style.removeProperty("--photo-x");
 
     $("#film-eyebrow").textContent = (need ? "RECOMMENDED · " : "FEATURED · ") + chosen.code + " SERIES";
     $("#film-name").textContent = chosen.name;
@@ -433,7 +462,7 @@ if ($("#dealer-count")) {
   const openMap = () => {
     const frame = document.createElement("iframe");
     frame.title = "แผนที่ " + $("#map-title").textContent;
-    frame.referrerPolicy = "no-referrer-when-downgrade";
+    frame.referrerPolicy = "strict-origin-when-cross-origin";   // v9.9 ส่งแค่โดเมน ไม่ส่ง URL หน้าเต็มให้ Google (ตรงกับ meta referrer ของเว็บ)
     frame.src = mapSrc();
     const close = document.createElement("button");
     close.type = "button";

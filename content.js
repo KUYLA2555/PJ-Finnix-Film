@@ -438,5 +438,27 @@ window.FINNIX_JOURNEY = {
    "titanium"
   ]
  },
- "needMappingConfirmed": false
+ "needMappingConfirmed": false,
+ "needPhoto": {
+  "heat": {
+   "src": "assets/Page/1.jpg",
+   "alt": "ครอบครัวนั่งในรถยามแดดเย็น คนขับใส่แว่นกันแดด ลูกหลับสบายอยู่เบาะหลัง",
+   "x": "62%"
+  },
+  "clarity": {
+   "src": "assets/Page/2.jpg",
+   "alt": "มุมมองคนขับผ่านกระจกหน้ารถ เห็นถนนและตึกในเมืองชัดเจนตอนแดดเย็น",
+   "x": "50%"
+  },
+  "privacy": {
+   "src": "assets/Page/3.jpg",
+   "alt": "กระจกข้างรถสีเข้มสะท้อนตึกยามเย็น เห็นผู้โดยสารด้านในเพียงรางๆ",
+   "x": "68%"
+  },
+  "balance": {
+   "src": "assets/Page/4.jpg",
+   "alt": "รถ SUV สีดำจอดริมแม่น้ำเจ้าพระยา ฉากหลังวัดอรุณฯ ยามพระอาทิตย์ตก",
+   "x": "70%"
+  }
+ }
 };

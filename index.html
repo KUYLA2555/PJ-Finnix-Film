@@ -103,18 +103,22 @@
 
   <!-- 04 ลองความเข้ม + วิทยาศาสตร์ของแสง (v7.9 จับคู่ส่วน 04 กับ 06 ของต้นแบบ) — พื้นมืดผืนเดียว ซ้าย TRY · ขวา SCIENCE
        ภาพจำลองความเข้ม ไม่ใช่ค่า VLT (v8.1 หน้า /try.html ลบแล้ว — ตัวเลื่อนเหลือที่นี่ที่เดียว)
-       v9.5 ภาพเป็นรถ 3D หมุนดูรอบคัน (@gen:try-scene จาก CAR_3D ใน build.py — ยังไม่มีไฟล์โมเดล = ภาพเมืองเดิม) · ตัด Dark เหลือ Clear 40 60 80 -->
+       v9.5 ภาพเป็นรถ 3D หมุนดูรอบคัน (@gen:try-scene จาก CAR_3D ใน build.py — ไม่มีไฟล์โมเดล = ภาพเมืองเดิม) · ตัด Dark เหลือ Clear 40 60 80 -->
   <section class="dark home-pair try-science" id="try">
     <div class="eyebrow home-pair-head">04 <span></span> TRY FINNIX · SCIENCE, SIMPLY</div>
     <div class="home-pair-col reveal">
       <h2>ลองด้วยตา<br>เลือกด้วยตัวคุณเอง</h2>
       <p>มุมมองเดียวกัน ต่างความเข้ม<br>เลื่อนเพื่อสำรวจเฉดที่คุณชอบ</p>
       <!-- @gen:try-scene -->
-      <div class="tint-scene">
-        <img src="assets/glass.jpg" alt="ภาพเมืองเดียวกันสำหรับทดลองความเข้ม" loading="lazy">
-        <div id="tint-overlay"></div>
+      <div class="tint-scene car3d" data-src="assets/3d/car.glb" data-posters="assets/3d/car-0.jpg assets/3d/car-1.jpg assets/3d/car-2.jpg assets/3d/car-3.jpg" data-glass="none 0.55 0.75 0.9" data-orbit="-35deg 75deg 80%" data-alt="รถจำลอง 3 มิติ ลากเพื่อหมุนดูรอบคัน">
+        <img class="car3d-poster" src="assets/3d/car-2.jpg" alt="รถจำลองติดฟิล์มความเข้ม 60" loading="lazy">
+        <div class="car3d-bar">
+          <p class="car3d-status" role="status"></p>
+          <button type="button" class="pill light car3d-load" hidden><span aria-hidden="true">⟲</span> หมุนดูรถ 3D รอบคัน</button>
+        </div>
         <div class="tint-caption"><span>YOUR VIEW. YOUR CHOICE.</span><output id="tint-output" for="tint-range">60</output></div>
       </div>
+      <p class="car3d-credit">โมเดล 3D "<a href="https://sketchfab.com/3d-models/tesla-m3-model-3a602469d7874d1397efa67182198705">Tesla M3 model</a>" โดย <a href="https://sketchfab.com/wintrez">wintrez</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> · ดัดแปลง: <span class="nb">สีขาว</span> · แยกเลนส์ไฟ · ไม่เกี่ยวข้องกับผู้ผลิตรถ</p>
       <!-- @end gen:try-scene -->
       <div class="tint-controls">
         <input id="tint-range" type="range" min="0" max="3" step="1" value="2" aria-label="ระดับความเข้มฟิล์ม">

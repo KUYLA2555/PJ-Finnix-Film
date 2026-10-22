@@ -250,13 +250,20 @@ footer .logo img {
 .try-science .light-diagram {
   height: 300px;
 }
+.try-science .sun-label {        /* v7.9 ≤1250 · v9.6 ทุกขนาด — จอใหญ่คอลัมน์ SCIENCE แคบลงเหลือ 2 ใน 5 (หมวด 15) · ป้าย SUNLIGHT ซ่อนเหมือนต้นแบบที่ ≤1050 ให้แผนภาพมีที่ */
+  display: none;
+}
+.try-science .glass-plane {
+  width: 50px;
+  margin-right: 25px;
+}
 .try-science .proof-grid {
   grid-template-columns: 1fr;
   gap: 10px;
   margin-top: 20px;
 }
-/* v9.5 รถ 3D (@gen:try-scene · CAR_3D ใน build.py) — ภาพนิ่งต่อระดับความเข้ม + ปุ่มโหลด 3D มุมขวาบน
-   กดแล้ว model-viewer วางทับเต็มกรอบ (.is-3d ซ่อนภาพนิ่ง) · พื้นสีเดียวกับ .dark เพราะภาพนิ่งเรนเดอร์บนพื้นนี้ จึงใช้ contain ได้ไม่เห็นขอบ */
+/* v9.5 รถ 3D (@gen:try-scene · CAR_3D ใน build.py) — ภาพนิ่งต่อระดับความเข้ม + ข้อความสถานะ / ปุ่มลองใหม่มุมบน
+   v9.8 โหลดเองเมื่อเลื่อนใกล้ถึง แล้ว model-viewer วางทับเต็มกรอบ (.is-3d ซ่อนภาพนิ่ง) · พื้นสีเดียวกับ .dark เพราะภาพนิ่งเรนเดอร์บนพื้นนี้ จึงใช้ contain ได้ไม่เห็นขอบ */
 .car3d {
   background: #111517;
 }
@@ -3173,13 +3180,13 @@ dialog h3 {
   }
 }
 
-@media (max-width: 1250px) {
-  .try-science .sun-label {      /* v7.9 ครึ่งจอแคบ — ป้าย SUNLIGHT ซ่อนเหมือนต้นแบบที่ ≤1050 ให้แผนภาพมีที่ */
-    display: none;
+@media (min-width: 1251px) {
+  .try-science {                 /* v9.6 คอลัมน์รถ 3D ใหญ่กว่า SCIENCE 3:2 (ผู้สั่งงานสั่ง "ใหญ่กว่าด้านขวา จะได้เด่น") · 1051–1250 ครึ่งต่อครึ่งเดิม — แบ่งแล้วแผนภาพแสงแคบเกิน */
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   }
-  .try-science .glass-plane {
-    width: 50px;
-    margin-right: 25px;
+  .try-science .tint-scene {
+    height: auto;
+    aspect-ratio: 5 / 3;         /* สัดส่วนภาพนิ่งรถ 1200x720 — กรอบโตตามคอลัมน์ (1440 ≈ 434px · เดิม 360) */
   }
 }
 
@@ -3361,7 +3368,7 @@ dialog h3 {
     min-height: 590px;
   }
   .films-feature-photo {
-    object-position: 62% center;
+    object-position: var(--photo-x, 62%) center;   /* v9.9 รายภาพตามความต้องการ — NEED_PHOTO ใน build.py (app.js ตั้งให้) */
   }
   .films-feature::after {
     background: linear-gradient(90deg, #0a1111d1, #0a111140 100%);
