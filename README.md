@@ -21,15 +21,15 @@ python -m http.server 8000     # แล้วเปิด http://localhost:8000/
 ```
 PJ_Finnix_Film/
 ├── index.html              หน้าแรก
-├── films.html  about.html  experience.html  dealers.html  works.html
-│                           หน้าละไฟล์ ชื่อตามหน้า (v7.4) · films/<ซีรีส์>.html อีก 5 หน้าสร้างอัตโนมัติ
+├── films.html  about.html  dealers.html  works.html
+│                           หน้าละไฟล์ ชื่อตามหน้า (v7.4) · films/<ซีรีส์>.html อีก 6 หน้าสร้างอัตโนมัติ
 ├── style.css  journey.css  สไตล์จากต้นแบบ
 ├── merge.css               คอมโพเนนต์ที่เพิ่มเอง
 ├── app.js                  JS ทั้งเว็บ
 ├── content.js              ข้อมูลที่ app.js ใช้ — สร้างอัตโนมัติ ห้ามแก้มือ
 ├── data/                   films.json · dealers.json · gallery.json — source of truth
 ├── tools/build.py          ตัวสร้าง content.js · หน้ารุ่น · header/footer
-├── assets/                 รูปทั้งหมด (โลโก้ · ภาพ · ปกโบรชัวร์ · PDF)
+├── assets/                 รูปทั้งหมด (โลโก้ · ภาพ · ปกโบรชัวร์ · PDF) · video/ วิดีโอปกหน้าแรก (v8.9)
 └── docs/                   HOW-TO-EDIT (คู่มือแก้ไข) · CHANGELOG · film-data
 ```
 

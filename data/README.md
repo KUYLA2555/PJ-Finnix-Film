@@ -4,7 +4,7 @@
 
 | ไฟล์ | คืออะไร | ขึ้นที่ไหน |
 |---|---|---|
-| `films.json` | ค่าสเปกจริงทั้ง 15 รหัสฟิล์ม + ราคา 3 ซีรีส์ ถอดจากโบรชัวร์ (`scans` อยู่ในคลังแล้ว — ดู `docs/film-data.md`) | `/films.html` (รวมราคา `#price` ตั้งแต่ v8.0) · หน้ารุ่น 5 หน้า |
+| `films.json` | ค่าสเปกจริง 15 รหัสฟิล์มของ 5 ซีรีส์ + ราคา 3 ซีรีส์ ถอดจากโบรชัวร์ (`scans` อยู่ในคลังแล้ว — ดู `docs/film-data.md`) · v9.1 ซีรีส์ที่ 6 CERAMIC PLUS (ยังไม่มีโบรชัวร์ ค่าเป็น `null` ทั้งหมด) · สีฟิล์ม `tint` ทุกรหัส (วัดจากภาพถ่าย ใช้กับภาพจำลอง ไม่ใช่ค่าสเปก) | `/films.html` (รวมราคา `#price` ตั้งแต่ v8.0) · หน้ารุ่น 6 หน้า |
 | `dealers.json` | ร้านตัวแทน 9 ราย — **ข้อมูลสมมติทั้งหมด** (`placeholder:true`) | `/dealers.html` |
 | `gallery.json` | ผลงาน 20 คัน — **ตัวอย่างการแสดงผล** ไม่ใช่งานจริง | `/works.html` (ผลงานที่ติดตั้ง) |
 
@@ -17,5 +17,6 @@
 
 ## โครง `films.json`
 
-`_readme` · `meta` · `series[]` (5) · `openQuestions[]` (5)
-แต่ละ `series` มี `variants[]` 3 รหัส · แต่ละรหัสมี 6 ค่า — `darkness · heatReject · vlt · reflect · uv · ir`
+`_readme` · `meta` · `series[]` (6) · `openQuestions[]` (7)
+แต่ละ `series` มี `variants[]` 3 รหัส · แต่ละรหัสมี 6 ค่า — `darkness · heatReject · vlt · reflect · uv · ir` + `tint` (สีภาพจำลอง v9.1)
+ซีรีส์ใส่ `warrantyYears` ของตัวเองได้ (ไม่ใส่ = ใช้ `meta.warrantyYears`) · ลำดับใน `series[]` = ลำดับเลขบนเว็บ

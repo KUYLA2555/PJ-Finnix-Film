@@ -2,7 +2,9 @@
 
 | ไฟล์ | ทำอะไร |
 |---|---|
-| `build.py` | **ตัวสร้างของเว็บ** — `content.js` · หน้ารุ่น 5 หน้า · บล็อกร่วมทุกหน้า (`@assets` `@header` `@footer` `@next`) · บล็อกจากข้อมูล (`@gen:…`) · แปลงลิงก์ `href="/…"` `src="/…"` ทั้งหน้าเป็น relative (v8.6 · `relativize`) · อ่าน docstring หัวไฟล์ |
+| `build.py` | **ตัวสร้างของเว็บ** — `content.js` · หน้ารุ่น 6 หน้า (v9.1) · บล็อกร่วมทุกหน้า (`@assets` `@header` `@footer` `@next`) · บล็อกจากข้อมูล (`@gen:…`) · แปลงลิงก์ `href="/…"` `src="/…"` ทั้งหน้าเป็น relative (v8.6 · `relativize`) · อ่าน docstring หัวไฟล์ |
+| `logo_white.py` | **โลโก้ซีรีส์ฉบับพื้นมืด** (v9.4) — อ่าน `assets/series/logo-<id>.png` ทุกไฟล์ → เขียน `logo-<id>-white.png` (ส่วนดำ/เทาเข้มเป็นขาว · สีแบรนด์คงเดิม · ใช้ ffmpeg) สำหรับกระจกดำบนการ์ด `/films.html` · เปลี่ยนโลโก้ซีรีส์แล้วรันก่อน build |
+| `car_posters.py` | **ภาพนิ่งรถ 3D หน้าแรกส่วน 04** (v9.5) — อ่าน `CAR_3D` ใน `build.py` → เรนเดอร์ `assets/3d/car.glb` มุมกล้องเดียวกับตอนเปิด 3D ทุกระดับความเข้ม → `assets/3d/car-<n>.jpg` (Chrome headless + SwiftShader · ไม่ต้องมีการ์ดจอ) · พิมพ์ชื่อวัสดุกระจกที่เจอ (ไม่เจอ = ภาพทุกระดับเหมือนกัน) · เปลี่ยนโมเดล / `orbit` / `glass` แล้วรันก่อน build |
 | `format_css.py` | จัดรูปแบบ CSS ที่ถูกบีบอัดเป็นบรรทัดเดียวให้อ่านได้ — เทียบความหมายกับต้นฉบับก่อนเขียนทุกครั้ง ไม่ตรงไม่เขียน (ใช้ครั้งแรกกับ `style.css` `journey.css` ใน v6.3) |
 
 ไฟล์ที่ `build.py` สร้างเป็น static ล้วน ลบโฟลเดอร์นี้ทิ้งเว็บก็ยังทำงานเหมือนเดิม แค่แก้ข้อมูลต่อไม่สะดวก
@@ -23,7 +25,8 @@ python tools/format_css.py --check style.css   # ตรวจอย่างเ�
 | เบอร์โทร · LINE · ข้อมูลบริษัท | `SITE` บนสุดของ `build.py` |
 | เมนูบน · ลิงก์ท้ายเว็บ | `NAV` · `HOME_FOOT` |
 | ไฟล์ CSS / JS ที่ทุกหน้าโหลด | `ASSETS` |
-| ภาพการ์ดซีรีส์ที่ `/films.html` | `SERIES_PHOTO` |
+| ภาพการ์ดซีรีส์ที่ `/films.html` | `SERIES_CARD` (v9.2 · `assets/series/card-<id>.jpg`) — ภาพใหญ่หน้ารุ่นกับการ์ดทางเลือกท้ายหน้ารุ่นยังใช้ `SERIES_PHOTO` |
+| รถ 3D หน้าแรกส่วน 04 (โมเดล · มุมกล้อง · ความทึบกระจก · เครดิต) | `CAR_3D` → `gen_try_scene()` (`@gen:try-scene`) · ไม่มีไฟล์ครบ = ภาพเมืองเดิม · มีโมเดลแต่ `credit` ว่าง = build exit 1 |
 | ยืนยันการแนะนำซีรีส์ตามความต้องการ | `NEED_MAPPING_CONFIRMED` · ลำดับการแนะนำอยู่ที่ `need_rank` |
 | หน้ารุ่น `films/<id>.html` | เทมเพลต `series_page()` — **ห้ามแก้ไฟล์ HTML ของหน้ารุ่นตรง ๆ** จะถูกเขียนทับ |
 | header / footer | `header_block()` · `footer_block()` (= `home_footer_block()` ทุกหน้า) |
