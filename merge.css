@@ -14,7 +14,7 @@
    สารบัญ
      1. ตัวช่วยทั่วไป               8. ราคา (/films.html#price)
      2. header · footer              9. /about.html (v8.3)
-     3. โลโก้รูป                    10. /experience.html
+     3. โลโก้รูป                    10. (ว่าง · /experience.html ลบแล้ว v8.8)
      4. ภาพชั่วคราว                 11. /dealers.html (v8.3)
      5. หน้าแรก                     12. /works.html (v8.2)
      6. /films.html (v8.0)       13. (ว่าง · /faq.html ลบแล้ว v8.4)
@@ -64,15 +64,13 @@
   opacity: .75;
 }
 
-/* ค่าที่ยังรอข้อมูล {{VAR}} */
+/* ค่าที่ยังรอข้อมูล — v8.8 ผู้เข้าชมเห็น "รอข้อมูล" (เดิมขึ้น {{VAR}} ตัวพิมพ์ดีด) · ชื่อตัวแปรอยู่ใน data-var
+   ตัวหนังสือสีเดียวกับข้อความรอบข้าง + เส้นประใต้ (เดิม --muted บนพื้นเทาได้คอนทราสต์แค่ 4.16) */
 .var {
-  font-family: ui-monospace, Consolas, monospace;
-  font-size: .86em;
-  color: var(--muted);
-  background: #0000000a;
-  border-radius: 3px;
-  padding: 1px 6px;
   white-space: nowrap;
+  text-decoration: underline dashed;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 .dark .var {
   color: #c9d0d3;
@@ -193,6 +191,21 @@ footer .logo img {
    v6.4 หน้าแรกใช้คลาสของต้นแบบ (style.css) เกือบทั้งหมด — ที่นี่มีแค่ส่วนที่ต้นแบบไม่มี
    กฎของ /dealers/ (แผนที่เกาะจอ) กับ /technology/ (.proof-grid 4 คอลัมน์) ขึ้นต้นด้วย .inner-page จะได้ไม่ทับหน้าแรก */
 
+/* v8.9 วิดีโอปก — วางแทนภาพใน .hero-media (ขนาด/ครอบเต็มกรอบใช้กฎ .hero-media video ของ style.css ต้นแบบ) · พื้นดำระหว่างโหลด
+   คลิปมีฉากมืด/ฉากวุ่น (ห้องนอน · ในรถ) ตัวหนังสือสีเข้มของปกอ่านยากกว่าภาพเดิม → ม่านสว่างฝั่งขวาเข้มขึ้น + แสงฟุ้งรอบตัวหนังสือ (จอ ≥761)
+   มือถือใช้ม่านล่างที่หมวด 15 */
+.hero-media video {
+  background: #1b1d1f;
+}
+@media (min-width: 761px) {
+  .hero-wash {
+    background: linear-gradient(90deg, transparent 32%, #f7eee066 52%, #f8f3e5c7 78%);
+  }
+  .hero-copy {
+    text-shadow: 0 0 22px #f8f3e5d9, 0 0 6px #f8f3e5a6;
+  }
+}
+
 /* 04 · 05 แถวคู่ (v7.9) — ส่วน 01–03 ใช้คลาสต้นแบบตรง ๆ · 04 = TRY + SCIENCE ของต้นแบบ (พื้นมืดผืนเดียว)
    05 = FEATURED + FIND YOUR FILM ของต้นแบบ (พื้นกระดาษ) · ป้ายหัวข้อเต็มแถวแบบส่วน 06 แล้วสองคอลัมน์ · ≤1050 พับเป็นคอลัมน์เดียว */
 .home-pair {
@@ -241,6 +254,65 @@ footer .logo img {
   grid-template-columns: 1fr;
   gap: 10px;
   margin-top: 20px;
+}
+/* v9.5 รถ 3D (@gen:try-scene · CAR_3D ใน build.py) — ภาพนิ่งต่อระดับความเข้ม + ปุ่มโหลด 3D มุมขวาบน
+   กดแล้ว model-viewer วางทับเต็มกรอบ (.is-3d ซ่อนภาพนิ่ง) · พื้นสีเดียวกับ .dark เพราะภาพนิ่งเรนเดอร์บนพื้นนี้ จึงใช้ contain ได้ไม่เห็นขอบ */
+.car3d {
+  background: #111517;
+}
+.car3d .car3d-poster {
+  object-fit: contain;
+  object-position: center;
+  transition: opacity .4s;
+}
+.car3d.is-3d .car3d-poster {
+  opacity: 0;
+}
+.car3d model-viewer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  --poster-color: transparent;
+  --progress-bar-color: var(--red);   /* แถบโหลดในตัวของ model-viewer (ค่าเดิมดำจาง มองไม่เห็นบนพื้นมืด) */
+  --progress-bar-height: 3px;
+}
+.car3d-bar {                    /* ข้อความสถานะซ้าย ปุ่มขวา · จอแคบไม่พอ ปุ่มตกลงบรรทัดใหม่ ไม่ชนกัน (เห็นพร้อมกันตอนโหลดพลาด) */
+  position: absolute;
+  inset: 18px 18px auto 25px;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  pointer-events: none;         /* ไม่บังการลากหมุนรถ — ปุ่มเปิดคืนเอง */
+}
+.car3d-load {
+  margin-left: auto;
+  pointer-events: auto;
+}
+.car3d-load[hidden] {           /* .pill ตั้ง display ไว้ — [hidden] ต้องมีกฎของตัวเอง */
+  display: none;
+}
+.car3d-status {
+  margin: 0;
+  font-size: 12px;
+  color: #c9d0d3;
+}
+.car3d-status:empty {
+  display: none;
+}
+.car3d .tint-caption {
+  pointer-events: none;   /* ไม่บังการลากหมุนรถตรงขอบล่าง */
+}
+.car3d-credit {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #9ea5a9;
+}
+.car3d-credit a {
+  color: inherit;
 }
 
 /* 05 ซ้ายการ์ดซีรีส์เด่น (ภาพรถ + ม่านกระดาษจากล่างแบบ .featured มือถือของต้นแบบ) · ขวาการ์ดความต้องการ 5 ใบ */
@@ -350,6 +422,52 @@ footer .logo img {
 .find-family .map-panel,
 .find-family .map-panel iframe {
   min-height: 320px;
+}
+/* v8.8 แผนที่ส่วน 06 โหลดเมื่อกด "เปิดแผนที่" หรือค้นหาเท่านั้น — ระหว่างนั้นเป็นภาพแผนที่ประกอบ (.dl-map-art) + หมุด (.dl-pin) แบบ /dealers.html
+   app.js ส่วนที่ 3 ใส่ iframe ไว้หน้าสุดของ .map-panel แล้วเติม .is-live */
+.find-family .map-panel {
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  background: #e4e9e1;
+}
+.map-cover {
+  max-width: 300px;
+  margin: 24px 22px 80px;   /* เว้นล่างให้ปุ่ม "เปิด Google Maps" */
+  padding: 22px 22px 24px;
+  border: 1px solid #fff;
+  background: #fafaf8f2;
+  box-shadow: 0 15px 60px #28392a0c;
+  text-align: center;
+}
+.map-cover .dl-pin {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 12px;
+}
+.map-cover p {
+  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.map-cover .pill {
+  gap: 14px;
+}
+.map-cover .pill[hidden] {
+  display: none;
+}
+.find-family .map-panel.is-live iframe {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  height: 100%;
+}
+.find-family .map-panel.is-live .map-cover {
+  visibility: hidden;
+}
+.find-family .map-panel > .pill {
+  z-index: 2;
 }
 
 /* ท้ายเว็บหน้าแรก (v7.1) — โครงตามรูปตัวอย่าง: แบรนด์ · รู้จัก FINNIX · ผลิตภัณฑ์ · บริการและการติดต่อ → เส้นคั่น → © / BEAUTIFULLY REAL. / คำขวัญ
@@ -691,9 +809,10 @@ dialog h3 {
   border-color: #fff;
   color: var(--ink);
 }
+/* v8.7 ตัวขาวบน --red ได้แค่ 4.45 → ใช้ --red-ink (5.21) ทุกปุ่มที่ตัวหนังสือขาวบนแดง */
 .films-feature-copy .pill:hover {
-  background: var(--red);
-  border-color: var(--red);
+  background: var(--red-ink);
+  border-color: var(--red-ink);
   color: #fff;
 }
 .films-feature-note {
@@ -737,7 +856,7 @@ dialog h3 {
   }
 }
 
-/* ซีรีส์ทั้งหมด — ตาราง 6 ช่อง: 3 ใบแรกกว้าง 2 ช่อง · 2 ใบหลังกว้าง 3 ช่อง (ภาพกว้างกว่า) */
+/* ซีรีส์ทั้งหมด — ตาราง 6 ช่อง ใบละ 2 ช่อง = แถวละ 3 ใบ (v9.1 หกซีรีส์ 3+3 · เดิมห้าใบ 3+2 ที่สองใบหลังกว้าง 3 ช่อง) */
 .films-catalog {
   padding: 64px 6% 72px;
 }
@@ -762,9 +881,6 @@ dialog h3 {
   grid-column: span 2;
   min-width: 0;
 }
-.series-card:nth-child(n+4) {
-  grid-column: span 3;
-}
 .card-button {
   display: block;
   color: inherit;
@@ -778,14 +894,73 @@ dialog h3 {
   border-radius: 5px;
   background: #d4d4d0;
 }
-.series-card:nth-child(n+4) .card-photo {
-  aspect-ratio: 1.9;
-}
-.card-photo img {
+.card-photo > img {
   transition: transform .7s;
 }
-.card-button:hover .card-photo img {
+.card-button:hover .card-photo > img {
   transform: scale(1.045);
+}
+/* v9.2 ชี้ภาพแล้วโลโก้ซีรีส์ขึ้น · v9.4 เป็นกระจกดำ (ฟิล์มเข้ม) เลื่อนขึ้นจากขอบล่าง (เหมือนกระจกไฟฟ้า) โลโก้ติดมากับกระจก
+   ดำโปร่งราว 78% ยังเห็นรถจาง ๆ · โลโก้ฉบับพื้นมืด logo-<id>-white.png (build.py เลือกให้ · สร้างด้วย tools/logo_white.py)
+   ขอบบนสว่าง = สันกระจก · ::before = แสงสะท้อนเฉียงกวาดผ่านตอนกระจกขึ้น · ซ่อนใต้ขอบล่างพร้อมเงาด้วย calc (+24px)
+   จอสัมผัสไม่มีการชี้ จึงไม่แสดง — ชื่อรุ่นอยู่ใต้ภาพอยู่แล้ว · กดแท็บถึงการ์ดก็ขึ้นเหมือนกัน */
+.card-logo {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0 13%;
+  overflow: hidden;
+  background-color: #0c0e0fc7;
+  border-top: 2px solid #ffffff8c;
+  box-shadow: 0 -4px 12px -4px #00000080;
+  backdrop-filter: blur(2px);
+  transform: translateY(calc(100% + 24px));
+  transition: transform .7s cubic-bezier(.2, .75, .25, 1);
+  pointer-events: none;
+}
+.card-logo::before {
+  content: "";
+  position: absolute;
+  inset: 0 -100%;
+  background: linear-gradient(110deg, transparent 40%, #ffffff33 46%, #ffffff0f 51%, transparent 57%);
+  transform: translateX(-22%);
+  transition: transform 1.2s ease .15s;
+}
+.card-logo img {
+  position: relative;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.card-logo .sp-logo-text {
+  position: relative;
+  color: #fff;
+  font-size: clamp(22px, 2.2vw, 32px);
+  text-align: center;
+}
+.card-logo .sp-logo-text small {
+  color: inherit;
+}
+.card-button:focus-visible .card-logo {
+  transform: none;
+}
+.card-button:focus-visible .card-logo::before {
+  transform: translateX(10%);
+}
+@media (hover: hover) {
+  .card-button:hover .card-logo {
+    transform: none;
+  }
+  .card-button:hover .card-logo::before {
+    transform: translateX(10%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-logo,
+  .card-logo::before {
+    transition: none;
+  }
 }
 .card-number {
   position: absolute;
@@ -862,7 +1037,7 @@ dialog h3 {
 
 
 /* 7. หน้ารุ่น films/<id>.html (v8.2 ตามไฟล์ต้นแบบ C:/Claude/ceramic.html · ฟอนต์/โทเคนของเว็บนี้ · เนื้อหาเดิม) ------
-   .sp-crumb → .sp-hero ภาพเต็มแถวพื้นมืด → .sp-nav ลิงก์ในหน้า → .sp-overview โลโก้ ปก ค่าหลัก 6 ช่อง
+   .sp-crumb → .sp-hero ภาพเต็มแถวพื้นมืด → .sp-overview โลโก้ ปก ค่าหลัก 6 ช่อง
    → .sp-spec ปุ่มเลือกรหัส + ตาราง → .sp-price กล่องคำนวณ + ตาราง → .sp-alts · markup จาก series_page() · responsive อยู่ท้ายไฟล์ */
 
 .sp-crumb {
@@ -875,11 +1050,6 @@ dialog h3 {
 }
 .sp-crumb a:hover {
   color: var(--ink);
-}
-
-/* v8.5 หัวข้อที่กดลิงก์ในหน้าไปถึง ไม่ให้แถบลิงก์ที่ติดด้านบนบัง */
-main [id] {
-  scroll-margin-top: 76px;
 }
 
 /* ภาพใหญ่ — ม่านมืดจากซ้าย · ชื่อรุ่นตัวใหญ่ตัวห่าง */
@@ -947,8 +1117,8 @@ main [id] {
   color: var(--ink);
 }
 .sp-white:hover {
-  background: var(--red);
-  border-color: var(--red);
+  background: var(--red-ink);
+  border-color: var(--red-ink);
   color: #fff;
 }
 .sp-hero-note {
@@ -957,41 +1127,6 @@ main [id] {
   bottom: 16px;
   font-size: 12px;
   color: #ffffffbf;
-}
-
-/* ลิงก์ในหน้า — v8.5 ติดด้านบนตอนเลื่อน (หน้ารุ่น · /films.html · /about.html) */
-.sp-nav {
-  position: sticky;
-  top: 0;
-  z-index: 15;
-  background: #fafaf8f2;
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 25px;
-  min-height: 65px;
-  padding: 0 6%;
-  border-bottom: 1px solid var(--line);
-}
-.sp-nav-title {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: .12em;
-}
-.sp-nav-links {
-  display: flex;
-  gap: 32px;
-}
-.sp-nav-links a {
-  font-size: 14px;
-  color: var(--muted);
-}
-.sp-nav-links a:hover {
-  color: var(--red-ink);
-}
-.sp-nav-links a:last-child {
-  color: var(--ink);
 }
 
 .sp-overview .eyebrow,
@@ -1035,6 +1170,31 @@ main [id] {
 .cover figcaption {
   padding: 10px 14px;
   font-size: 12px;
+  color: var(--muted);
+}
+/* v9.1 ซีรีส์ที่ยังไม่มีไฟล์โลโก้ / โบรชัวร์ (CERAMIC PLUS) — ชื่อตัวหนังสือแทนโลโก้ · กล่องเส้นประแทนปก
+   v9.3 CERAMIC PLUS ได้โลโก้แล้ว → ตอนนี้ไม่มีหน้าที่ใช้ .sp-logo-text (เก็บไว้เป็นทางสำรองของ series_logo()) · .cover-pending ยังใช้ */
+.sp-logo-text {
+  display: block;
+  font-size: 44px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .02em;
+}
+.sp-logo-text small {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  color: var(--muted);
+}
+.cover-pending {
+  max-width: 240px;
+  padding: 18px;
+  border: 1px dashed var(--line);
+  border-radius: 5px;
+  font-size: 14px;
   color: var(--muted);
 }
 .sp-facts {
@@ -1129,17 +1289,23 @@ main [id] {
   border: 2px solid transparent;
   border-radius: 5px;
   background: #253630;
+  isolation: isolate;
   transition: border-color .2s;
 }
 .sp-shade-scene img {
   object-position: 68% center;
 }
+/* v9.1 ภาพมองผ่านกระจก — สีฟิล์มของรหัส (--tint จาก tint ใน films.json · วัดจากภาพถ่ายแผ่นตัวอย่าง) คูณทับเฉพาะช่องกระจก
+   หน้ากาก glass-window.svg ขนาดเท่า glass.jpg วางแบบ cover ตำแหน่งเดียวกับ img → ตรงกันทุกสัดส่วนกล่อง (.86 · 1.1 · .75)
+   ประตูกับเสาไม่ทับสี ไว้เทียบ · เดิม (v8.2) เป็นชั้นสีดำโปร่งตามค่าแสงส่องผ่าน ไม่ใช่สีจริงของฟิล์ม */
 .sp-shade-scene::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: #071514;
-  opacity: var(--shade);
+  background: var(--tint);
+  mix-blend-mode: multiply;
+  -webkit-mask: url("assets/glass-window.svg") 68% center / cover no-repeat;
+  mask: url("assets/glass-window.svg") 68% center / cover no-repeat;
 }
 .sp-shade-mark {
   position: absolute;
@@ -1394,8 +1560,8 @@ main [id] {
 }
 .sp-result .pill {
   width: 100%;
-  background: var(--red);
-  border-color: var(--red);
+  background: var(--red-ink);   /* v8.7 เดิม --red ได้คอนทราสต์ 4.45 ไม่ถึง AA */
+  border-color: var(--red-ink);
   color: #fff;
 }
 .sp-result .pill:hover {
@@ -1532,7 +1698,7 @@ main [id] {
 
 
 /* 9. /about.html เกี่ยวกับเรา (v8.3 แทนหน้าเทคโนโลยี · ดีไซน์ตามไฟล์ต้นแบบ C:/Claude/technology (1).html) ----------
-   breadcrumb กับแถบลิงก์ในหน้าใช้ .sp-crumb / .sp-nav ของหมวด 7 · ท้ายหมวดคือกฎแผนภาพแสงที่หน้าแรกใช้ · responsive อยู่ท้ายไฟล์ */
+   breadcrumb ใช้ .sp-crumb ของหมวด 7 · ท้ายหมวดคือกฎแผนภาพแสงที่หน้าแรกใช้ · responsive อยู่ท้ายไฟล์ */
 
 .ab-hero {
   position: relative;
@@ -1617,12 +1783,8 @@ main [id] {
 
 .ab-about .eyebrow,
 .ab-offerings .eyebrow,
-.ab-experience .eyebrow,
 .ab-company .eyebrow {
   color: var(--red-ink);
-}
-.ab-experience .eyebrow {
-  color: #b52b24;   /* บนพื้นเทา #e9ece6 แดง --red-ink ได้แค่ 4.37 — เข้มขึ้นให้ผ่าน AA */
 }
 
 /* 01 เราคือใคร */
@@ -1833,63 +1995,6 @@ main [id] {
   color: var(--red-ink);
 }
 
-/* ลองของจริง — ภาพซ้าย ข้อความขวา */
-.ab-experience {
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
-  background: #e9ece6;
-}
-.ab-experience-photo {
-  position: relative;
-  min-height: 485px;
-  margin: 0;
-  overflow: hidden;
-}
-.ab-experience-photo img {
-  position: absolute;
-  inset: 0;
-  object-position: 37% center;
-}
-.ab-experience-photo figcaption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 40px 25px 20px;
-  background: linear-gradient(transparent, #111b12c0);
-  font-size: 12px;
-  letter-spacing: .08em;
-  color: #fff;
-}
-.ab-experience-copy {
-  align-self: center;
-  padding: 65px clamp(30px, 5.4vw, 80px);
-}
-.ab-experience-copy h2 {
-  margin-bottom: 22px;
-  font-size: clamp(30px, 3.25vw, 46px);
-  font-weight: 400;
-  line-height: 1.35;
-  letter-spacing: -.04em;
-}
-.ab-experience-copy > p {
-  margin-bottom: 28px;
-  font-size: 15px;
-  line-height: 1.9;
-  color: #56625a;
-}
-.ab-experience-copy .pill {
-  gap: 30px;
-}
-.ab-sub-link {
-  display: block;
-  margin-top: 16px;
-  font-size: 14px;
-  color: #4f5b52;
-  text-decoration: underline;
-  text-underline-offset: 5px;
-}
-
 /* ติดต่อบริษัท */
 .ab-company {
   display: grid;
@@ -1982,62 +2087,7 @@ main [id] {
 }
 
 
-/* 10. /experience.html — ภาพซ้าย ขั้นตอนขวา ------------------------------------ */
-
-.experience-layout {
-  display: grid;
-  grid-template-columns: minmax(240px, 380px) 1fr;
-  gap: 60px;
-  align-items: start;
-}
-.experience-layout h2 {
-  font-size: clamp(28px, 2.6vw, 40px);
-}
-.experience-layout .experience-flow {
-  display: block;
-  padding: 0;
-  margin: 24px 0 8px;
-  border-top: 1px solid var(--line);
-}
-.experience-layout .experience-flow li {
-  display: grid;
-  grid-template-columns: 48px 110px 1fr;
-  gap: 16px;
-  align-items: baseline;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--line);
-}
-.experience-flow h3 {
-  font-size: 22px;
-}
-.experience-flow p {
-  color: var(--muted);
-  font-size: 15px;
-}
-
-
-/* v7.7 เลขขั้นใหญ่ขึ้น · ขั้นที่อยู่กลางจอได้เลขแดง + เส้นแดงซ้าย (app.js ส่วนที่ 9 ใส่ .js-steps / .is-active) */
-.experience-layout .experience-flow li > span {
-  font-size: 22px;
-  font-weight: 300;
-  letter-spacing: 0;
-}
-.experience-flow.js-steps li {
-  padding-left: 14px;
-  border-left: 2px solid transparent;
-  transition: border-color .4s, background-color .4s;
-}
-.experience-flow.js-steps li > span {
-  color: var(--muted);
-  transition: color .4s;
-}
-.experience-flow.js-steps li.is-active {
-  border-left-color: var(--red);
-  background: #df372e0a;
-}
-.experience-flow.js-steps li.is-active > span {
-  color: var(--red-ink);
-}
+/* 10. (ว่าง) — เดิม /experience.html ลบไปพร้อมหน้าใน v8.8 */
 
 
 /* 11. /dealers.html (v8.3 ดีไซน์ตามไฟล์ต้นแบบ C:/Claude/dealers.html · รายชื่อร้านและข้อมูลบริษัทชุดเดิม) ----------
@@ -2122,16 +2172,6 @@ main [id] {
 }
 .dl-demo.demo-tag {
   margin-bottom: 20px;
-}
-.dl-experience {
-  margin-bottom: 22px;
-  padding: 13px 18px;
-  border-left: 3px solid var(--red);
-  background: #f5eeea;
-  font-size: 14px;
-}
-.dl-experience[hidden] {
-  display: none;
 }
 /* v8.5 แถวบน: ค้นหา + ใช้ตำแหน่ง + ชิปจังหวัด · แถวล่าง: แผนที่ซ้าย + รายชื่อร้านขวา สูงเท่ากัน */
 .dl-controls {
@@ -2944,7 +2984,8 @@ main [id] {
 /* 14. หัวหน้าย่อย · ตอนต่อไป · ทรานซิชันข้ามหน้า (v7.7) -------------------------
    ทุกหน้าย่อยเปิดด้วย .page-hero (แทน .page-intro ของต้นแบบ) และปิดด้วยแถบ .next-chapter (สร้างจาก NEXT ใน build.py)
    .page-hero         ภาพขวา + พื้นกระดาษไล่จากซ้าย แบบเดียวกับ .featured — หน้าที่ขายความรู้สึก (try · technology · experience)
-   .page-hero.compact ไม่มีภาพ ตัวหนังสือใหญ่ + เส้นแดงสั้นใต้หัว — หน้าที่คนเข้ามาทำธุระ (films · price · dealers · works · faq) */
+   .page-hero.compact ไม่มีภาพ ตัวหนังสือใหญ่ + เส้นแดงสั้นใต้หัว — หน้าที่คนเข้ามาทำธุระ (films · price · dealers · works · faq)
+   v8.8 ไม่มีหน้าไหนใช้ .page-hero แล้ว (หน้าสุดท้ายคือ /experience.html ลบแล้ว) — เก็บไว้เป็นคอมโพเนนต์สำหรับหน้าใหม่ · .next-chapter ยังใช้ทุกหน้าย่อย */
 .page-hero {
   position: relative;
   display: flex;
@@ -3024,7 +3065,8 @@ main [id] {
   letter-spacing: -.03em;
   font-weight: 300;
 }
-.next-chapter strong span {
+/* v8.7 ใช้ > เพราะข้อความใน NEXT มี <span class="nb"> ซ้อนข้างใน — ไม่งั้นได้เส้นใต้ซ้อนสองชั้น */
+.next-chapter strong > span {
   padding-bottom: 4px;
   background: linear-gradient(var(--red), var(--red)) 0 100% / 0 2px no-repeat;
   -webkit-box-decoration-break: clone;
@@ -3042,8 +3084,8 @@ main [id] {
   font-style: normal;
   transition: background-color .3s, border-color .3s, transform .3s;
 }
-.next-chapter a:hover strong span,
-.next-chapter a:focus-visible strong span {
+.next-chapter a:hover strong > span,
+.next-chapter a:focus-visible strong > span {
   background-size: 100% 2px;
 }
 .next-chapter a:hover i,
@@ -3065,7 +3107,7 @@ main [id] {
   @view-transition {
     navigation: none;
   }
-  .next-chapter strong span,
+  .next-chapter strong > span,
   .next-chapter i {
     transition: none;
   }
@@ -3183,16 +3225,12 @@ main [id] {
     border-bottom: 1px solid var(--line);
     padding-bottom: 22px;
   }
-  .price-layout,
-  .experience-layout {
+  .price-layout {
     grid-template-columns: 1fr;
     gap: 36px;
   }
   .price-panel {
     position: static;
-  }
-  .experience-layout .temp-figure {
-    max-width: 340px;
   }
 }
 
@@ -3242,6 +3280,24 @@ main [id] {
   .find-family .map-panel iframe {
     min-height: 260px;
   }
+  /* v8.9 วิดีโอปกบนมือถือ (เต็มจอ ตัดข้าง ตามที่ผู้สั่งงานเลือก) — ซับไทยในคลิปถูกตัดซ้ายขวาแล้วโผล่จาง ๆ หลังข้อความปก
+     → ม่านล่างทึบขึ้นจนบังแถบซับ (ซับอยู่ราว 12–20% จากขอบล่าง) */
+  .hero-wash {
+    background: linear-gradient(0deg, #f5eadf 0%, #f5eadf 24%, #f5eadfd0 34%, #f5eadf05 62%, #fff3);
+  }
+  /* v8.8 คำใต้รูปโพลารอยด์ส่วน 06 ล้นกรอบ ("A moment together." ขึ้นสองบรรทัด) และถูกรูปถัดไปบัง ("On the road.")
+     → ขอบล่างของกรอบสูงพอสองบรรทัด · รูปไม่ซ้อนกัน (เดิม margin-left -3%) */
+  .find-family .collage figure {
+    width: 32%;
+    padding-bottom: 40px;
+  }
+  .find-family .collage figure:nth-child(n+2) {
+    margin-left: 2%;
+  }
+  .find-family .collage figcaption {
+    line-height: 1.3;
+    letter-spacing: .02em;
+  }
 
   /* บล็อกที่ตัวหนังสือทับรูป — ม่านสว่างขึ้นให้อ่านชัด */
   .feature-wash {
@@ -3259,13 +3315,6 @@ main [id] {
 
 
 
-  .experience-layout .experience-flow li {
-    grid-template-columns: 36px 1fr;
-    gap: 4px 12px;
-  }
-  .experience-layout .experience-flow li p {
-    grid-column: 2;
-  }
 
 
 
@@ -3349,22 +3398,14 @@ main [id] {
     font-size: 14px;
   }
   .series-grid {
-    grid-template-columns: 1fr 1fr;   /* 2 + 2 + ใบสุดท้ายเต็มแถว (ภาพกว้าง) ตามต้นแบบ */
+    grid-template-columns: 1fr 1fr;   /* v9.1 หกใบ = 2+2+2 (เดิมห้าใบ 2+2 + ใบสุดท้ายเต็มแถว) */
     gap: 24px 14px;
   }
-  .series-card,
-  .series-card:nth-child(n+4) {
+  .series-card {
     grid-column: span 1;
   }
-  .series-card:last-child {
-    grid-column: span 2;
-  }
-  .card-photo,
-  .series-card:nth-child(n+4) .card-photo {
+  .card-photo {
     aspect-ratio: .9;
-  }
-  .series-card:last-child .card-photo {
-    aspect-ratio: 1.8;
   }
   .card-line {
     display: block;
@@ -3406,9 +3447,6 @@ main [id] {
   }
   .sp-price-head {
     align-items: start;
-  }
-  .sp-nav-links {
-    gap: 22px;
   }
   .works-intro-row {
     gap: 40px;
@@ -3464,22 +3502,6 @@ main [id] {
   .sp-hero-note {
     right: 7%;
   }
-  .sp-nav {
-    justify-content: center;
-    min-height: 58px;
-    padding: 0 7%;
-    overflow-x: auto;
-  }
-  .sp-nav-title {
-    display: none;
-  }
-  .sp-nav-links {
-    gap: 20px;
-    white-space: nowrap;
-  }
-  .sp-nav-links a {
-    font-size: 13px;
-  }
   .sp-overview {
     grid-template-columns: minmax(0, 1fr);
     gap: 28px;
@@ -3487,6 +3509,9 @@ main [id] {
   }
   .sp-logo img {
     height: 48px;
+  }
+  .sp-logo-text {
+    font-size: 34px;
   }
   .cover {
     max-width: 240px;
@@ -3683,9 +3708,6 @@ main [id] {
   .ab-section-head {
     gap: 40px;
   }
-  .ab-experience-copy {
-    padding: 45px 30px;
-  }
   .dl-split {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 22px;
@@ -3812,19 +3834,6 @@ main [id] {
   }
   .ab-offering h3 {
     font-size: 24px;
-  }
-  .ab-experience {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .ab-experience-photo {
-    min-height: 0;
-    aspect-ratio: 1.3;
-  }
-  .ab-experience-copy {
-    padding: 36px 7% 40px;
-  }
-  .ab-experience-copy h2 {
-    font-size: 32px;
   }
   .ab-company {
     grid-template-columns: minmax(0, 1fr);
@@ -3963,8 +3972,5 @@ main [id] {
   .film-find .need-item {
     flex: 0 0 43%;
     min-width: 150px;
-  }
-  .sp-nav {
-    position: sticky;   /* มือถือก็ติดด้านบน — แถบเลื่อนแนวนอนได้อยู่แล้ว */
   }
 }

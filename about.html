@@ -1,4 +1,4 @@
-<!-- JOB: TRUST / BELONG | USER FEELS: FINNIX คือใคร คิดอะไรอยู่ | NEXT: /experience.html -->
+<!-- JOB: TRUST / BELONG | USER FEELS: FINNIX คือใคร คิดอะไรอยู่ | NEXT: /films.html (v8.8 ลบ /experience.html) -->
 <!-- v8.3 หน้าเกี่ยวกับเรา — แทนหน้าเทคโนโลยีเดิม (technology.html) · ดีไซน์และข้อความตามไฟล์ต้นแบบ C:\Claude\technology (1).html
      ปรับฟอนต์ สี header footer ให้เป็นของเว็บนี้ · ข้อความแนวคิดแบรนด์เป็นข้อความใหม่จากไฟล์ต้นแบบ (ไม่มีตัวเลข ประวัติ หรือรางวัล) รอบริษัทตรวจ
      ภาพทั้งหมดเป็นภาพประกอบบรรยากาศ (AI) ไม่ใช่สำนักงาน ทีมงาน หรือผลงานลูกค้า · CSS หมวด 9 ของ merge.css -->
@@ -10,9 +10,10 @@
   <title>เกี่ยวกับเรา · รู้จัก FINNIX | FINNIX FILM</title>
   <meta name="description" content="รู้จัก FINNIX FILM แนวคิดของเรา ผลิตภัณฑ์ฟิล์มรถยนต์ และการเลือกฟิล์มจากการใช้งานจริง ติดต่อบริษัท ฟินนิกซ์ ฟิล์ม จำกัด">
   <!-- @assets -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="journey.css">
   <link rel="stylesheet" href="merge.css">
@@ -29,7 +30,6 @@
     <a href="./">หน้าแรก</a>
     <a href="films.html">ฟิล์ม</a>
     <a href="works.html">ผลงาน</a>
-    <a href="experience.html">ลองของจริง</a>
     <a href="about.html" aria-current="page">เกี่ยวกับเรา</a>
     <a class="nav-extra" href="dealers.html">หาร้านใกล้คุณ</a>
   </nav>
@@ -57,11 +57,6 @@
     </div>
   </section>
 
-  <nav class="sp-nav" aria-label="หัวข้อในหน้าเกี่ยวกับเรา">
-    <span class="sp-nav-title">INSIDE FINNIX</span>
-    <span class="sp-nav-links"><a href="#about">รู้จักเรา</a><a href="#belief">แนวคิดของเรา</a><a href="#products">ผลิตภัณฑ์</a><a href="#company">ติดต่อบริษัท</a></span>
-  </nav>
-
   <!-- 01 เราคือใคร -->
   <section class="ab-about" id="about">
     <div class="ab-about-head">
@@ -87,7 +82,7 @@
         <div class="eyebrow"><span></span> 02 / WHAT WE BELIEVE</div>
         <p>แนวคิดที่เราอยากส่งต่อ</p>
       </div>
-      <h2 class="ab-quote">“ดีในสิ่งที่ควรดี”<br><span>และมีความหมายกับการใช้งานจริง</span></h2>
+      <h2 class="ab-quote">“ดีในสิ่งที่ควรดี”<br><span>และมีความหมายกับการ<span class="nb">ใช้งานจริง</span></span></h2>
     </div>
     <div class="ab-values">
       <article><span class="ab-value-no">01 /</span><h3>เริ่มต้นที่คนใช้รถ</h3><p>ความต้องการของแต่ละคนต่างกัน เราจึงให้ความสำคัญกับการใช้งานประจำวัน ความชอบ และงบประมาณของคุณ</p></article>
@@ -127,20 +122,7 @@
     </div>
   </section>
 
-  <!-- ลองของจริง — ภาพซ้าย ข้อความขวา -->
-  <section class="ab-experience">
-    <figure class="ab-experience-photo">
-      <img src="assets/glass.jpg" alt="ภาพประกอบมุมมองเมืองและแสงแดดผ่านกระจกรถยนต์" loading="lazy">
-      <figcaption>YOUR EVERYDAY VIEW / ภาพประกอบบรรยากาศ</figcaption>
-    </figure>
-    <div class="ab-experience-copy">
-      <div class="eyebrow"><span></span> THE FINNIX EXPERIENCE</div>
-      <h2>รู้จักเรามากขึ้น<br>ผ่านสิ่งที่คุณได้ลอง</h2>
-      <p>เริ่มจากดูสีฟิล์ม อ่านข้อมูลซีรีส์ที่สนใจ แล้วให้ร้านช่วยแนะนำจากรถและการใช้งานของคุณ เพราะการเลือกที่เหมาะสมควรมีทั้งข้อมูลและประสบการณ์จริงประกอบกัน</p>
-      <a class="pill filled" href="experience.html">รู้จักการลอง FINNIX <span aria-hidden="true">↗</span></a>
-      <a class="ab-sub-link" href="dealers.html?experience=1">สอบถามร้านที่มีจุดทดลอง</a>
-    </div>
-  </section>
+  <!-- v8.8 ลบส่วน "THE FINNIX EXPERIENCE" (ปุ่มไปหน้าลองของจริงที่ลบแล้ว) ตามคำสั่ง -->
 
   <!-- ติดต่อบริษัท — ชื่อบริษัทกับเบอร์มาจาก SITE ใน build.py (@gen:company) -->
   <section class="ab-company" id="company">
@@ -164,9 +146,9 @@
   <!-- แถบ "ตอนต่อไป" — ปลายทางและข้อความอยู่ที่ NEXT ใน build.py -->
   <!-- @next -->
   <nav class="next-chapter dark" aria-label="ตอนต่อไป">
-    <a href="experience.html">
-      <span class="eyebrow">NEXT <span></span> TRY IT YOURSELF <em class="eyebrow-th">ลองของจริง</em></span>
-      <strong><span>รู้จักฟิล์ม ผ่านการลองจริง</span></strong>
+    <a href="films.html">
+      <span class="eyebrow">NEXT <span></span> FIND YOUR FILM <em class="eyebrow-th">ฟิล์มทุกซีรีส์</em></span>
+      <strong><span>ดูฟิล์มทุกซีรีส์</span></strong>
       <i aria-hidden="true">→</i>
     </a>
   </nav>
@@ -192,7 +174,6 @@
     <h2>ผลิตภัณฑ์</h2>
     <a href="films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
     <a href="films.html#price">ราคา</a>
-    <a href="experience.html">ลองของจริง</a>
   </nav>
   <div class="home-footer-contact">
     <h2>บริการและการติดต่อ</h2>

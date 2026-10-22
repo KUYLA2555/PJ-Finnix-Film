@@ -9,13 +9,13 @@
    ลำดับ:
      1. reveal       — ค่อย ๆ แสดงบล็อก .reveal ตอนเลื่อนถึง (ทุกหน้า)
      2. เมนูมือถือ    — ปุ่ม ☰ (ทุกหน้า)
-     3. หน้าแรก       — ปุ่มหยุดภาพเคลื่อนไหว · ตัวเลื่อนความเข้ม · หน้าต่างรายละเอียด · ค้นหาร้านบนแผนที่
+     3. หน้าแรก       — ปุ่มหยุดภาพเคลื่อนไหว (v8.9 หยุด/เล่นวิดีโอปกด้วย) · ตัวเลื่อนความเข้ม (v9.5 รถ 3D · โหลด vendor/ เมื่อกด) · หน้าต่างรายละเอียด · ค้นหาร้านบนแผนที่ (v8.8 โหลดเมื่อกดเปิด/ค้นหา)
      4. /films.html      — แนะนำซีรีส์ตาม ?need= + สลับความต้องการในหน้า · ปุ่มหยุดภาพ (v8.5 เลิกหน้าต่างรายละเอียด)
      5. (ว่าง)           — เดิม /try.html (ลบแล้ว v8.1)
      6. /films.html#price — เครื่องคำนวณราคา + ตัวเลขนับขึ้น (v8.0 เดิมหน้า /price.html)
      7. /dealers.html    — ค้นหาร้าน + ชิปจังหวัด + รายชื่อในกล่องเลื่อน + แผนที่ (โหลดเมื่อกดเปิด)
      8. /works.html      — กรองตามซีรีส์ · แสดงทีละ 6 (v8.2 · v8.5 เลิกหน้าต่าง)
-     9. ลูกเล่นตอนเลื่อนถึง — แผนภาพแสง (หน้าแรก) · ขั้นตอนที่ /experience.html
+     9. ลูกเล่นตอนเลื่อนถึง — แผนภาพแสง (หน้าแรก) · v8.8 ขั้นตอนของ /experience.html ลบไปพร้อมหน้า
     10. (ว่าง)          — เดิม /faq.html (ลบแล้ว v8.4)
     11. หน้ารุ่น          — ปุ่มเลือกรหัส ↔ ตารางสเปก · กล่องคำนวณราคา (v8.2)
    ========================================================================== */
@@ -26,6 +26,8 @@ const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 const seriesById = (id) => data.series.find((s) => s.id === id);
+// v8.8 แผนที่ตอนยังไม่เลือกพื้นที่ = ภาพรวมประเทศไทย ไม่ปักจุด (เดิม q=FINNIX FILM Thailand ไปปักจุดหนึ่งในเชียงใหม่ที่ยังไม่รู้ว่าเป็นร้านใคร)
+const THAILAND_MAP = "https://maps.google.com/maps?ll=13.2,101.0&z=5&output=embed";
 // v8.6 เว็บอยู่ใต้ path ย่อยได้ (GitHub Pages) — ลิงก์ที่ JS สร้างห้ามขึ้นต้นด้วย / ให้ต่อจาก ROOT
 // ROOT = ส่วนหน้า "app.js" ใน src ของสคริปต์นี้ ("" ที่หน้า root · "../" ที่หน้ารุ่น) — build.py ใส่ src แบบ relative ให้ทุกหน้า
 const ROOT = ((document.currentScript && document.currentScript.getAttribute("src")) || "").replace(/app\.js(\?.*)?$/, "");
@@ -77,10 +79,15 @@ if ($("#menu")) {
    -------------------------------------------------------------------------- */
 // ปุ่มหยุด/เล่นภาพเคลื่อนไหว (เริ่มหยุดถ้าผู้ใช้ตั้งลดการเคลื่อนไหว)
 if ($("#motion")) {
+  const heroVideo = $("#hero-video");   // v8.9 วิดีโอปก — ปุ่มเดียวกันหยุด/เล่นวิดีโอ · ตั้งลดการเคลื่อนไหว = หยุดตั้งแต่เปิดหน้า
   const setPaused = (paused) => {
     document.body.classList.toggle("paused", paused);
     $("#motion").setAttribute("aria-pressed", String(paused));
     $("#motion").innerHTML = (paused ? "▶" : "Ⅱ") + " <span>" + (paused ? "เล่นภาพเคลื่อนไหว" : "หยุดภาพเคลื่อนไหว") + "</span>";
+    if (heroVideo) {
+      if (paused) heroVideo.pause();
+      else heroVideo.play().catch(() => {});   // เบราว์เซอร์บางตัว (เช่นโหมดประหยัดแบต) ไม่ให้เล่นเอง — ค้างที่ภาพปก
+    }
   };
   setPaused(reduced.matches);
   $("#motion").addEventListener("click", () => {
@@ -88,15 +95,42 @@ if ($("#motion")) {
   });
 }
 
-// ตัวเลื่อนความเข้ม — ภาพจำลองเท่านั้น ไม่ใช่ค่า VLT
+// ตัวเลื่อนความเข้ม — ภาพจำลองเท่านั้น ไม่ใช่ค่า VLT · v9.5 ตัด Dark เหลือ Clear 40 60 80
+//   ภาพเมือง (#tint-overlay ม่านเข้ม) หรือรถ 3D (.car3d — build.py เลือกให้ตามไฟล์ที่มี · ค่าอยู่ที่ CAR_3D)
+//   รถ 3D: ก่อนกดโหลด สลับภาพนิ่ง car-<n>.jpg (มุมเดียวกัน) · กด "หมุนดูรถ 3D" แล้วค่อยโหลดไลบรารี vendor/ (~1 MB) กับโมเดล
+//   แล้วเปลี่ยนสีวัสดุกระจกของโมเดลแทน (ชื่อวัสดุมี glass/window · ไม่เจอ = วัสดุโปร่ง BLEND)
 if ($("#tint-range")) {
-  const LEVELS = ["Clear", "40", "60", "80", "Dark"];
-  const SHADE = [0, 0.19, 0.34, 0.52, 0.67];
+  const LEVELS = ["Clear", "40", "60", "80"];
+  const NAMES = ["ไม่ติดฟิล์ม", "ติดฟิล์มความเข้ม 40", "ติดฟิล์มความเข้ม 60", "ติดฟิล์มความเข้ม 80"];
+  const SHADE = [0, 0.19, 0.34, 0.52];
+  const FILM = [0.02, 0.03, 0.035];          // สีฟิล์มบนกระจก 3D (เกือบดำ) — ความทึบตาม data-glass
+  const car = $(".car3d");
+  const posters = car ? car.dataset.posters.split(" ") : [];
+  const glassAlpha = car ? car.dataset.glass.split(" ").map(Number) : [];   // "none" → NaN = กระจกเดิมของโมเดล
+  let viewer = null;
+  let glass = [];                            // [{ material, original }]
+  let current = 2;
+
+  const paintGlass = () => {
+    glass.forEach(({ material, original }) => {
+      const alpha = glassAlpha[current];
+      material.setAlphaMode("BLEND");
+      material.pbrMetallicRoughness.setBaseColorFactor(Number.isNaN(alpha) ? original : [...FILM, alpha]);
+    });
+  };
   const setTint = (level) => {
+    current = level;
     $("#tint-range").value = level;
     $("#tint-range").setAttribute("aria-valuetext", LEVELS[level]);
-    $("#tint-overlay").style.opacity = SHADE[level];
     $("#tint-output").textContent = LEVELS[level];
+    if ($("#tint-overlay")) $("#tint-overlay").style.opacity = SHADE[level];
+    if (car) {
+      const poster = $(".car3d-poster");
+      poster.src = ROOT + posters[level];
+      poster.alt = "รถจำลอง" + NAMES[level];
+      if (viewer) viewer.alt = car.dataset.alt + " · " + NAMES[level];
+      paintGlass();
+    }
     $$("[data-tint]").forEach((b) => {
       const active = Number(b.dataset.tint) === level;
       b.classList.toggle("active", active);
@@ -106,6 +140,54 @@ if ($("#tint-range")) {
   $("#tint-range").addEventListener("input", (e) => setTint(Number(e.target.value)));
   $$("[data-tint]").forEach((b) => b.addEventListener("click", () => setTint(Number(b.dataset.tint))));
   setTint(2);
+
+  if (car) {
+    const button = $(".car3d-load");
+    const status = $(".car3d-status");
+    button.hidden = false;                   // ปุ่มทำงานด้วย JS เท่านั้น — ไม่มี JS เห็นภาพนิ่งกับปุ่มความเข้ม (ซึ่งก็ใช้ JS) ไม่มีปุ่มค้าง
+    const fail = () => {
+      status.textContent = "โหลดรถ 3D ไม่ได้ ลองใหม่อีกครั้ง";
+      button.hidden = false;
+      if (viewer) viewer.remove();
+      viewer = null;
+      glass = [];
+      car.classList.remove("is-3d");
+    };
+    button.addEventListener("click", () => {
+      button.hidden = true;
+      status.textContent = "กำลังโหลดรถ 3D…";
+      import(new URL(ROOT + "vendor/model-viewer.min.js", document.baseURI).href).then(() => {
+        viewer = document.createElement("model-viewer");
+        viewer.setAttribute("src", ROOT + car.dataset.src);
+        viewer.setAttribute("camera-orbit", car.dataset.orbit);
+        viewer.setAttribute("camera-controls", "");
+        viewer.setAttribute("disable-zoom", "");          // ล้อเมาส์ใช้เลื่อนหน้า ไม่ใช่ซูม
+        viewer.setAttribute("touch-action", "pan-y");     // มือถือ: ลากแนวนอนหมุนรถ แนวตั้งเลื่อนหน้า
+        viewer.setAttribute("interaction-prompt", "none");
+        viewer.setAttribute("environment-image", "neutral");
+        viewer.setAttribute("shadow-intensity", "1");
+        viewer.setAttribute("loading", "eager");
+        if (!reduced.matches) viewer.setAttribute("auto-rotate", "");   // หมุนช้า ๆ จนผู้ใช้ลากเอง
+        viewer.alt = car.dataset.alt + " · " + NAMES[current];
+        viewer.addEventListener("progress", (e) => {
+          // ทีละ 10% (role=status อ่านออกเสียงทุกครั้งที่เปลี่ยน) · progress 100% ยิงหลัง load — อย่าทับข้อความ "ลากเพื่อหมุน"
+          if (car.classList.contains("is-3d")) return;
+          status.textContent = "กำลังโหลดรถ 3D… " + Math.floor(e.detail.totalProgress * 10) * 10 + "%";
+        });
+        viewer.addEventListener("load", () => {
+          const materials = viewer.model.materials;
+          let found = materials.filter((m) => /glass|window|windshield|glas/i.test(m.name));
+          if (!found.length) found = materials.filter((m) => m.getAlphaMode() === "BLEND");
+          glass = found.map((material) => ({ material, original: material.pbrMetallicRoughness.baseColorFactor.slice() }));
+          paintGlass();
+          car.classList.add("is-3d");
+          status.textContent = "ลากเพื่อหมุนดูรถรอบคัน";
+        });
+        viewer.addEventListener("error", fail);
+        $(".car3d-poster").after(viewer);   // ก่อนแถบปุ่มกับคำบรรยาย — สองอย่างนั้นจึงวาดทับรถ
+      }).catch(fail);
+    });
+  }
 }
 
 // หน้าต่างรายละเอียด — การ์ดความต้องการ (data-guide) · รายชื่อซีรีส์มาจาก content.js
@@ -138,14 +220,28 @@ if ($("#detail")) {
 }
 
 // ค้นหาร้านบน Google Maps (รายชื่อร้านเต็มอยู่ที่ /dealers.html)
+// v8.8 แผนที่ไม่โหลดจนกว่าจะกด "เปิดแผนที่" หรือค้นหา (ไม่ส่ง IP ผู้เข้าชมให้ Google ตั้งแต่เปิดหน้า) · เปิดเปล่า = ภาพรวมประเทศไทย ไม่ปักจุดใด
 if ($("#dealer-form") && !$("#dealer-count")) {
+  const openMap = (src) => {
+    let frame = $(".map-panel iframe");
+    if (!frame) {
+      frame = document.createElement("iframe");
+      frame.title = "แผนที่ Google ค้นหาร้าน FINNIX";
+      frame.referrerPolicy = "no-referrer-when-downgrade";
+      $(".map-panel").prepend(frame);
+      $(".map-panel").classList.add("is-live");
+    }
+    frame.src = src;
+  };
   const updateMap = (query, latLng) => {
-    $(".map-panel iframe").src = "https://maps.google.com/maps?q=" + encodeURIComponent(query) +
-      (latLng ? "&ll=" + encodeURIComponent(latLng) + "&z=12" : "") + "&output=embed";
+    openMap("https://maps.google.com/maps?q=" + encodeURIComponent(query) +
+      (latLng ? "&ll=" + encodeURIComponent(latLng) + "&z=12" : "") + "&output=embed");
     $("#map-link").href = latLng
       ? "https://www.google.com/maps/search/FINNIX+FILM/@" + latLng + ",12z"
       : "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
   };
+  $("#home-load-map").hidden = false;
+  $("#home-load-map").addEventListener("click", () => openMap(THAILAND_MAP));
   $("#dealer-form").addEventListener("submit", (e) => {
     e.preventDefault();
     const q = $("#dealer-query").value.trim();
@@ -317,17 +413,17 @@ if ($("#price-form")) {
 
 /* --------------------------------------------------------------------------
    7. /dealers.html — ค้นหาร้าน (ชื่อ จังหวัด ที่อยู่) + ใช้ตำแหน่งปัจจุบัน + แผนที่ Google (v8.3 ตามไฟล์ต้นแบบ dealers.html)
-      v8.4 แสดงทุกร้านในกล่องเลื่อนขึ้นลง (เลิกปุ่ม "แสดงเพิ่ม" ตามคำสั่ง) · ร้านสมมติไม่มีเบอร์ (build.py ไม่ส่ง) → ขึ้น {{DEALER_PHONE}}
+      v8.4 แสดงทุกร้านในกล่องเลื่อนขึ้นลง (เลิกปุ่ม "แสดงเพิ่ม" ตามคำสั่ง) · ร้านสมมติไม่มีเบอร์ (build.py ไม่ส่ง) → ขึ้น "เบอร์โทร · รอข้อมูล" (data-var="DEALER_PHONE" · v8.8)
       แผนที่เป็นภาพประกอบก่อน — โหลด Google Maps (iframe) เมื่อกด "เปิดแผนที่" / "ดูบนแผนที่" เท่านั้น
       ไม่มี JS = ไม่มีปุ่มเปิดแผนที่ (hidden) ใช้ลิงก์ "เปิด Google Maps" ใต้แผนที่แทน
    -------------------------------------------------------------------------- */
 if ($("#dealer-count")) {
   const telHref = (phone) => "tel:" + String(phone).replace(/[^+0-9]/g, "");
   let matches = [];
-  let mapQuery = "FINNIX FILM Thailand";
+  let mapQuery = null;   // v8.8 null = ภาพรวมประเทศไทย (THAILAND_MAP) ไม่ปักจุด
   let mapLatLng = null;
 
-  const mapSrc = () => "https://maps.google.com/maps?q=" + encodeURIComponent(mapQuery) +
+  const mapSrc = () => !mapQuery ? THAILAND_MAP : "https://maps.google.com/maps?q=" + encodeURIComponent(mapQuery) +
     (mapLatLng ? "&ll=" + encodeURIComponent(mapLatLng) + "&z=13" : "") + "&output=embed";
 
   const closeMap = () => {
@@ -357,7 +453,7 @@ if ($("#dealer-count")) {
     mapLatLng = latLng || null;
     $("#map-title").textContent = label || query;
     $("#map-heading").textContent = label || query;
-    $("#map-link").href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(latLng || query);
+    $("#map-link").href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(latLng || query || "Thailand");
     const frame = $("#map-live iframe");
     if (frame) frame.src = mapSrc();
   };
@@ -385,7 +481,8 @@ if ($("#dealer-count")) {
     else if (d.placeholder) {
       const pending = document.createElement("span");
       pending.className = "var";
-      pending.textContent = "{{DEALER_PHONE}}";
+      pending.textContent = "เบอร์โทร · รอข้อมูล";   // v8.8 เดิมขึ้น {{DEALER_PHONE}}
+      pending.dataset.var = "DEALER_PHONE";
       pending.title = "ร้านตัวอย่าง — ยังไม่มีเบอร์จริง";
       actions.append(pending);
     }
@@ -453,7 +550,7 @@ if ($("#dealer-count")) {
     b.addEventListener("click", () => {
       setChip(province);
       $("#dealer-query").value = province;
-      updateMap(province ? "FINNIX FILM " + province : "FINNIX FILM Thailand", null, province || "พื้นที่ที่คุณสะดวก");
+      updateMap(province ? "FINNIX FILM " + province : null, null, province || "พื้นที่ที่คุณสะดวก");
       renderDealers(province);
     });
     return b;
@@ -497,10 +594,7 @@ if ($("#dealer-count")) {
     }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
   });
 
-  if (new URLSearchParams(location.search).get("experience") === "1") {
-    $("#experience-status").textContent = "ยังไม่มีรายชื่อร้านที่ยืนยันว่ามีจุดทดลอง กรุณาโทรถามร้านก่อนเดินทาง";
-    $("#experience-status").hidden = false;
-  }
+  // v8.8 ข้อความ ?experience=1 ("หาร้านที่มีจุดทดลอง") ลบไปพร้อมหน้า /experience.html
   renderDealers("");
 }
 
@@ -566,18 +660,7 @@ if ("IntersectionObserver" in window && !reduced.matches) {
     [...el.children].forEach((child, i) => child.style.setProperty("--i", i));  // ลำดับหน่วงเวลาของลูก
     observer.observe(el);
   });
-
-  // /experience.html — ขั้นที่อยู่กลางจอสว่างขึ้น (แถบกลางจอ 40–50% ของความสูง)
-  if ($(".experience-flow")) {
-    const steps = $$(".experience-flow li");
-    $(".experience-flow").classList.add("js-steps");
-    const spotlight = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) steps.forEach((s) => s.classList.toggle("is-active", s === entry.target));
-      });
-    }, { rootMargin: "-40% 0px -50% 0px" });
-    steps.forEach((s) => spotlight.observe(s));
-  }
+  // v8.8 ขั้นตอนที่ /experience.html (ขั้นกลางจอสว่างขึ้น) ลบไปพร้อมหน้า
 }
 
 

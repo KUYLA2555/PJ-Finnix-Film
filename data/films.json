@@ -1,18 +1,19 @@
 {
-  "_readme": "ข้อมูลฟิล์มถอดจากรูปโบรชัวร์ใน scans/ (v7.5 ย้าย scans/ กับ finnix-*.png ไปคลัง C:/Claude/top secret/Finnix/ไฟล์ต้นฉบับ/ — ช่อง image กับ source ด้านล่างเป็นบันทึกที่มา build.py ไม่ได้ใช้) · ร่างครั้งที่ 1 · 5 ส.ค. 2569 · ยังไม่ยืนยันกับลูกค้า · คำอธิบายโครงสร้างและข้อที่ต้องยืนยันอยู่ใน docs/film-data.md · v6.0 เป็นต้นไป tools/build.py อ่านไฟล์นี้แล้วสร้าง content.js + หน้ารุ่น 5 หน้า + บล็อก @gen ในหน้าอื่น — แก้ตัวเลขที่นี่แล้วรัน python tools/build.py",
+  "_readme": "ข้อมูลฟิล์มถอดจากรูปโบรชัวร์ใน scans/ (v7.5 ย้าย scans/ กับ finnix-*.png ไปคลัง C:/Claude/top secret/Finnix/ไฟล์ต้นฉบับ/ — ช่อง image กับ source ด้านล่างเป็นบันทึกที่มา build.py ไม่ได้ใช้) · ร่างครั้งที่ 1 · 5 ส.ค. 2569 · ยังไม่ยืนยันกับลูกค้า · คำอธิบายโครงสร้างและข้อที่ต้องยืนยันอยู่ใน docs/film-data.md · v6.0 เป็นต้นไป tools/build.py อ่านไฟล์นี้แล้วสร้าง content.js + หน้ารุ่น 5 หน้า + บล็อก @gen ในหน้าอื่น — แก้ตัวเลขที่นี่แล้วรัน python tools/build.py · v9.1 เพิ่มซีรีส์ที่ 6 CERAMIC PLUS (ยังไม่มีโบรชัวร์ — ค่าทั้งหมดเป็น null) · ช่อง tint ของแต่ละรหัส = สีสำหรับภาพจำลองมองผ่านกระจก วัดจากภาพถ่ายแผ่นตัวอย่าง ไม่ใช่ค่าจากโบรชัวร์ (ดู meta.tintSource)",
 
   "meta": {
     "dataYear": 2024,
     "testStandard": "{{TEST_STANDARD}}",
     "testStandardNote": "โบรชัวร์เขียนแค่ 'เป็นไปตามวิธีทดสอบตามมาตรฐานสากลของโลก' ไม่ระบุชื่อมาตรฐาน — ต้องขอก่อนขึ้นตัวเลขใดๆ ตามข้อ 3 ของบรีฟ",
     "warrantyYears": 7,
-    "warrantySource": "หน้าปกของทั้ง 5 ซีรีส์",
+    "warrantySource": "หน้าปกของ 5 ซีรีส์ที่มีโบรชัวร์ (CERAMIC PLUS ยังไม่มี — ตั้ง warrantyYears ของซีรีส์เป็น null)",
     "installedArea": "3 ล้านตารางฟุตทั่วประเทศ",
     "currency": "THB",
     "priceYear": 2024,
     "priceDisplayOnSite": true,
-    "priceDisplayNote": "v8.0 ราคาขึ้นที่ /films.html#price (เครื่องคำนวณ · เดิมหน้า /price.html) และตารางราคาในหน้ารุ่น /films/<id>.html · มีข้อมูลแค่ 3 ซีรีส์ อีก 2 ซีรีส์เป็น null หน้าเว็บขึ้น \"ยังไม่มีราคา\" — ห้ามเดา",
+    "priceDisplayNote": "v8.0 ราคาขึ้นที่ /films.html#price (เครื่องคำนวณ · เดิมหน้า /price.html) และตารางราคาในหน้ารุ่น /films/<id>.html · มีข้อมูลแค่ 3 ซีรีส์ อีก 3 ซีรีส์เป็น null หน้าเว็บขึ้น \"ยังไม่มีราคา\" — ห้ามเดา",
     "units": "ทุกค่าเป็นเปอร์เซ็นต์",
+    "tintSource": "v9.1 ช่อง tint (สี sRGB สำหรับ mix-blend-mode: multiply บนปุ่มเลือกรหัสของหน้ารุ่น) วัดจากภาพถ่ายแผ่นตัวอย่าง 18 รูปที่ผู้สั่งงานส่งมา 21 ต.ค. 2569 (ต้นฉบับอยู่ในคลัง ไฟล์ต้นฉบับ/filmcolor) — สีพื้นหลังที่มองผ่านกระจก ÷ พื้นหลังเดียวกันนอกกระจก · ใช้กับภาพจำลองเท่านั้น ห้ามแปลงเป็นตัวเลขสเปก · TITANIUM ป้ายในภาพเขียน SY35/SY15/SY05 จับคู่กับ SY40/SY20/SY10 ตามลำดับอ่อน→เข้ม (ผู้สั่งงานเลือกคงรหัสตามโบรชัวร์)",
     "fields": {
       "darkness": "ความเข้ม",
       "heatReject": "ลดความร้อนจากแสงแดดโดยรวม (ตรงกับนิยาม TSER แต่โบรชัวร์ไม่ได้ใช้คำนี้)",
@@ -44,9 +45,9 @@
       "image": "assets/finnix-titanium.png",
       "source": ["scans/TIT/เอกสาร 6_1.jpg", "scans/TIT/เอกสาร 6_2.jpg", "scans/TIT/เอกสาร 6_3.jpg", "scans/TIT/เอกสาร 6_4.jpg"],
       "variants": [
-        { "code": "SY40", "darkness": null, "heatReject": 81, "vlt": 40, "reflect": 0.24, "uv": 99, "ir": 91 },
-        { "code": "SY20", "darkness": null, "heatReject": 89, "vlt": 20, "reflect": 0.24, "uv": 99, "ir": 95 },
-        { "code": "SY10", "darkness": null, "heatReject": 96, "vlt": 10, "reflect": 0.24, "uv": 99, "ir": 98 }
+        { "code": "SY40", "darkness": null, "heatReject": 81, "vlt": 40, "reflect": 0.24, "uv": 99, "ir": 91, "tint": "#9ea08e" },
+        { "code": "SY20", "darkness": null, "heatReject": 89, "vlt": 20, "reflect": 0.24, "uv": 99, "ir": 95, "tint": "#7d7a71" },
+        { "code": "SY10", "darkness": null, "heatReject": 96, "vlt": 10, "reflect": 0.24, "uv": 99, "ir": 98, "tint": "#554a50" }
       ],
       "price": {
         "pickup2": { "front": 10600, "full": 32000 },
@@ -73,9 +74,9 @@
       "image": "assets/finnix-ceramic.png",
       "source": ["scans/CM/เอกสาร 7_1.jpg", "scans/CM/เอกสาร 7_2.jpg", "scans/CM/เอกสาร 7_3.jpg", "scans/CM/เอกสาร 7_4.jpg"],
       "variants": [
-        { "code": "CM35", "darkness": 40, "heatReject": 80, "vlt": 30, "reflect": 0.19, "uv": 99, "ir": 91 },
-        { "code": "CM15", "darkness": 60, "heatReject": 90, "vlt": 15, "reflect": 0.19, "uv": 99, "ir": 95 },
-        { "code": "CM05", "darkness": 80, "heatReject": 90, "vlt": 5,  "reflect": 0.19, "uv": 99, "ir": 98 }
+        { "code": "CM35", "darkness": 40, "heatReject": 80, "vlt": 30, "reflect": 0.19, "uv": 99, "ir": 91, "tint": "#c7b5ad" },
+        { "code": "CM15", "darkness": 60, "heatReject": 90, "vlt": 15, "reflect": 0.19, "uv": 99, "ir": 95, "tint": "#6b6c62" },
+        { "code": "CM05", "darkness": 80, "heatReject": 90, "vlt": 5,  "reflect": 0.19, "uv": 99, "ir": 98, "tint": "#504e48" }
       ],
       "price": {
         "pickup2": { "front": 5600, "full": 10200 },
@@ -92,6 +93,31 @@
     },
 
     {
+      "id": "ceramic-plus",
+      "codePrefix": "CM",
+      "name": { "th": "ฟินนิกซ์ เซรามิค พลัส ฟิล์ม", "en": "CERAMIC PLUS" },
+      "tech": "{{TECH_CERAMIC_PLUS}}",
+      "techNote": "v9.1 ผู้สั่งงานสั่งเพิ่มเป็นซีรีส์ที่ 6 (21 ต.ค. 2569) · ยังไม่มีโบรชัวร์ — รู้แค่ชื่อและรหัสจากป้ายบนแผ่นตัวอย่าง",
+      "metalFree": null,
+      "tagline": null,
+      "claim": null,
+      "warrantyYears": null,
+      "image": null,
+      "source": ["ภาพถ่ายแผ่นตัวอย่าง DSC09167–DSC09169 (ป้าย 'Finnix Ceramic Plus+' · คลัง ไฟล์ต้นฉบับ/filmcolor)"],
+      "variants": [
+        { "code": "CM35", "darkness": null, "heatReject": null, "vlt": null, "reflect": null, "uv": null, "ir": null, "tint": "#9c9ca3" },
+        { "code": "CM15", "darkness": null, "heatReject": null, "vlt": null, "reflect": null, "uv": null, "ir": null, "tint": "#706f71" },
+        { "code": "CM05", "darkness": null, "heatReject": null, "vlt": null, "reflect": null, "uv": null, "ir": null, "tint": "#514e4e" }
+      ],
+      "price": null,
+      "verify": [
+        "ไม่มีโบรชัวร์ — สเปก ราคา ระยะรับประกัน เทคโนโลยี โลโก้ ปก tagline ยังไม่มีทั้งหมด",
+        "รหัสตามป้ายบนแผ่นตัวอย่าง (CM35 · CM15 · CM05) ซ้ำกับ CERAMIC — บนเนื้อฟิล์มพิมพ์ว่า 'CMplus' ต้องยืนยันรหัสจริง",
+        "ชื่อไทยตั้งตามรูปแบบชื่อซีรีส์อื่น (ฟินนิกซ์ เซรามิค ฟิล์ม) — ต้องยืนยัน"
+      ]
+    },
+
+    {
       "id": "crystalize",
       "codePrefix": "CT",
       "name": { "th": "ฟินนิกซ์ คริสตัลไลซ์ ฟิล์ม", "en": "CRYSTALIZE" },
@@ -103,9 +129,9 @@
       "image": "assets/finnix-crystalize.png",
       "source": ["scans/CT/เอกสาร_1.jpg", "scans/CT/เอกสาร_2.jpg", "scans/CT/เอกสาร_3.jpg"],
       "variants": [
-        { "code": "CT70", "darkness": null, "heatReject": 55, "vlt": 70, "reflect": 8.6, "uv": 99, "ir": 89 },
-        { "code": "CT40", "darkness": 40,   "heatReject": 75, "vlt": 35, "reflect": 7.7, "uv": 99, "ir": 90 },
-        { "code": "CT20", "darkness": 60,   "heatReject": 85, "vlt": 22, "reflect": 7.6, "uv": 99, "ir": 93 }
+        { "code": "CT70", "darkness": null, "heatReject": 55, "vlt": 70, "reflect": 8.6, "uv": 99, "ir": 89, "tint": "#f7f5e4" },
+        { "code": "CT40", "darkness": 40,   "heatReject": 75, "vlt": 35, "reflect": 7.7, "uv": 99, "ir": 90, "tint": "#a4a797" },
+        { "code": "CT20", "darkness": 60,   "heatReject": 85, "vlt": 22, "reflect": 7.6, "uv": 99, "ir": 93, "tint": "#79766f" }
       ],
       "price": null,
       "verify": [
@@ -127,9 +153,9 @@
       "image": "assets/finnix-extra-clear.png",
       "source": ["scans/EX/เอกสาร 5_1.jpg", "scans/EX/เอกสาร 5_2.jpg", "scans/EX/เอกสาร 5_3.jpg"],
       "variants": [
-        { "code": "XT35", "darkness": 40, "heatReject": 61, "vlt": 35, "reflect": 5.8, "uv": 100, "ir": 96 },
-        { "code": "XT15", "darkness": 60, "heatReject": 63, "vlt": 15, "reflect": 5.1, "uv": 100, "ir": 97 },
-        { "code": "XT05", "darkness": 80, "heatReject": 67, "vlt": 5,  "reflect": 5.1, "uv": 100, "ir": 98 }
+        { "code": "XT35", "darkness": 40, "heatReject": 61, "vlt": 35, "reflect": 5.8, "uv": 100, "ir": 96, "tint": "#9eb9bd" },
+        { "code": "XT15", "darkness": 60, "heatReject": 63, "vlt": 15, "reflect": 5.1, "uv": 100, "ir": 97, "tint": "#5d6a69" },
+        { "code": "XT05", "darkness": 80, "heatReject": 67, "vlt": 5,  "reflect": 5.1, "uv": 100, "ir": 98, "tint": "#3c4645" }
       ],
       "price": null,
       "verify": [
@@ -150,9 +176,9 @@
       "image": "assets/finnix-uvguard.png",
       "source": ["scans/UV_g/เอกสาร 4_1.jpg", "scans/UV_g/เอกสาร 4_2.jpg", "scans/UV_g/เอกสาร 4_3.jpg"],
       "variants": [
-        { "code": "SM35", "darkness": 40, "heatReject": 52, "vlt": 40, "reflect": 6.1, "uv": 100, "ir": 95 },
-        { "code": "SM15", "darkness": 60, "heatReject": 59, "vlt": 15, "reflect": 5.2, "uv": 100, "ir": 95 },
-        { "code": "SM05", "darkness": 80, "heatReject": 63, "vlt": 5,  "reflect": 5.1, "uv": 100, "ir": 98 }
+        { "code": "SM35", "darkness": 40, "heatReject": 52, "vlt": 40, "reflect": 6.1, "uv": 100, "ir": 95, "tint": "#aebbba" },
+        { "code": "SM15", "darkness": 60, "heatReject": 59, "vlt": 15, "reflect": 5.2, "uv": 100, "ir": 95, "tint": "#5c6162" },
+        { "code": "SM05", "darkness": 80, "heatReject": 63, "vlt": 5,  "reflect": 5.1, "uv": 100, "ir": 98, "tint": "#454244" }
       ],
       "price": {
         "pickup2": { "front": 4000, "full": 8600 },
@@ -174,6 +200,8 @@
     "เฟสนี้ขึ้นเว็บ 3 ซีรีส์ตามบรีฟ หรือ 5 ซีรีส์ตามของที่ขายจริง",
     "เรียก 'ลดความร้อนจากแสงแดดโดยรวม' ว่า TSER บนเว็บได้หรือไม่",
     "ชื่อมาตรฐานการทดสอบ — ต้องได้เป็นลำดับแรก",
-    "จำนวนศูนย์บริการ (หน้าแรกเขียน 120+ ไม่มีที่มาในเอกสารชุดนี้)"
+    "จำนวนศูนย์บริการ (หน้าแรกเขียน 120+ ไม่มีที่มาในเอกสารชุดนี้)",
+    "v9.1 CERAMIC PLUS — ขอโบรชัวร์ (สเปก ราคา ระยะรับประกัน เทคโนโลยี โลโก้ ปก) + รหัสจริง (ป้ายตัวอย่างเขียน CM35/CM15/CM05 ซ้ำกับ CERAMIC)",
+    "v9.1 TITANIUM — ป้ายบนแผ่นตัวอย่างเขียน SY35/SY15/SY05 แต่โบรชัวร์เป็น SY40/SY20/SY10 · ชุดไหนคือรหัสที่ขายจริง"
   ]
 }

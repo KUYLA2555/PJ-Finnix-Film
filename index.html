@@ -12,9 +12,10 @@
   <meta property="og:locale" content="th_TH">
   <meta property="og:title" content="ฟิล์มกรองแสงรถยนต์ | FINNIX FILM">
   <!-- @assets -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="journey.css">
   <link rel="stylesheet" href="merge.css">
@@ -31,7 +32,6 @@
     <a href="./" aria-current="page">หน้าแรก</a>
     <a href="films.html">ฟิล์ม</a>
     <a href="works.html">ผลงาน</a>
-    <a href="experience.html">ลองของจริง</a>
     <a href="about.html">เกี่ยวกับเรา</a>
     <a class="nav-extra" href="dealers.html">หาร้านใกล้คุณ</a>
   </nav>
@@ -42,10 +42,15 @@
 
 <main id="main">
 
-  <!-- 01 hero — ภาพ AI จากต้นแบบ -->
+  <!-- 01 hero — v8.9 วิดีโอแบรนด์แทนภาพปก (ผู้สั่งงานส่งมา · ไม่มีเสียง — ตัดแทร็กเสียงออกจากไฟล์แล้ว · เล่นเอง วนซ้ำ)
+       มือถือ ≤760 โหลดไฟล์ 720p (4 MB) · จอใหญ่ 1080p (9 MB) · ภาพปก = เฟรมแรกของคลิป · ต้นฉบับ 49 MB อยู่ในคลัง top secret
+       ปุ่ม "หยุดภาพเคลื่อนไหว" หยุด/เล่นวิดีโอด้วย · ตั้งลดการเคลื่อนไหว = หยุดที่ภาพปก (app.js ส่วนที่ 3) · ภาพเดิม assets/hero.jpg ยังใช้ที่ส่วนอื่น -->
   <section class="hero" id="home">
     <div class="hero-media moving">
-      <img src="assets/hero.jpg" alt="ผู้โดยสารมองกรุงเทพฯ ผ่านกระจกรถในแสงยามเย็น" fetchpriority="high">
+      <video id="hero-video" autoplay muted loop playsinline poster="assets/video/hero-poster.jpg" aria-label="วิดีโอแบรนด์ FINNIX FILM ไม่มีเสียง">
+        <source src="assets/video/hero-720.mp4" type="video/mp4" media="(max-width: 760px)">
+        <source src="assets/video/hero.mp4" type="video/mp4">
+      </video>
     </div>
     <div class="hero-wash"></div>
     <div class="hero-copy">
@@ -97,25 +102,27 @@
   </section>
 
   <!-- 04 ลองความเข้ม + วิทยาศาสตร์ของแสง (v7.9 จับคู่ส่วน 04 กับ 06 ของต้นแบบ) — พื้นมืดผืนเดียว ซ้าย TRY · ขวา SCIENCE
-       ภาพจำลองชั้นสีเข้มบนภาพเดียวกัน ไม่ใช่ค่า VLT (v8.1 หน้า /try.html ลบแล้ว — ตัวเลื่อนเหลือที่นี่ที่เดียว) -->
+       ภาพจำลองความเข้ม ไม่ใช่ค่า VLT (v8.1 หน้า /try.html ลบแล้ว — ตัวเลื่อนเหลือที่นี่ที่เดียว)
+       v9.5 ภาพเป็นรถ 3D หมุนดูรอบคัน (@gen:try-scene จาก CAR_3D ใน build.py — ยังไม่มีไฟล์โมเดล = ภาพเมืองเดิม) · ตัด Dark เหลือ Clear 40 60 80 -->
   <section class="dark home-pair try-science" id="try">
     <div class="eyebrow home-pair-head">04 <span></span> TRY FINNIX · SCIENCE, SIMPLY</div>
     <div class="home-pair-col reveal">
       <h2>ลองด้วยตา<br>เลือกด้วยตัวคุณเอง</h2>
       <p>มุมมองเดียวกัน ต่างความเข้ม<br>เลื่อนเพื่อสำรวจเฉดที่คุณชอบ</p>
+      <!-- @gen:try-scene -->
       <div class="tint-scene">
         <img src="assets/glass.jpg" alt="ภาพเมืองเดียวกันสำหรับทดลองความเข้ม" loading="lazy">
         <div id="tint-overlay"></div>
         <div class="tint-caption"><span>YOUR VIEW. YOUR CHOICE.</span><output id="tint-output" for="tint-range">60</output></div>
       </div>
+      <!-- @end gen:try-scene -->
       <div class="tint-controls">
-        <input id="tint-range" type="range" min="0" max="4" step="1" value="2" aria-label="ระดับความเข้มฟิล์ม">
+        <input id="tint-range" type="range" min="0" max="3" step="1" value="2" aria-label="ระดับความเข้มฟิล์ม">
         <div class="tint-labels">
           <button data-tint="0">Clear</button>
           <button data-tint="1">40</button>
           <button data-tint="2" class="active">60</button>
           <button data-tint="3">80</button>
-          <button data-tint="4">Dark</button>
         </div>
       </div>
       <div class="try-foot">
@@ -145,7 +152,7 @@
   </section>
 
   <!-- 05 ซีรีส์เด่น + เลือกตามการใช้ชีวิต (v7.9 จับคู่ส่วน 05 กับ 07 ของต้นแบบ) — ซ้ายการ์ดภาพรถ · ขวาการ์ดความต้องการ 5 ใบ
-       ซีรีส์เด่นสร้างจาก HERO_FILM + films.json (ต้นแบบเขียน "CERAMIC PLUS" ซึ่งไม่มีในโบรชัวร์)
+       ซีรีส์เด่นสร้างจาก HERO_FILM + films.json (ต้นแบบเขียน "CERAMIC PLUS" — v9.1 เพิ่มเป็นซีรีส์ที่ 6 แล้วแต่ยังไม่มีตัวเลข จึงยังไม่ใช้เป็นซีรีส์เด่น)
        การ์ดความต้องการกดแล้วเปิดหน้าต่างคำแนะนำ (ข้อความอยู่ที่ data-guide) + ซีรีส์ทั้งหมดจาก content.js -->
   <section class="home-pair film-find" id="find">
     <div class="eyebrow home-pair-head">05 <span></span> FIND YOUR FILM · FEATURED</div>
@@ -232,11 +239,18 @@
       </form>
       <button class="text-button location" id="locate">◎ ใช้ตำแหน่งปัจจุบัน</button>
       <p id="location-status" class="small" role="status"></p>
-      <div class="map-panel">
-        <iframe title="ค้นหา FINNIX FILM บนแผนที่" src="https://maps.google.com/maps?q=FINNIX%20FILM%20Thailand&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        <a id="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=FINNIX%20FILM%20Thailand" target="_blank" rel="noopener noreferrer" class="pill">เปิด Google Maps</a>
+      <!-- v8.8 แผนที่ Google โหลดเมื่อกด "เปิดแผนที่" หรือค้นหาเท่านั้น (เดิมโหลดทันที ส่ง IP ผู้เข้าชมให้ Google + ปักจุดที่เชียงใหม่ที่ยังไม่รู้ว่าเป็นร้านใคร)
+           ภาพแผนที่ประกอบ + หมุด แบบเดียวกับ /dealers.html · ไม่มี JS = ปุ่มซ่อน (hidden) ใช้ลิงก์ "เปิด Google Maps" แทน · app.js ส่วนที่ 3 -->
+      <div class="map-panel" id="home-map">
+        <svg class="dl-map-art" viewBox="0 0 680 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><pattern id="home-blocks" width="125" height="90" patternTransform="rotate(-23)" patternUnits="userSpaceOnUse"><rect width="125" height="90" fill="#e7ebe3"/><rect x="8" y="8" width="46" height="30" rx="3" fill="#d8e0d2"/><rect x="64" y="8" width="53" height="30" rx="3" fill="#dce3d6"/><rect x="8" y="48" width="109" height="34" rx="3" fill="#dbe2d5"/></pattern></defs><rect width="680" height="620" fill="url(#home-blocks)"/><path d="M490 -40C220 160 680 210 440 380S340 590 520 680" stroke="#bdcfc7" stroke-width="40" fill="none"/><path d="M-80 160L710 500M90-60L460 660M-80 480L730 130" stroke="#cbd3c3" stroke-width="25" fill="none"/><path d="M-80 160L710 500M90-60L460 660M-80 480L730 130" stroke="#f7f8f2" stroke-width="17" fill="none"/><path d="M-80 480L730 130" stroke="#e6d9b8" stroke-width="3" stroke-dasharray="9 6" fill="none"/></svg>
+        <div class="map-cover">
+          <div class="dl-pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+          <p>ค้นหาพื้นที่ หรือเปิดแผนที่เพื่อดูบริเวณที่<span class="nb">คุณสะดวก</span></p>
+          <button class="pill" id="home-load-map" type="button" hidden>เปิดแผนที่ <span aria-hidden="true">↗</span></button>
+        </div>
+        <a id="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Thailand" target="_blank" rel="noopener noreferrer" class="pill">เปิด Google Maps</a>
       </div>
-      <p class="small">ค้นหาผ่าน Google Maps · ติดต่อร้านเพื่อยืนยันสินค้าและเวลาบริการก่อนเดินทาง</p>
+      <p class="small">แผนที่โหลดจาก Google Maps เมื่อกดเปิดหรือค้นหาเท่านั้น · ติดต่อร้านเพื่อยืนยันสินค้าและเวลาบริการก่อนเดินทาง</p>
     </div>
   </section>
 
@@ -264,7 +278,6 @@
     <h2>ผลิตภัณฑ์</h2>
     <a href="films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
     <a href="films.html#price">ราคา</a>
-    <a href="experience.html">ลองของจริง</a>
   </nav>
   <div class="home-footer-contact">
     <h2>บริการและการติดต่อ</h2>

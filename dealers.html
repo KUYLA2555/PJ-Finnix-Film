@@ -7,9 +7,10 @@
   <title>หาร้านใกล้คุณ · ติดต่อเรา | FINNIX FILM</title>
   <meta name="description" content="ค้นหาร้านติดตั้งฟิล์มฟินนิกซ์ใกล้คุณ และช่องทางติดต่อสำนักงานใหญ่ บริษัท ฟินนิกซ์ ฟิล์ม จำกัด">
   <!-- @assets -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="journey.css">
   <link rel="stylesheet" href="merge.css">
@@ -26,7 +27,6 @@
     <a href="./">หน้าแรก</a>
     <a href="films.html">ฟิล์ม</a>
     <a href="works.html">ผลงาน</a>
-    <a href="experience.html">ลองของจริง</a>
     <a href="about.html">เกี่ยวกับเรา</a>
     <a class="nav-extra" href="dealers.html" aria-current="page">หาร้านใกล้คุณ</a>
   </nav>
@@ -59,9 +59,7 @@
       <h2>ร้านติดตั้งฟิล์ม FINNIX</h2>
       <p>ให้ร้านช่วยแนะนำรุ่นและเฉดที่เหมาะกับรถของคุณ</p>
     </div>
-    <p class="dl-demo demo-tag">ตัวอย่างการแสดงผล — รายชื่อร้านทั้งหมดยังเป็นข้อมูลสมมติ · รอ {{SERVICE_CENTERS}}</p>
-    <!-- ข้อความเมื่อมาจากปุ่ม "หาร้านที่มีจุดทดลอง" (?experience=1) -->
-    <p class="dl-experience" id="experience-status" role="status" hidden></p>
+    <p class="dl-demo demo-tag">ตัวอย่างการแสดงผล — รายชื่อร้านทั้งหมดยังเป็นข้อมูลสมมติ · <span class="var" data-var="SERVICE_CENTERS">รอข้อมูล</span>ร้านจริง</p>
     <!-- v8.5 แถวบน: ค้นหา + ตำแหน่ง + ชิปจังหวัด (เต็มความกว้าง) · แถวล่าง: แผนที่ซ้าย + รายชื่อร้านขวา สูงเท่ากัน
          ลำดับในโค้ด = รายชื่อก่อนแผนที่ (มือถือเรียง ค้นหา → รายชื่อ → แผนที่) · จอใหญ่ CSS สลับแผนที่ไปซ้าย -->
     <div class="dl-controls">
@@ -137,13 +135,13 @@
         <a href="tel:0635978497">06-3597-8497 <span aria-hidden="true">↗</span></a>
       </div>
       <dl>
-        <dt>ที่อยู่</dt><dd><span class="var">{{COMPANY_ADDRESS}}</span></dd>
-        <dt>อีเมล</dt><dd><span class="var">{{COMPANY_EMAIL}}</span></dd>
-        <dt>เวลาทำการ</dt><dd><span class="var">{{OFFICE_HOURS}}</span></dd>
-        <dt>LINE</dt><dd><span class="var">{{LINE_OA_ID}}</span></dd>
-        <dt>Facebook</dt><dd><span class="var">{{FACEBOOK_URL}}</span></dd>
-        <dt>Instagram</dt><dd><span class="var">{{INSTAGRAM_URL}}</span></dd>
-        <dt>เลขทะเบียนนิติบุคคล</dt><dd><span class="var">{{COMPANY_REG_NO}}</span></dd>
+        <dt>ที่อยู่</dt><dd><span class="var" data-var="COMPANY_ADDRESS">รอข้อมูล</span></dd>
+        <dt>อีเมล</dt><dd><span class="var" data-var="COMPANY_EMAIL">รอข้อมูล</span></dd>
+        <dt>เวลาทำการ</dt><dd><span class="var" data-var="OFFICE_HOURS">รอข้อมูล</span></dd>
+        <dt>LINE</dt><dd><span class="var" data-var="LINE_OA_ID">รอข้อมูล</span></dd>
+        <dt>Facebook</dt><dd><span class="var" data-var="FACEBOOK_URL">รอข้อมูล</span></dd>
+        <dt>Instagram</dt><dd><span class="var" data-var="INSTAGRAM_URL">รอข้อมูล</span></dd>
+        <dt>เลขทะเบียนนิติบุคคล</dt><dd><span class="var" data-var="COMPANY_REG_NO">รอข้อมูล</span></dd>
       </dl>
       <!-- @end gen:hq -->
     </div>
@@ -180,7 +178,6 @@
     <h2>ผลิตภัณฑ์</h2>
     <a href="films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
     <a href="films.html#price">ราคา</a>
-    <a href="experience.html">ลองของจริง</a>
   </nav>
   <div class="home-footer-contact">
     <h2>บริการและการติดต่อ</h2>

@@ -18,7 +18,6 @@ window.FINNIX = {
    "tech": "{{TECH_TITANIUM}}",
    "metalFree": null,
    "heat": "81–96%",
-   "heatMin": 81,
    "heatMax": 96,
    "vlt": "10–40%",
    "vltMax": 40,
@@ -80,7 +79,6 @@ window.FINNIX = {
    "tech": "เซรามิก ไม่มีชั้นโลหะ",
    "metalFree": true,
    "heat": "80–90%",
-   "heatMin": 80,
    "heatMax": 90,
    "vlt": "5–30%",
    "vltMax": 30,
@@ -134,6 +132,42 @@ window.FINNIX = {
    "logo": "assets/series/logo-ceramic.png"
   },
   {
+   "id": "ceramic-plus",
+   "code": "CM",
+   "name": "CERAMIC PLUS",
+   "th": "ฟินนิกซ์ เซรามิค พลัส ฟิล์ม",
+   "tag": null,
+   "tech": "{{TECH_CERAMIC_PLUS}}",
+   "metalFree": null,
+   "heat": null,
+   "heatMax": null,
+   "vlt": null,
+   "vltMax": null,
+   "uv": null,
+   "variants": [
+    {
+     "code": "CM35",
+     "darkness": null,
+     "heat": null,
+     "vlt": null
+    },
+    {
+     "code": "CM15",
+     "darkness": null,
+     "heat": null,
+     "vlt": null
+    },
+    {
+     "code": "CM05",
+     "darkness": null,
+     "heat": null,
+     "vlt": null
+    }
+   ],
+   "price": null,
+   "logo": "assets/series/logo-ceramic-plus.png"
+  },
+  {
    "id": "crystalize",
    "code": "CT",
    "name": "CRYSTALIZE",
@@ -142,7 +176,6 @@ window.FINNIX = {
    "tech": "เคลือบโลหะหลายชั้น (sputtering)",
    "metalFree": false,
    "heat": "55–85%",
-   "heatMin": 55,
    "heatMax": 85,
    "vlt": "22–70%",
    "vltMax": 70,
@@ -179,7 +212,6 @@ window.FINNIX = {
    "tech": "เซรามิก ไม่มีชั้นโลหะ",
    "metalFree": true,
    "heat": "61–67%",
-   "heatMin": 61,
    "heatMax": 67,
    "vlt": "5–35%",
    "vltMax": 35,
@@ -216,7 +248,6 @@ window.FINNIX = {
    "tech": "เซรามิก ไม่มีชั้นโลหะ",
    "metalFree": true,
    "heat": "52–63%",
-   "heatMin": 52,
    "heatMax": 63,
    "vlt": "5–40%",
    "vltMax": 40,

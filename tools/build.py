@@ -6,7 +6,7 @@
 
 สคริปต์นี้ทำ 4 อย่าง:
   1. content.js              ← data/films.json + dealers.json (ข้อมูลที่ app.js ใช้ตอนรัน)
-  2. films/<id>.html ×5       ← data/films.json (หน้ารุ่นสร้างทั้งไฟล์ — ห้ามแก้ HTML ของหน้ารุ่นตรง ๆ)
+  2. films/<id>.html ×6       ← data/films.json (หนึ่งหน้าต่อซีรีส์ · สร้างทั้งไฟล์ — ห้ามแก้ HTML ของหน้ารุ่นตรง ๆ)
   3. บล็อกที่ใช้ซ้ำทุกหน้า    ← ใส่ระหว่างเครื่องหมายในหน้า HTML
         <!-- @assets -->  … <!-- @end assets -->    ลิงก์ CSS / JS ใน <head>
         <!-- @header -->  … <!-- @end header -->    แถบเมนูบน (ใส่ aria-current ให้เองตาม URL)
@@ -31,7 +31,7 @@ CHECK = '--check' in sys.argv
 
 # ============================================================================
 #  ค่าที่แก้บ่อย — แก้ตรงนี้แล้วรัน python tools/build.py
-#  ค่าที่ยังไม่มีให้ใส่ None — หน้าเว็บจะขึ้นเป็น {{ชื่อตัวแปร}} ให้เห็นว่ายังรอข้อมูล ห้ามเดา
+#  ค่าที่ยังไม่มีให้ใส่ None — หน้าเว็บจะขึ้น "รอข้อมูล" (v8.8 · ชื่อตัวแปรอยู่ใน data-var) ห้ามเดา
 # ============================================================================
 SITE = {
     'company': 'บริษัท ฟินนิกซ์ ฟิล์ม จำกัด',
@@ -53,32 +53,30 @@ NAV = [
     ('/', 'หน้าแรก'),
     ('/films.html', 'ฟิล์ม'),           # ฟิล์มทุกซีรีส์ + ราคา (v8.0) · v8.3 เปลี่ยนชื่อเมนูจาก "ราคา"
     ('/works.html', 'ผลงาน'),           # v8.3 ย้ายมาแทนตำแหน่ง "เทคโนโลยี"
-    ('/experience.html', 'ลองของจริง'),
-    ('/about.html', 'เกี่ยวกับเรา'),     # v8.3 หน้าเทคโนโลยีเดิม เปลี่ยนเป็นหน้าเกี่ยวกับเรา
+    ('/about.html', 'เกี่ยวกับเรา'),     # v8.3 หน้าเทคโนโลยีเดิม เปลี่ยนเป็นหน้าเกี่ยวกับเรา · v8.8 ลบ "ลองของจริง" (/experience.html)
 ]
 
 # ท้ายเว็บ (v7.1 · โครงตามรูปตัวอย่าง messageImage_1791443930138.jpg) — v8.1 ใช้แบบเดียวกันทุกหน้า (เดิมหน้าอื่นใช้ FOOT แถบลิงก์สีอ่อน)
 # คอลัมน์ "บริการและการติดต่อ" กับไอคอน Facebook / LINE / โทร สร้างจาก SITE ใน home_footer_block()
 HOME_FOOT = [
     ('รู้จัก FINNIX', [('/about.html', 'เกี่ยวกับเรา'), ('/works.html', 'ผลงานที่ติดตั้ง')]),   # v8.4 ลบ /faq.html
-    ('ผลิตภัณฑ์', [('/films.html', 'ฟิล์มรถยนต์ทุกซีรีส์'), ('/films.html#price', 'ราคา'), ('/experience.html', 'ลองของจริง')]),
+    ('ผลิตภัณฑ์', [('/films.html', 'ฟิล์มรถยนต์ทุกซีรีส์'), ('/films.html#price', 'ราคา')]),   # v8.8 ลบ /experience.html
 ]
 HOME_FOOT_LOGO = '/assets/logo-finnix-white.png'   # ครอบจาก LOGO FINNIX-01.png (ตัวอักษรขาว · นกและ FILM แดง) — ต้นฉบับอยู่ในคลัง top secret/Finnix/ไฟล์ต้นฉบับ/
 
-# แถบ "ตอนต่อไป" ท้ายหน้าย่อย (v7.7 · <!-- @next -->) — หน้า → (ปลายทาง, ข้อความชวน) · 'series' = หน้ารุ่นทั้ง 5
+# แถบ "ตอนต่อไป" ท้ายหน้าย่อย (v7.7 · <!-- @next -->) — หน้า → (ปลายทาง, ข้อความชวน) · 'series' = หน้ารุ่นทุกหน้า
 # ปลายทางต้องมีชื่ออยู่ใน CHAPTERS (อังกฤษ, ไทย) — ตัวเดียวกับป้ายบนหัวของหน้านั้น
+#   ข้อความชวนเป็น HTML (v8.7) — ใส่ <span class="nb"> ได้ · v8.8 ลบ /experience.html → films · หน้ารุ่น ไปหาร้าน · about ไปฟิล์ม
 NEXT = {
-    '/films.html': ('/experience.html', 'ลองสัมผัสของจริงก่อนตัดสินใจ'),   # v8.1 /try.html ลบแล้ว
-    '/about.html': ('/experience.html', 'รู้จักฟิล์ม ผ่านการลองจริง'),   # v8.3 ข้อความจากไฟล์ต้นแบบ about
-    '/experience.html': ('/dealers.html?experience=1', 'หาร้านที่มีจุดทดลองใกล้คุณ'),
+    '/films.html': ('/dealers.html', 'หาร้านใกล้คุณ'),
+    '/about.html': ('/films.html', 'ดูฟิล์มทุกซีรีส์'),
     '/dealers.html': ('/works.html', 'ดูผลงานที่ติดตั้ง'),
     '/works.html': ('/dealers.html', 'หาร้านใกล้คุณ'),
-    'series': ('/experience.html', 'ลองสัมผัสของจริงก่อนตัดสินใจ'),
+    'series': ('/dealers.html', 'หาร้านใกล้คุณ'),
 }
 CHAPTERS = {
     '/films.html': ('FIND YOUR FILM', 'ฟิล์มทุกซีรีส์'),
     '/about.html': ('ABOUT US', 'เกี่ยวกับเรา'),
-    '/experience.html': ('TRY IT YOURSELF', 'ลองของจริง'),
     '/dealers.html': ('FIND FINNIX', 'หาร้านใกล้คุณ'),
     '/works.html': ('OUR WORK', 'ผลงานที่ติดตั้ง'),
 }
@@ -87,10 +85,12 @@ CHAPTERS = {
 #   CSP — สคริปต์ได้เฉพาะไฟล์ของเว็บเอง (ไม่มี <script> inline) · ฟอนต์ Google Fonts · iframe แผนที่ Google เท่านั้น
 #         style-src ต้องมี 'unsafe-inline' เพราะมี style="" ในหน้า (ตำแหน่งภาพ ฯลฯ) · เพิ่มบริการภายนอกใหม่ต้องเพิ่มที่นี่ ไม่งั้นถูกบล็อก
 #   robots noindex — ไม่ให้ Google เก็บเข้าระบบค้นหา ระหว่างที่ร้าน/ผลงานยังเป็นข้อมูลสมมติ · **เอาออกตอนขึ้นเว็บจริง**
+#   v9.5 img-src เพิ่ม blob: — รถ 3D (vendor/model-viewer.min.js) แตกภาพที่ฝังในไฟล์ .glb เป็น blob: URL
 HEAD_META = [
-    '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\'; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' https://fonts.gstatic.com; img-src \'self\' data:; frame-src https://maps.google.com https://www.google.com; connect-src \'self\'; object-src \'none\'; base-uri \'self\'; form-action \'self\'">',
+    '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\'; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' https://fonts.gstatic.com; img-src \'self\' data: blob:; frame-src https://maps.google.com https://www.google.com; connect-src \'self\'; object-src \'none\'; base-uri \'self\'; form-action \'self\'">',
     '<meta name="referrer" content="strict-origin-when-cross-origin">',
     '<meta name="robots" content="noindex, nofollow">',
+    '<link rel="icon" type="image/png" href="/assets/favicon.png">',   # v8.8 นกแดงครอบจาก logo-finnix-web.png
 ]
 
 # ไฟล์ CSS / JS ที่ทุกหน้าโหลด (ลำดับมีผล — style → journey → merge)
@@ -105,15 +105,35 @@ ASSETS = [
 # ซีรีส์ที่โชว์ที่ /films.html เมื่อไม่ได้เลือกความต้องการ + การ์ดซีรีส์เด่นในส่วน 05 ของหน้าแรก (@gen:featured)
 HERO_FILM = 'ceramic'
 
+# v9.5 หน้าแรกส่วน 04 — รถ 3D หมุนดูรอบคัน แทนภาพเมือง (@gen:try-scene · app.js ส่วนที่ 3 · CSS หมวด 5)
+#   ใช้ได้เมื่อมีไฟล์โมเดล + ภาพนิ่งครบทุกระดับ — ไม่ครบ = ภาพเมืองเดิม (ไม่มีปุ่มที่กดแล้วเสีย)
+#   ภาพนิ่ง car-<n>.jpg = รถมุมเดียวกับ 3D ที่ความเข้มระดับ n สร้างด้วย python tools/car_posters.py (เปลี่ยนโมเดล/มุม/ความเข้ม แล้วสร้างใหม่)
+#   ปุ่ม Clear/40/60/80 สลับภาพนิ่งได้ทันที · ไลบรารี (vendor/ ~1 MB) กับโมเดลโหลดเมื่อกด "หมุนดูรถ 3D" เท่านั้น
+#   glass = ความทึบของกระจกในภาพจำลองตามปุ่ม Clear 40 60 80 ใน index.html (None = กระจกเดิมของโมเดล) — ไม่ใช่ค่า VLT
+#   credit = เครดิตตามสัญญาอนุญาตของโมเดล (HTML · แสดงใต้ภาพ) — โมเดล CC BY ต้องมี ไม่งั้น build exit 1
+CAR_3D = {
+    'src': '/assets/3d/car.glb',
+    'poster': '/assets/3d/car-{n}.jpg',
+    'orbit': '-35deg 75deg auto',
+    'glass': [None, 0.55, 0.75, 0.9],
+    'alt': 'รถจำลอง 3 มิติ ลากเพื่อหมุนดูรอบคัน',
+    'credit': None,
+}
+
 # /films.html การ์ดซีรีส์ (v8.0 ตามไฟล์ต้นแบบ C:/Claude/films.html) — ภาพประกอบบรรยากาศ ไม่ใช่สีฟิล์มจริง · (ภาพ, object-position)
 # sedan.jpg มาจากไฟล์ต้นแบบนั้น (ผู้สั่งงานอนุมัติ 10 ต.ค. 2569) · ได้ภาพจริงรายซีรีส์เมื่อไรเปลี่ยนที่นี่ที่เดียว
 SERIES_PHOTO = {
     'titanium': ('/assets/sedan.jpg', '72% center'),
     'ceramic': ('/assets/car.jpg', '80% center'),
+    'ceramic-plus': ('/assets/hero.jpg', '88% center'),   # v9.1 ฝั่งหน้าต่างของภาพเดียวกับ uv-guard (ใบ 06 ใช้ฝั่งคน) — คนละแถวบนการ์ด 3+3
     'crystalize': ('/assets/sedan.jpg', '100% center'),
     'extra-clear': ('/assets/glass.jpg', '70% center'),
     'uv-guard': ('/assets/hero.jpg', '30% center'),     # ต้นแบบใช้ glass.png ซ้ำกับใบ 04 — เปลี่ยนให้ 5 ใบไม่ซ้ำกัน
 }
+# v9.2 ภาพการ์ดที่ /films.html — ภาพรถรายซีรีส์ที่ผู้สั่งงานส่งมา (โฟลเดอร์ PICWeb · ย่อเป็น 880px · ต้นฉบับอยู่ในคลัง) · ภาพจัตุรัสบนการ์ดแนวนอน → เลื่อนกรอบลงให้เห็นตัวรถ
+#   ภาพใหญ่หัวหน้ารุ่นกับการ์ดทางเลือกในหน้ารุ่นยังใช้ SERIES_PHOTO · ซีรีส์ที่ไม่อยู่ในนี้ใช้ SERIES_PHOTO แทน
+SERIES_CARD = {sid: (f'/assets/series/card-{sid}.jpg', 'center 75%')
+               for sid in ('titanium', 'ceramic', 'ceramic-plus', 'crystalize', 'extra-clear', 'uv-guard')}
 
 # ความต้องการ → ซีรีส์ ยังเป็นร่างที่คำนวณจากตัวเลข (ดู need_rank ข้างล่าง)
 # บริษัทยืนยันแล้วเปลี่ยนเป็น True — ข้อความ "ยังรอบริษัทยืนยัน" บนหน้าเว็บจะหายไป
@@ -121,8 +141,13 @@ NEED_MAPPING_CONFIRMED = False
 NEEDS = [('heat', 'กันร้อน'), ('clarity', 'มองชัด'), ('privacy', 'เป็นส่วนตัว'), ('balance', 'สมดุล')]
 
 # โลโก้ — logo-finnix-web.png คือโลโก้บริษัท (817x96 พื้นใส) · โลโก้ซีรีส์ครอบจาก finnix-*.png (ต้นฉบับอยู่ในคลัง) ให้ชิดตัวอักษร
+#   ซีรีส์ที่ยังไม่มีไฟล์โลโก้ขึ้นชื่อเป็นตัวหนังสือแทน — วางไฟล์ตามชื่อนี้แล้ว build ใหม่ โลโก้ขึ้นเอง (v9.1–9.2 CERAMIC PLUS · v9.3 ได้ไฟล์แล้ว ครบ 6)
 LOGO_SERIES = '/assets/series/logo-{id}.png'
-COVER = {'SY': 'cover-SY.jpg', 'CM': 'cover-CM.jpg', 'CT': 'cover-CT.jpg', 'XT': 'cover-XT.jpg', 'SM': 'cover-SM.jpg'}
+# v9.4 ฉบับพื้นมืด (ดำ → ขาว · สีแบรนด์คงเดิม) สำหรับกระจกดำบนการ์ด /films.html — สร้างจากไฟล์ข้างบนด้วย python tools/logo_white.py
+#   เปลี่ยนโลโก้ซีรีส์แล้วต้องรันสคริปต์นั้นใหม่ก่อน build · ไม่มีไฟล์ = ชื่อตัวหนังสือสีขาว
+LOGO_SERIES_WHITE = '/assets/series/logo-{id}-white.png'
+# ปกโบรชัวร์ตาม id ซีรีส์ (v9.1 เดิมตาม codePrefix — CERAMIC PLUS ใช้รหัส CM ซ้ำกับ CERAMIC) · ซีรีส์ที่ไม่มีในนี้ขึ้นกล่อง "รอข้อมูล" แทนปก
+COVER = {'titanium': 'cover-SY.jpg', 'ceramic': 'cover-CM.jpg', 'crystalize': 'cover-CT.jpg', 'extra-clear': 'cover-XT.jpg', 'uv-guard': 'cover-SM.jpg'}
 TECH_TH = {'ceramic': 'เซรามิก ไม่มีชั้นโลหะ', 'metalize-sputtering': 'เคลือบโลหะหลายชั้น (sputtering)'}
 SPEC_FIELDS = [
     ('heatReject', 'ลดความร้อนจากแสงแดด<span class="nb">โดยรวม</span>'),
@@ -157,18 +182,25 @@ def write(path, text):
         full.write_text(text, encoding='utf-8', newline='\n')
 
 
+def pending(var_name):
+    """ช่องที่ยังรอข้อมูล — v8.8 ผู้เข้าชมเห็น "รอข้อมูล" · ชื่อตัวแปรอยู่ใน data-var (ค้นด้วย grep -rn data-var)"""
+    return f'<span class="var" data-var="{var_name}">รอข้อมูล</span>'
+
+
 def var(text):
-    """ห่อ {{VAR}} ด้วย <span class="var"> ให้เห็นชัดบนหน้าว่ายังรอข้อมูล"""
-    return re.sub(r'(\{\{[A-Z_0-9]+\}\})', r'<span class="var">\1</span>', text)
+    """แทน {{VAR}} ในข้อความด้วย pending() ให้เห็นชัดบนหน้าว่ายังรอข้อมูล"""
+    return re.sub(r'\{\{([A-Z_0-9]+)\}\}', lambda m: pending(m.group(1)), text)
 
 
 def value_or_var(value, var_name):
-    return e(value) if value else f'<span class="var">{{{{{var_name}}}}}</span>'
+    return e(value) if value else pending(var_name)
 
 
 def rng(values, unit='%'):
-    """ช่วงค่า เช่น 81–96% (ข้ามค่า None)"""
+    """ช่วงค่า เช่น 81–96% (ข้ามค่า None) · ไม่มีค่าเลยคืน None (v9.1 ซีรีส์ที่ยังไม่มีโบรชัวร์)"""
     values = [v for v in values if v is not None]
+    if not values:
+        return None
     lo, hi = min(values), max(values)
     return f'{lo:g}{unit}' if lo == hi else f'{lo:g}–{hi:g}{unit}'
 
@@ -178,9 +210,12 @@ def png_size(url):
     return struct.unpack('>II', data)
 
 
-def series_logo(series_id, name, lazy=True):
-    """<img> โลโก้ซีรีส์ พร้อม width/height จริง (กัน layout กระโดดตอนโหลด)"""
-    url = LOGO_SERIES.format(id=series_id)
+def series_logo(series_id, name, lazy=True, white=False):
+    """<img> โลโก้ซีรีส์ พร้อม width/height จริง (กัน layout กระโดดตอนโหลด) · ยังไม่มีไฟล์ = ชื่อตัวหนังสือ (v9.1)
+    white=True ฉบับพื้นมืด (v9.4 กระจกดำบนการ์ด /films.html)"""
+    url = (LOGO_SERIES_WHITE if white else LOGO_SERIES).format(id=series_id)
+    if not (ROOT / url.lstrip('/')).exists():
+        return f'<span class="sp-logo-text"><small>FINNIX FILM</small>{e(name)}</span>'
     w, h = png_size(url)
     lazy_attr = ' loading="lazy"' if lazy else ''
     return f'<img src="{url}" alt="{e(name)}" width="{w}" height="{h}"{lazy_attr}>'
@@ -208,7 +243,14 @@ def tech_label(s):
     return TECH_TH.get(s['tech'], s['tech'])
 
 
+def maximum(values):
+    """ค่ามากสุด ข้าม None · ไม่มีค่าเลยคืน None"""
+    values = [x for x in values if x is not None]
+    return max(values) if values else None
+
+
 def series_summary(s):
+    """สรุปซีรีส์สำหรับ content.js และการ์ด · v9.1 ซีรีส์ที่ยังไม่มีตัวเลข (CERAMIC PLUS) ได้ None ในช่องตัวเลข"""
     v = s['variants']
     return {
         'id': s['id'],
@@ -219,10 +261,9 @@ def series_summary(s):
         'tech': tech_label(s),
         'metalFree': s['metalFree'],
         'heat': rng([x['heatReject'] for x in v]),
-        'heatMin': min(x['heatReject'] for x in v),
-        'heatMax': max(x['heatReject'] for x in v),
+        'heatMax': maximum(x['heatReject'] for x in v),
         'vlt': rng([x['vlt'] for x in v]),
-        'vltMax': max(x['vlt'] for x in v),
+        'vltMax': maximum(x['vlt'] for x in v),
         'uv': rng([x['uv'] for x in v]),
         'variants': [{'code': x['code'], 'darkness': x['darkness'], 'heat': x['heatReject'], 'vlt': x['vlt']} for x in v],
         'price': s.get('price'),
@@ -239,8 +280,12 @@ by_id = {s['id']: s for s in summary}
 #   clarity = ซีรีส์ที่แสงส่องผ่านสูงสุด
 #   privacy = ซีรีส์ที่รหัสเข้มสุด (VLT ต่ำสุด) ยังลดความร้อนได้มากที่สุด
 #   balance = ซีรีส์เซรามิกไม่มีโลหะที่ราคาเริ่มต้นต่ำสุด
+#   v9.1 ซีรีส์ที่ยังไม่มีตัวเลข (CERAMIC PLUS) ไม่ถูกแนะนำ — จัดอันดับไม่ได้
+rated = [s for s in summary if s['heatMax'] is not None and s['vltMax'] is not None]
+
+
 def ranked(key):
-    return [s['id'] for s in sorted(summary, key=key, reverse=True)]
+    return [s['id'] for s in sorted(rated, key=key, reverse=True)]
 
 
 def privacy_key(s):
@@ -248,13 +293,13 @@ def privacy_key(s):
     return (-darkest['vlt'], darkest['heat'])
 
 
-priced_ceramic = [s for s in summary if s['price'] and s['metalFree']]
+priced_ceramic = [s for s in rated if s['price'] and s['metalFree']]
 need_rank = {
     'heat': ranked(lambda s: s['heatMax']),
     'clarity': ranked(lambda s: s['vltMax']),
     'privacy': ranked(privacy_key),
     'balance': [s['id'] for s in sorted(priced_ceramic, key=lambda s: s['price']['sedan']['full'])]
-               + [s['id'] for s in summary if s not in priced_ceramic],
+               + [s['id'] for s in rated if s not in priced_ceramic],
 }
 need_to_film = {need: ids[0] for need, ids in need_rank.items()}
 need_alternatives = {need: ids[1:3] for need, ids in need_rank.items()}
@@ -288,7 +333,7 @@ write('content.js',
 # ============================================================================
 #  2. หน้ารุ่น films/<id>.html — สร้างทั้งไฟล์
 # ============================================================================
-def spec_table(variants):
+def spec_table(variants, var_prefix):
     """ตารางสเปก — ปุ่มเลือกรหัสไฮไลต์คอลัมน์ได้ (app.js ส่วนที่ 11) · แถวลดความร้อนตัวใหญ่ (v8.2 ตามต้นแบบ ceramic.html)"""
     head = ''.join(f'<th scope="col">{e(v["code"])}</th>' for v in variants)
     rows = []
@@ -299,6 +344,8 @@ def spec_table(variants):
         cls = ' class="heat"' if key == 'heatReject' else ''
         cells = ''.join(f'<td>{"—" if x is None else f"{x:g}%"}</td>' for x in values)
         rows.append(f'      <tr{cls}><th scope="row">{label}</th>{cells}</tr>')
+    if not rows:   # v9.1 ซีรีส์ที่ยังไม่มีโบรชัวร์ — แถวเดียวบอกว่ารอข้อมูล (ไม่ปล่อยตารางมีแต่หัว)
+        rows.append(f'      <tr><th scope="row">ค่าสเปก</th><td colspan="{len(variants)}">{pending(var_prefix + "_SPEC")}</td></tr>')
     return ('<div class="table-wrap" tabindex="0" role="region" aria-label="ตารางสเปก — เลื่อนแนวนอนได้บนมือถือ">\n'
             '  <table class="spec-table sp-table" id="spec-table">\n'
             f'    <thead><tr><th scope="col">ค่า</th>{head}</tr></thead>\n'
@@ -307,21 +354,23 @@ def spec_table(variants):
             '</div>')
 
 
-def shade_opacity(vlt):
-    """ความทึบของชั้นสีเข้มบนภาพจำลอง — ช่วงเดียวกับไฟล์ต้นแบบ ceramic.html (แสงผ่าน 5% ≈ .82 · 15% ≈ .63 · 30% ≈ .35)"""
-    return min(.9, max(.05, .91 - .019 * vlt))
+def shade_picker(variants, var_prefix):
+    """ปุ่มเลือกรหัส (v8.2 แทนบันไดความเข้ม v7.8) · กดแล้วไฮไลต์คอลัมน์ในตาราง
+    v9.1 ภาพมองผ่านกระจก — ภาพเมืองจากในรถ (glass.jpg) ทับสีฟิล์มของรหัสนั้น (tint ใน films.json วัดจากภาพถ่ายแผ่นตัวอย่าง)
+    เฉพาะช่องกระจก (หน้ากาก assets/glass-window.svg) ขอบประตูกับเสาไม่ทับ ไว้เทียบกับของจริง · CSS .sp-shade-scene ใน merge.css หมวด 7"""
+    if any(not v.get('tint') for v in variants):
+        return '<!-- ปุ่มเลือกรหัส: บางรหัสยังไม่มีสีฟิล์ม (tint) จึงไม่แสดง -->'
 
+    def light(v):
+        return f'{v["vlt"]:g}%' if v['vlt'] is not None else pending(var_prefix + '_SPEC')
 
-def shade_picker(variants):
-    """ปุ่มเลือกรหัส (v8.2 แทนบันไดความเข้ม v7.8) — ภาพเดียวกัน + ชั้นสีเข้มตามค่าแสงส่องผ่าน · กดแล้วไฮไลต์คอลัมน์ในตาราง
-    ภาพจำลองความทึบ ไม่ใช่สีจริงของฟิล์ม (ป้ายบอกอยู่ใต้ปุ่ม)"""
-    if any(v['vlt'] is None for v in variants):
-        return '<!-- ปุ่มเลือกรหัส: บางรหัสไม่มีค่าแสงส่องผ่าน จึงไม่แสดง -->'
+    def label(v):
+        return f'เลือกรหัส {e(v["code"])}' + ('' if v['vlt'] is None else f' แสงผ่าน {v["vlt"]:g}%')
     buttons = '\n'.join(
-        f'  <button type="button" class="sp-shade" data-col="{i}" aria-pressed="false" aria-label="เลือกรหัส {e(v["code"])} แสงผ่าน {v["vlt"]:g}%">'
-        f'<span class="sp-shade-scene" style="--shade:{shade_opacity(v["vlt"]):.2f}"><img src="/assets/glass.jpg" alt="" loading="lazy">'
+        f'  <button type="button" class="sp-shade" data-col="{i}" aria-pressed="false" aria-label="{label(v)}">'
+        f'<span class="sp-shade-scene" style="--tint:{v["tint"]}"><img src="/assets/glass.jpg" alt="" loading="lazy">'
         f'<span class="sp-shade-mark" aria-hidden="true">✓</span></span>'
-        f'<b>{e(v["code"])}</b><small>แสงผ่าน {v["vlt"]:g}%</small></button>'
+        f'<b>{e(v["code"])}</b><small>แสงผ่าน {light(v)}</small></button>'
         for i, v in enumerate(variants, 1))
     return f'<div class="sp-shades" role="group" aria-label="เลือกรหัสเพื่อไฮไลต์ในตาราง">\n{buttons}\n</div>'
 
@@ -331,11 +380,14 @@ def price_section(s):
     กล่องคำนวณต้องใช้ JS → ใส่ hidden แล้ว app.js ส่วนที่ 11 เปิด (ไม่มี JS เห็นแค่ตาราง)"""
     year = meta['priceYear']
     if not s.get('price'):
+        # v9.1 ซีรีส์ที่ยังไม่มีโบรชัวร์เลย (ไม่มีใน COVER) — บอกว่ารอข้อมูล ไม่ใช่ "โบรชัวร์ไม่มีตารางราคา"
+        missing = ('โบรชัวร์ของซีรีส์นี้ไม่มีตารางราคา' if s['id'] in COVER
+                   else f'ราคา{pending(series_var(s) + "_PRICE")}')
         return ('<section class="sp-price" id="price">\n'
                 '  <div class="sp-inner">\n'
                 '    <div class="eyebrow"><span></span> PRICE</div>\n'
                 '    <h2>ราคา</h2>\n'
-                '    <p class="note">โบรชัวร์ของซีรีส์นี้ไม่มีตารางราคา สอบถามได้ที่ร้านติดตั้ง</p>\n'
+                f'    <p class="note">{missing} สอบถามได้ที่ร้านติดตั้ง</p>\n'
                 '    <a class="pill" href="/dealers.html">หาร้านใกล้คุณ</a>\n'
                 '  </div>\n'
                 '</section>')
@@ -385,18 +437,38 @@ def price_section(s):
             f'</section>')
 
 
+def series_var(s):
+    """คำนำหน้าชื่อตัวแปรรอข้อมูลของซีรีส์ เช่น ceramic-plus → CERAMIC_PLUS (CERAMIC_PLUS_SPEC · _PRICE · _WARRANTY · _BROCHURE)"""
+    return s['id'].upper().replace('-', '_')
+
+
+def code_number(v):
+    """เลขในรหัส (CM35 → 35) — ใช้เรียงรหัสแทนแสงส่องผ่านเมื่อยังไม่มีค่า (v9.1)"""
+    return int(re.sub(r'\D', '', v['code']) or 0)
+
+
 def series_page(s, number):
     """หน้ารุ่น (v8.2 ดีไซน์ตามไฟล์ต้นแบบ C:/Claude/ceramic.html · เนื้อหาเดิมทั้งหมดจาก films.json)
-    ภาพใหญ่พื้นมืด → แถบลิงก์ในหน้า → ภาพรวม (โลโก้ ปกโบรชัวร์ ค่าหลัก 6 ช่อง) → ความเข้มและสเปก → ราคา → ทางเลือกอื่น"""
+    ภาพใหญ่พื้นมืด → ภาพรวม (โลโก้ ปกโบรชัวร์ ค่าหลัก 6 ช่อง) → ความเข้มและสเปก → ราคา → ทางเลือกอื่น
+    v9.1 ซีรีส์ที่ยังไม่มีโบรชัวร์ (CERAMIC PLUS) — ช่องที่ไม่มีค่าขึ้น "รอข้อมูล" · ไม่มี tagline ก็ไม่มีหัวรอง"""
     sm = by_id[s['id']]
-    variants = sorted(s['variants'], key=lambda x: x['vlt'])
+    vp = series_var(s)
+    # เข้มสุดก่อน — เรียงตามแสงส่องผ่าน · ยังไม่มีค่าใช้เลขในรหัสแทน (ตัวเลขน้อย = เข้ม)
+    variants = sorted(s['variants'], key=lambda x: code_number(x) if x['vlt'] is None else x['vlt'])
     metal_head, metal_note = {
         True: ('ไม่มีชั้นโลหะ', 'ไม่รบกวนสัญญาณ 5G · GPS · บัตรทางด่วน'),
         False: ('มีชั้นโลหะ', 'แจ้งช่างก่อนถ้าเรื่องสัญญาณสำคัญกับคุณ'),
         None: ('ยังไม่ระบุ', 'เอกสารยังไม่ระบุว่ามีชั้นโลหะหรือไม่'),
     }[s['metalFree']]
     claim = f'\n      <p class="sp-hero-claim">{e(s["claim"])}</p>' if s.get('claim') else ''
-    others = sorted((x for x in summary if x['id'] != s['id']), key=lambda x: abs(x['heatMax'] - sm['heatMax']))[:2]
+    tagline = f'\n      <h2>{e(s["tagline"])}</h2>' if s.get('tagline') else ''
+    # ทางเลือกอื่น 2 ใบ — ลดความร้อนใกล้เคียงที่สุด · ซีรีส์ที่ยังไม่มีตัวเลขไม่ถูกเสนอ และถ้าหน้านี้เองไม่มีตัวเลข ใช้ซีรีส์ที่อยู่ติดกันในรายการแทน
+    order = [x['id'] for x in summary]
+    if sm['heatMax'] is None:
+        distance = lambda x: abs(order.index(x['id']) - order.index(s['id']))
+    else:
+        distance = lambda x: abs(x['heatMax'] - sm['heatMax'])
+    others = sorted((x for x in rated if x['id'] != s['id']), key=distance)[:2]
     # ภาพการ์ดทางเลือก — ใช้ SERIES_PHOTO ของซีรีส์นั้น แต่ถ้าซ้ำกับภาพที่ใช้ในหน้านี้แล้ว (ภาพใหญ่ / การ์ดก่อนหน้า) เลือกภาพอื่นแทน
     used = {SERIES_PHOTO[s['id']][0]}
     alt_photos = []
@@ -415,8 +487,21 @@ def series_page(s, number):
     name_en, name_th = s['name']['en'], s['name']['th']
     codes = ' · '.join(e(v['code']) for v in variants)
     photo, pos = SERIES_PHOTO[s['id']]
+    description = f'{name_th} — {s["tagline"]}' if s.get('tagline') else f'{name_th} — ฟิล์มกรองแสงรถยนต์ FINNIX FILM'
+    if s['id'] in COVER:
+        cover = (f'      <figure class="cover">\n'
+                 f'        <img src="/assets/Brochure/{COVER[s["id"]]}" alt="ปกโบรชัวร์ {e(name_th)}" loading="lazy" width="880" height="1245">\n'
+                 f'        <figcaption>ปกโบรชัวร์ต้นฉบับของบริษัท</figcaption>\n'
+                 f'      </figure>')
+        source = f'ถอดจากโบรชัวร์ของบริษัทปี {meta["dataYear"]}'
+    else:
+        cover = f'      <p class="cover-pending">โบรชัวร์ของซีรีส์นี้{pending(vp + "_BROCHURE")}</p>'
+        source = f'ยังไม่มีโบรชัวร์ของซีรีส์นี้ ค่าสเปก{pending(vp + "_SPEC")}'
+    warranty = s.get('warrantyYears', meta['warrantyYears'])
+    warranty = f'{warranty} <small>ปี</small>' if warranty else pending(vp + '_WARRANTY')
+    fact = lambda value: value if value else pending(vp + '_SPEC')
 
-    return f'''<!-- JOB: CONSIDER | USER FEELS: รุ่นนี้เหมาะกับเราไหม | NEXT: /experience.html
+    return f'''<!-- JOB: CONSIDER | USER FEELS: รุ่นนี้เหมาะกับเราไหม | NEXT: /dealers.html
      สร้างโดย tools/build.py จาก data/films.json — ห้ามแก้ไฟล์นี้ตรง ๆ แก้ที่ series_page() ใน build.py
      v8.2 ดีไซน์ตามไฟล์ต้นแบบ C:/Claude/ceramic.html (เนื้อหาเดิม) · CSS หมวด 7 ของ merge.css · JS ส่วนที่ 11 ของ app.js -->
 <!doctype html>
@@ -425,7 +510,7 @@ def series_page(s, number):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{e(name_en)} | FINNIX FILM</title>
-  <meta name="description" content="{e(name_th)} — {e(s["tagline"])}">
+  <meta name="description" content="{e(description)}">
   <!-- @assets --><!-- @end assets -->
 </head>
 <body class="inner-page series-page">
@@ -443,8 +528,7 @@ def series_page(s, number):
       <div class="eyebrow">{number:02d} <span></span> {e(s["codePrefix"])} SERIES · FINNIX FILM</div>
       <h1>{e(name_en)}</h1>
       <p class="sp-hero-th">{e(name_th)}</p>
-      <span class="red-line" aria-hidden="true"></span>
-      <h2>{e(s["tagline"])}</h2>{claim}
+      <span class="red-line" aria-hidden="true"></span>{tagline}{claim}
       <div class="sp-hero-actions">
         <a class="pill sp-white" href="#price">ดูราคา</a>
         <a class="pill light" href="#spec">ดูค่าสเปก</a>
@@ -453,29 +537,21 @@ def series_page(s, number):
     <span class="sp-hero-note">ภาพประกอบบรรยากาศ</span>
   </section>
 
-  <nav class="sp-nav" aria-label="เนื้อหาในหน้านี้">
-    <span class="sp-nav-title">{e(name_en)}</span>
-    <span class="sp-nav-links"><a href="#overview">รู้จักซีรีส์</a><a href="#spec">ความเข้มและสเปก</a><a href="#price">ราคา</a><a href="/experience.html">ลองของจริง</a></span>
-  </nav>
-
   <!-- ภาพรวม — โลโก้ + ปกโบรชัวร์ซ้าย · ค่าหลัก 6 ช่องขวา (ช่วงค่าจาก films.json) -->
   <section class="sp-overview" id="overview">
     <div class="sp-overview-brand">
       <div class="eyebrow"><span></span> {e(s["codePrefix"])} SERIES · {len(variants)} รหัสความเข้ม</div>
       <p class="sp-logo">{series_logo(s["id"], name_en)}</p>
       <p class="sp-codes">{codes}</p>
-      <figure class="cover">
-        <img src="/assets/Brochure/{COVER[s["codePrefix"]]}" alt="ปกโบรชัวร์ {e(name_th)}" loading="lazy" width="880" height="1245">
-        <figcaption>ปกโบรชัวร์ต้นฉบับของบริษัท</figcaption>
-      </figure>
+{cover}
     </div>
     <dl class="sp-facts">
       <div><dt>เทคโนโลยี</dt><dd>{var(e(tech_label(s)))}</dd></div>
       <div><dt>ชั้นโลหะ</dt><dd>{metal_head}<small>{metal_note}</small></dd></div>
-      <div><dt>ลดความร้อน</dt><dd class="num">{sm["heat"]}</dd></div>
-      <div><dt>แสงส่องผ่าน</dt><dd class="num">{sm["vlt"]}</dd></div>
-      <div><dt>กัน UV</dt><dd class="num">{sm["uv"]}</dd></div>
-      <div><dt>รับประกัน</dt><dd class="num">{meta["warrantyYears"]} <small>ปี</small></dd></div>
+      <div><dt>ลดความร้อน</dt><dd class="num">{fact(sm["heat"])}</dd></div>
+      <div><dt>แสงส่องผ่าน</dt><dd class="num">{fact(sm["vlt"])}</dd></div>
+      <div><dt>กัน UV</dt><dd class="num">{fact(sm["uv"])}</dd></div>
+      <div><dt>รับประกัน</dt><dd class="num">{warranty}</dd></div>
     </dl>
   </section>
 
@@ -484,13 +560,13 @@ def series_page(s, number):
     <div class="sp-spec-intro">
       <div class="eyebrow"><span></span> SPEC · {len(variants)} รหัสความเข้ม</div>
       <h2>ค่าสเปกทั้ง {len(variants)} รหัส</h2>
-      <p class="note">ภาพจำลองความทึบจากค่าแสงส่องผ่าน ไม่ใช่สีจริงของฟิล์ม · กดรหัสเพื่อดูในตาราง</p>
+      <p class="note">ภาพจำลองมองผ่านกระจก — สีและความเข้มเทียบจากภาพถ่ายแผ่นฟิล์มตัวอย่างจริง สีบนจอต่างจากของจริงได้ · กดรหัสเพื่อดูในตาราง</p>
       <p class="sp-selection" id="sp-selection" aria-live="polite" hidden><strong id="sp-selected-code"></strong><span id="sp-selected-light"></span></p>
     </div>
-{indent(shade_picker(variants), "    ")}
+{indent(shade_picker(variants, vp), "    ")}
     <div class="sp-spec-table">
-{indent(spec_table(variants), "      ")}
-      <p class="sp-source">ถอดจากโบรชัวร์ของบริษัทปี {meta["dataYear"]} · ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{{{TEST_STANDARD}}}}</span></p>
+{indent(spec_table(variants, vp), "      ")}
+      <p class="sp-source">{source} · ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยัง{pending("TEST_STANDARD")}</p>
     </div>
   </section>
 
@@ -614,7 +690,7 @@ def next_block(url):
     return (f'<nav class="next-chapter dark" aria-label="ตอนต่อไป">\n'
             f'  <a href="{href}">\n'
             f'    <span class="eyebrow">NEXT <span></span> {e(en)} <em class="eyebrow-th">{th}</em></span>\n'
-            f'    <strong><span>{e(text)}</span></strong>\n'
+            f'    <strong><span>{text}</span></strong>\n'   # v8.7 ข้อความใน NEXT เป็น HTML ได้ (<span class="nb">) แบบ SPEC_FIELDS
             f'    <i aria-hidden="true">→</i>\n'
             f'  </a>\n'
             f'</nav>')
@@ -626,8 +702,8 @@ def next_block(url):
 # gen_facts / gen_needs — v6.4 ถอดออกจากหน้าแรกแล้ว (ต้นแบบไม่มี) · ยังไม่มีหน้าที่ใช้ เก็บไว้ย้ายไปใส่หน้าอื่น
 def gen_facts():
     """ตัวเลขเด่น 4 ช่อง (เดิมอยู่หน้าแรก)"""
-    top = max(summary, key=lambda x: x['heatMax'])
-    uv_min = min(v['uv'] for s in SERIES for v in s['variants'])
+    top = max(rated, key=lambda x: x['heatMax'])
+    uv_min = min(v['uv'] for s in SERIES for v in s['variants'] if v['uv'] is not None)
     metal_free = [x for x in summary if x['metalFree'] is True]
     facts = [
         (f'{meta["warrantyYears"]}<small>ปี</small>', 'รับประกันทุกซีรีส์', 'ระยะเท่ากันทุกรุ่น ไม่ลดหลั่นตามราคา'),
@@ -658,7 +734,8 @@ def gen_need_links():
 
 
 def gen_featured():
-    """หน้าแรก ส่วน 05 — ซีรีส์เด่น (HERO_FILM) ในการ์ดภาพรถ · v7.9 แทน "CERAMIC PLUS" ของต้นแบบ ซึ่งไม่มีในโบรชัวร์"""
+    """หน้าแรก ส่วน 05 — ซีรีส์เด่น (HERO_FILM) ในการ์ดภาพรถ · v7.9 แทน "CERAMIC PLUS" ของต้นแบบ (ตอนนั้นไม่มีในโบรชัวร์ ·
+    v9.1 ผู้สั่งงานเพิ่ม CERAMIC PLUS เป็นซีรีส์ที่ 6 แล้ว แต่ยังไม่มีตัวเลข จึงยังเป็นซีรีส์เด่นไม่ได้)"""
     s = by_id[HERO_FILM]
     return (f'<p class="product-name">FINNIX<br><strong>{e(s["name"])}</strong></p>\n'
             f'<p>{e(s["th"])} · {e(s["tag"])}</p>\n'
@@ -666,12 +743,46 @@ def gen_featured():
             f'<a class="text-button" href="/films.html">ดูฟิล์มทุกรุ่น</a>')
 
 
+CAR_POSTERS = [CAR_3D['poster'].format(n=n) for n in range(len(CAR_3D['glass']))]
+CAR_READY = all((ROOT / p.lstrip('/')).exists() for p in [CAR_3D['src'], *CAR_POSTERS])
+TINT_NAMES = ['ไม่ติดฟิล์ม', 'ติดฟิล์มความเข้ม 40', 'ติดฟิล์มความเข้ม 60', 'ติดฟิล์มความเข้ม 80']
+
+
+def gen_try_scene():
+    """หน้าแรกส่วน 04 ภาพทดลองความเข้ม — v9.5 รถ 3D (CAR_3D) เมื่อไฟล์ครบ · ไม่ครบ = ภาพเมือง + ม่านเข้ม (v7.9)
+    เริ่มที่ระดับ 60 (ลำดับ 2) ตรงกับ app.js · path ใน data-* ไม่มี / นำหน้า (relativize แปลงแค่ href/src) — app.js ต่อ ROOT เอง"""
+    caption = ('<div class="tint-caption"><span>YOUR VIEW. YOUR CHOICE.</span>'
+               '<output id="tint-output" for="tint-range">60</output></div>')
+    if not CAR_READY:
+        return ('<div class="tint-scene">\n'
+                '  <img src="/assets/glass.jpg" alt="ภาพเมืองเดียวกันสำหรับทดลองความเข้ม" loading="lazy">\n'
+                '  <div id="tint-overlay"></div>\n'
+                f'  {caption}\n'
+                '</div>')
+    glass = ' '.join('none' if g is None else f'{g:g}' for g in CAR_3D['glass'])
+    posters = ' '.join(p.lstrip('/') for p in CAR_POSTERS)
+    credit = f'\n<p class="car3d-credit">{CAR_3D["credit"]}</p>' if CAR_3D['credit'] else ''
+    return (f'<div class="tint-scene car3d" data-src="{CAR_3D["src"].lstrip("/")}" data-posters="{posters}" '
+            f'data-glass="{glass}" data-orbit="{CAR_3D["orbit"]}" data-alt="{e(CAR_3D["alt"])}">\n'
+            f'  <img class="car3d-poster" src="{CAR_POSTERS[2]}" alt="รถจำลอง{TINT_NAMES[2]}" loading="lazy">\n'
+            '  <div class="car3d-bar">\n'
+            '    <p class="car3d-status" role="status"></p>\n'
+            '    <button type="button" class="pill light car3d-load" hidden><span aria-hidden="true">⟲</span> หมุนดูรถ 3D รอบคัน</button>\n'
+            '  </div>\n'
+            f'  {caption}\n'
+            f'</div>{credit}')
+
+
 def gen_series_cards():
-    """/films.html — การ์ดซีรีส์ 5 ใบ (v8.0 ตามไฟล์ต้นแบบ) · ภาพ + เลข + ชื่อ · แถวบน 3 ใบ แถวล่าง 2 ใบ
-    v8.5 ไม่มีหน้าต่างคั่นแล้ว — กดภาพ/ชื่อไปหน้ารุ่นทันที · ค่าหลักขึ้นบนการ์ด · ปุ่ม "ดูสเปก" / "ดูราคา" ไปส่วนนั้นของหน้ารุ่นตรง ๆ"""
+    """/films.html — การ์ดซีรีส์ (v8.0 ตามไฟล์ต้นแบบ) · ภาพ + เลข + ชื่อ · v9.1 หกใบ = 3+3 (เดิม 5 ใบ 3+2 · CSS หมวด 6)
+    v8.5 ไม่มีหน้าต่างคั่นแล้ว — กดภาพ/ชื่อไปหน้ารุ่นทันที · ค่าหลักขึ้นบนการ์ด · ปุ่ม "ดูสเปก" / "ดูราคา" ไปส่วนนั้นของหน้ารุ่นตรง ๆ
+    v9.2 ภาพจาก SERIES_CARD · ชี้ภาพแล้วโลโก้ซีรีส์ขึ้น (.card-logo · ชื่อซ้ำกับใต้ภาพจึงซ่อนจากโปรแกรมอ่านจอ)
+    v9.4 โลโก้อยู่บนกระจกดำ (ฟิล์มเข้ม) ที่เลื่อนขึ้นจากขอบล่าง → ใช้โลโก้ฉบับพื้นมืด LOGO_SERIES_WHITE"""
     cards = []
     for i, x in enumerate(summary, 1):
-        src, pos = SERIES_PHOTO[x['id']]
+        src, pos = SERIES_CARD.get(x['id'], SERIES_PHOTO[x['id']])
+        logo = f'<span class="card-logo" aria-hidden="true">{series_logo(x["id"], x["name"], white=True)}</span>'
+        missing = pending(series_var(x) + '_SPEC')   # v9.1 ซีรีส์ที่ยังไม่มีตัวเลข
         if x['price']:
             price = f'บานหน้าเริ่มต้น <b>{min(p["front"] for p in x["price"].values()):,}</b> บาท'
         else:
@@ -679,10 +790,10 @@ def gen_series_cards():
         cards.append(
             f'  <article class="series-card" data-id="{x["id"]}">\n'
             f'    <a class="card-button" href="/films/{x["id"]}.html">\n'
-            f'      <span class="card-photo"><img src="{src}" style="object-position:{pos}" alt="" loading="lazy"><span class="card-number">{i:02d}</span></span>\n'
+            f'      <span class="card-photo"><img src="{src}" style="object-position:{pos}" alt="" loading="lazy">{logo}<span class="card-number">{i:02d}</span></span>\n'
             f'      <span class="card-line"><span><strong>{e(x["name"])}</strong><small>{e(x["th"])}</small></span></span>\n'
             f'    </a>\n'
-            f'    <p class="card-facts"><span class="nb">ลดความร้อน <b>{x["heat"]}</b></span> · <span class="nb">แสงส่องผ่าน <b>{x["vlt"]}</b></span><br>{price}</p>\n'
+            f'    <p class="card-facts"><span class="nb">ลดความร้อน <b>{x["heat"] or missing}</b></span> · <span class="nb">แสงส่องผ่าน <b>{x["vlt"] or missing}</b></span><br>{price}</p>\n'
             f'    <p class="card-links"><a class="pill" href="/films/{x["id"]}.html#spec">ดูสเปก <span aria-hidden="true">→</span></a>'
             f'<a class="pill" href="/films/{x["id"]}.html#price">ดูราคา <span aria-hidden="true">→</span></a></p>\n'
             f'  </article>')
@@ -777,6 +888,7 @@ GEN = {
     'needs': gen_needs,
     'need-links': gen_need_links,
     'featured': gen_featured,
+    'try-scene': gen_try_scene,
     'series-cards': gen_series_cards,
     'hq': gen_hq,
     'gallery': gen_gallery,
@@ -819,6 +931,8 @@ def relativize(src, rel):
 pages = set(ROOT.glob('*.html')) | set((ROOT / 'films').glob('*.html'))
 pages |= {ROOT / 'films' / f'{s["id"]}.html' for s in SERIES}
 problems = []
+if CAR_READY and not CAR_3D['credit']:
+    problems.append(f'มีโมเดล {CAR_3D["src"]} แต่ CAR_3D["credit"] ว่าง — ใส่เครดิตตามสัญญาอนุญาตของโมเดลก่อน')
 for page in sorted(pages):
     rel = page.relative_to(ROOT).as_posix()
     url = '/' if rel == 'index.html' else '/' + rel

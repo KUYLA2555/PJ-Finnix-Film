@@ -1,15 +1,16 @@
-<!-- JOB: CONSIDER + REMOVE PRICE ANXIETY | USER FEELS: รุ่นไหนเหมาะกับเรา แล้วราคาเท่าไหร่ | NEXT: /experience.html (v8.1 ลบ /try.html แล้ว) -->
+<!-- JOB: CONSIDER + REMOVE PRICE ANXIETY | USER FEELS: รุ่นไหนเหมาะกับเรา แล้วราคาเท่าไหร่ | NEXT: /dealers.html (v8.1 ลบ /try.html · v8.8 ลบ /experience.html) -->
 <!doctype html>
 <html lang="th">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>ฟิล์มทุกซีรีส์และราคา | FINNIX FILM</title>
-  <meta name="description" content="ห้าซีรีส์ สิบห้ารหัสความเข้ม — เลือกฟิล์มฟินนิกซ์จากสิ่งที่สำคัญกับคุณ แล้วเช็คราคาตามประเภทรถ ซีรีส์ และตำแหน่งกระจก">
+  <meta name="description" content="หกซีรีส์ สิบแปดรหัสความเข้ม —เลือกฟิล์มฟินนิกซ์จากสิ่งที่สำคัญกับคุณ แล้วเช็คราคาตามประเภทรถ ซีรีส์ และตำแหน่งกระจก">
   <!-- @assets -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="journey.css">
   <link rel="stylesheet" href="merge.css">
@@ -26,7 +27,6 @@
     <a href="./">หน้าแรก</a>
     <a href="films.html" aria-current="page">ฟิล์ม</a>
     <a href="works.html">ผลงาน</a>
-    <a href="experience.html">ลองของจริง</a>
     <a href="about.html">เกี่ยวกับเรา</a>
     <a class="nav-extra" href="dealers.html">หาร้านใกล้คุณ</a>
   </nav>
@@ -40,12 +40,6 @@
   <!-- v8.0 ดีไซน์ตามไฟล์ต้นแบบ C:\Claude\films.html (ปรับฟอนต์ สี header footer ให้เป็นของเว็บนี้) + รวมหน้าราคาเดิม (/price.html) ไว้ท้ายหน้า (#price) -->
 
   <nav class="sp-crumb" aria-label="เส้นทางหน้าเว็บ"><a href="./">หน้าแรก</a><span aria-hidden="true">/</span><span aria-current="page">ฟิล์มทุกซีรีส์</span></nav>
-
-  <!-- v8.5 ทางลัดในหน้า (ติดด้านบนตอนเลื่อน) — เมนูไม่มี "ราคา" แล้ว คนหาราคากดไปถึงได้ทันที -->
-  <nav class="sp-nav" aria-label="เนื้อหาในหน้านี้">
-    <span class="sp-nav-title">FINNIX FILMS</span>
-    <span class="sp-nav-links"><a href="#need">เลือกตามความต้องการ</a><a href="#film-hero">ซีรีส์ที่แนะนำ</a><a href="#series">ซีรีส์ทั้งหมด</a><a href="#price">ราคา</a></span>
-  </nav>
 
   <!-- 1. เริ่มจากความต้องการ — ไม่มี JS เป็นลิงก์ ?need= ธรรมดา · มี JS สลับซีรีส์แนะนำในหน้าโดยไม่โหลดใหม่ (app.js ส่วนที่ 4) -->
   <section class="films-intro" id="need">
@@ -82,7 +76,7 @@
     <button class="films-motion" id="film-motion" type="button" aria-pressed="false" hidden><span aria-hidden="true">Ⅱ</span> <span class="films-motion-label">หยุดภาพ</span></button>
   </section>
 
-  <!-- 3. ซีรีส์ทั้งหมด — การ์ดภาพ 3 + 2 ใบ สร้างจาก data/films.json + SERIES_PHOTO ใน build.py -->
+  <!-- 3. ซีรีส์ทั้งหมด — การ์ดภาพ 3 + 3 ใบ สร้างจาก data/films.json + SERIES_CARD ใน build.py · ชี้ภาพแล้วโลโก้ซีรีส์เฟดขึ้น (v9.2) -->
   <section class="films-catalog" id="series">
     <div class="films-heading">
       <div>
@@ -95,7 +89,7 @@
     <div class="series-grid">
       <article class="series-card" data-id="titanium">
         <a class="card-button" href="films/titanium.html">
-          <span class="card-photo"><img src="assets/sedan.jpg" style="object-position:72% center" alt="" loading="lazy"><span class="card-number">01</span></span>
+          <span class="card-photo"><img src="assets/series/card-titanium.jpg" style="object-position:center 75%" alt="" loading="lazy"><span class="card-logo" aria-hidden="true"><img src="assets/series/logo-titanium-white.png" alt="TITANIUM" width="800" height="266" loading="lazy"></span><span class="card-number">01</span></span>
           <span class="card-line"><span><strong>TITANIUM</strong><small>ฟินนิกซ์ ไทเทเนี่ยม ฟิล์ม</small></span></span>
         </a>
         <p class="card-facts"><span class="nb">ลดความร้อน <b>81–96%</b></span> · <span class="nb">แสงส่องผ่าน <b>10–40%</b></span><br>บานหน้าเริ่มต้น <b>10,600</b> บาท</p>
@@ -103,15 +97,23 @@
       </article>
       <article class="series-card" data-id="ceramic">
         <a class="card-button" href="films/ceramic.html">
-          <span class="card-photo"><img src="assets/car.jpg" style="object-position:80% center" alt="" loading="lazy"><span class="card-number">02</span></span>
+          <span class="card-photo"><img src="assets/series/card-ceramic.jpg" style="object-position:center 75%" alt="" loading="lazy"><span class="card-logo" aria-hidden="true"><img src="assets/series/logo-ceramic-white.png" alt="CERAMIC" width="800" height="256" loading="lazy"></span><span class="card-number">02</span></span>
           <span class="card-line"><span><strong>CERAMIC</strong><small>ฟินนิกซ์ เซรามิค ฟิล์ม</small></span></span>
         </a>
         <p class="card-facts"><span class="nb">ลดความร้อน <b>80–90%</b></span> · <span class="nb">แสงส่องผ่าน <b>5–30%</b></span><br>บานหน้าเริ่มต้น <b>5,600</b> บาท</p>
         <p class="card-links"><a class="pill" href="films/ceramic.html#spec">ดูสเปก <span aria-hidden="true">→</span></a><a class="pill" href="films/ceramic.html#price">ดูราคา <span aria-hidden="true">→</span></a></p>
       </article>
+      <article class="series-card" data-id="ceramic-plus">
+        <a class="card-button" href="films/ceramic-plus.html">
+          <span class="card-photo"><img src="assets/series/card-ceramic-plus.jpg" style="object-position:center 75%" alt="" loading="lazy"><span class="card-logo" aria-hidden="true"><img src="assets/series/logo-ceramic-plus-white.png" alt="CERAMIC PLUS" width="892" height="268" loading="lazy"></span><span class="card-number">03</span></span>
+          <span class="card-line"><span><strong>CERAMIC PLUS</strong><small>ฟินนิกซ์ เซรามิค พลัส ฟิล์ม</small></span></span>
+        </a>
+        <p class="card-facts"><span class="nb">ลดความร้อน <b><span class="var" data-var="CERAMIC_PLUS_SPEC">รอข้อมูล</span></b></span> · <span class="nb">แสงส่องผ่าน <b><span class="var" data-var="CERAMIC_PLUS_SPEC">รอข้อมูล</span></b></span><br>ยังไม่มีราคาในเอกสาร</p>
+        <p class="card-links"><a class="pill" href="films/ceramic-plus.html#spec">ดูสเปก <span aria-hidden="true">→</span></a><a class="pill" href="films/ceramic-plus.html#price">ดูราคา <span aria-hidden="true">→</span></a></p>
+      </article>
       <article class="series-card" data-id="crystalize">
         <a class="card-button" href="films/crystalize.html">
-          <span class="card-photo"><img src="assets/sedan.jpg" style="object-position:100% center" alt="" loading="lazy"><span class="card-number">03</span></span>
+          <span class="card-photo"><img src="assets/series/card-crystalize.jpg" style="object-position:center 75%" alt="" loading="lazy"><span class="card-logo" aria-hidden="true"><img src="assets/series/logo-crystalize-white.png" alt="CRYSTALIZE" width="800" height="232" loading="lazy"></span><span class="card-number">04</span></span>
           <span class="card-line"><span><strong>CRYSTALIZE</strong><small>ฟินนิกซ์ คริสตัลไลซ์ ฟิล์ม</small></span></span>
         </a>
         <p class="card-facts"><span class="nb">ลดความร้อน <b>55–85%</b></span> · <span class="nb">แสงส่องผ่าน <b>22–70%</b></span><br>ยังไม่มีราคาในเอกสาร</p>
@@ -119,7 +121,7 @@
       </article>
       <article class="series-card" data-id="extra-clear">
         <a class="card-button" href="films/extra-clear.html">
-          <span class="card-photo"><img src="assets/glass.jpg" style="object-position:70% center" alt="" loading="lazy"><span class="card-number">04</span></span>
+          <span class="card-photo"><img src="assets/series/card-extra-clear.jpg" style="object-position:center 75%" alt="" loading="lazy"><span class="card-logo" aria-hidden="true"><img src="assets/series/logo-extra-clear-white.png" alt="EXTRA CLEAR" width="800" height="195" loading="lazy"></span><span class="card-number">05</span></span>
           <span class="card-line"><span><strong>EXTRA CLEAR</strong><small>ฟินนิกซ์ เอ็กซ์ตร้า เคลียร์</small></span></span>
         </a>
         <p class="card-facts"><span class="nb">ลดความร้อน <b>61–67%</b></span> · <span class="nb">แสงส่องผ่าน <b>5–35%</b></span><br>ยังไม่มีราคาในเอกสาร</p>
@@ -127,7 +129,7 @@
       </article>
       <article class="series-card" data-id="uv-guard">
         <a class="card-button" href="films/uv-guard.html">
-          <span class="card-photo"><img src="assets/hero.jpg" style="object-position:30% center" alt="" loading="lazy"><span class="card-number">05</span></span>
+          <span class="card-photo"><img src="assets/series/card-uv-guard.jpg" style="object-position:center 75%" alt="" loading="lazy"><span class="card-logo" aria-hidden="true"><img src="assets/series/logo-uv-guard-white.png" alt="UV GUARD" width="800" height="233" loading="lazy"></span><span class="card-number">06</span></span>
           <span class="card-line"><span><strong>UV GUARD</strong><small>ฟินนิกซ์ ยูวีการ์ด เซรามิค ฟิล์ม</small></span></span>
         </a>
         <p class="card-facts"><span class="nb">ลดความร้อน <b>52–63%</b></span> · <span class="nb">แสงส่องผ่าน <b>5–40%</b></span><br>บานหน้าเริ่มต้น <b>4,000</b> บาท</p>
@@ -135,7 +137,7 @@
       </article>
     </div>
     <!-- @end gen:series-cards -->
-    <p class="note">ภาพประกอบบรรยากาศ สีฟิล์มและมุมมองจริงขึ้นอยู่กับรหัสฟิล์ม กระจก และสภาพแสง · ค่าบนการ์ดต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยังรอ <span class="var">{{TEST_STANDARD}}</span> · ฟิล์มใสกันรอยยังไม่มีข้อมูลบนเว็บ รอ <span class="var">{{PORTFOLIO_ITEMS_PPF}}</span></p>
+    <p class="note">ภาพประกอบบรรยากาศ สีฟิล์มและมุมมองจริงขึ้นอยู่กับรหัสฟิล์ม กระจก และสภาพแสง · ค่าบนการ์ดต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยัง<span class="var" data-var="TEST_STANDARD">รอข้อมูล</span> · ฟิล์มใสกันรอยยัง<span class="var" data-var="PORTFOLIO_ITEMS_PPF">รอข้อมูล</span></p>
   </section>
 
   <!-- 4. ราคา (v8.0 ย้ายมาจาก /price.html · v8.1 เอาการ์ดราคาเต็มรายซีรีส์ออกตามคำสั่ง — ตารางเต็มอยู่ที่หน้ารุ่น) — เครื่องคำนวณ: ตัวเลือกกับราคามาจาก content.js (app.js ส่วนที่ 6) · ?film=<id> เลือกซีรีส์ให้ล่วงหน้า -->
@@ -165,8 +167,8 @@
       </form>
       <div class="price-panel">
         <div class="eyebrow red">RESULT</div>
-        <div id="price-result" class="price-result" role="status">เลือกตัวเลือกด้านซ้าย แล้วกด<span class="nb">ดูราคา</span></div>
-        <p class="note">ราคาจากโบรชัวร์ปี 2024 ซึ่งมีตารางราคาเฉพาะ TITANIUM · CERAMIC · UV GUARD · อีกสอง<span class="nb">ซีรีส์</span>ไม่มีในเอกสาร เราจึงไม่แสดงราคาเดา · ราคาจริงยืนยันที่ร้าน</p>
+        <div id="price-result" class="price-result" role="status">เลือกให้ครบ 3 ข้อ แล้วกด<span class="nb">ดูราคา</span></div>
+        <p class="note">ราคาจากโบรชัวร์ปี 2024 ซึ่งมีตารางราคาเฉพาะ TITANIUM · CERAMIC · UV GUARD · อีกสาม<span class="nb">ซีรีส์</span>ยังไม่มีราคาในเอกสาร เราจึงไม่แสดงราคาเดา · ราคาจริงยืนยันที่ร้าน</p>
       </div>
     </div>
   </section>
@@ -174,9 +176,9 @@
   <!-- แถบ "ตอนต่อไป" — ปลายทางและข้อความอยู่ที่ NEXT ใน build.py -->
   <!-- @next -->
   <nav class="next-chapter dark" aria-label="ตอนต่อไป">
-    <a href="experience.html">
-      <span class="eyebrow">NEXT <span></span> TRY IT YOURSELF <em class="eyebrow-th">ลองของจริง</em></span>
-      <strong><span>ลองสัมผัสของจริงก่อนตัดสินใจ</span></strong>
+    <a href="dealers.html">
+      <span class="eyebrow">NEXT <span></span> FIND FINNIX <em class="eyebrow-th">หาร้านใกล้คุณ</em></span>
+      <strong><span>หาร้านใกล้คุณ</span></strong>
       <i aria-hidden="true">→</i>
     </a>
   </nav>
@@ -203,7 +205,6 @@
     <h2>ผลิตภัณฑ์</h2>
     <a href="films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
     <a href="films.html#price">ราคา</a>
-    <a href="experience.html">ลองของจริง</a>
   </nav>
   <div class="home-footer-contact">
     <h2>บริการและการติดต่อ</h2>

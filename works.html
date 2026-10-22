@@ -7,9 +7,10 @@
   <title>ผลงานที่ติดตั้ง | FINNIX FILM</title>
   <meta name="description" content="ผลงานติดตั้งฟิล์มฟินนิกซ์ — รุ่นรถ และรหัสฟิล์มที่ติดในแต่ละตำแหน่งกระจก">
   <!-- @assets -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="journey.css">
   <link rel="stylesheet" href="merge.css">
@@ -26,7 +27,6 @@
     <a href="./">หน้าแรก</a>
     <a href="films.html">ฟิล์ม</a>
     <a href="works.html" aria-current="page">ผลงาน</a>
-    <a href="experience.html">ลองของจริง</a>
     <a href="about.html">เกี่ยวกับเรา</a>
     <a class="nav-extra" href="dealers.html">หาร้านใกล้คุณ</a>
   </nav>
@@ -49,7 +49,7 @@
     <!-- @gen:works-meta -->
     <p class="works-meta"><span><b>20</b> รายการตัวอย่าง</span><span><b>05</b> ซีรีส์ฟิล์ม</span></p>
     <!-- @end gen:works-meta -->
-    <p class="works-notice demo-tag" role="note"><span class="works-notice-icon" aria-hidden="true">i</span><span><strong>ตัวอย่างการแสดงผล</strong> — ยังไม่ใช่บันทึกงานติดตั้งจริง · รอ {{PORTFOLIO_ITEMS}}</span></p>
+    <p class="works-notice demo-tag" role="note"><span class="works-notice-icon" aria-hidden="true">i</span><span><strong>ตัวอย่างการแสดงผล</strong> — ยังไม่ใช่บันทึกงานติดตั้งจริง · <span class="var" data-var="PORTFOLIO_ITEMS">รอข้อมูล</span>ผลงานจริง</span></p>
   </section>
 
   <!-- ผลงาน — สร้างจาก data/gallery.json · ตัวอย่างการแสดงผล รอ {{PORTFOLIO_ITEMS}} · กรอง / แสดงทีละ 6 อยู่ที่ app.js ส่วนที่ 8 · การ์ดลิงก์ไปหน้ารุ่นของฟิล์มที่ใช้ (v8.5) -->
@@ -312,7 +312,6 @@
     <h2>ผลิตภัณฑ์</h2>
     <a href="films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
     <a href="films.html#price">ราคา</a>
-    <a href="experience.html">ลองของจริง</a>
   </nav>
   <div class="home-footer-contact">
     <h2>บริการและการติดต่อ</h2>

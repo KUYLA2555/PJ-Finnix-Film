@@ -1,0 +1,177 @@
+<!-- JOB: CONSIDER | USER FEELS: รุ่นนี้เหมาะกับเราไหม | NEXT: /dealers.html
+     สร้างโดย tools/build.py จาก data/films.json — ห้ามแก้ไฟล์นี้ตรง ๆ แก้ที่ series_page() ใน build.py
+     v8.2 ดีไซน์ตามไฟล์ต้นแบบ C:/Claude/ceramic.html (เนื้อหาเดิม) · CSS หมวด 7 ของ merge.css · JS ส่วนที่ 11 ของ app.js -->
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CERAMIC PLUS | FINNIX FILM</title>
+  <meta name="description" content="ฟินนิกซ์ เซรามิค พลัส ฟิล์ม — ฟิล์มกรองแสงรถยนต์ FINNIX FILM">
+  <!-- @assets -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../journey.css">
+  <link rel="stylesheet" href="../merge.css">
+  <script src="../content.js" defer></script>
+  <script src="../app.js" defer></script>
+  <!-- @end assets -->
+</head>
+<body class="inner-page series-page">
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<!-- @header -->
+<header>
+  <a href="../" class="logo"><img src="../assets/logo-finnix-web.png" alt="FINNIX FILM หน้าแรก" width="817" height="96"></a>
+  <nav id="nav" aria-label="เมนูหลัก">
+    <a href="../">หน้าแรก</a>
+    <a href="../films.html">ฟิล์ม</a>
+    <a href="../works.html">ผลงาน</a>
+    <a href="../about.html">เกี่ยวกับเรา</a>
+    <a class="nav-extra" href="../dealers.html">หาร้านใกล้คุณ</a>
+  </nav>
+  <a class="pill nav-dealer" href="../dealers.html">หาร้านใกล้คุณ</a>
+  <button id="menu" aria-label="เปิดเมนู" aria-controls="nav" aria-expanded="false"><span></span><span></span></button>
+</header>
+<!-- @end header -->
+
+<main id="main">
+
+  <nav class="sp-crumb" aria-label="เส้นทางหน้าเว็บ"><a href="../">หน้าแรก</a><span aria-hidden="true">/</span><a href="../films.html">ฟิล์มทุกซีรีส์</a><span aria-hidden="true">/</span><span aria-current="page">CERAMIC PLUS</span></nav>
+
+  <!-- ภาพใหญ่พื้นมืด — ภาพประกอบจาก SERIES_PHOTO ใน build.py (ไม่ใช่ผลงานติดตั้งจริง) -->
+  <section class="sp-hero" id="film-hero">
+    <img class="sp-hero-photo" src="../assets/hero.jpg" style="object-position:88% center" alt="" fetchpriority="high">
+    <div class="sp-hero-copy">
+      <div class="eyebrow">03 <span></span> CM SERIES · FINNIX FILM</div>
+      <h1>CERAMIC PLUS</h1>
+      <p class="sp-hero-th">ฟินนิกซ์ เซรามิค พลัส ฟิล์ม</p>
+      <span class="red-line" aria-hidden="true"></span>
+      <div class="sp-hero-actions">
+        <a class="pill sp-white" href="#price">ดูราคา</a>
+        <a class="pill light" href="#spec">ดูค่าสเปก</a>
+      </div>
+    </div>
+    <span class="sp-hero-note">ภาพประกอบบรรยากาศ</span>
+  </section>
+
+  <!-- ภาพรวม — โลโก้ + ปกโบรชัวร์ซ้าย · ค่าหลัก 6 ช่องขวา (ช่วงค่าจาก films.json) -->
+  <section class="sp-overview" id="overview">
+    <div class="sp-overview-brand">
+      <div class="eyebrow"><span></span> CM SERIES · 3 รหัสความเข้ม</div>
+      <p class="sp-logo"><img src="../assets/series/logo-ceramic-plus.png" alt="CERAMIC PLUS" width="892" height="268" loading="lazy"></p>
+      <p class="sp-codes">CM05 · CM15 · CM35</p>
+      <p class="cover-pending">โบรชัวร์ของซีรีส์นี้<span class="var" data-var="CERAMIC_PLUS_BROCHURE">รอข้อมูล</span></p>
+    </div>
+    <dl class="sp-facts">
+      <div><dt>เทคโนโลยี</dt><dd><span class="var" data-var="TECH_CERAMIC_PLUS">รอข้อมูล</span></dd></div>
+      <div><dt>ชั้นโลหะ</dt><dd>ยังไม่ระบุ<small>เอกสารยังไม่ระบุว่ามีชั้นโลหะหรือไม่</small></dd></div>
+      <div><dt>ลดความร้อน</dt><dd class="num"><span class="var" data-var="CERAMIC_PLUS_SPEC">รอข้อมูล</span></dd></div>
+      <div><dt>แสงส่องผ่าน</dt><dd class="num"><span class="var" data-var="CERAMIC_PLUS_SPEC">รอข้อมูล</span></dd></div>
+      <div><dt>กัน UV</dt><dd class="num"><span class="var" data-var="CERAMIC_PLUS_SPEC">รอข้อมูล</span></dd></div>
+      <div><dt>รับประกัน</dt><dd class="num"><span class="var" data-var="CERAMIC_PLUS_WARRANTY">รอข้อมูล</span></dd></div>
+    </dl>
+  </section>
+
+  <!-- ความเข้มและสเปก — ปุ่มเลือกรหัสไฮไลต์คอลัมน์ในตาราง (app.js ส่วนที่ 11) -->
+  <section class="sp-spec" id="spec">
+    <div class="sp-spec-intro">
+      <div class="eyebrow"><span></span> SPEC · 3 รหัสความเข้ม</div>
+      <h2>ค่าสเปกทั้ง 3 รหัส</h2>
+      <p class="note">ภาพจำลองมองผ่านกระจก — สีและความเข้มเทียบจากภาพถ่ายแผ่นฟิล์มตัวอย่างจริง สีบนจอต่างจากของจริงได้ · กดรหัสเพื่อดูในตาราง</p>
+      <p class="sp-selection" id="sp-selection" aria-live="polite" hidden><strong id="sp-selected-code"></strong><span id="sp-selected-light"></span></p>
+    </div>
+    <div class="sp-shades" role="group" aria-label="เลือกรหัสเพื่อไฮไลต์ในตาราง">
+      <button type="button" class="sp-shade" data-col="1" aria-pressed="false" aria-label="เลือกรหัส CM05"><span class="sp-shade-scene" style="--tint:#514e4e"><img src="../assets/glass.jpg" alt="" loading="lazy"><span class="sp-shade-mark" aria-hidden="true">✓</span></span><b>CM05</b><small>แสงผ่าน <span class="var" data-var="CERAMIC_PLUS_SPEC">รอข้อมูล</span></small></button>
+      <button type="button" class="sp-shade" data-col="2" aria-pressed="false" aria-label="เลือกรหัส CM15"><span class="sp-shade-scene" style="--tint:#706f71"><img src="../assets/glass.jpg" alt="" loading="lazy"><span class="sp-shade-mark" aria-hidden="true">✓</span></span><b>CM15</b><small>แสงผ่าน <span class="var" data-var="CERAMIC_PLUS_SPEC">รอข้อมูล</span></small></button>
+      <button type="button" class="sp-shade" data-col="3" aria-pressed="false" aria-label="เลือกรหัส CM35"><span class="sp-shade-scene" style="--tint:#9c9ca3"><img src="../assets/glass.jpg" alt="" loading="lazy"><span class="sp-shade-mark" aria-hidden="true">✓</span></span><b>CM35</b><small>แสงผ่าน <span class="var" data-var="CERAMIC_PLUS_SPEC">รอข้อมูล</span></small></button>
+    </div>
+    <div class="sp-spec-table">
+      <div class="table-wrap" tabindex="0" role="region" aria-label="ตารางสเปก — เลื่อนแนวนอนได้บนมือถือ">
+        <table class="spec-table sp-table" id="spec-table">
+          <thead><tr><th scope="col">ค่า</th><th scope="col">CM05</th><th scope="col">CM15</th><th scope="col">CM35</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">ค่าสเปก</th><td colspan="3"><span class="var" data-var="CERAMIC_PLUS_SPEC">รอข้อมูล</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sp-source">ยังไม่มีโบรชัวร์ของซีรีส์นี้ ค่าสเปก<span class="var" data-var="CERAMIC_PLUS_SPEC">รอข้อมูล</span> · ทุกค่าต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยัง<span class="var" data-var="TEST_STANDARD">รอข้อมูล</span></p>
+    </div>
+  </section>
+
+  <section class="sp-price" id="price">
+    <div class="sp-inner">
+      <div class="eyebrow"><span></span> PRICE</div>
+      <h2>ราคา</h2>
+      <p class="note">ราคา<span class="var" data-var="CERAMIC_PLUS_PRICE">รอข้อมูล</span> สอบถามได้ที่ร้านติดตั้ง</p>
+      <a class="pill" href="../dealers.html">หาร้านใกล้คุณ</a>
+    </div>
+  </section>
+
+  <section class="sp-alts">
+    <div class="sp-alts-head">
+      <h2>ทางเลือกอื่นที่อยาก<span class="nb">ให้ลอง</span></h2>
+      <a class="sp-text-link" href="../films.html">ดูฟิล์มทุกซีรีส์</a>
+    </div>
+    <div class="sp-alt-grid">
+      <a class="sp-alt" href="../films/ceramic.html">
+        <span class="sp-alt-photo"><img src="../assets/car.jpg" style="object-position:80% center" alt="" loading="lazy"><span>ภาพประกอบบรรยากาศ</span></span>
+        <span class="sp-alt-copy"><span><strong>CERAMIC</strong><small>ลดความร้อน 80–90% · แสงส่องผ่าน 5–30%</small></span><i aria-hidden="true">↗</i></span>
+      </a>
+      <a class="sp-alt" href="../films/crystalize.html">
+        <span class="sp-alt-photo"><img src="../assets/sedan.jpg" style="object-position:100% center" alt="" loading="lazy"><span>ภาพประกอบบรรยากาศ</span></span>
+        <span class="sp-alt-copy"><span><strong>CRYSTALIZE</strong><small>ลดความร้อน 55–85% · แสงส่องผ่าน 22–70%</small></span><i aria-hidden="true">↗</i></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- @next -->
+  <nav class="next-chapter dark" aria-label="ตอนต่อไป">
+    <a href="../dealers.html">
+      <span class="eyebrow">NEXT <span></span> FIND FINNIX <em class="eyebrow-th">หาร้านใกล้คุณ</em></span>
+      <strong><span>หาร้านใกล้คุณ</span></strong>
+      <i aria-hidden="true">→</i>
+    </a>
+  </nav>
+  <!-- @end next -->
+
+</main>
+
+<!-- @footer -->
+<footer class="home-footer">
+<div class="home-footer-grid">
+  <div class="home-footer-brand">
+    <a class="home-footer-logo" href="../"><img src="../assets/logo-finnix-white.png" alt="FINNIX FILM หน้าแรก" width="720" height="88" loading="lazy"></a>
+    <p>ฟิล์มกรองแสงสำหรับรถยนต์<br>ความสบายที่อยู่กับคุณในทุกการเดินทาง</p>
+    <p class="home-footer-company">บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</p>
+    <div class="home-footer-social"><span class="foot-icon is-pending" role="img" aria-label="Facebook — ยังไม่มีลิงก์" title="Facebook · รอ {{FACEBOOK_URL}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5H16l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8.1v3h2.5V21z"/></svg></span><span class="foot-icon is-pending" role="img" aria-label="LINE — ยังไม่มีลิงก์" title="LINE · รอ {{LINE_OA_ID}}"><svg class="ico-line" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.3.1.8.2.9.6.1.3.1.8 0 1.1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6.1-3.6 8.3-6.2 1.5-1.7 2.3-3.4 2.3-5.4 0-4.7-4.7-8.5-10.5-8.5z"/><text x="12" y="13.3" text-anchor="middle">LINE</text></svg></span><a class="foot-icon" href="tel:0635978497" aria-label="โทร 06-3597-8497"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></a></div>
+  </div>
+  <nav aria-label="รู้จัก FINNIX">
+    <h2>รู้จัก FINNIX</h2>
+    <a href="../about.html">เกี่ยวกับเรา</a>
+    <a href="../works.html">ผลงานที่ติดตั้ง</a>
+  </nav>
+  <nav aria-label="ผลิตภัณฑ์">
+    <h2>ผลิตภัณฑ์</h2>
+    <a href="../films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
+    <a href="../films.html#price">ราคา</a>
+  </nav>
+  <div class="home-footer-contact">
+    <h2>บริการและการติดต่อ</h2>
+    <a href="../dealers.html">ค้นหาร้าน FINNIX</a>
+    <a href="../dealers.html#contact">ติดต่อสำนักงานใหญ่</a>
+    <span class="foot-line is-pending" title="LINE · รอ {{LINE_OA_ID}}"><svg class="ico-line" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C6.2 2.5 1.5 6.3 1.5 11c0 4.2 3.7 7.7 8.8 8.4.3.1.8.2.9.6.1.3.1.8 0 1.1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6.1-3.6 8.3-6.2 1.5-1.7 2.3-3.4 2.3-5.4 0-4.7-4.7-8.5-10.5-8.5z"/><text x="12" y="13.3" text-anchor="middle">LINE</text></svg>LINE FINNIX <small>(เร็ว ๆ นี้)</small></span>
+    <p>ให้ร้านช่วยแนะนำรุ่นและเฉด<br>ที่เหมาะกับรถของคุณ</p>
+  </div>
+</div>
+<div class="home-footer-bottom">
+  <span>© 2026 บริษัท ฟินนิกซ์ ฟิล์ม จำกัด</span>
+  <span>BEAUTIFULLY REAL.</span>
+  <span>CLEARER PEOPLE. BRIGHTER TOMORROW.</span>
+</div>
+</footer>
+<!-- @end footer -->
+</body>
+</html>
