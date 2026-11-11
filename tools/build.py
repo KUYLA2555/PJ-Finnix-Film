@@ -11,7 +11,7 @@
         <!-- @assets -->  … <!-- @end assets -->    ลิงก์ CSS / JS ใน <head>
         <!-- @header -->  … <!-- @end header -->    แถบเมนูบน (ใส่ aria-current ให้เองตาม URL)
         <!-- @footer -->  … <!-- @end footer -->    ท้ายเว็บ 4 คอลัมน์ (ไม่มีปุ่มติดต่อลอยแล้ว v8.1)
-        <!-- @next -->    … <!-- @end next -->      แถบ "ตอนต่อไป" (เฉพาะหน้าใน NEXT + หน้ารุ่น)
+        <!-- @find-family --> … <!-- @end find-family -->   หาร้าน + เพื่อนร่วมทาง ท้าย <main> (v10.0 แทนแถบ "ตอนต่อไป" · ยกเว้นหน้าใน NO_FIND_FAMILY)
   4. บล็อกที่สร้างจากข้อมูล   ← <!-- @gen:ชื่อ --> … <!-- @end gen:ชื่อ -->  (ดูรายชื่อที่ GEN ท้ายไฟล์)
 
 ทุกอย่างระหว่างเครื่องหมายถูกเขียนทับทุกครั้งที่ build — แก้ที่ไฟล์นี้ ไม่ใช่ในหน้า
@@ -51,7 +51,7 @@ SITE = {
 # เมนูบน — (URL, ชื่อที่แสดง) · ปุ่ม "หาร้านใกล้คุณ" อยู่แยกทางขวาเสมอ
 NAV = [
     ('/', 'หน้าแรก'),
-    ('/films.html', 'ฟิล์ม'),           # ฟิล์มทุกซีรีส์ + ราคา (v8.0) · v8.3 เปลี่ยนชื่อเมนูจาก "ราคา"
+    ('/films.html', 'ฟิล์ม'),           # ฟิล์มทุกซีรีส์ · v10.0 ส่วนราคาท้ายหน้าเอาออก (ราคาอยู่ที่หน้ารุ่น)
     ('/works.html', 'ผลงาน'),           # v8.3 ย้ายมาแทนตำแหน่ง "เทคโนโลยี"
     ('/about.html', 'เกี่ยวกับเรา'),     # v8.3 หน้าเทคโนโลยีเดิม เปลี่ยนเป็นหน้าเกี่ยวกับเรา · v8.8 ลบ "ลองของจริง" (/experience.html)
 ]
@@ -60,26 +60,9 @@ NAV = [
 # คอลัมน์ "บริการและการติดต่อ" กับไอคอน Facebook / LINE / โทร สร้างจาก SITE ใน home_footer_block()
 HOME_FOOT = [
     ('รู้จัก FINNIX', [('/about.html', 'เกี่ยวกับเรา'), ('/works.html', 'ผลงานที่ติดตั้ง')]),   # v8.4 ลบ /faq.html
-    ('ผลิตภัณฑ์', [('/films.html', 'ฟิล์มรถยนต์ทุกซีรีส์'), ('/films.html#price', 'ราคา')]),   # v8.8 ลบ /experience.html
+    ('ผลิตภัณฑ์', [('/films.html', 'ฟิล์มรถยนต์ทุกซีรีส์')]),   # v8.8 ลบ /experience.html · v10.0 ลบ "ราคา" (/films.html#price เอาออกแล้ว)
 ]
 HOME_FOOT_LOGO = '/assets/logo-finnix-white.png'   # ครอบจาก LOGO FINNIX-01.png (ตัวอักษรขาว · นกและ FILM แดง) — ต้นฉบับอยู่ในคลัง top secret/Finnix/ไฟล์ต้นฉบับ/
-
-# แถบ "ตอนต่อไป" ท้ายหน้าย่อย (v7.7 · <!-- @next -->) — หน้า → (ปลายทาง, ข้อความชวน) · 'series' = หน้ารุ่นทุกหน้า
-# ปลายทางต้องมีชื่ออยู่ใน CHAPTERS (อังกฤษ, ไทย) — ตัวเดียวกับป้ายบนหัวของหน้านั้น
-#   ข้อความชวนเป็น HTML (v8.7) — ใส่ <span class="nb"> ได้ · v8.8 ลบ /experience.html → films · หน้ารุ่น ไปหาร้าน · about ไปฟิล์ม
-NEXT = {
-    '/films.html': ('/dealers.html', 'หาร้านใกล้คุณ'),
-    '/about.html': ('/films.html', 'ดูฟิล์มทุกซีรีส์'),
-    '/dealers.html': ('/works.html', 'ดูผลงานที่ติดตั้ง'),
-    '/works.html': ('/dealers.html', 'หาร้านใกล้คุณ'),
-    'series': ('/dealers.html', 'หาร้านใกล้คุณ'),
-}
-CHAPTERS = {
-    '/films.html': ('FIND YOUR FILM', 'ฟิล์มทุกซีรีส์'),
-    '/about.html': ('ABOUT US', 'เกี่ยวกับเรา'),
-    '/dealers.html': ('FIND FINNIX', 'หาร้านใกล้คุณ'),
-    '/works.html': ('OUR WORK', 'ผลงานที่ติดตั้ง'),
-}
 
 # v8.4 meta ความปลอดภัยทุกหน้า (ใส่ใน @assets ก่อน CSS/JS)
 #   CSP — สคริปต์ได้เฉพาะไฟล์ของเว็บเอง (ไม่มี <script> inline) · ฟอนต์ Google Fonts · iframe แผนที่ Google เท่านั้น
@@ -111,6 +94,7 @@ HERO_FILM = 'ceramic'
 #   ปุ่ม Clear/40/60/80 สลับภาพนิ่งได้ทันที · ไลบรารี (vendor/ ~1 MB) กับโมเดลโหลดเองเมื่อเลื่อนใกล้ถึงส่วน 04 (v9.8 · เดิมกดปุ่ม)
 #   ปุ่ม "หมุนดูรถ 3D" ใน HTML ซ่อนไว้ — JS เปิดเมื่อโหลดพลาด (เป็น "ลองใหม่") หรือเบราว์เซอร์เปิดโหมดประหยัดเน็ต
 #   glass = ความทึบของกระจกในภาพจำลองตามปุ่ม Clear 40 60 80 ใน index.html (None = กระจกเดิมของโมเดล) — ไม่ใช่ค่า VLT
+#     v10.0 Clear 0.35 (เดิม None = กระจกเดิมของโมเดล สีฟ้าอ่อนทึบ 0.25 ใสจนดูเหมือนไม่มีกระจก) — ผู้สั่งงานสั่งให้เข้มขึ้นแต่ไม่ถึงระดับ 40 (0.55)
 #   credit = เครดิตตามสัญญาอนุญาตของโมเดล (HTML · แสดงใต้ภาพ) — โมเดล CC BY ต้องมี ไม่งั้น build exit 1
 #   v9.6 โมเดล "Tesla M3 model" โดย wintrez (Sketchfab · CC BY 4.0) — ต้นฉบับอยู่ในคลัง ต้นฉบับรูปบนเว็บ · ไฟล์ในเว็บดัดแปลงแล้ว 2 อย่าง:
 #   เลนส์ไฟหน้า/ท้ายใช้วัสดุ glass ร่วมกับหน้าต่าง (ฟิล์มทาไฟดำไปด้วย) จึงแยกเป็นวัสดุ lampLens ด้วย car-glb-split.py ในคลังเดียวกัน
@@ -120,7 +104,7 @@ CAR_3D = {
     'src': '/assets/3d/car.glb',
     'poster': '/assets/3d/car-{n}.jpg',
     'orbit': '-35deg 75deg 80%',
-    'glass': [None, 0.55, 0.75, 0.9],
+    'glass': [0.35, 0.55, 0.75, 0.9],
     'alt': 'รถจำลอง 3 มิติ ลากเพื่อหมุนดูรอบคัน',
     'credit': ('โมเดล 3D "<a href="https://sketchfab.com/3d-models/tesla-m3-model-3a602469d7874d1397efa67182198705">Tesla M3 model</a>" '
                'โดย <a href="https://sketchfab.com/wintrez">wintrez</a> · '
@@ -166,7 +150,8 @@ LOGO_SERIES = '/assets/series/logo-{id}.png'
 LOGO_SERIES_WHITE = '/assets/series/logo-{id}-white.png'
 # ปกโบรชัวร์ตาม id ซีรีส์ (v9.1 เดิมตาม codePrefix — CERAMIC PLUS ใช้รหัส CM ซ้ำกับ CERAMIC) · ซีรีส์ที่ไม่มีในนี้ขึ้นกล่อง "รอข้อมูล" แทนปก
 COVER = {'titanium': 'cover-SY.jpg', 'ceramic': 'cover-CM.jpg', 'crystalize': 'cover-CT.jpg', 'extra-clear': 'cover-XT.jpg', 'uv-guard': 'cover-SM.jpg'}
-TECH_TH = {'ceramic': 'เซรามิก ไม่มีชั้นโลหะ', 'metalize-sputtering': 'เคลือบโลหะหลายชั้น (sputtering)'}
+TECH_TH = {'ceramic': 'เซรามิค',   # v10.7 เดิม 'เซรามิก ไม่มีชั้นโลหะ' — ช่องถัดไป (ชั้นโลหะ) บอกอยู่แล้ว · สะกดตามชื่อซีรีส์
+            'metalize-sputtering': 'เคลือบโลหะหลายชั้น (sputtering)'}
 SPEC_FIELDS = [
     ('heatReject', 'ลดความร้อนจากแสงแดด<span class="nb">โดยรวม</span>'),
     ('vlt', 'แสงส่องผ่าน'),
@@ -327,8 +312,7 @@ need_alternatives = {need: ids[1:3] for need, ids in need_rank.items()}
 #  1. content.js
 # ============================================================================
 content = {
-    'carTypes': meta['carTypes'],
-    'series': summary,
+    'series': summary,   # v10.0 เลิกส่ง carTypes — ใช้แค่เครื่องคำนวณราคาที่ /films.html#price ซึ่งเอาออกแล้ว (หน้ารุ่นสร้างตัวเลือกใน HTML เอง)
     'dealers': [
         # v8.4 ร้านสมมติ (placeholder) ไม่ส่งเบอร์ออกไป — เบอร์ 081000000x ใน dealers.json กดโทรได้จริง จะโทรไปหาคนอื่น
         {k: (None if k == 'phone' and d.get('placeholder') else d.get(k))
@@ -401,7 +385,7 @@ def price_section(s):
     if not s.get('price'):
         # v9.1 ซีรีส์ที่ยังไม่มีโบรชัวร์เลย (ไม่มีใน COVER) — บอกว่ารอข้อมูล ไม่ใช่ "โบรชัวร์ไม่มีตารางราคา"
         missing = ('โบรชัวร์ของซีรีส์นี้ไม่มีตารางราคา' if s['id'] in COVER
-                   else f'ราคา{pending(series_var(s) + "_PRICE")}')
+                   else pending(series_var(s) + "_PRICE"))   # v10.7 หัวส่วนเขียน "ราคา" อยู่แล้ว
         return ('<section class="sp-price" id="price">\n'
                 '  <div class="sp-inner">\n'
                 '    <div class="eyebrow"><span></span> PRICE</div>\n'
@@ -429,7 +413,7 @@ def price_section(s):
             f'    </div>\n'
             f'    <div class="sp-price-layout">\n'
             f'      <div class="sp-estimate" data-name="{name}" hidden>\n'
-            f'        <div class="eyebrow">{name} · ราคาตามเอกสารปี {year}</div>\n'
+            f'        <div class="eyebrow">{name}</div>\n'
             f'        <label for="sp-car">ประเภทรถ</label>\n'
             f'        <select id="sp-car">{options}</select>\n'
             f'        <fieldset>\n'
@@ -439,7 +423,7 @@ def price_section(s):
             f'<label><input type="radio" name="sp-position" value="full" checked>รอบคัน</label></div>\n'
             f'        </fieldset>\n'
             f'        <div class="sp-result" aria-live="polite">\n'
-            f'          <small>ราคาตามเอกสารปี {year}</small>\n'
+            f'          <small>ราคา</small>\n'
             f'          <p class="sp-amount"><strong id="sp-amount">{amount}</strong> <span>บาท</span></p>\n'
             f'          <p class="sp-caption" id="sp-caption">{e(meta["carTypes"][default_car])} · รอบคัน · {name}</p>\n'
             f'          <a class="pill" href="/dealers.html">หาร้านใกล้คุณ</a>\n'
@@ -468,7 +452,7 @@ def code_number(v):
 
 def series_page(s, number):
     """หน้ารุ่น (v8.2 ดีไซน์ตามไฟล์ต้นแบบ C:/Claude/ceramic.html · เนื้อหาเดิมทั้งหมดจาก films.json)
-    ภาพใหญ่พื้นมืด → ภาพรวม (โลโก้ ปกโบรชัวร์ ค่าหลัก 6 ช่อง) → ความเข้มและสเปก → ราคา → ทางเลือกอื่น
+    ภาพใหญ่พื้นมืด → ภาพรวม (โลโก้ ปกโบรชัวร์ ค่าหลัก 6 ช่อง) → ความเข้มและสเปก → ราคา → รถที่ติดซีรีส์นี้ (v10.6 · ไม่มีผลงานไม่ขึ้น) → ทางเลือกอื่น
     v9.1 ซีรีส์ที่ยังไม่มีโบรชัวร์ (CERAMIC PLUS) — ช่องที่ไม่มีค่าขึ้น "รอข้อมูล" · ไม่มี tagline ก็ไม่มีหัวรอง"""
     sm = by_id[s['id']]
     vp = series_var(s)
@@ -519,6 +503,8 @@ def series_page(s, number):
     warranty = s.get('warrantyYears', meta['warrantyYears'])
     warranty = f'{warranty} <small>ปี</small>' if warranty else pending(vp + '_WARRANTY')
     fact = lambda value: value if value else pending(vp + '_SPEC')
+    works = series_works(s)
+    works = f'\n  <!-- v10.6 ผลงานที่ติดซีรีส์นี้ — data/gallery.json (series_works · ไม่มีผลงาน = ไม่มีส่วนนี้) -->\n{indent(works, "  ")}\n' if works else ''
 
     return f'''<!-- JOB: CONSIDER | USER FEELS: รุ่นนี้เหมาะกับเราไหม | NEXT: /dealers.html
      สร้างโดย tools/build.py จาก data/films.json — ห้ามแก้ไฟล์นี้ตรง ๆ แก้ที่ series_page() ใน build.py
@@ -577,7 +563,7 @@ def series_page(s, number):
   <!-- ความเข้มและสเปก — ปุ่มเลือกรหัสไฮไลต์คอลัมน์ในตาราง (app.js ส่วนที่ 11) -->
   <section class="sp-spec" id="spec">
     <div class="sp-spec-intro">
-      <div class="eyebrow"><span></span> SPEC · {len(variants)} รหัสความเข้ม</div>
+      <div class="eyebrow"><span></span> SPEC</div>
       <h2>ค่าสเปกทั้ง {len(variants)} รหัส</h2>
       <p class="note">ภาพจำลองมองผ่านกระจก — สีและความเข้มเทียบจากภาพถ่ายแผ่นฟิล์มตัวอย่างจริง สีบนจอต่างจากของจริงได้ · กดรหัสเพื่อดูในตาราง</p>
       <p class="sp-selection" id="sp-selection" aria-live="polite" hidden><strong id="sp-selected-code"></strong><span id="sp-selected-light"></span></p>
@@ -590,7 +576,7 @@ def series_page(s, number):
   </section>
 
 {indent(price_section(s), "  ")}
-
+{works}
   <section class="sp-alts">
     <div class="sp-alts-head">
       <h2>ทางเลือกอื่นที่อยาก<span class="nb">ให้ลอง</span></h2>
@@ -601,7 +587,7 @@ def series_page(s, number):
     </div>
   </section>
 
-  <!-- @next --><!-- @end next -->
+  <!-- @find-family --><!-- @end find-family -->
 
 </main>
 
@@ -620,7 +606,7 @@ def assets_block(url):
 
 def header_block(url):
     def current(href):
-        here = url == href.split('#')[0]   # v8.0 /films.html#price ไฮไลต์ที่ /films.html
+        here = url == href.split('#')[0]   # ลิงก์ที่มี #ส่วน ไฮไลต์ที่หน้านั้น
         return ' aria-current="page"' if here else ''
     links = '\n'.join(f'    <a href="{href}"{current(href)}>{label}</a>' for href, label in NAV)
     # ปุ่ม "หาร้านใกล้คุณ" ทางขวาถูกซ่อนบนมือถือ → ใส่ซ้ำในเมนูพับ (.nav-extra โชว์เฉพาะ ≤1050)
@@ -702,17 +688,70 @@ def footer_block(url):
     return home_footer_block()
 
 
-def next_block(url):
-    """แถบ "ตอนต่อไป" ท้ายหน้าย่อย (v7.7) — ค่าอยู่ที่ NEXT / CHAPTERS"""
-    href, text = NEXT['series' if url.startswith('/films/') else url]
-    en, th = CHAPTERS[href.split('?')[0].split('#')[0]]
-    return (f'<nav class="next-chapter dark" aria-label="ตอนต่อไป">\n'
-            f'  <a href="{href}">\n'
-            f'    <span class="eyebrow">NEXT <span></span> {e(en)} <em class="eyebrow-th">{th}</em></span>\n'
-            f'    <strong><span>{text}</span></strong>\n'   # v8.7 ข้อความใน NEXT เป็น HTML ได้ (<span class="nb">) แบบ SPEC_FIELDS
-            f'    <i aria-hidden="true">→</i>\n'
-            f'  </a>\n'
-            f'</nav>')
+# ภาพแผนที่ประกอบ (แบบเดียวกับ /dealers.html) ระหว่างที่ยังไม่โหลด Google Maps — id ลายพื้นต้องไม่ซ้ำกับ dl-blocks ของ /dealers.html
+FF_MAP_ART = (
+    '<svg class="dl-map-art" viewBox="0 0 680 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>'
+    '<pattern id="ff-blocks" width="125" height="90" patternTransform="rotate(-23)" patternUnits="userSpaceOnUse">'
+    '<rect width="125" height="90" fill="#e7ebe3"/><rect x="8" y="8" width="46" height="30" rx="3" fill="#d8e0d2"/>'
+    '<rect x="64" y="8" width="53" height="30" rx="3" fill="#dce3d6"/><rect x="8" y="48" width="109" height="34" rx="3" fill="#dbe2d5"/>'
+    '</pattern></defs><rect width="680" height="620" fill="url(#ff-blocks)"/>'
+    '<path d="M490 -40C220 160 680 210 440 380S340 590 520 680" stroke="#bdcfc7" stroke-width="40" fill="none"/>'
+    '<path d="M-80 160L710 500M90-60L460 660M-80 480L730 130" stroke="#cbd3c3" stroke-width="25" fill="none"/>'
+    '<path d="M-80 160L710 500M90-60L460 660M-80 480L730 130" stroke="#f7f8f2" stroke-width="17" fill="none"/>'
+    '<path d="M-80 480L730 130" stroke="#e6d9b8" stroke-width="3" stroke-dasharray="9 6" fill="none"/></svg>')
+PIN_ICON = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">'
+            '<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>')
+
+
+# หน้าที่ไม่มีส่วนท้าย หาร้าน + เพื่อนร่วมทาง และต้องไม่มีเครื่องหมาย @find-family (build นับให้)
+# /dealers.html มีช่องค้นหาร้านของตัวเองอยู่แล้ว — สองช่องทำให้สับสน (v10.0 ผู้สั่งงานสั่งเอาออก · ค้างข้อ 49)
+NO_FIND_FAMILY = {'/dealers.html'}
+
+
+def find_family_block(url):
+    """ท้าย <main> ทุกหน้า ยกเว้น NO_FIND_FAMILY — หาร้าน + เพื่อนร่วมทาง (v6.5 หน้าแรกส่วน 06 · v10.0 ผู้สั่งงานสั่งให้ทุกหน้าจบแบบนี้ แทนแถบ "ตอนต่อไป")
+    ซ้ายคอลลาจภาพบรรยากาศแบรนด์ (AI) · ขวาค้นหาบน Google Maps (รายชื่อร้านเต็มอยู่ที่ /dealers.html) · CSS หมวด 5 .find-family · app.js ส่วนที่ 5
+    id ขึ้นต้น ff- ทุกตัว — /dealers.html มี #dealer #dealer-form #locate #map-link ของตัวเอง (ตอนนี้ไม่ใส่ส่วนนี้ แต่กันไว้เผื่อใส่กลับ)
+    แผนที่ Google โหลดเมื่อกด "เปิดแผนที่" หรือค้นหาเท่านั้น (v8.8) · ไม่มี JS = ปุ่มซ่อน (hidden) ใช้ลิงก์ "เปิด Google Maps" แทน
+    เลข 06 เฉพาะหน้าแรก (หัวข้อหน้าแรกเรียงเป็นบท 01–06)"""
+    number = '06 ' if url == '/' else ''
+    return f'''<section class="dealer find-family" id="find-family">
+  <div class="eyebrow find-family-head">{number}<span></span> FIND FINNIX · FRIENDS &amp; FAMILY <em class="eyebrow-th">หาร้าน · เพื่อนร่วมทาง</em></div>
+  <div class="find-family-col reveal">
+    <h2>มากกว่าฟิล์ม<br>คือ<span class="nb">เพื่อนร่วมทาง</span></h2>
+    <p>คน รถ และเรื่องราวระหว่างทาง<br>โลกของ FINNIX เริ่มต้นที่คุณ</p>
+    <a class="pill" href="/dealers.html">พบ FINNIX ใกล้คุณ</a>
+    <div class="collage">
+      <figure><img src="/assets/car.jpg" alt="การเดินทางบนถนน" loading="lazy"><figcaption>On the road.</figcaption></figure>
+      <figure><img src="/assets/hero.jpg" alt="ความสงบระหว่างการเดินทาง" loading="lazy"><figcaption>A moment together.</figcaption></figure>
+      <figure><img src="/assets/glass.jpg" alt="เมืองผ่านกระจกรถ" loading="lazy"><figcaption>A different view.</figcaption></figure>
+      <span class="handwritten">Same Sun.<br>Different Stories.</span>
+    </div>
+  </div>
+  <div class="find-family-col dealer-copy">
+    <h2>FINNIX ใกล้คุณ</h2>
+    <p>เริ่มจากพื้นที่ที่สะดวก<br>แล้วไปดู ลอง และเลือกด้วยตัวเอง</p>
+    <form id="ff-form">
+      <label for="ff-query">จังหวัด เขต หรือพื้นที่</label>
+      <div class="search-wrap">
+        <input id="ff-query" name="location" placeholder="เช่น บางแค กรุงเทพฯ" required>
+        <button type="submit" aria-label="ค้นหาร้าน FINNIX">⌕</button>
+      </div>
+    </form>
+    <button class="text-button location" id="ff-locate">◎ ใช้ตำแหน่งปัจจุบัน</button>
+    <p id="ff-status" class="small" role="status"></p>
+    <div class="map-panel" id="ff-map">
+      {FF_MAP_ART}
+      <div class="map-cover">
+        <div class="dl-pin" aria-hidden="true">{PIN_ICON}</div>
+        <p>ค้นหาพื้นที่ หรือเปิดแผนที่เพื่อดูบริเวณที่<span class="nb">คุณสะดวก</span></p>
+        <button class="pill" id="ff-load-map" type="button" hidden>เปิดแผนที่ <span aria-hidden="true">↗</span></button>
+      </div>
+      <a id="ff-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Thailand" target="_blank" rel="noopener noreferrer" class="pill">เปิด Google Maps</a>
+    </div>
+    <p class="small">แผนที่โหลดจาก Google Maps เมื่อกดเปิดหรือค้นหาเท่านั้น · ติดต่อร้านเพื่อยืนยันสินค้าและเวลาบริการก่อนเดินทาง</p>
+  </div>
+</section>'''
 
 
 # ============================================================================
@@ -759,7 +798,7 @@ def gen_featured():
     return (f'<p class="product-name">FINNIX<br><strong>{e(s["name"])}</strong></p>\n'
             f'<p>{e(s["th"])} · {e(s["tag"])}</p>\n'
             f'<a class="pill filled" href="/films/{s["id"]}.html">สำรวจ {e(s["name"])}</a>\n'
-            f'<a class="text-button" href="/films.html">ดูฟิล์มทุกรุ่น</a>')
+            f'<a class="text-button" href="/films.html">ดูฟิล์มทุกซีรีส์</a>')
 
 
 CAR_POSTERS = [CAR_3D['poster'].format(n=n) for n in range(len(CAR_3D['glass']))]
@@ -851,53 +890,136 @@ ID_BY_NAME = {x['name']: x['id'] for x in summary}   # v8.5 การ์ดผ�
 WORK_COUNT = {x['name']: sum(1 for item in gallery['items'] if item['series'] == x['name']) for x in summary}
 WORK_PHOTO_ICON = ('<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="5" width="26" height="22" rx="2"/>'
                    '<circle cx="11" cy="12" r="2.5"/><path d="m4 23 7-6 5 4 5-8 8 10"/></svg>')
+WORK_WORD = 'รายการตัวอย่าง' if gallery.get('placeholder') else 'ผลงาน'   # v10.4 ผลงานจริงแล้ว (placeholder: false)
+
+
+def work_photos(item):
+    """v10.4 ภาพของผลงานคันนี้ assets/works/<photo>-<n>.jpg เรียงตามเลข (tools/work_photos.py ทำให้)
+    เทียบชื่อเต็ม — "avatr" ต้องไม่ไปเก็บภาพของ "avatr-07" """
+    if not item.get('photo'):
+        return []
+    found = []
+    for p in (ROOT / 'assets' / 'works').glob(f'{item["photo"]}-*.jpg'):
+        m = re.fullmatch(re.escape(item['photo']) + r'-(\d+)', p.stem)
+        if m:
+            found.append((int(m.group(1)), p.name))
+    return [name for _, name in sorted(found)]
+
+
+WORK_PHOTOS = [work_photos(item) for item in gallery['items']]
+WORK_MISSING = [f'data/gallery.json: {item["car"]} มี "photo": "{item["photo"]}" แต่ไม่พบ assets/works/{item["photo"]}-1.jpg'
+                ' — รัน python tools/work_photos.py ก่อน'
+                for item, photos in zip(gallery['items'], WORK_PHOTOS) if item.get('photo') and not photos]
 
 
 def gen_works_meta():
     """/works.html — ตัวเลขใต้หัวหน้า (v8.2 ตามต้นแบบ works.html) · นับจาก gallery.json"""
     series = sum(1 for n in WORK_COUNT.values() if n)
-    return (f'<p class="works-meta"><span><b>{len(gallery["items"])}</b> รายการตัวอย่าง</span>'
+    return (f'<p class="works-meta"><span><b>{len(gallery["items"])}</b> {WORK_WORD}</span>'
             f'<span><b>{series:02d}</b> ซีรีส์ฟิล์ม</span></p>')
+
+
+def work_slides(item, photos):
+    """v10.4 ภาพจริงทั้งชุดของคันนี้ — แถบเลื่อนแนวนอน (scroll-snap ใน merge.css หมวด 12 · ปัดนิ้วได้แม้ไม่มี JS)
+    ปุ่ม ‹ › กับตัวนับซ่อนอยู่ (hidden) จน app.js ส่วนที่ 8 เปิด — ไม่มีปุ่มที่กดแล้วไม่ทำอะไร"""
+    car, series, total = e(item['car']), e(item['series']), len(photos)
+    imgs = ''.join(f'<img src="/assets/works/{name}" alt="{car} ติดฟิล์ม {series} — ภาพที่ {n} จาก {total}" '
+                   'width="800" height="800" loading="lazy" decoding="async">'
+                   for n, name in enumerate(photos, 1))
+    slides = f'<div class="work-slides" role="group" tabindex="0" aria-label="ภาพผลงาน {car} {total} ภาพ">{imgs}</div>'
+    if total < 2:
+        return slides
+    return (slides + '<div class="work-nav" hidden>'
+            f'<button type="button" class="work-prev" aria-label="ภาพก่อนหน้า — {car}"><span aria-hidden="true">‹</span></button>'
+            f'<span class="work-counter" aria-live="polite">1 / {total}</span>'
+            f'<button type="button" class="work-next" aria-label="ภาพถัดไป — {car}"><span aria-hidden="true">›</span></button></div>')
+
+
+def work_card(item, index, on_series=False):
+    """การ์ดผลงานหนึ่งคัน — ใช้ทั้ง /works.html (gen_gallery) และหน้ารุ่น (series_works · v10.6)
+    on_series=True บนหน้ารุ่น — ไม่มีป้ายซีรีส์ (หัวส่วนบอกแล้ว) และไม่มีลิงก์ "ดูฟิล์ม <ซีรีส์>" (จะพากลับมาหน้าเดิม)
+    v10.7 เลิกเขียน "7 ภาพ" ใต้การ์ด — ตัวนับ "1 / 7" บนภาพบอกอยู่แล้ว
+    คันที่ยังไม่มีภาพขึ้นกรอบ "รอภาพผลงานจริง" (ห้ามใช้ภาพ AI) · รหัส 4 ช่อง (แยกบานข้างคู่หน้า/คู่หลัง) → .work-spec.is-four เรียง 2×2"""
+    roof = ' class="roof"'
+    specs = ''.join(
+        f'<div{roof if f["position"] == "หลังคาแก้ว" else ""}><dt>{e(f["position"])}</dt><dd>{e(f["code"])}</dd></div>'
+        for f in item['fit'])
+    four = ' is-four' if sum(1 for f in item['fit'] if f['position'] != 'หลังคาแก้ว') == 4 else ''
+    photos = WORK_PHOTOS[gallery['items'].index(item)]
+    if photos:
+        photo = f'    <div class="work-photo">{work_slides(item, photos)}</div>\n'
+        note = ''
+    else:
+        photo = (f'    <div class="work-photo"><div class="work-placeholder">{WORK_PHOTO_ICON}<p>รอภาพผลงานจริง</p><small>FINNIX FILM</small></div>'
+                 f'<span class="work-index">{index:02d}</span><span class="work-photo-label">ภาพผลงานกำลังอัปเดต</span></div>\n')
+        note = f'<small>{WORK_WORD}</small>'
+    link = ('' if on_series else
+            f'<a class="work-film-link" href="/films/{ID_BY_NAME.get(item["series"], "")}.html">ดูฟิล์ม {e(item["series"])} <span aria-hidden="true">→</span></a>')
+    label = '' if on_series else f'      <p class="work-series">{e(item["series"])}</p>\n'
+    bottom = f'      <div class="work-bottom">{note}{link}</div>\n' if note or link else ''
+    return (f'  <article class="work-card" data-series="{e(item["series"])}">\n'
+            + photo +
+            '    <div class="work-content">\n'
+            + label +
+            f'      <h3>{e(item["car"])}</h3>\n'
+            f'      <dl class="work-spec{four}">{specs}</dl>\n'
+            + bottom +
+            '    </div>\n'
+            '  </article>')
+
+
+def series_works(s):
+    """v10.6 หน้ารุ่น — "รถที่ติด <ซีรีส์>" การ์ดผลงานทุกคันของซีรีส์นี้ (ผู้สั่งงานสั่ง · วางหลังราคา ก่อนทางเลือกอื่น)
+    ซีรีส์ที่ยังไม่มีผลงานใน gallery.json → ไม่มีส่วนนี้ (คืน '') · จับคู่ด้วยชื่ออังกฤษตรงตัว เหมือนปุ่มกรองของ /works.html
+    แสดงทีละแถว + ปุ่มดูเพิ่ม (app.js ส่วนที่ 8 · ไม่มี JS = เห็นครบทุกคัน ปุ่มซ่อนอยู่) · id ขึ้นต้น sp-work- ไม่ชนกับ /works.html"""
+    items = [item for item in gallery['items'] if item['series'] == s['name']['en']]
+    if not items:
+        return ''
+    name = e(s['name']['en'])
+    counts = {len(WORK_PHOTOS[gallery['items'].index(item)]) for item in items}
+    each = f' ปัดดูได้คันละ {counts.pop()} ภาพ' if len(counts) == 1 and 0 not in counts else ''
+    cards = '\n'.join(work_card(item, i, on_series=True) for i, item in enumerate(items, 1))
+    return ('<section class="sp-works" id="works">\n'
+            '  <div class="sp-works-head">\n'
+            '    <div>\n'
+            '      <div class="eyebrow"><span></span> INSTALLED <em class="eyebrow-th">ผลงานติดตั้งจริง</em></div>\n'
+            f'      <h2>รถที่ติด {name}</h2>\n'
+            f'      <p>{len(items)} คัน · ภาพจริงจากงานติดตั้ง{each}</p>\n'
+            '    </div>\n'
+            '    <a class="sp-text-link" href="/works.html">ดูผลงานทุกซีรีส์</a>\n'
+            '  </div>\n'
+            '  <div class="work-grid" id="sp-work-grid">\n'
+            + indent(cards, '  ') + '\n'
+            '  </div>\n'
+            '  <div class="works-more">\n'
+            '    <button type="button" class="pill" id="sp-work-more" hidden>ดูผลงานเพิ่มเติม <span aria-hidden="true">+</span></button>\n'
+            '    <p id="sp-work-shown" aria-live="polite"></p>\n'
+            '  </div>\n'
+            '</section>')
 
 
 def gen_gallery():
     """/works.html — ปุ่มกรอง + การ์ดผลงาน (data/gallery.json) · v8.2 ดีไซน์ตามไฟล์ต้นแบบ C:/Claude/works.html
-    ช่องภาพเป็นกรอบ "รอภาพผลงานจริง" (หน้านี้ห้ามใช้ภาพ AI) · ปุ่มแสดงเพิ่มใช้ JS → hidden แล้ว app.js ส่วนที่ 8 เปิด
-    v8.5 ปุ่ม "ดูรายละเอียด" (หน้าต่างที่ข้อมูลซ้ำกับการ์ด) → ลิงก์ "ดูฟิล์ม <ซีรีส์> →" ไปหน้ารุ่นตรง ๆ"""
+    ปุ่มแสดงเพิ่มใช้ JS → hidden แล้ว app.js ส่วนที่ 8 เปิด
+    v8.5 ปุ่ม "ดูรายละเอียด" (หน้าต่างที่ข้อมูลซ้ำกับการ์ด) → ลิงก์ "ดูฟิล์ม <ซีรีส์> →" ไปหน้ารุ่นตรง ๆ
+    v10.4 ภาพจริงจาก assets/works/ ทั้งชุดต่อคัน (work_slides) · v10.6 markup การ์ดย้ายไป work_card() ใช้ร่วมกับหน้ารุ่น"""
     total = len(gallery['items'])
     # v7.7 จำนวนคันต่อซีรีส์บนปุ่ม (ซีรีส์ที่ยังไม่มีผลงานไม่ขึ้นปุ่ม — กดแล้วจะว่างเปล่า)
     chips = [f'  <button class="work-filter" data-filter="all" aria-pressed="true">ทั้งหมด <small>{total}</small></button>']
     chips += [f'  <button class="work-filter" data-filter="{e(x["name"])}" aria-pressed="false">{e(x["name"])} <small>{WORK_COUNT[x["name"]]}</small></button>'
               for x in summary if WORK_COUNT[x['name']]]
-    # เรียงสลับซีรีส์ (รอบละคันต่อซีรีส์ ตามต้นแบบ) — แสดงทีละ 6 คันจะได้เห็นหลายซีรีส์ตั้งแต่แรก · ข้อมูลใน gallery.json ไม่เปลี่ยน
+    # เรียงสลับซีรีส์ (รอบละคันต่อซีรีส์ ตามต้นแบบ) — แสดงทีละ 12 คัน (มือถือ 6) จะได้เห็นหลายซีรีส์ตั้งแต่แรก · ข้อมูลใน gallery.json ไม่เปลี่ยน
     queues = [[item for item in gallery['items'] if item['series'] == x['name']] for x in summary]
     ordered = [q[r] for r in range(max(map(len, queues))) for q in queues if r < len(q)]
     ordered += [item for item in gallery['items'] if item not in ordered]   # ซีรีส์สะกดไม่ตรง films.json ก็ยังขึ้น
-    cards = []
-    for i, item in enumerate(ordered, 1):
-        roof = ' class="roof"'
-        specs = ''.join(
-            f'<div{roof if f["position"] == "หลังคาแก้ว" else ""}><dt>{e(f["position"])}</dt><dd>{e(f["code"])}</dd></div>'
-            for f in item['fit'])
-        cards.append(f'  <article class="work-card" data-series="{e(item["series"])}">\n'
-                     f'    <div class="work-photo"><div class="work-placeholder">{WORK_PHOTO_ICON}<p>รอภาพผลงานจริง</p><small>FINNIX FILM</small></div>'
-                     f'<span class="work-index">{i:02d}</span><span class="work-photo-label">ภาพผลงานกำลังอัปเดต</span></div>\n'
-                     f'    <div class="work-content">\n'
-                     f'      <p class="work-series">{e(item["series"])}</p>\n'
-                     f'      <h3>{e(item["car"])}</h3>\n'
-                     f'      <dl class="work-spec">{specs}</dl>\n'
-                     f'      <div class="work-bottom"><small>รายการตัวอย่าง</small>'
-                     f'<a class="work-film-link" href="/films/{ID_BY_NAME.get(item["series"], "")}.html">ดูฟิล์ม {e(item["series"])} <span aria-hidden="true">→</span></a></div>\n'
-                     f'    </div>\n'
-                     f'  </article>')
+    cards = [work_card(item, i) for i, item in enumerate(ordered, 1)]
     return ('<div class="works-toolbar">\n'
             '  <h2>เลือกดูตามซีรีส์</h2>\n'
-            f'  <p class="works-count" id="work-count" role="status">{total} รายการตัวอย่าง</p>\n'
             '</div>\n'
             '<div class="works-filters" role="group" aria-label="กรองผลงานตามซีรีส์">\n' + '\n'.join(chips) + '\n</div>\n'
             '<div class="work-grid" id="work-grid">\n' + '\n'.join(cards) + '\n</div>\n'
             '<div class="works-more">\n'
-            '  <button type="button" class="pill" id="work-more" hidden>ดูตัวอย่างเพิ่มเติม <span aria-hidden="true">+</span></button>\n'
+            f'  <button type="button" class="pill" id="work-more" hidden>ดู{WORK_WORD}เพิ่มเติม <span aria-hidden="true">+</span></button>\n'
             '  <p id="work-shown" aria-live="polite"></p>\n'
             '</div>')
 
@@ -914,7 +1036,7 @@ GEN = {
     'works-meta': gen_works_meta,
     'company': gen_company,
 }
-SHARED = {'assets': assets_block, 'header': header_block, 'footer': footer_block}
+SHARED = {'assets': assets_block, 'header': header_block, 'footer': footer_block, 'find-family': find_family_block}
 
 
 def fill(src, name, block):
@@ -949,7 +1071,7 @@ def relativize(src, rel):
 # v7.4 หน้าละไฟล์ชื่อตามหน้า: index.html (หน้าแรก) · <หน้า>.html ที่ root · films/<id>.html (หน้ารุ่น สร้างทั้งไฟล์)
 pages = set(ROOT.glob('*.html')) | set((ROOT / 'films').glob('*.html'))
 pages |= {ROOT / 'films' / f'{s["id"]}.html' for s in SERIES}
-problems = []
+problems = list(WORK_MISSING)   # v10.4 ผลงานที่ระบุภาพไว้แต่ยังไม่มีไฟล์
 if CAR_READY and not CAR_3D['credit']:
     problems.append(f'มีโมเดล {CAR_3D["src"]} แต่ CAR_3D["credit"] ว่าง — ใส่เครดิตตามสัญญาอนุญาตของโมเดลก่อน')
 for page in sorted(pages):
@@ -963,14 +1085,11 @@ for page in sorted(pages):
         src = page.read_text(encoding='utf-8')
     for name, make in SHARED.items():
         src, count = fill(src, name, make(url))
-        if count != 1:
-            problems.append(f'{rel}: เครื่องหมาย @{name} มี {count} คู่ (ต้องมี 1)')
-    if url in NEXT or url.startswith('/films/'):
-        src, count = fill(src, 'next', next_block(url))
-        if count != 1:
-            problems.append(f'{rel}: เครื่องหมาย @next มี {count} คู่ (ต้องมี 1)')
-    elif '<!-- @next -->' in src:
-        problems.append(f'{rel}: มีเครื่องหมาย @next แต่ไม่มีหน้านี้ใน NEXT ของ build.py')
+        need = 0 if name == 'find-family' and url in NO_FIND_FAMILY else 1
+        if count != need:
+            problems.append(f'{rel}: เครื่องหมาย @{name} มี {count} คู่ (ต้องมี {need})')
+    if '<!-- @next -->' in src:   # v10.0 แถบ "ตอนต่อไป" เลิกใช้ — แทนด้วย @find-family
+        problems.append(f'{rel}: ยังมีเครื่องหมาย @next ที่เลิกใช้แล้ว — เปลี่ยนเป็น <!-- @find-family --><!-- @end find-family -->')
     for name, make in GEN.items():
         src, _ = fill(src, f'gen:{name}', make())
     write(rel, relativize(src, rel))

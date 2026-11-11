@@ -8,17 +8,17 @@
      --paper พื้น · --ink ตัวหนังสือ · --muted ตัวหนังสือรอง · --line เส้น
      --red   แดงแบรนด์ (ปุ่ม · พื้น · เส้น) · --red-ink แดงสำหรับตัวหนังสือเล็ก (ผ่าน AA)
    ภาษาดีไซน์: เส้น 1px · มุม 5px · ปุ่มแคปซูล .pill · ระยะข้าง 6% (มือถือ 7%)
-   เบรกพอยต์: 1250 (การ์ด 5 ใบ → แถบเลื่อน) · 1050 (แท็บเล็ต · เมนูพับ) · 760 (มือถือ)
+   เบรกพอยต์: 1250 (≥1251 หน้าแรกส่วน 04 รถ : SCIENCE 3 : 2 · 1051–1250 การ์ดความต้องการ 5 ใบหดให้พอแถว) · 1050 (แท็บเล็ต · เมนูพับ) · 760 (มือถือ)
    ตัวหนังสือไทยห้ามเล็กกว่า 12px
 
    สารบัญ
-     1. ตัวช่วยทั่วไป               8. ราคา (/films.html#price)
+     1. ตัวช่วยทั่วไป               8. (ว่าง · ราคา /films.html#price ลบแล้ว v10.0)
      2. header · footer              9. /about.html (v8.3)
      3. โลโก้รูป                    10. (ว่าง · /experience.html ลบแล้ว v8.8)
      4. ภาพชั่วคราว                 11. /dealers.html (v8.3)
-     5. หน้าแรก                     12. /works.html (v8.2)
+     5. หน้าแรก (+ ส่วน 06 ทุกหน้า)  12. /works.html (v8.2)
      6. /films.html (v8.0)       13. (ว่าง · /faq.html ลบแล้ว v8.4)
-     7. หน้ารุ่น (v8.2)              14. หัวหน้าย่อย · ตอนต่อไป · ทรานซิชัน
+     7. หน้ารุ่น (v8.2)              14. หัวหน้าย่อย · ทรานซิชัน
                                     15. responsive
    v7.9 ชื่อหน้าในสารบัญ/หัวหมวดเป็นแบบ .html (v7.4) แล้ว — ในคอมเมนต์รายกฎบางจุดยังเขียน /price/ แบบเดิม หมายถึงหน้าเดียวกัน
    ========================================================================== */
@@ -130,7 +130,8 @@ header nav .nav-extra {
   display: none;
 }
 
-/* v8.1 ท้ายเว็บทุกหน้าใช้ .home-footer (หมวด 5) · แถบลิงก์สีอ่อน .foot-links กับปุ่มลอยโทร Hotline เลิกใช้แล้ว */
+/* v8.1 ท้ายเว็บทุกหน้าใช้ .home-footer (หมวด 5) · แถบลิงก์สีอ่อน .foot-links กับปุ่มลอยโทร Hotline เลิกใช้แล้ว
+   v10.0 ทุกหน้าจบ <main> ด้วยส่วน 06 หาร้าน + เพื่อนร่วมทาง (.find-family หมวด 5 · find_family_block() ใน build.py) แทนแถบ "ตอนต่อไป" */
 
 
 /* 3. โลโก้รูป ------------------------------------------------------------
@@ -191,19 +192,21 @@ footer .logo img {
    v6.4 หน้าแรกใช้คลาสของต้นแบบ (style.css) เกือบทั้งหมด — ที่นี่มีแค่ส่วนที่ต้นแบบไม่มี
    กฎของ /dealers/ (แผนที่เกาะจอ) กับ /technology/ (.proof-grid 4 คอลัมน์) ขึ้นต้นด้วย .inner-page จะได้ไม่ทับหน้าแรก */
 
-/* v8.9 วิดีโอปก — วางแทนภาพใน .hero-media (ขนาด/ครอบเต็มกรอบใช้กฎ .hero-media video ของ style.css ต้นแบบ) · พื้นดำระหว่างโหลด
-   คลิปมีฉากมืด/ฉากวุ่น (ห้องนอน · ในรถ) ตัวหนังสือสีเข้มของปกอ่านยากกว่าภาพเดิม → ม่านสว่างฝั่งขวาเข้มขึ้น + แสงฟุ้งรอบตัวหนังสือ (จอ ≥761)
-   มือถือใช้ม่านล่างที่หมวด 15 */
+/* v8.9 วิดีโอปก — วางแทนภาพใน .hero-media (ขนาด/ครอบเต็มกรอบใช้กฎ .hero-media video ของ style.css ต้นแบบ) · พื้นดำระหว่างโหลด */
 .hero-media video {
   background: #1b1d1f;
 }
-@media (min-width: 761px) {
-  .hero-wash {
-    background: linear-gradient(90deg, transparent 32%, #f7eee066 52%, #f8f3e5c7 78%);
-  }
-  .hero-copy {
-    text-shadow: 0 0 22px #f8f3e5d9, 0 0 6px #f8f3e5a6;
-  }
+/* v10.3 ปกเป็นวิดีโอโล่ง — ผู้สั่งงานสั่งเอาข้อความฝั่งขวาออก ม่านครีม .hero-wash ที่มีไว้ให้ข้อความอ่านออกเลยเอาออกด้วย
+   เหลือแถบสว่างบาง ๆ ด้านบนแทน: header ลอยทับปก (style.css) ตัวหนังสือเมนู/โลโก้/☰ เป็นสีเข้ม — ฉากในคลิปมืด ไม่มีแถบนี้แล้วอ่านไม่ออก
+   แถบล่าง (BEAUTIFULLY REAL · ปุ่มหยุด) ใช้ตัวขาว + เงาของต้นแบบ · มือถือคืนค่าที่หมวด 15 */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 150px;
+  background: linear-gradient(#f8f3e5e6, #f8f3e5b3 45%, #f8f3e500);
+  pointer-events: none;
 }
 
 /* 04 · 05 แถวคู่ (v7.9) — ส่วน 01–03 ใช้คลาสต้นแบบตรง ๆ · 04 = TRY + SCIENCE ของต้นแบบ (พื้นมืดผืนเดียว)
@@ -411,7 +414,8 @@ footer .logo img {
   letter-spacing: 0;
 }
 
-/* 06 หาร้าน + เพื่อนร่วมทาง (v6.5) — ใช้ .dealer ของต้นแบบเป็นพื้น · หัวข้อเต็มแถว ซ้ายคอลลาจ ขวาค้นหา + แผนที่ */
+/* 06 หาร้าน + เพื่อนร่วมทาง (v6.5) — ใช้ .dealer ของต้นแบบเป็นพื้น · หัวข้อเต็มแถว ซ้ายคอลลาจ ขวาค้นหา + แผนที่
+   v10.0 ใช้ท้าย <main> ทุกหน้า (find_family_block() ใน build.py · หน้าแรกเท่านั้นที่มีเลข 06) */
 .find-family {
   grid-template-columns: 1fr 1fr;
   row-gap: 28px;
@@ -431,7 +435,7 @@ footer .logo img {
   min-height: 320px;
 }
 /* v8.8 แผนที่ส่วน 06 โหลดเมื่อกด "เปิดแผนที่" หรือค้นหาเท่านั้น — ระหว่างนั้นเป็นภาพแผนที่ประกอบ (.dl-map-art) + หมุด (.dl-pin) แบบ /dealers.html
-   app.js ส่วนที่ 3 ใส่ iframe ไว้หน้าสุดของ .map-panel แล้วเติม .is-live */
+   app.js ส่วนที่ 5 ใส่ iframe ไว้หน้าสุดของ .map-panel แล้วเติม .is-live */
 .find-family .map-panel {
   display: grid;
   place-items: center;
@@ -684,9 +688,9 @@ dialog h3 {
 }
 
 
-/* 6. /films.html — ฟิล์มทุกซีรีส์ + ราคา (v8.0 ตามไฟล์ต้นแบบ C:/Claude/films.html · ใช้ฟอนต์และโทเคนของเว็บนี้) ------
+/* 6. /films.html — ฟิล์มทุกซีรีส์ (v8.0 ตามไฟล์ต้นแบบ C:/Claude/films.html · ใช้ฟอนต์และโทเคนของเว็บนี้) ------
    ลำดับในหน้า: .films-intro ความต้องการ 4 ปุ่ม → .films-feature ภาพเต็มแถวพื้นมืด → .films-catalog การ์ดภาพ 3 + 2 ใบ
-   → .films-price เครื่องคำนวณ + การ์ดราคา (กฎของฟอร์มอยู่หมวด 8) · responsive ของหน้านี้อยู่ท้ายไฟล์ */
+   (v10.0 ส่วนราคา .films-price ท้ายหน้าเอาออกแล้ว) · responsive ของหน้านี้อยู่ท้ายไฟล์ */
 
 /* หัวหน้า + ปุ่มความต้องการ (ปุ่มสร้างจาก @gen:need-links · app.js ส่วนที่ 4 สลับในหน้า) */
 .films-intro {
@@ -1036,16 +1040,11 @@ dialog h3 {
   margin-top: 28px;
 }
 
-/* ราคา (ย้ายมาจาก /price.html) — พื้นเทาอ่อนแบบส่วน 06 หน้าแรก แยกจากแคตตาล็อก · กฎฟอร์มอยู่หมวด 8 */
-.films-price {
-  padding: 64px 6% 80px;
-  background: #edf0f1;
-}
 
 
 /* 7. หน้ารุ่น films/<id>.html (v8.2 ตามไฟล์ต้นแบบ C:/Claude/ceramic.html · ฟอนต์/โทเคนของเว็บนี้ · เนื้อหาเดิม) ------
    .sp-crumb → .sp-hero ภาพเต็มแถวพื้นมืด → .sp-overview โลโก้ ปก ค่าหลัก 6 ช่อง
-   → .sp-spec ปุ่มเลือกรหัส + ตาราง → .sp-price กล่องคำนวณ + ตาราง → .sp-alts · markup จาก series_page() · responsive อยู่ท้ายไฟล์ */
+   → .sp-spec ปุ่มเลือกรหัส + ตาราง → .sp-price กล่องคำนวณ + ตาราง → .sp-works รถที่ติดซีรีส์นี้ (v10.6) → .sp-alts · markup จาก series_page() · responsive อยู่ท้ายไฟล์ */
 
 .sp-crumb {
   display: flex;
@@ -1577,10 +1576,30 @@ dialog h3 {
   color: var(--ink);
 }
 
+/* v10.6 รถที่ติดซีรีส์นี้ — การ์ดผลงานชุดเดียวกับ /works.html (คลาส .work-* หมวด 12) · หัวแบบเดียวกับ .sp-alts-head
+   ซีรีส์ที่ยังไม่มีผลงานไม่มีส่วนนี้ · ทีละแถว + ปุ่มดูเพิ่ม (app.js ส่วนที่ 8) */
+.sp-works {
+  padding: 68px 6% 60px;
+  border-bottom: 1px solid var(--line);
+}
+.sp-works-head .eyebrow {
+  color: var(--red-ink);
+}
+.sp-works-head p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.sp-works .work-content {   /* v10.7 การ์ดหน้ารุ่นไม่มี .work-bottom (ไม่มีลิงก์ดูฟิล์ม · ไม่มี "7 ภาพ") — เส้นล่างย้ายมาที่นี่ ให้แถวยังจบที่เส้นเดียวกัน */
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
 /* ทางเลือกอื่น — การ์ดภาพ 2 ใบ */
 .sp-alts {
   padding: 68px 6%;
 }
+.sp-works-head,
 .sp-alts-head {
   display: flex;
   align-items: end;
@@ -1651,57 +1670,7 @@ dialog h3 {
   color: var(--red);
 }
 
-/* 8. ราคา /films.html#price (v8.0 เดิมหน้า /price.html) — ฟอร์มซ้าย ผลลัพธ์ขวา · การ์ดราคาเริ่มต้น 5 ใบ ------ */
-
-.price-layout {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 56px;
-  align-items: start;
-}
-.price-layout .calculator {
-  grid-template-columns: 1fr;
-  gap: 18px;
-}
-.calculator button {
-  align-self: start;   /* เดิมถูกยืดสูงเท่าแถวจนปุ่มกลายเป็นวงกลม */
-  margin-top: 6px;
-}
-.price-panel {
-  position: sticky;
-  top: 24px;
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  padding: 28px;
-  background: #fff;
-}
-.price-panel .price-result {
-  margin: 12px 0 0;
-  padding: 0;
-  border: 0;
-  font-size: clamp(22px, 2vw, 28px);
-  line-height: 1.4;
-}
-
-
-/* v7.7 ผลราคา — ตัวเลขใหญ่ (นับขึ้นด้วย app.js) + รายละเอียดบรรทัดล่าง */
-.price-result .price-figure {
-  display: block;
-  font-size: clamp(40px, 4.2vw, 58px);
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: -.03em;
-}
-.price-figure strong {
-  font-weight: 400;
-  font-variant-numeric: tabular-nums;
-}
-.price-result small {
-  display: block;
-  margin-top: 10px;
-  font-size: 15px;
-  color: var(--muted);
-}
+/* 8. (ว่าง) — เดิมเครื่องคำนวณราคา /films.html#price (v8.0 · เดิมหน้า /price.html) ผู้สั่งงานสั่งเอาออกใน v10.0 · ราคาอยู่ที่หน้ารุ่น (หมวด 7 .sp-price-layout) */
 
 
 /* 9. /about.html เกี่ยวกับเรา (v8.3 แทนหน้าเทคโนโลยี · ดีไซน์ตามไฟล์ต้นแบบ C:/Claude/technology (1).html) ----------
@@ -2351,12 +2320,6 @@ dialog h3 {
   font-size: 15px;
   color: #56615a;
 }
-.dl-note {
-  margin-top: 17px;
-  font-size: 13px;
-  line-height: 1.8;
-  color: #5f6a67;
-}
 
 /* แผนที่ — ภาพประกอบก่อน กด "เปิดแผนที่" แล้วค่อยโหลด Google Maps ทับ */
 .dl-map {
@@ -2632,8 +2595,11 @@ dialog h3 {
 
 
 /* 12. /works.html (v8.2 ตามไฟล์ต้นแบบ C:/Claude/works.html · ฟอนต์/โทเคนของเว็บนี้) ------------------------
-   หัวหน้า + ตัวเลข + กล่องแจ้งข้อมูลตัวอย่าง → ตัวกรอง → การ์ด 3 คอลัมน์ (ช่องภาพ "รอภาพผลงานจริง" — ห้ามใช้ภาพ AI)
-   → แสดงทีละ 6 → ชุมชน FINNIX พื้นมืด · กรองแล้วเหลือใบเดียวในแถวสุดท้าย → .is-pairs 2 คอลัมน์ (app.js ส่วนที่ 8) */
+   หัวหน้า + ตัวเลข → ตัวกรอง → การ์ด 4 คอลัมน์ (v10.5 · ≤1250 3 · ≤760 1) → แสดงทีละ 12 (มือถือ 6) → ส่วนท้ายทุกหน้า (v10.0 ส่วนชุมชน FINNIX พื้นมืดลบแล้ว — ข้อความซ้ำกับส่วนท้าย)
+   v10.4 ช่องภาพเป็นภาพจริงทั้งชุดต่อคัน (จัตุรัส · เลื่อนแนวนอนด้วย scroll-snap · ปุ่ม ‹ › + ตัวนับจาก app.js ส่วนที่ 8) · กล่องแจ้ง "ตัวอย่างการแสดงผล" ลบแล้ว
+   คันที่ยังไม่มีภาพขึ้นกรอบ "รอภาพผลงานจริง" (.work-placeholder — ห้ามใช้ภาพ AI)
+   v10.6 การ์ด .work-* ใช้ที่หน้ารุ่นด้วย (.sp-works หมวด 7) — แก้การ์ดที่นี่มีผลทั้งสองที่
+   ห้ามเหลือใบเดียวในแถวสุดท้าย (app.js ส่วนที่ 8): 3 คอลัมน์เหลือ 4 ใบ → .is-pairs 2 คอลัมน์ · ยังเหลือใบเดียว → ใบสุดท้าย .is-wide เต็มแถว ภาพซ้าย ข้อมูลขวา */
 
 .works-intro {
   padding: 62px 6% 38px;
@@ -2675,34 +2641,8 @@ dialog h3 {
   font-weight: 500;
   color: var(--ink);
 }
-.works-notice.demo-tag {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-top: 32px;
-  padding: 14px 18px;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  background: #f2f3f1;
-  font-size: 14px;
-  letter-spacing: 0;
-  color: #576162;
-}
-.works-notice strong {
-  color: var(--ink);
-}
-.works-notice-icon {
-  flex: 0 0 21px;
-  display: grid;
-  place-items: center;
-  width: 21px;
-  height: 21px;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  font-size: 13px;
-}
 
-/* ตัวกรอง + จำนวน */
+/* ตัวกรอง (v10.7 เลิกตัวนับ .works-count — ชิปบอกจำนวนอยู่แล้ว) */
 .works-gallery {
   padding: 0 6% 70px;
 }
@@ -2716,10 +2656,6 @@ dialog h3 {
 .works-toolbar h2 {
   font-size: 20px;
   font-weight: 500;
-}
-.works-count {
-  font-size: 13px;
-  color: var(--muted);
 }
 .works-filters {
   display: flex;
@@ -2764,7 +2700,7 @@ dialog h3 {
 /* การ์ดผลงาน */
 .work-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));   /* v10.5 เดิม 3 — ผู้สั่งงานสั่งให้การ์ดเล็กลง (1440 ภาพ 402 → ~300px) · ≤1250 3 · ≤760 1 */
   gap: 36px 24px;
 }
 .work-grid.is-pairs {
@@ -2778,13 +2714,96 @@ dialog h3 {
 .work-card[hidden] {
   display: none;
 }
+/* v10.4 ใบสุดท้ายที่จะเหลือเดี่ยวในแถว → เต็มแถว ภาพกว้างเท่า 1 คอลัมน์ (สูงเท่าแถวอื่น) ข้อมูลอยู่ขวา */
+.work-card.is-wide {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: calc((100% - 72px) / 4) minmax(0, 1fr);   /* ภาพกว้างเท่า 1 ใน 4 คอลัมน์ (ช่องว่าง 3 × 24px) */
+  column-gap: 24px;
+}
+.work-grid.is-pairs .work-card.is-wide {
+  grid-template-columns: calc((100% - 24px) / 2) minmax(0, 1fr);
+}
+.work-card.is-wide .work-content {
+  padding-top: 0;
+}
+.work-card.is-wide .work-spec {   /* รหัสไม่กระจายห่างกันไปทั้งแถว */
+  max-width: 420px;
+}
 .work-photo {
   position: relative;
-  aspect-ratio: 1.5;
+  aspect-ratio: 1;   /* v10.4 ภาพจริงเป็นจัตุรัส ป้ายรหัสฟิล์มอยู่ขอบล่างของภาพ — ครอบเป็น 1.5 แบบเดิมป้ายจะขาด */
   overflow: hidden;
   border: 1px solid #e3e6e1;
   border-radius: 5px;
   background: #eff0ed;
+}
+
+/* v10.4 ภาพทั้งชุดต่อคัน — ปัด/เลื่อนแนวนอนทีละภาพ (ไม่มี JS ก็ปัดนิ้วได้) */
+.work-slides {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;   /* ปัดสุดแล้วไม่ไปกระตุ้นการย้อนหน้าของเบราว์เซอร์ */
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.work-slides::-webkit-scrollbar {
+  display: none;
+}
+.work-slides:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: -2px;
+}
+.work-slides img {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+/* ปุ่ม ‹ › กลางขอบซ้าย/ขวา + ตัวนับมุมขวาบน — ป้ายรหัสฟิล์มอยู่กลางล่าง โลโก้กลางบน จึงไม่ทับกัน
+   .work-nav ไม่ตั้ง display เอง → hidden ของ HTML ซ่อนได้ (app.js เปิด) */
+.work-nav button {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0 0 3px;
+  border: 1px solid #ffffff99;
+  border-radius: 50%;
+  background: #fafaf8e0;
+  color: var(--ink);
+  font: inherit;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background .2s;
+}
+.work-nav button:hover {
+  background: #fff;
+}
+.work-nav button:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+.work-prev {
+  left: 10px;
+}
+.work-next {
+  right: 10px;
+}
+.work-counter {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 3px 9px;
+  border-radius: 99px;
+  background: #1b1d1fb3;
+  font-size: 12px;
+  letter-spacing: .05em;
+  color: #fff;
 }
 .work-placeholder {
   display: flex;
@@ -2864,6 +2883,9 @@ dialog h3 {
   font-weight: 600;
   color: #353d3b;
 }
+.work-spec.is-four {   /* v10.4 แยกบานข้างคู่หน้า/คู่หลัง — 4 ช่องเรียง 2×2 (4 คอลัมน์ชื่อตำแหน่งตัดบรรทัด) */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 .work-spec .roof {
   grid-column: 1 / -1;
   display: flex;
@@ -2892,6 +2914,7 @@ dialog h3 {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-left: auto;   /* v10.7 เลิกเขียน "7 ภาพ" ทางซ้าย — ลิงก์ยังอยู่มุมขวาเหมือนเดิม */
   padding: 5px 0 5px 10px;
   font-size: 13px;
 }
@@ -2925,74 +2948,15 @@ dialog h3 {
   color: var(--muted);
 }
 
-/* ชุมชน FINNIX — พื้นมืด ภาพ 3 ช่อง (ใบแรกสูงสองแถว) · เส้นคั่นกับแถบตอนต่อไปที่พื้นมืดเหมือนกัน */
-.works-family + .next-chapter {
-  border-top: 1px solid #ffffff24;
-}
-.works-family {
-  display: grid;
-  grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
-  gap: 60px;
-  align-items: center;
-  padding: 65px 6%;
-  background: #111617;
-  color: #fff;
-}
-.works-family .eyebrow {
-  color: #c9d0d3;
-}
-.works-family h2 {
-  margin-bottom: 24px;
-  font-size: clamp(34px, 3.8vw, 55px);
-  font-weight: 400;
-  line-height: 1.25;
-  letter-spacing: -.035em;
-}
-.works-family-copy p {
-  color: #bfc7c6;
-}
-.works-family-copy .works-family-en {
-  margin-top: 30px;
-  font: italic 21px/1.5 Georgia, serif;
-  color: #9aa5a3;
-}
-.works-family-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 170px 190px;
-  gap: 12px;
-}
-.works-family-grid figure {
-  position: relative;
-  margin: 0;
-  overflow: hidden;
-  border-radius: 4px;
-}
-.works-family-grid figure:first-child {
-  grid-row: span 2;
-}
-.works-family-grid img {
-  filter: saturate(.85);
-}
-.works-family-grid figcaption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 30px 12px 10px;
-  background: linear-gradient(transparent, #050909b8);
-  font-size: 12px;
-  color: #e7ebe8;
-}
 
 /* 13. (ว่าง) — เดิม /faq.html ลบไปพร้อมหน้าใน v8.4 */
 
 
-/* 14. หัวหน้าย่อย · ตอนต่อไป · ทรานซิชันข้ามหน้า (v7.7) -------------------------
-   ทุกหน้าย่อยเปิดด้วย .page-hero (แทน .page-intro ของต้นแบบ) และปิดด้วยแถบ .next-chapter (สร้างจาก NEXT ใน build.py)
+/* 14. หัวหน้าย่อย · ทรานซิชันข้ามหน้า (v7.7) -------------------------
+   ทุกหน้าย่อยเปิดด้วย .page-hero (แทน .page-intro ของต้นแบบ) · แถบ "ตอนต่อไป" .next-chapter ที่เคยปิดท้ายหน้าย่อยลบแล้ว v10.0 (แทนด้วยส่วน 06 ทุกหน้า)
    .page-hero         ภาพขวา + พื้นกระดาษไล่จากซ้าย แบบเดียวกับ .featured — หน้าที่ขายความรู้สึก (try · technology · experience)
    .page-hero.compact ไม่มีภาพ ตัวหนังสือใหญ่ + เส้นแดงสั้นใต้หัว — หน้าที่คนเข้ามาทำธุระ (films · price · dealers · works · faq)
-   v8.8 ไม่มีหน้าไหนใช้ .page-hero แล้ว (หน้าสุดท้ายคือ /experience.html ลบแล้ว) — เก็บไว้เป็นคอมโพเนนต์สำหรับหน้าใหม่ · .next-chapter ยังใช้ทุกหน้าย่อย */
+   v8.8 ไม่มีหน้าไหนใช้ .page-hero แล้ว (หน้าสุดท้ายคือ /experience.html ลบแล้ว) — เก็บไว้เป็นคอมโพเนนต์สำหรับหน้าใหม่ */
 .page-hero {
   position: relative;
   display: flex;
@@ -3051,57 +3015,6 @@ dialog h3 {
   background: var(--red);
 }
 
-/* แถบ "ตอนต่อไป" — พื้นมืดเต็มกว้าง · ชี้แล้วเส้นแดงวิ่งใต้ข้อความ + วงกลมลูกศรเป็นสีแดง */
-.next-chapter a {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: end;
-  gap: 8px 40px;
-  padding: 72px 6% 78px;
-  color: inherit;
-  text-decoration: none;
-}
-.next-chapter .eyebrow {
-  grid-column: 1 / -1;
-  margin-bottom: 6px;
-  color: #9ea5a9;
-}
-.next-chapter strong {
-  font-size: clamp(28px, 3.4vw, 52px);
-  line-height: 1.3;
-  letter-spacing: -.03em;
-  font-weight: 300;
-}
-/* v8.7 ใช้ > เพราะข้อความใน NEXT มี <span class="nb"> ซ้อนข้างใน — ไม่งั้นได้เส้นใต้ซ้อนสองชั้น */
-.next-chapter strong > span {
-  padding-bottom: 4px;
-  background: linear-gradient(var(--red), var(--red)) 0 100% / 0 2px no-repeat;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  transition: background-size .5s ease;
-}
-.next-chapter i {
-  display: grid;
-  place-items: center;
-  width: 76px;
-  height: 76px;
-  border: 1px solid #f9f9f73d;
-  border-radius: 50%;
-  font-size: 26px;
-  font-style: normal;
-  transition: background-color .3s, border-color .3s, transform .3s;
-}
-.next-chapter a:hover strong > span,
-.next-chapter a:focus-visible strong > span {
-  background-size: 100% 2px;
-}
-.next-chapter a:hover i,
-.next-chapter a:focus-visible i {
-  background-color: var(--red);
-  border-color: var(--red);
-  transform: translateX(6px);
-}
-
 /* เปลี่ยนหน้าแบบจางนุ่ม (View Transitions ข้ามเอกสาร) — เบราว์เซอร์ที่ไม่รองรับเปลี่ยนหน้าตามปกติ */
 @view-transition {
   navigation: auto;
@@ -3113,10 +3026,6 @@ dialog h3 {
 @media (prefers-reduced-motion: reduce) {
   @view-transition {
     navigation: none;
-  }
-  .next-chapter strong > span,
-  .next-chapter i {
-    transition: none;
   }
 }
 
@@ -3152,21 +3061,13 @@ dialog h3 {
   .page-hero.compact::after {
     left: 7%;
   }
-  .next-chapter a {
-    gap: 8px 20px;
-    padding: 52px 7% 58px;
-  }
-  .next-chapter i {
-    width: 56px;
-    height: 56px;
-    font-size: 22px;
-  }
 }
 
 
 /* 15. responsive ========================================================== */
 
-/* การ์ด 5 ใบ (ซีรีส์ · ราคา) — แคบกว่า 1250 เป็นแถบเลื่อนแนวนอนแบบ .story-track ของต้นแบบ */
+/* หน้าแรก — ≥1600 เนื้อหากว้างไม่เกิน 1600 · 1051–1250 การ์ดความต้องการ 5 ใบหดให้ยังพอดีแถว (≤1050 ใช้ค่าต้นแบบ · เลื่อนแนวนอนเมื่อไม่พอ)
+   · ≥1251 ส่วน 04 รถ : SCIENCE = 3 : 2 — v10.2 แก้คอมเมนต์เดิม "การ์ด 5 ใบ (ซีรีส์ · ราคา)" ที่ล้าสมัย (ส่วนราคาลบแล้ว v10.0) */
 @media (min-width: 1600px) {
   .home-pair {                   /* v7.9 จอกว้าง — เนื้อหากว้างไม่เกิน 1600 เหมือน .try .science ของต้นแบบ */
     padding-left: max(6%, calc((100vw - 1600px) / 2));
@@ -3232,13 +3133,6 @@ dialog h3 {
     border-bottom: 1px solid var(--line);
     padding-bottom: 22px;
   }
-  .price-layout {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-  .price-panel {
-    position: static;
-  }
 }
 
 @media (max-width: 760px) {
@@ -3287,10 +3181,15 @@ dialog h3 {
   .find-family .map-panel iframe {
     min-height: 260px;
   }
-  /* v8.9 วิดีโอปกบนมือถือ (เต็มจอ ตัดข้าง ตามที่ผู้สั่งงานเลือก) — ซับไทยในคลิปถูกตัดซ้ายขวาแล้วโผล่จาง ๆ หลังข้อความปก
-     → ม่านล่างทึบขึ้นจนบังแถบซับ (ซับอยู่ราว 12–20% จากขอบล่าง) */
-  .hero-wash {
-    background: linear-gradient(0deg, #f5eadf 0%, #f5eadf 24%, #f5eadfd0 34%, #f5eadf05 62%, #fff3);
+  /* v10.3 ปกไม่มีม่านครีมแล้ว (หมวด 5) — แถบล่างมือถือของต้นแบบเป็นตัวเข้มสำหรับวางบนม่าน → คืนเป็นตัวขาว + เงาแบบจอใหญ่ */
+  .hero-bottom {
+    color: white;
+    text-shadow: 0 1px 8px #000;
+  }
+  .hero-bottom button {
+    color: white;
+    border-color: #ffffff65;
+    background: #171b1d50;
   }
   /* v8.8 คำใต้รูปโพลารอยด์ส่วน 06 ล้นกรอบ ("A moment together." ขึ้นสองบรรทัด) และถูกรูปถัดไปบัง ("On the road.")
      → ขอบล่างของกรอบสูงพอสองบรรทัด · รูปไม่ซ้อนกัน (เดิม margin-left -3%) */
@@ -3426,8 +3325,18 @@ dialog h3 {
     top: 12px;
     font-size: 17px;
   }
-  .films-price {
-    padding: 42px 7% 48px;
+}
+
+/* /works.html v10.5 — การ์ดผลงาน 4 คอลัมน์ → 3 คอลัมน์ตั้งแต่ 1250 ลงไปถึงแท็บเล็ต (เดิม ≤1050 2 คอลัมน์ ภาพใหญ่ถึง 443px) · ≤760 1 คอลัมน์อยู่ข้างล่าง */
+@media (max-width: 1250px) {
+  .work-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .work-grid.is-pairs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .work-card.is-wide {
+    grid-template-columns: calc((100% - 48px) / 3) minmax(0, 1fr);
   }
 }
 
@@ -3462,16 +3371,8 @@ dialog h3 {
     padding-left: 20px;
     font-size: 16px;
   }
-  .work-grid,
-  .work-grid.is-pairs {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 35px 24px;
-  }
-  .works-family {
-    gap: 30px;
-  }
-  .works-family-grid {
-    grid-template-rows: 140px 155px;
+  .work-grid {
+    gap: 35px 24px;   /* คอลัมน์ตั้งที่ ≤1250 ข้างบน (v10.5 · เดิม 2 คอลัมน์ที่นี่) */
   }
 }
 
@@ -3589,6 +3490,10 @@ dialog h3 {
   .sp-alts {
     padding: 42px 7%;
   }
+  .sp-works {
+    padding: 42px 7%;
+  }
+  .sp-works-head,
   .sp-alts-head {
     display: block;
   }
@@ -3621,12 +3526,6 @@ dialog h3 {
     padding: 0;
     border: 0;
   }
-  .works-notice.demo-tag {
-    align-items: start;
-    margin-top: 24px;
-    padding: 13px;
-    font-size: 13px;
-  }
   .works-gallery {
     padding: 0 7% 42px;
   }
@@ -3654,8 +3553,8 @@ dialog h3 {
     grid-template-columns: minmax(0, 1fr);
     gap: 30px;
   }
-  .work-photo {
-    aspect-ratio: 1.7;
+  .work-card.is-wide {   /* 1 คอลัมน์ไม่มีใบเดี่ยว — กันไว้ถ้า JS ยังไม่ได้เอาคลาสออก */
+    display: flex;
   }
   .work-content h3 {
     min-height: 0;
@@ -3663,22 +3562,6 @@ dialog h3 {
   }
   .work-spec dd {
     font-size: 18px;
-  }
-  .works-family {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 30px;
-    padding: 40px 7%;
-  }
-  .works-family h2 {
-    margin-bottom: 16px;
-    font-size: 38px;
-  }
-  .works-family-copy .works-family-en {
-    display: none;
-  }
-  .works-family-grid {
-    grid-template-rows: 140px 160px;
-    gap: 10px;
   }
 }
 
@@ -3906,6 +3789,9 @@ dialog h3 {
   }
   .dl-results {
     max-height: 460px;   /* v8.4 มือถือ — กล่องรายชื่อเตี้ยลงให้เห็นแผนที่ด้านล่าง */
+  }
+  .dealer-actions .var {
+    flex-basis: 100%;   /* v10.1 "เบอร์โทร · รอข้อมูล" บรรทัดของตัวเอง — ปุ่มแผนที่กับเส้นทางอยู่คู่กัน ไม่ทิ้ง "เส้นทาง" ไว้บรรทัดเดียว */
   }
   .dl-map {
     min-height: 390px;

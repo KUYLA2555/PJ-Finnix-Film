@@ -9,12 +9,12 @@
    ลำดับ:
      1. reveal       — ค่อย ๆ แสดงบล็อก .reveal ตอนเลื่อนถึง (ทุกหน้า)
      2. เมนูมือถือ    — ปุ่ม ☰ (ทุกหน้า)
-     3. หน้าแรก       — ปุ่มหยุดภาพเคลื่อนไหว (v8.9 หยุด/เล่นวิดีโอปกด้วย) · ตัวเลื่อนความเข้ม (v9.5 รถ 3D · โหลด vendor/ เมื่อกด) · หน้าต่างรายละเอียด · ค้นหาร้านบนแผนที่ (v8.8 โหลดเมื่อกดเปิด/ค้นหา)
+     3. หน้าแรก       — ปุ่มหยุดภาพเคลื่อนไหว (v8.9 หยุด/เล่นวิดีโอปกด้วย) · ตัวเลื่อนความเข้ม (v9.5 รถ 3D · v9.8 โหลด vendor/ เมื่อเลื่อนใกล้ถึง) · หน้าต่างรายละเอียด
      4. /films.html      — แนะนำซีรีส์ตาม ?need= + สลับความต้องการในหน้า · ปุ่มหยุดภาพ (v8.5 เลิกหน้าต่างรายละเอียด)
-     5. (ว่าง)           — เดิม /try.html (ลบแล้ว v8.1)
-     6. /films.html#price — เครื่องคำนวณราคา + ตัวเลขนับขึ้น (v8.0 เดิมหน้า /price.html)
+     5. ท้ายทุกหน้า       — หาร้าน + เพื่อนร่วมทาง: ค้นหาร้านบนแผนที่ (v8.8 โหลดเมื่อกดเปิด/ค้นหา · v10.0 ย้ายจากส่วนที่ 3 · เดิม /try.html)
+     6. (ว่าง)           — เดิมเครื่องคำนวณราคา /films.html#price (ลบแล้ว v10.0)
      7. /dealers.html    — ค้นหาร้าน + ชิปจังหวัด + รายชื่อในกล่องเลื่อน + แผนที่ (โหลดเมื่อกดเปิด)
-     8. /works.html      — กรองตามซีรีส์ · แสดงทีละ 6 (v8.2 · v8.5 เลิกหน้าต่าง)
+     8. ผลงาน           — /works.html กรองตามซีรีส์ · แสดงทีละ 12 (มือถือ 6 · v10.5) · หน้ารุ่น "รถที่ติด" ทีละแถว (v10.6) · ปุ่มเลื่อนภาพผลงาน (v10.4)
      9. ลูกเล่นตอนเลื่อนถึง — แผนภาพแสง (หน้าแรก) · v8.8 ขั้นตอนของ /experience.html ลบไปพร้อมหน้า
     10. (ว่าง)          — เดิม /faq.html (ลบแล้ว v8.4)
     11. หน้ารุ่น          — ปุ่มเลือกรหัส ↔ ตารางสเปก · กล่องคำนวณราคา (v8.2)
@@ -74,8 +74,8 @@ if ($("#menu")) {
 
 /* --------------------------------------------------------------------------
    3. หน้าแรก (ตามต้นแบบ FINNIX-Website)
-      ฟอร์มค้นหาใช้ id เดียวกับ /dealers.html (สไตล์ชีตจับด้วย id) → ส่วนที่ 7 จึงเช็ค #dealer-count ที่มีแค่หน้านั้นแทน
       (ตัวเลื่อนเคยใช้ id ซ้ำกับ /try.html ซึ่งลบแล้วใน v8.1 — จึงเหลือที่หน้าแรกที่เดียว)
+      ส่วน 06 หาร้าน + เพื่อนร่วมทาง ใช้ทุกหน้าแล้ว (v10.0) → ย้ายไปส่วนที่ 5
    -------------------------------------------------------------------------- */
 // ปุ่มหยุด/เล่นภาพเคลื่อนไหว (เริ่มหยุดถ้าผู้ใช้ตั้งลดการเคลื่อนไหว)
 if ($("#motion")) {
@@ -237,56 +237,6 @@ if ($("#detail")) {
     '<h3>ซีรีส์ที่คุณสำรวจต่อได้</h3><p class="small">เลือกจากเฉดและสเปกจริงของแต่ละซีรีส์ เพื่อให้เหมาะกับคุณ</p>' + filmLinks())));
 }
 
-// ค้นหาร้านบน Google Maps (รายชื่อร้านเต็มอยู่ที่ /dealers.html)
-// v8.8 แผนที่ไม่โหลดจนกว่าจะกด "เปิดแผนที่" หรือค้นหา (ไม่ส่ง IP ผู้เข้าชมให้ Google ตั้งแต่เปิดหน้า) · เปิดเปล่า = ภาพรวมประเทศไทย ไม่ปักจุดใด
-if ($("#dealer-form") && !$("#dealer-count")) {
-  const openMap = (src) => {
-    let frame = $(".map-panel iframe");
-    if (!frame) {
-      frame = document.createElement("iframe");
-      frame.title = "แผนที่ Google ค้นหาร้าน FINNIX";
-      frame.referrerPolicy = "strict-origin-when-cross-origin";   // v9.9 ส่งแค่โดเมน ไม่ส่ง URL หน้าเต็มให้ Google (ตรงกับ meta referrer ของเว็บ)
-      $(".map-panel").prepend(frame);
-      $(".map-panel").classList.add("is-live");
-    }
-    frame.src = src;
-  };
-  const updateMap = (query, latLng) => {
-    openMap("https://maps.google.com/maps?q=" + encodeURIComponent(query) +
-      (latLng ? "&ll=" + encodeURIComponent(latLng) + "&z=12" : "") + "&output=embed");
-    $("#map-link").href = latLng
-      ? "https://www.google.com/maps/search/FINNIX+FILM/@" + latLng + ",12z"
-      : "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
-  };
-  $("#home-load-map").hidden = false;
-  $("#home-load-map").addEventListener("click", () => openMap(THAILAND_MAP));
-  $("#dealer-form").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const q = $("#dealer-query").value.trim();
-    if (!q) return;
-    updateMap("FINNIX FILM " + q);
-    $("#location-status").textContent = "แสดงผลการค้นหาบน Google Maps สำหรับ " + q;
-  });
-  $("#locate").addEventListener("click", () => {
-    const status = $("#location-status");
-    if (!navigator.geolocation) {
-      status.textContent = "อุปกรณ์นี้ไม่รองรับตำแหน่ง กรุณาพิมพ์พื้นที่ที่ต้องการ";
-      return;
-    }
-    status.textContent = "กำลังขอตำแหน่งจากอุปกรณ์…";
-    $("#locate").disabled = true;
-    navigator.geolocation.getCurrentPosition((pos) => {
-      updateMap("FINNIX FILM", pos.coords.latitude + "," + pos.coords.longitude);
-      status.textContent = "ตั้งแผนที่ใกล้ตำแหน่งของคุณแล้ว";
-      $("#locate").disabled = false;
-    }, () => {
-      status.textContent = "ไม่สามารถใช้ตำแหน่งได้ กรุณาพิมพ์จังหวัดหรือเขตแทน";
-      $("#locate").disabled = false;
-    }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
-  });
-}
-
-
 /* --------------------------------------------------------------------------
    4. /films.html — ?need=heat|clarity|privacy|balance → แนะนำซีรีส์ที่ตรง
       การจับคู่คำนวณใน build.py (needToFilm) — ยังเป็นร่าง รอบริษัทยืนยัน
@@ -366,78 +316,65 @@ if ($("#film-motion")) {
 
 
 /* --------------------------------------------------------------------------
-   5. (ว่าง) — เดิมเป็น /try.html ซึ่งลบแล้วใน v8.1 · คงเลขส่วนไว้ให้เลขที่อ้างในเอกสารยังตรง
-      ตัวเลื่อนความเข้มเหลือที่หน้าแรกส่วน 04 (ส่วนที่ 3) ที่เดียว
+   5. ท้ายทุกหน้า — หาร้าน + เพื่อนร่วมทาง (v10.0 · เดิมหน้าแรกส่วน 06 ในส่วนที่ 3 · ส่วนที่ 5 เดิมคือ /try.html ลบแล้ว v8.1)
+      markup จาก find_family_block() ใน build.py · id ขึ้นต้น ff- ไม่ชนกับฟอร์มของ /dealers.html (ส่วนที่ 7)
+      ค้นหาร้านบน Google Maps (รายชื่อร้านเต็มอยู่ที่ /dealers.html)
+      v8.8 แผนที่ไม่โหลดจนกว่าจะกด "เปิดแผนที่" หรือค้นหา (ไม่ส่ง IP ผู้เข้าชมให้ Google ตั้งแต่เปิดหน้า) · เปิดเปล่า = ภาพรวมประเทศไทย ไม่ปักจุดใด
    -------------------------------------------------------------------------- */
+if ($("#ff-form")) {
+  const panel = $("#ff-map");
+  const locate = $("#ff-locate");
+  const status = $("#ff-status");
+  const openMap = (src) => {
+    let frame = panel.querySelector("iframe");
+    if (!frame) {
+      frame = document.createElement("iframe");
+      frame.title = "แผนที่ Google ค้นหาร้าน FINNIX";
+      frame.referrerPolicy = "strict-origin-when-cross-origin";   // v9.9 ส่งแค่โดเมน ไม่ส่ง URL หน้าเต็มให้ Google (ตรงกับ meta referrer ของเว็บ)
+      panel.prepend(frame);
+      panel.classList.add("is-live");
+    }
+    frame.src = src;
+  };
+  const updateMap = (query, latLng) => {
+    openMap("https://maps.google.com/maps?q=" + encodeURIComponent(query) +
+      (latLng ? "&ll=" + encodeURIComponent(latLng) + "&z=12" : "") + "&output=embed");
+    $("#ff-map-link").href = latLng
+      ? "https://www.google.com/maps/search/FINNIX+FILM/@" + latLng + ",12z"
+      : "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
+  };
+  $("#ff-load-map").hidden = false;
+  $("#ff-load-map").addEventListener("click", () => openMap(THAILAND_MAP));
+  $("#ff-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const q = $("#ff-query").value.trim();
+    if (!q) return;
+    updateMap("FINNIX FILM " + q);
+    status.textContent = "แสดงผลการค้นหาบน Google Maps สำหรับ " + q;
+  });
+  locate.addEventListener("click", () => {
+    if (!navigator.geolocation) {
+      status.textContent = "อุปกรณ์นี้ไม่รองรับตำแหน่ง กรุณาพิมพ์พื้นที่ที่ต้องการ";
+      return;
+    }
+    status.textContent = "กำลังขอตำแหน่งจากอุปกรณ์…";
+    locate.disabled = true;
+    navigator.geolocation.getCurrentPosition((pos) => {
+      updateMap("FINNIX FILM", pos.coords.latitude + "," + pos.coords.longitude);
+      status.textContent = "ตั้งแผนที่ใกล้ตำแหน่งของคุณแล้ว";
+      locate.disabled = false;
+    }, () => {
+      status.textContent = "ไม่สามารถใช้ตำแหน่งได้ กรุณาพิมพ์จังหวัดหรือเขตแทน";
+      locate.disabled = false;
+    }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
+  });
+}
 
 
 /* --------------------------------------------------------------------------
-   6. ราคา /films.html#price (v8.0 เดิม /price.html) — ราคาจากโบรชัวร์ (มีแค่บางซีรีส์ · ซีรีส์ที่ไม่มีราคาต้องบอกตรง ๆ ห้ามเดา)
-      ?film=<id> เลือกซีรีส์ให้ล่วงหน้า (ลิงก์จากหน้ารุ่น) · หน้าต่างรายละเอียดซีรีส์ก็เลือกให้ (ส่วนที่ 4)
+   6. (ว่าง) — เดิมเครื่องคำนวณราคา /films.html#price (v8.0 · เดิมหน้า /price.html) ผู้สั่งงานสั่งเอาออกใน v10.0
+      ราคาอยู่ที่หน้ารุ่น (ส่วนที่ 11) · คงเลขส่วนไว้ให้เลขที่อ้างในเอกสารยังตรง
    -------------------------------------------------------------------------- */
-if ($("#price-form")) {
-  // นับขึ้นทีละเฟรม 0.7 วินาที · มีตัวตั้งเวลาสำรองใส่ค่าจริงเสมอ — ถ้าเฟรมหยุดกลางทาง (แท็บพื้นหลัง) ตัวเลขไม่ค้างค่าระหว่างทาง
-  // เวลาของเฟรมแรกอาจมาก่อน performance.now() → จำกัด t ไม่ให้ติดลบ (เคยได้ -509)
-  let counting = 0;
-  const countUp = (el, target) => {
-    const final = target.toLocaleString("th-TH");
-    el.textContent = final;
-    if (reduced.matches) return;
-    const run = ++counting;  // กดดูราคาซ้ำระหว่างนับ → รอบเก่าหยุด
-    const start = performance.now();
-    const step = (now) => {
-      if (run !== counting) return;
-      const t = Math.min(Math.max((now - start) / 700, 0), 1);
-      el.textContent = Math.round(target * (1 - (1 - t) ** 3)).toLocaleString("th-TH");
-      if (t < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-    setTimeout(() => {
-      if (run !== counting) return;
-      counting += 1;  // หยุดเฟรมที่ยังค้างอยู่ ไม่ให้เขียนทับค่าจริง
-      el.textContent = final;
-    }, 800);
-  };
-
-  for (const [key, label] of Object.entries(data.carTypes)) {
-    $("#car-type").append(new Option(label, key));
-  }
-  data.series.forEach((s) => {
-    $("#price-film").append(new Option(s.name + (s.price ? "" : " (ยังไม่มีราคา)"), s.id));
-  });
-  const preset = new URLSearchParams(location.search).get("film");
-  if (preset && seriesById(preset)) $("#price-film").value = preset;
-
-  $("#price-form").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const series = seriesById($("#price-film").value);
-    const carType = $("#car-type").value;
-    const position = $("#position").value;
-    const price = series && series.price && series.price[carType] && series.price[carType][position];
-
-    if (Number.isFinite(price)) {
-      const where = position === "front" ? "บานหน้า" : "รอบคัน";
-      // v7.7 ตัวเลขใหญ่นับขึ้นจนถึงราคาจริง · โปรแกรมอ่านจอได้ประโยคเต็มจาก .sr-only ไม่ได้ยินตัวเลขระหว่างทาง
-      const spoken = document.createElement("span");
-      spoken.className = "sr-only";
-      spoken.textContent = `ราคา ${price.toLocaleString("th-TH")} บาท — ${series.name} · ${data.carTypes[carType]} · ${where}`;
-      const figure = document.createElement("span");
-      figure.className = "price-figure";
-      figure.setAttribute("aria-hidden", "true");
-      const amount = document.createElement("strong");
-      figure.append(amount, " บาท");
-      const detail = document.createElement("small");
-      detail.setAttribute("aria-hidden", "true");
-      detail.textContent = `${series.name} · ${data.carTypes[carType]} · ${where}`;
-      $("#price-result").replaceChildren(spoken, figure, detail);
-      countUp(amount, price);
-    } else if (series && !series.price) {
-      $("#price-result").textContent = `${series.name} ยังไม่มีราคาในเอกสาร สอบถามที่ร้านติดตั้ง`;
-    } else {
-      $("#price-result").textContent = "ยังไม่มีราคาสำหรับตัวเลือกนี้";
-    }
-  });
-}
 
 
 /* --------------------------------------------------------------------------
@@ -629,43 +566,99 @@ if ($("#dealer-count")) {
 
 
 /* --------------------------------------------------------------------------
-   8. /works.html — กรองผลงานตามซีรีส์ · แสดงทีละ 6 คัน (v8.2 ตามไฟล์ต้นแบบ works.html · v8.5 เลิกหน้าต่างรายละเอียด)
-      ไม่มี JS = เห็นครบ 20 คัน ปุ่ม "ดูตัวอย่างเพิ่มเติม" ซ่อนอยู่ (hidden) — ไม่มีปุ่มที่กดแล้วไม่ทำอะไร
+   8. ผลงาน — /works.html กรองตามซีรีส์ · แสดงทีละ 12 คัน (v8.2 ตามไฟล์ต้นแบบ works.html · v8.5 เลิกหน้าต่างรายละเอียด)
+      + หน้ารุ่น "รถที่ติด <ซีรีส์>" (v10.6 · #sp-work-grid · แสดงทีละแถว)
+      v10.5 การ์ดเล็กลง (ผู้สั่งงานสั่ง): 4 คอลัมน์ · ≤1250 3 · ≤760 1 → ทีละ 12 = เต็มแถวพอดีทั้ง 4 และ 3 คอลัมน์ (มือถือ 1 คอลัมน์ทีละ 6 · เดิมทีละ 6 ทุกจอ)
+      ไม่มี JS = เห็นครบทุกคัน ปุ่ม "ดูผลงานเพิ่มเติม" ซ่อนอยู่ (hidden) — ไม่มีปุ่มที่กดแล้วไม่ทำอะไร
+      v10.4 ภาพจริงทั้งชุดต่อคัน: CSS เลื่อนแนวนอนด้วย scroll-snap (ปัดนิ้วได้แม้ไม่มี JS) · JS เปิดปุ่ม ‹ › + ตัวนับ "1 / 7"
+      ปุ่มวนรอบ (ภาพสุดท้าย → ภาพแรก) ไม่ปิดปุ่มที่ปลาย — ปุ่มที่ถูก disabled ตอนโฟกัสอยู่ทำโฟกัสหลุด
    -------------------------------------------------------------------------- */
-if ($("#work-grid")) {
-  const PAGE_SIZE = 6;
-  const grid = $("#work-grid");
-  const more = $("#work-more");
-  const cards = $$(".work-card");
+// 8ก ปุ่มเลื่อนภาพ — ทุกการ์ดผลงานในหน้า
+$$(".work-slides").forEach((track) => {
+  const nav = track.parentElement.querySelector(".work-nav");
+  if (!nav) return;   // คันที่มีภาพเดียวไม่มีปุ่ม
+  const total = track.children.length;
+  const counter = nav.querySelector(".work-counter");
+  let current = -1;
+  const show = (index) => {
+    if (index === current) return;
+    current = index;
+    counter.textContent = `${index + 1} / ${total}`;
+  };
+  const sync = () => {   // อ่านจากตำแหน่งเลื่อนจริง (ปัดนิ้ว · ลากแทร็กแพด · ปุ่มลูกศรคีย์บอร์ด)
+    const width = track.clientWidth;
+    if (width) show(Math.min(total - 1, Math.max(0, Math.round(track.scrollLeft / width))));   // width 0 = การ์ดถูกซ่อนอยู่
+  };
+  const go = (step) => {
+    sync();
+    const target = (Math.max(current, 0) + step + total) % total;
+    track.scrollTo({ left: target * track.clientWidth, behavior: reduced.matches ? "auto" : "smooth" });
+    show(target);   // ตัวนับเปลี่ยนทันทีที่กด ไม่รอ scroll event
+  };
+  nav.querySelector(".work-prev").addEventListener("click", () => go(-1));
+  nav.querySelector(".work-next").addEventListener("click", () => go(1));
+  track.addEventListener("scroll", sync, { passive: true });
+  track.addEventListener("work:sync", sync);
+  nav.hidden = false;
+});
+
+// 8ข กริดการ์ด — แสดงทีละชุด + ห้ามเหลือใบเดียวในแถวสุดท้าย · ใช้ทั้ง /works.html และหน้ารุ่น
+// จำนวนคอลัมน์ตามเบรกพอยต์ของ merge.css หมวด 12/15 (4 · ≤1250 → 3 · ≤760 → 1)
+const workColumns = () => (matchMedia("(max-width: 760px)").matches ? 1 : matchMedia("(max-width: 1250px)").matches ? 3 : 4);
+
+// unit — หน่วยใน "แสดง X จาก N …" (หน้ารุ่นนับเป็นคัน ให้ตรงกับหัวส่วน "15 คัน" · v10.7)
+// v10.7 เลิกตัวนับ "ทั้งหมด · 30 ผลงาน" เหนือตัวกรอง — ชิปบอกจำนวนอยู่แล้ว
+function workGrid({ grid, more, status, unit = "ผลงาน", filters = [], first, step }) {
+  const cards = [...grid.querySelectorAll(".work-card")];
   let filter = "all";
-  let limit = PAGE_SIZE;
+  let limit = first();
   const matching = () => cards.filter((c) => filter === "all" || c.dataset.series === filter);
 
   const update = () => {
     const matched = matching();
     const shown = matched.slice(0, limit);
     cards.forEach((c) => { c.hidden = !shown.includes(c); });
-    $$("[data-filter]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === filter)));
-    // 3 คอลัมน์แล้วเหลือใบเดียวในแถวสุดท้าย (กรองซีรีส์ละ 4 คัน) → 2 คอลัมน์ ตามกฎ layout ของเว็บ (CSS ใช้เฉพาะจอ >1050)
-    grid.classList.toggle("is-pairs", shown.length % 3 === 1);
+    filters.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === filter)));
+    // 3 คอลัมน์มี 4 ใบ → 2+2 (.is-pairs) · ยังเหลือใบเดียว (1 ใบ · 5 · 7 · 9 …) → ใบสุดท้ายเต็มแถว (.is-wide)
+    const cols = workColumns();
+    const pairs = cols === 3 && shown.length === 4;
+    const perRow = pairs ? 2 : cols;
+    const wide = perRow > 1 && shown.length % perRow === 1 ? shown[shown.length - 1] : null;
+    grid.classList.toggle("is-pairs", pairs);
+    cards.forEach((c) => c.classList.toggle("is-wide", c === wide));
     more.hidden = matched.length <= limit;
-    $("#work-count").textContent = `${filter === "all" ? "ทั้งหมด" : filter} · ${matched.length} รายการตัวอย่าง`;
-    $("#work-shown").textContent = `แสดง ${shown.length} จาก ${matched.length} รายการตัวอย่าง`;
+    status.textContent = `แสดง ${shown.length} จาก ${matched.length} ${unit}`;
+    // การ์ดที่เพิ่งกลับมาแสดง/เปลี่ยนขนาด — ตำแหน่งเลื่อนอาจถูกรีเซ็ต ให้ตัวนับอ่านใหม่
+    grid.querySelectorAll(".work-slides").forEach((t) => t.dispatchEvent(new Event("work:sync")));
   };
 
-  $$("[data-filter]").forEach((b) => b.addEventListener("click", () => {
+  let resizeTimer;
+  addEventListener("resize", () => {   // หมุนจอ/ย่อหน้าต่างข้ามเบรกพอยต์ → คิด .is-pairs / .is-wide ใหม่
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(update, 150);
+  });
+  filters.forEach((b) => b.addEventListener("click", () => {
     filter = b.dataset.filter;
-    limit = PAGE_SIZE;
+    limit = first();
     update();
   }));
   more.addEventListener("click", () => {
     const firstNew = matching()[limit];
-    limit += PAGE_SIZE;
+    limit += step();
     update();
-    firstNew?.querySelector(".work-film-link")?.focus({ preventScroll: true });
+    firstNew?.querySelector(".work-film-link, .work-slides")?.focus({ preventScroll: true });
   });
-
   update();
+}
+
+if ($("#work-grid")) {   // /works.html — ทีละ 12 (มือถือ 6) + ปุ่มกรองซีรีส์
+  const page = () => (workColumns() === 1 ? 6 : 12);
+  workGrid({ grid: $("#work-grid"), more: $("#work-more"), status: $("#work-shown"),
+    filters: $$("[data-filter]"), first: page, step: page });
+}
+if ($("#sp-work-grid")) {   // หน้ารุ่น (v10.6) — แถวแรกแถวเดียว (มือถือ 2 คัน) แล้วเปิดเพิ่มทีละแถว (มือถือทีละ 4)
+  workGrid({ grid: $("#sp-work-grid"), more: $("#sp-work-more"), status: $("#sp-work-shown"), unit: "คัน",
+    first: () => (workColumns() === 1 ? 2 : workColumns()), step: () => (workColumns() === 1 ? 4 : workColumns()) });
 }
 
 
@@ -709,7 +702,8 @@ if ($("#spec-table")) {
   const vltRow = [...table.tBodies[0].rows].find((r) => r.cells[0].textContent.startsWith("แสงส่องผ่าน"));
   const choose = (col) => {
     shades.forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.col) === col)));
-    [...table.rows].forEach((row) => [...row.cells].forEach((cell, i) => cell.classList.toggle("col-on", i === col)));
+    // ช่องที่กินหลายคอลัมน์ (CERAMIC PLUS ยังไม่มีค่า — "รอข้อมูล" ช่องเดียวทั้งแถว) ไม่ไฮไลต์ ไม่งั้นติดสีเฉพาะตอนเลือกรหัสแรก
+    [...table.rows].forEach((row) => [...row.cells].forEach((cell, i) => cell.classList.toggle("col-on", i === col && cell.colSpan === 1)));
     $("#sp-selected-code").textContent = table.tHead.rows[0].cells[col].textContent;
     $("#sp-selected-light").textContent = vltRow ? `แสงส่องผ่าน ${vltRow.cells[col].textContent}` : "";
     $("#sp-selection").hidden = false;

@@ -1,11 +1,11 @@
-<!-- JOB: CONSIDER + REMOVE PRICE ANXIETY | USER FEELS: รุ่นไหนเหมาะกับเรา แล้วราคาเท่าไหร่ | NEXT: /dealers.html (v8.1 ลบ /try.html · v8.8 ลบ /experience.html) -->
+<!-- JOB: CONSIDER | USER FEELS: รุ่นไหนเหมาะกับเรา | NEXT: หน้ารุ่น (สเปก + ราคา) · /dealers.html (v10.0 เอาส่วนราคาท้ายหน้าออก — ราคาอยู่ที่หน้ารุ่น) -->
 <!doctype html>
 <html lang="th">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ฟิล์มทุกซีรีส์และราคา | FINNIX FILM</title>
-  <meta name="description" content="หกซีรีส์ สิบแปดรหัสความเข้ม —เลือกฟิล์มฟินนิกซ์จากสิ่งที่สำคัญกับคุณ แล้วเช็คราคาตามประเภทรถ ซีรีส์ และตำแหน่งกระจก">
+  <title>ฟิล์มทุกซีรีส์ | FINNIX FILM</title>
+  <meta name="description" content="หกซีรีส์ สิบแปดรหัสความเข้ม — เลือกฟิล์มฟินนิกซ์จากสิ่งที่สำคัญกับคุณ แล้วดูสเปกและราคาในหน้าของแต่ละซีรีส์">
   <!-- @assets -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -37,7 +37,7 @@
 
 <main id="main">
 
-  <!-- v8.0 ดีไซน์ตามไฟล์ต้นแบบ C:\Claude\films.html (ปรับฟอนต์ สี header footer ให้เป็นของเว็บนี้) + รวมหน้าราคาเดิม (/price.html) ไว้ท้ายหน้า (#price) -->
+  <!-- v8.0 ดีไซน์ตามไฟล์ต้นแบบ C:\Claude\films.html (ปรับฟอนต์ สี header footer ให้เป็นของเว็บนี้) · v10.0 เอาส่วนราคา (#price · เครื่องคำนวณ) ท้ายหน้าออกตามคำสั่ง — ราคาอยู่ที่หน้ารุ่น -->
 
   <nav class="sp-crumb" aria-label="เส้นทางหน้าเว็บ"><a href="./">หน้าแรก</a><span aria-hidden="true">/</span><span aria-current="page">ฟิล์มทุกซีรีส์</span></nav>
 
@@ -84,7 +84,7 @@
         <div class="eyebrow"><span></span> ALL SERIES</div>
         <h2>ซีรีส์ทั้งหมด</h2>
       </div>
-      <p>เปรียบเทียบซีรีส์ แล้วลองเฉดสีที่คุณชอบ</p>
+      <p>เปรียบเทียบค่าหลักของทุกซีรีส์ แล้วกดดูสเปกหรือราคาได้ทันที</p>
     </div>
     <!-- @gen:series-cards -->
     <div class="series-grid">
@@ -141,49 +141,46 @@
     <p class="note">ภาพประกอบบรรยากาศ สีฟิล์มและมุมมองจริงขึ้นอยู่กับรหัสฟิล์ม กระจก และสภาพแสง · ค่าบนการ์ดต้องอ่านคู่กับมาตรฐานที่ใช้วัด ซึ่งยัง<span class="var" data-var="TEST_STANDARD">รอข้อมูล</span> · ฟิล์มใสกันรอยยัง<span class="var" data-var="PORTFOLIO_ITEMS_PPF">รอข้อมูล</span></p>
   </section>
 
-  <!-- 4. ราคา (v8.0 ย้ายมาจาก /price.html · v8.1 เอาการ์ดราคาเต็มรายซีรีส์ออกตามคำสั่ง — ตารางเต็มอยู่ที่หน้ารุ่น) — เครื่องคำนวณ: ตัวเลือกกับราคามาจาก content.js (app.js ส่วนที่ 6) · ?film=<id> เลือกซีรีส์ให้ล่วงหน้า -->
-  <section class="films-price" id="price">
-    <div class="films-heading">
-      <div>
-        <div class="eyebrow"><span></span> PRICE <em class="eyebrow-th">ราคา</em></div>
-        <h2>ราคาสำหรับรถของคุณ</h2>
+  <!-- หาร้าน + เพื่อนร่วมทาง — ส่วนท้ายเดียวกันทุกหน้า (v10.0 แทนแถบ "ตอนต่อไป") · markup อยู่ที่ find_family_block() ใน build.py -->
+  <!-- @find-family -->
+  <section class="dealer find-family" id="find-family">
+    <div class="eyebrow find-family-head"><span></span> FIND FINNIX · FRIENDS &amp; FAMILY <em class="eyebrow-th">หาร้าน · เพื่อนร่วมทาง</em></div>
+    <div class="find-family-col reveal">
+      <h2>มากกว่าฟิล์ม<br>คือ<span class="nb">เพื่อนร่วมทาง</span></h2>
+      <p>คน รถ และเรื่องราวระหว่างทาง<br>โลกของ FINNIX เริ่มต้นที่คุณ</p>
+      <a class="pill" href="dealers.html">พบ FINNIX ใกล้คุณ</a>
+      <div class="collage">
+        <figure><img src="assets/car.jpg" alt="การเดินทางบนถนน" loading="lazy"><figcaption>On the road.</figcaption></figure>
+        <figure><img src="assets/hero.jpg" alt="ความสงบระหว่างการเดินทาง" loading="lazy"><figcaption>A moment together.</figcaption></figure>
+        <figure><img src="assets/glass.jpg" alt="เมืองผ่านกระจกรถ" loading="lazy"><figcaption>A different view.</figcaption></figure>
+        <span class="handwritten">Same Sun.<br>Different Stories.</span>
       </div>
-      <p>เลือกประเภทรถ ซีรีส์ และตำแหน่งกระจก เพื่อดูราคาตามเอกสารผลิตภัณฑ์</p>
     </div>
-    <div class="price-layout">
-      <form id="price-form" class="calculator">
-        <label>1. ประเภทรถ
-          <select id="car-type" required><option value="">เลือกประเภทรถ</option></select>
-        </label>
-        <label>2. ซีรีส์ฟิล์ม
-          <select id="price-film" required><option value="">เลือกซีรีส์</option></select>
-        </label>
-        <label>3. ตำแหน่งกระจก
-          <select id="position" required>
-            <option value="full">รอบคัน</option>
-            <option value="front">บานหน้า</option>
-          </select>
-        </label>
-        <button type="submit" class="pill filled">ดูราคา</button>
+    <div class="find-family-col dealer-copy">
+      <h2>FINNIX ใกล้คุณ</h2>
+      <p>เริ่มจากพื้นที่ที่สะดวก<br>แล้วไปดู ลอง และเลือกด้วยตัวเอง</p>
+      <form id="ff-form">
+        <label for="ff-query">จังหวัด เขต หรือพื้นที่</label>
+        <div class="search-wrap">
+          <input id="ff-query" name="location" placeholder="เช่น บางแค กรุงเทพฯ" required>
+          <button type="submit" aria-label="ค้นหาร้าน FINNIX">⌕</button>
+        </div>
       </form>
-      <div class="price-panel">
-        <div class="eyebrow red">RESULT</div>
-        <div id="price-result" class="price-result" role="status">เลือกให้ครบ 3 ข้อ แล้วกด<span class="nb">ดูราคา</span></div>
-        <p class="note">ราคาจากโบรชัวร์ปี 2024 ซึ่งมีตารางราคาเฉพาะ TITANIUM · CERAMIC · UV GUARD · อีกสาม<span class="nb">ซีรีส์</span>ยังไม่มีราคาในเอกสาร เราจึงไม่แสดงราคาเดา · ราคาจริงยืนยันที่ร้าน</p>
+      <button class="text-button location" id="ff-locate">◎ ใช้ตำแหน่งปัจจุบัน</button>
+      <p id="ff-status" class="small" role="status"></p>
+      <div class="map-panel" id="ff-map">
+        <svg class="dl-map-art" viewBox="0 0 680 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><pattern id="ff-blocks" width="125" height="90" patternTransform="rotate(-23)" patternUnits="userSpaceOnUse"><rect width="125" height="90" fill="#e7ebe3"/><rect x="8" y="8" width="46" height="30" rx="3" fill="#d8e0d2"/><rect x="64" y="8" width="53" height="30" rx="3" fill="#dce3d6"/><rect x="8" y="48" width="109" height="34" rx="3" fill="#dbe2d5"/></pattern></defs><rect width="680" height="620" fill="url(#ff-blocks)"/><path d="M490 -40C220 160 680 210 440 380S340 590 520 680" stroke="#bdcfc7" stroke-width="40" fill="none"/><path d="M-80 160L710 500M90-60L460 660M-80 480L730 130" stroke="#cbd3c3" stroke-width="25" fill="none"/><path d="M-80 160L710 500M90-60L460 660M-80 480L730 130" stroke="#f7f8f2" stroke-width="17" fill="none"/><path d="M-80 480L730 130" stroke="#e6d9b8" stroke-width="3" stroke-dasharray="9 6" fill="none"/></svg>
+        <div class="map-cover">
+          <div class="dl-pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+          <p>ค้นหาพื้นที่ หรือเปิดแผนที่เพื่อดูบริเวณที่<span class="nb">คุณสะดวก</span></p>
+          <button class="pill" id="ff-load-map" type="button" hidden>เปิดแผนที่ <span aria-hidden="true">↗</span></button>
+        </div>
+        <a id="ff-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Thailand" target="_blank" rel="noopener noreferrer" class="pill">เปิด Google Maps</a>
       </div>
+      <p class="small">แผนที่โหลดจาก Google Maps เมื่อกดเปิดหรือค้นหาเท่านั้น · ติดต่อร้านเพื่อยืนยันสินค้าและเวลาบริการก่อนเดินทาง</p>
     </div>
   </section>
-
-  <!-- แถบ "ตอนต่อไป" — ปลายทางและข้อความอยู่ที่ NEXT ใน build.py -->
-  <!-- @next -->
-  <nav class="next-chapter dark" aria-label="ตอนต่อไป">
-    <a href="dealers.html">
-      <span class="eyebrow">NEXT <span></span> FIND FINNIX <em class="eyebrow-th">หาร้านใกล้คุณ</em></span>
-      <strong><span>หาร้านใกล้คุณ</span></strong>
-      <i aria-hidden="true">→</i>
-    </a>
-  </nav>
-  <!-- @end next -->
+  <!-- @end find-family -->
 
 </main>
 
@@ -205,7 +202,6 @@
   <nav aria-label="ผลิตภัณฑ์">
     <h2>ผลิตภัณฑ์</h2>
     <a href="films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
-    <a href="films.html#price">ราคา</a>
   </nav>
   <div class="home-footer-contact">
     <h2>บริการและการติดต่อ</h2>

@@ -82,7 +82,7 @@
   <!-- ความเข้มและสเปก — ปุ่มเลือกรหัสไฮไลต์คอลัมน์ในตาราง (app.js ส่วนที่ 11) -->
   <section class="sp-spec" id="spec">
     <div class="sp-spec-intro">
-      <div class="eyebrow"><span></span> SPEC · 3 รหัสความเข้ม</div>
+      <div class="eyebrow"><span></span> SPEC</div>
       <h2>ค่าสเปกทั้ง 3 รหัส</h2>
       <p class="note">ภาพจำลองมองผ่านกระจก — สีและความเข้มเทียบจากภาพถ่ายแผ่นฟิล์มตัวอย่างจริง สีบนจอต่างจากของจริงได้ · กดรหัสเพื่อดูในตาราง</p>
       <p class="sp-selection" id="sp-selection" aria-live="polite" hidden><strong id="sp-selected-code"></strong><span id="sp-selected-light"></span></p>
@@ -119,6 +119,31 @@
     </div>
   </section>
 
+  <!-- v10.6 ผลงานที่ติดซีรีส์นี้ — data/gallery.json (series_works · ไม่มีผลงาน = ไม่มีส่วนนี้) -->
+  <section class="sp-works" id="works">
+    <div class="sp-works-head">
+      <div>
+        <div class="eyebrow"><span></span> INSTALLED <em class="eyebrow-th">ผลงานติดตั้งจริง</em></div>
+        <h2>รถที่ติด CRYSTALIZE</h2>
+        <p>1 คัน · ภาพจริงจากงานติดตั้ง ปัดดูได้คันละ 7 ภาพ</p>
+      </div>
+      <a class="sp-text-link" href="../works.html">ดูผลงานทุกซีรีส์</a>
+    </div>
+    <div class="work-grid" id="sp-work-grid">
+      <article class="work-card" data-series="CRYSTALIZE">
+        <div class="work-photo"><div class="work-slides" role="group" tabindex="0" aria-label="ภาพผลงาน Chevrolet Aveo 7 ภาพ"><img src="../assets/works/chevrolet-aveo-1.jpg" alt="Chevrolet Aveo ติดฟิล์ม CRYSTALIZE — ภาพที่ 1 จาก 7" width="800" height="800" loading="lazy" decoding="async"><img src="../assets/works/chevrolet-aveo-2.jpg" alt="Chevrolet Aveo ติดฟิล์ม CRYSTALIZE — ภาพที่ 2 จาก 7" width="800" height="800" loading="lazy" decoding="async"><img src="../assets/works/chevrolet-aveo-3.jpg" alt="Chevrolet Aveo ติดฟิล์ม CRYSTALIZE — ภาพที่ 3 จาก 7" width="800" height="800" loading="lazy" decoding="async"><img src="../assets/works/chevrolet-aveo-4.jpg" alt="Chevrolet Aveo ติดฟิล์ม CRYSTALIZE — ภาพที่ 4 จาก 7" width="800" height="800" loading="lazy" decoding="async"><img src="../assets/works/chevrolet-aveo-5.jpg" alt="Chevrolet Aveo ติดฟิล์ม CRYSTALIZE — ภาพที่ 5 จาก 7" width="800" height="800" loading="lazy" decoding="async"><img src="../assets/works/chevrolet-aveo-6.jpg" alt="Chevrolet Aveo ติดฟิล์ม CRYSTALIZE — ภาพที่ 6 จาก 7" width="800" height="800" loading="lazy" decoding="async"><img src="../assets/works/chevrolet-aveo-7.jpg" alt="Chevrolet Aveo ติดฟิล์ม CRYSTALIZE — ภาพที่ 7 จาก 7" width="800" height="800" loading="lazy" decoding="async"></div><div class="work-nav" hidden><button type="button" class="work-prev" aria-label="ภาพก่อนหน้า — Chevrolet Aveo"><span aria-hidden="true">‹</span></button><span class="work-counter" aria-live="polite">1 / 7</span><button type="button" class="work-next" aria-label="ภาพถัดไป — Chevrolet Aveo"><span aria-hidden="true">›</span></button></div></div>
+        <div class="work-content">
+          <h3>Chevrolet Aveo</h3>
+          <dl class="work-spec"><div><dt>บานหน้า</dt><dd>CT40</dd></div><div><dt>บานข้าง</dt><dd>CT20</dd></div><div><dt>บานหลัง</dt><dd>CT20</dd></div></dl>
+        </div>
+      </article>
+    </div>
+    <div class="works-more">
+      <button type="button" class="pill" id="sp-work-more" hidden>ดูผลงานเพิ่มเติม <span aria-hidden="true">+</span></button>
+      <p id="sp-work-shown" aria-live="polite"></p>
+    </div>
+  </section>
+
   <section class="sp-alts">
     <div class="sp-alts-head">
       <h2>ทางเลือกอื่นที่อยาก<span class="nb">ให้ลอง</span></h2>
@@ -136,15 +161,45 @@
     </div>
   </section>
 
-  <!-- @next -->
-  <nav class="next-chapter dark" aria-label="ตอนต่อไป">
-    <a href="../dealers.html">
-      <span class="eyebrow">NEXT <span></span> FIND FINNIX <em class="eyebrow-th">หาร้านใกล้คุณ</em></span>
-      <strong><span>หาร้านใกล้คุณ</span></strong>
-      <i aria-hidden="true">→</i>
-    </a>
-  </nav>
-  <!-- @end next -->
+  <!-- @find-family -->
+  <section class="dealer find-family" id="find-family">
+    <div class="eyebrow find-family-head"><span></span> FIND FINNIX · FRIENDS &amp; FAMILY <em class="eyebrow-th">หาร้าน · เพื่อนร่วมทาง</em></div>
+    <div class="find-family-col reveal">
+      <h2>มากกว่าฟิล์ม<br>คือ<span class="nb">เพื่อนร่วมทาง</span></h2>
+      <p>คน รถ และเรื่องราวระหว่างทาง<br>โลกของ FINNIX เริ่มต้นที่คุณ</p>
+      <a class="pill" href="../dealers.html">พบ FINNIX ใกล้คุณ</a>
+      <div class="collage">
+        <figure><img src="../assets/car.jpg" alt="การเดินทางบนถนน" loading="lazy"><figcaption>On the road.</figcaption></figure>
+        <figure><img src="../assets/hero.jpg" alt="ความสงบระหว่างการเดินทาง" loading="lazy"><figcaption>A moment together.</figcaption></figure>
+        <figure><img src="../assets/glass.jpg" alt="เมืองผ่านกระจกรถ" loading="lazy"><figcaption>A different view.</figcaption></figure>
+        <span class="handwritten">Same Sun.<br>Different Stories.</span>
+      </div>
+    </div>
+    <div class="find-family-col dealer-copy">
+      <h2>FINNIX ใกล้คุณ</h2>
+      <p>เริ่มจากพื้นที่ที่สะดวก<br>แล้วไปดู ลอง และเลือกด้วยตัวเอง</p>
+      <form id="ff-form">
+        <label for="ff-query">จังหวัด เขต หรือพื้นที่</label>
+        <div class="search-wrap">
+          <input id="ff-query" name="location" placeholder="เช่น บางแค กรุงเทพฯ" required>
+          <button type="submit" aria-label="ค้นหาร้าน FINNIX">⌕</button>
+        </div>
+      </form>
+      <button class="text-button location" id="ff-locate">◎ ใช้ตำแหน่งปัจจุบัน</button>
+      <p id="ff-status" class="small" role="status"></p>
+      <div class="map-panel" id="ff-map">
+        <svg class="dl-map-art" viewBox="0 0 680 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><pattern id="ff-blocks" width="125" height="90" patternTransform="rotate(-23)" patternUnits="userSpaceOnUse"><rect width="125" height="90" fill="#e7ebe3"/><rect x="8" y="8" width="46" height="30" rx="3" fill="#d8e0d2"/><rect x="64" y="8" width="53" height="30" rx="3" fill="#dce3d6"/><rect x="8" y="48" width="109" height="34" rx="3" fill="#dbe2d5"/></pattern></defs><rect width="680" height="620" fill="url(#ff-blocks)"/><path d="M490 -40C220 160 680 210 440 380S340 590 520 680" stroke="#bdcfc7" stroke-width="40" fill="none"/><path d="M-80 160L710 500M90-60L460 660M-80 480L730 130" stroke="#cbd3c3" stroke-width="25" fill="none"/><path d="M-80 160L710 500M90-60L460 660M-80 480L730 130" stroke="#f7f8f2" stroke-width="17" fill="none"/><path d="M-80 480L730 130" stroke="#e6d9b8" stroke-width="3" stroke-dasharray="9 6" fill="none"/></svg>
+        <div class="map-cover">
+          <div class="dl-pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+          <p>ค้นหาพื้นที่ หรือเปิดแผนที่เพื่อดูบริเวณที่<span class="nb">คุณสะดวก</span></p>
+          <button class="pill" id="ff-load-map" type="button" hidden>เปิดแผนที่ <span aria-hidden="true">↗</span></button>
+        </div>
+        <a id="ff-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Thailand" target="_blank" rel="noopener noreferrer" class="pill">เปิด Google Maps</a>
+      </div>
+      <p class="small">แผนที่โหลดจาก Google Maps เมื่อกดเปิดหรือค้นหาเท่านั้น · ติดต่อร้านเพื่อยืนยันสินค้าและเวลาบริการก่อนเดินทาง</p>
+    </div>
+  </section>
+  <!-- @end find-family -->
 
 </main>
 
@@ -165,7 +220,6 @@
   <nav aria-label="ผลิตภัณฑ์">
     <h2>ผลิตภัณฑ์</h2>
     <a href="../films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
-    <a href="../films.html#price">ราคา</a>
   </nav>
   <div class="home-footer-contact">
     <h2>บริการและการติดต่อ</h2>

@@ -44,20 +44,17 @@
 
   <!-- 01 hero — v8.9 วิดีโอแบรนด์แทนภาพปก (ผู้สั่งงานส่งมา · ไม่มีเสียง — ตัดแทร็กเสียงออกจากไฟล์แล้ว · เล่นเอง วนซ้ำ)
        มือถือ ≤760 โหลดไฟล์ 720p (4 MB) · จอใหญ่ 1080p (9 MB) · ภาพปก = เฟรมแรกของคลิป · ต้นฉบับ 49 MB อยู่ในคลัง top secret
-       ปุ่ม "หยุดภาพเคลื่อนไหว" หยุด/เล่นวิดีโอด้วย · ตั้งลดการเคลื่อนไหว = หยุดที่ภาพปก (app.js ส่วนที่ 3) · ภาพเดิม assets/hero.jpg ยังใช้ที่ส่วนอื่น -->
+       ปุ่ม "หยุดภาพเคลื่อนไหว" หยุด/เล่นวิดีโอด้วย · ตั้งลดการเคลื่อนไหว = หยุดที่ภาพปก (app.js ส่วนที่ 3) · ภาพเดิม assets/hero.jpg ยังใช้ที่ส่วนอื่น
+       v10.3 ผู้สั่งงานสั่งเอาข้อความฝั่งขวาออก ("01 — LIFE, THROUGH A DIFFERENT LENS" · A CLEARER TOMORROW · ประโยคไทย · Discover FINNIX) ให้ปกเป็นวิดีโอโล่ง ๆ
+       → ม่านครีม .hero-wash ที่มีไว้ให้ข้อความอ่านออกเอาออกด้วย เหลือแถบสว่างบาง ๆ ด้านบนให้เมนูอ่านออก (.hero::before ใน merge.css หมวด 5)
+       · h1 คงไว้แบบมองไม่เห็น (.sr-only) ให้หน้าแรกยังมีหัวข้อหลัก -->
   <section class="hero" id="home">
+    <h1 class="sr-only">FINNIX FILM — A CLEARER TOMORROW</h1>
     <div class="hero-media moving">
       <video id="hero-video" autoplay muted loop playsinline poster="assets/video/hero-poster.jpg" aria-label="วิดีโอแบรนด์ FINNIX FILM ไม่มีเสียง">
         <source src="assets/video/hero-720.mp4" type="video/mp4" media="(max-width: 760px)">
         <source src="assets/video/hero.mp4" type="video/mp4">
       </video>
-    </div>
-    <div class="hero-wash"></div>
-    <div class="hero-copy">
-      <div class="eyebrow">01 <span></span> LIFE, THROUGH A DIFFERENT LENS</div>
-      <h1>A CLEARER<br>TOMORROW</h1>
-      <p>มากกว่าความสบาย<br>คือวันข้างหน้าที่ชัดกว่า</p>
-      <a class="round-link" href="#glass"><span class="circle">↓</span> Discover FINNIX</a>
     </div>
     <div class="hero-bottom">
       <span>BEAUTIFULLY REAL.</span>
@@ -110,7 +107,7 @@
       <h2>ลองด้วยตา<br>เลือกด้วยตัวคุณเอง</h2>
       <p>มุมมองเดียวกัน ต่างความเข้ม<br>เลื่อนเพื่อสำรวจเฉดที่คุณชอบ</p>
       <!-- @gen:try-scene -->
-      <div class="tint-scene car3d" data-src="assets/3d/car.glb" data-posters="assets/3d/car-0.jpg assets/3d/car-1.jpg assets/3d/car-2.jpg assets/3d/car-3.jpg" data-glass="none 0.55 0.75 0.9" data-orbit="-35deg 75deg 80%" data-alt="รถจำลอง 3 มิติ ลากเพื่อหมุนดูรอบคัน">
+      <div class="tint-scene car3d" data-src="assets/3d/car.glb" data-posters="assets/3d/car-0.jpg assets/3d/car-1.jpg assets/3d/car-2.jpg assets/3d/car-3.jpg" data-glass="0.35 0.55 0.75 0.9" data-orbit="-35deg 75deg 80%" data-alt="รถจำลอง 3 มิติ ลากเพื่อหมุนดูรอบคัน">
         <img class="car3d-poster" src="assets/3d/car-2.jpg" alt="รถจำลองติดฟิล์มความเข้ม 60" loading="lazy">
         <div class="car3d-bar">
           <p class="car3d-status" role="status"></p>
@@ -131,7 +128,7 @@
       </div>
       <div class="try-foot">
         <p>ภาพจำลองความเข้มเพื่อเปรียบเทียบเท่านั้น ไม่ใช่ค่า VLT หรือการจำลองความร้อน<br>การมองเห็นจริงขึ้นกับรุ่นฟิล์ม กระจก แสง และ<span class="nb">หน้าจอ</span></p>
-        <a href="#dealer" class="pill light">สัมผัสฟิล์มจริงที่ร้าน</a>
+        <a href="#find-family" class="pill light">สัมผัสฟิล์มจริงที่ร้าน</a>
       </div>
     </div>
     <div class="home-pair-col reveal" id="science">
@@ -169,7 +166,7 @@
         <p class="product-name">FINNIX<br><strong>CERAMIC</strong></p>
         <p>ฟินนิกซ์ เซรามิค ฟิล์ม · ใส เคลียร์ ชัด</p>
         <a class="pill filled" href="films/ceramic.html">สำรวจ CERAMIC</a>
-        <a class="text-button" href="films.html">ดูฟิล์มทุกรุ่น</a>
+        <a class="text-button" href="films.html">ดูฟิล์มทุกซีรีส์</a>
         <!-- @end gen:featured -->
       </div>
     </div>
@@ -179,7 +176,7 @@
       <div class="need-track">
         <div class="need-item">
           <button class="need" data-need="ชีวิตในเมือง" data-guide="เริ่มจากเวลาที่ใช้รถและด้านที่รับแดด ลองเทียบเฉดจริงในช่วงเวลาที่คุณขับเป็นประจำ">
-            <img src="assets/glass.jpg" style="object-position:65% center" alt="" loading="lazy">
+            <img src="assets/Page/2.jpg" style="object-position:50% center" alt="" loading="lazy">
             <span class="need-copy"><i aria-hidden="true">◉</i><small>CITY / EVERYDAY</small><strong>ชีวิตในเมือง</strong></span>
           </button>
           <a class="need-go" href="films.html#series">ดูฟิล์ม <span aria-hidden="true">→</span></a>
@@ -193,21 +190,21 @@
         </div>
         <div class="need-item">
           <button class="need" data-need="คนที่เดินทางด้วย" data-guide="ลองนั่งในตำแหน่งผู้โดยสารด้วย เพราะแต่ละที่นั่งรับแสงต่างกัน">
-            <img src="assets/hero.jpg" style="object-position:24% center" alt="" loading="lazy">
+            <img src="assets/Page/1.jpg" style="object-position:88% center" alt="" loading="lazy">
             <span class="need-copy"><i aria-hidden="true">♡</i><small>FAMILY</small><strong>คนที่เดินทางด้วย</strong></span>
           </button>
           <a class="need-go" href="films.html#series">ดูฟิล์ม <span aria-hidden="true">→</span></a>
         </div>
         <div class="need-item">
           <button class="need" data-need="พื้นที่ส่วนตัว" data-guide="เทียบมุมมองทั้งจากด้านนอกและด้านใน ความเป็นส่วนตัวขึ้นกับความต่างของแสงด้วย">
-            <img src="assets/car.jpg" style="object-position:80% center" alt="" loading="lazy">
+            <img src="assets/Page/3.jpg" style="object-position:45% center" alt="" loading="lazy">
             <span class="need-copy"><i aria-hidden="true">◐</i><small>PRIVACY</small><strong>พื้นที่ส่วนตัว</strong></span>
           </button>
           <a class="need-go" href="films.html#series">ดูฟิล์ม <span aria-hidden="true">→</span></a>
         </div>
         <div class="need-item">
           <button class="need" data-need="ความพอดีของทุกวัน" data-guide="เริ่มจากเฉดที่มองสบาย แล้วเปรียบเทียบคุณสมบัติและงบประมาณกับร้านติดตั้ง">
-            <img src="assets/glass.jpg" style="object-position:30% center" alt="" loading="lazy">
+            <img src="assets/Page/4.jpg" style="object-position:68% center" alt="" loading="lazy">
             <span class="need-copy"><i aria-hidden="true">◎</i><small>BALANCED</small><strong>ความพอดีของ<span class="nb">ทุกวัน</span></strong></span>
           </button>
           <a class="need-go" href="films.html#series">ดูฟิล์ม <span aria-hidden="true">→</span></a>
@@ -216,11 +213,11 @@
     </div>
   </section>
 
-  <!-- 06 หาร้าน + เพื่อนร่วมทาง (v6.5 รวม FIND FINNIX กับ FRIENDS & FAMILY) — ซ้ายคอลลาจ ขวาค้นหา + แผนที่
-       ค้นผ่าน Google Maps ตามต้นแบบ (รายชื่อร้านเต็มอยู่ที่ /dealers.html) · ภาพบรรยากาศแบรนด์ (AI) -->
-  <section class="dealer find-family" id="dealer">
+  <!-- 06 หาร้าน + เพื่อนร่วมทาง — ส่วนท้ายเดียวกันทุกหน้า (v6.5 · v10.0 markup ย้ายไป find_family_block() ใน build.py) -->
+  <!-- @find-family -->
+  <section class="dealer find-family" id="find-family">
     <div class="eyebrow find-family-head">06 <span></span> FIND FINNIX · FRIENDS &amp; FAMILY <em class="eyebrow-th">หาร้าน · เพื่อนร่วมทาง</em></div>
-    <div class="find-family-col reveal" id="family">
+    <div class="find-family-col reveal">
       <h2>มากกว่าฟิล์ม<br>คือ<span class="nb">เพื่อนร่วมทาง</span></h2>
       <p>คน รถ และเรื่องราวระหว่างทาง<br>โลกของ FINNIX เริ่มต้นที่คุณ</p>
       <a class="pill" href="dealers.html">พบ FINNIX ใกล้คุณ</a>
@@ -234,29 +231,28 @@
     <div class="find-family-col dealer-copy">
       <h2>FINNIX ใกล้คุณ</h2>
       <p>เริ่มจากพื้นที่ที่สะดวก<br>แล้วไปดู ลอง และเลือกด้วยตัวเอง</p>
-      <form id="dealer-form">
-        <label for="dealer-query">จังหวัด เขต หรือพื้นที่</label>
+      <form id="ff-form">
+        <label for="ff-query">จังหวัด เขต หรือพื้นที่</label>
         <div class="search-wrap">
-          <input id="dealer-query" name="location" placeholder="เช่น บางแค กรุงเทพฯ" required>
+          <input id="ff-query" name="location" placeholder="เช่น บางแค กรุงเทพฯ" required>
           <button type="submit" aria-label="ค้นหาร้าน FINNIX">⌕</button>
         </div>
       </form>
-      <button class="text-button location" id="locate">◎ ใช้ตำแหน่งปัจจุบัน</button>
-      <p id="location-status" class="small" role="status"></p>
-      <!-- v8.8 แผนที่ Google โหลดเมื่อกด "เปิดแผนที่" หรือค้นหาเท่านั้น (เดิมโหลดทันที ส่ง IP ผู้เข้าชมให้ Google + ปักจุดที่เชียงใหม่ที่ยังไม่รู้ว่าเป็นร้านใคร)
-           ภาพแผนที่ประกอบ + หมุด แบบเดียวกับ /dealers.html · ไม่มี JS = ปุ่มซ่อน (hidden) ใช้ลิงก์ "เปิด Google Maps" แทน · app.js ส่วนที่ 3 -->
-      <div class="map-panel" id="home-map">
-        <svg class="dl-map-art" viewBox="0 0 680 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><pattern id="home-blocks" width="125" height="90" patternTransform="rotate(-23)" patternUnits="userSpaceOnUse"><rect width="125" height="90" fill="#e7ebe3"/><rect x="8" y="8" width="46" height="30" rx="3" fill="#d8e0d2"/><rect x="64" y="8" width="53" height="30" rx="3" fill="#dce3d6"/><rect x="8" y="48" width="109" height="34" rx="3" fill="#dbe2d5"/></pattern></defs><rect width="680" height="620" fill="url(#home-blocks)"/><path d="M490 -40C220 160 680 210 440 380S340 590 520 680" stroke="#bdcfc7" stroke-width="40" fill="none"/><path d="M-80 160L710 500M90-60L460 660M-80 480L730 130" stroke="#cbd3c3" stroke-width="25" fill="none"/><path d="M-80 160L710 500M90-60L460 660M-80 480L730 130" stroke="#f7f8f2" stroke-width="17" fill="none"/><path d="M-80 480L730 130" stroke="#e6d9b8" stroke-width="3" stroke-dasharray="9 6" fill="none"/></svg>
+      <button class="text-button location" id="ff-locate">◎ ใช้ตำแหน่งปัจจุบัน</button>
+      <p id="ff-status" class="small" role="status"></p>
+      <div class="map-panel" id="ff-map">
+        <svg class="dl-map-art" viewBox="0 0 680 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><pattern id="ff-blocks" width="125" height="90" patternTransform="rotate(-23)" patternUnits="userSpaceOnUse"><rect width="125" height="90" fill="#e7ebe3"/><rect x="8" y="8" width="46" height="30" rx="3" fill="#d8e0d2"/><rect x="64" y="8" width="53" height="30" rx="3" fill="#dce3d6"/><rect x="8" y="48" width="109" height="34" rx="3" fill="#dbe2d5"/></pattern></defs><rect width="680" height="620" fill="url(#ff-blocks)"/><path d="M490 -40C220 160 680 210 440 380S340 590 520 680" stroke="#bdcfc7" stroke-width="40" fill="none"/><path d="M-80 160L710 500M90-60L460 660M-80 480L730 130" stroke="#cbd3c3" stroke-width="25" fill="none"/><path d="M-80 160L710 500M90-60L460 660M-80 480L730 130" stroke="#f7f8f2" stroke-width="17" fill="none"/><path d="M-80 480L730 130" stroke="#e6d9b8" stroke-width="3" stroke-dasharray="9 6" fill="none"/></svg>
         <div class="map-cover">
           <div class="dl-pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
           <p>ค้นหาพื้นที่ หรือเปิดแผนที่เพื่อดูบริเวณที่<span class="nb">คุณสะดวก</span></p>
-          <button class="pill" id="home-load-map" type="button" hidden>เปิดแผนที่ <span aria-hidden="true">↗</span></button>
+          <button class="pill" id="ff-load-map" type="button" hidden>เปิดแผนที่ <span aria-hidden="true">↗</span></button>
         </div>
-        <a id="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Thailand" target="_blank" rel="noopener noreferrer" class="pill">เปิด Google Maps</a>
+        <a id="ff-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Thailand" target="_blank" rel="noopener noreferrer" class="pill">เปิด Google Maps</a>
       </div>
       <p class="small">แผนที่โหลดจาก Google Maps เมื่อกดเปิดหรือค้นหาเท่านั้น · ติดต่อร้านเพื่อยืนยันสินค้าและเวลาบริการก่อนเดินทาง</p>
     </div>
   </section>
+  <!-- @end find-family -->
 
 </main>
 
@@ -281,7 +277,6 @@
   <nav aria-label="ผลิตภัณฑ์">
     <h2>ผลิตภัณฑ์</h2>
     <a href="films.html">ฟิล์มรถยนต์ทุกซีรีส์</a>
-    <a href="films.html#price">ราคา</a>
   </nav>
   <div class="home-footer-contact">
     <h2>บริการและการติดต่อ</h2>

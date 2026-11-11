@@ -1,13 +1,5 @@
 /* สร้างโดย tools/build.py จาก data/*.json — ห้ามแก้ไฟล์นี้ตรง ๆ แก้ที่ data/ หรือ build.py แล้วรัน python tools/build.py */
 window.FINNIX = {
- "carTypes": {
-  "pickup2": "กระบะ 2 ประตู",
-  "pickup4": "กระบะ 4 ประตู",
-  "sedan": "รถเก๋ง",
-  "suv": "รถ SUV",
-  "mpv": "รถ MPV",
-  "van": "รถตู้"
- },
  "series": [
   {
    "id": "titanium",
@@ -76,7 +68,7 @@ window.FINNIX = {
    "name": "CERAMIC",
    "th": "ฟินนิกซ์ เซรามิค ฟิล์ม",
    "tag": "ใส เคลียร์ ชัด",
-   "tech": "เซรามิก ไม่มีชั้นโลหะ",
+   "tech": "เซรามิค",
    "metalFree": true,
    "heat": "80–90%",
    "heatMax": 90,
@@ -209,7 +201,7 @@ window.FINNIX = {
    "name": "EXTRA CLEAR",
    "th": "ฟินนิกซ์ เอ็กซ์ตร้า เคลียร์",
    "tag": "ใส เคลียร์ ชัด",
-   "tech": "เซรามิก ไม่มีชั้นโลหะ",
+   "tech": "เซรามิค",
    "metalFree": true,
    "heat": "61–67%",
    "heatMax": 67,
@@ -245,7 +237,7 @@ window.FINNIX = {
    "name": "UV GUARD",
    "th": "ฟินนิกซ์ ยูวีการ์ด เซรามิค ฟิล์ม",
    "tag": "ใส เคลียร์ ชัด",
-   "tech": "เซรามิก ไม่มีชั้นโลหะ",
+   "tech": "เซรามิค",
    "metalFree": true,
    "heat": "52–63%",
    "heatMax": 63,
